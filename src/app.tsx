@@ -239,6 +239,10 @@ const mappedAriaRolesToDescriptions = {
     "A cell containing header information for a column. This may be interactive if it is a descendant of a grid.",
   rowheader:
     "A cell containing header information for a row. This may be interactive if it is a descendant of a grid.",
+  code: "A piece of computer code.",
+  mark: "A run of text in one document marked or highlighted for reference purposes, due to its relevance in another context.",
+  marquee:
+    "A type of live region where non-essential information changes frequently.",
   combobox:
     "A presentation of a select; usually similar to a textbox where users can type ahead to select an option, or type to enter arbitrary text as a new item in the list.",
   complementary:
@@ -273,7 +277,6 @@ const mappedAriaRolesToDescriptions = {
   listitem: "A single item in a list.",
   log: "A type of live region where new information is added in meaningful order and old information may disappear.",
   main: "The main content area of a document.",
-  mark: "A run of text in one document marked or highlighted for reference purposes, due to its relevance in another context.",
   math: "Content that represents a mathematical expression.",
   menu: "A type of widget that offers a list of choices to the user.",
   menubar:
@@ -286,14 +289,24 @@ const mappedAriaRolesToDescriptions = {
   meter: "A measurement within a known range.",
   navigation:
     "A collection of navigational elements (usually links) for navigating the document or related documents.",
-  none: "A section of a page that is not part of the main content, yet is still related in some way.",
   note: "A section whose content is parenthetic or ancillary to the main content of the resource.",
   option: "A selectable item in a select list.",
   paragraph: "A paragraph of text.",
+  presentation:
+    "An element whose implicit native role semantics will not be mapped to the accessibility API.",
+  none: "An element whose implicit native role semantics will not be mapped to the accessibility API.",
+  progressbar:
+    "A type of live region containing a numerical counter which indicates an amount of elapsed time from a start point, or the time remaining until an end point.",
   radiogroup: "A group of radio buttons.",
+  radio:
+    "A checkable input in a group of radio roles, only one of which can be checked at a time.",
+  slider:
+    "A user input where the user selects a value from within a given range.",
+  spinbutton:
+    "A form of range that expects a user to select from among discrete choices.",
   region:
     "A large perceivable section of a web page or document, that typically contains a collection of items and objects.",
-  row: "A row of cells in a grid.",
+  row: "A row of cells in a grid. This is an interactive widget only if it is a descendant of a treegrid.",
   rowgroup: "A group containing one or more row elements in a grid.",
   search: "A landmark region that contains a search facility.",
   searchbox: "A type of textbox intended for specifying search criteria.",
@@ -452,52 +465,6 @@ const mappedAriaRolesToContentType = {
 function ARIAPeriodicTable() {
   return (
     <div>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-        customElements.define('expansion-button', class extends HTMLElement {
-          constructor() {
-            super();
-
-            const clickHandler = () => {
-              const containerElement = this.closest('.aria-role');
-              const dialogElement = containerElement.querySelector('dialog');
-
-              if (!dialogElement) {
-                return;
-              }
-
-              dialogElement.showModal();
-            };
-
-            this.addEventListener('click', clickHandler);
-            this.addEventListener('keydown', (event) => {
-              if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                clickHandler();
-              }
-            });
-          }
-        });
-
-        customElements.define('close-dialog-button', class extends HTMLElement {
-          constructor() {
-            super();
-
-            this.addEventListener('click', () => {
-              const dialogElement = this.closest('dialog');
-
-              if (!dialogElement) {
-                return;
-              }
-
-              dialogElement.close();
-            });
-          }
-        });
-      `,
-        }}
-      ></script>
       <style
         dangerouslySetInnerHTML={{
           __html: `
@@ -768,11 +735,8 @@ function ARIAPeriodicTable() {
                                     }}
                                   ></expansion-button>
                                   <dialog className="aria-role__dialog">
-                                    <close-dialog-button
-                                      role="button"
-                                      tabindex="0"
-                                    >
-                                      Close
+                                    <close-dialog-button>
+                                      <button type="button">Close</button>
                                     </close-dialog-button>
                                     <div className="aria-role__details">
                                       <h1>{role}</h1>
@@ -782,10 +746,12 @@ function ARIAPeriodicTable() {
                                             className="aria-role__column-header"
                                             scope="col"
                                           >
-                                            Category Description
+                                            Description
                                           </th>
                                           <td className="aria-role__cell">
-                                            <p>{description}</p>
+                                            {mappedAriaRolesToDescriptions[
+                                              role
+                                            ] || "--"}
                                           </td>
                                         </tr>
                                         <tr className="aria-role__row">
@@ -798,6 +764,17 @@ function ARIAPeriodicTable() {
                                           </th>
                                           <td className="aria-role__cell">
                                             {ariaToHtmlMapping[role] || "--"}
+                                          </td>
+                                        </tr>
+                                        <tr className="aria-role__row">
+                                          <th
+                                            className="aria-role__column-header"
+                                            scope="col"
+                                          >
+                                            Category Description
+                                          </th>
+                                          <td className="aria-role__cell">
+                                            <p>{description}</p>
                                           </td>
                                         </tr>
                                       </table>
@@ -816,6 +793,61 @@ function ARIAPeriodicTable() {
           }
         )}
       </ul>
+
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+        customElements.define('expansion-button', class extends HTMLElement {
+          constructor() {
+            super();
+
+            const clickHandler = () => {
+              const containerElement = this.closest('.aria-role');
+              const dialogElement = containerElement.querySelector('dialog');
+
+              if (!dialogElement) {
+                return;
+              }
+
+              dialogElement.showModal();
+            };
+
+            this.addEventListener('click', clickHandler);
+            this.addEventListener('keydown', (event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                clickHandler();
+              }
+            });
+          }
+        });
+
+        customElements.define('close-dialog-button', class extends HTMLElement {
+          constructor() {
+            super();
+
+            const buttonElement = this.querySelector('button');
+
+            console.log(this, buttonElement);
+
+            if (!buttonElement) {
+              throw new Error('No button element found');
+            }
+
+            buttonElement.addEventListener('click', () => {
+              const dialogElement = this.closest('dialog');
+
+              if (!dialogElement) {
+                return;
+              }
+
+              dialogElement.close();
+            });
+          }
+        });
+      `,
+        }}
+      ></script>
     </div>
   );
 }
