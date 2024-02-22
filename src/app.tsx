@@ -222,6 +222,20 @@ const ariaToHtmlMapping = {
   time: "<time>",
 };
 
+const ariaFormControls = [
+  "checkbox",
+  "combobox",
+  "listbox",
+  "radiogroup",
+  "radio",
+  "slider",
+  "spinbutton",
+  "textbox",
+  "searchbox",
+  "option",
+  "switch",
+];
+
 const mappedAriaRolesToDescriptions = {
   alert: "A live region for important, time-sensitive information.",
   alertdialog: "A type of dialog that contains an alert message.",
@@ -378,6 +392,19 @@ const mappedAbstractAriaRolesToTextColors = {
   window: "black",
   live: "black",
 };
+
+const ariaRolesWithOnlyPhrasingDescendants = [
+  "button",
+  "checkbox",
+  "img",
+  "menuitem",
+  "menuitemcheckbox",
+  "menuitemradio",
+  "option",
+  "radio",
+  "switch",
+  "tab",
+];
 
 const mappedAriaRolesToContentType = {
   alert: ["flow"],
@@ -589,6 +616,10 @@ function ARIAPeriodicTable() {
             color: white;
           }
 
+          .aria-role--only-phrasing-descendants:not(.aria-role--content-type-phrasing) {
+            background-image: linear-gradient(45deg, #0e5469 50%, transparent 50%);
+          }
+
           .aria-role__summary {
             text-align: center;
             display: grid;
@@ -695,12 +726,34 @@ function ARIAPeriodicTable() {
                               const isBPhrasing = (
                                 mappedAriaRolesToContentType[b] || []
                               ).includes("phrasing");
+                              const isAPhrasingDescedantsOnly =
+                                ariaRolesWithOnlyPhrasingDescendants.includes(
+                                  a
+                                );
+                              const isBPhrasingDescedantsOnly =
+                                ariaRolesWithOnlyPhrasingDescendants.includes(
+                                  b
+                                );
 
                               if (isAPhrasing && !isBPhrasing) {
                                 return 1;
                               }
 
                               if (!isAPhrasing && isBPhrasing) {
+                                return -1;
+                              }
+
+                              if (
+                                isAPhrasingDescedantsOnly &&
+                                !isBPhrasingDescedantsOnly
+                              ) {
+                                return 1;
+                              }
+
+                              if (
+                                !isAPhrasingDescedantsOnly &&
+                                isBPhrasingDescedantsOnly
+                              ) {
                                 return -1;
                               }
 
@@ -716,6 +769,13 @@ function ARIAPeriodicTable() {
                                   className={`
                                 aria-role
                                 aria-role--abstract-role-${abstractAriaRole}
+                                ${
+                                  ariaRolesWithOnlyPhrasingDescendants.includes(
+                                    role
+                                  )
+                                    ? "aria-role--only-phrasing-descendants"
+                                    : ""
+                                }
                                 ${(mappedAriaRolesToContentType[role] || [])
                                   .map(
                                     (contentType) =>
