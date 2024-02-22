@@ -20,7 +20,6 @@ const mappedAbstractAriaRolesToTitles = {
 
 const mappedAriaRolesToDisplayNames = {
   presentation: "presen<wbr />tation",
-  comment: "com<wbr />ment",
   definition: "defi<wbr />ni<wbr />tion",
   document: "docu<wbr />ment",
   emphasis: "emph<wbr />asis",
@@ -45,7 +44,7 @@ const mappedAriaRolesToDisplayNames = {
   rowheader: "row<wbr />header*",
   row: "row*",
   menuitemcheckbox: "menu<wbr />item<wbr />check<wbr />box",
-  separator: "separ<wbr />ator",
+  separator: "separ<wbr />ator*",
   menuitemradio: "menu<wbr />item<wbr />radio",
   menuitem: "menu<wbr />item",
   progressbar: "prog<wbr />ress<wbr />bar",
@@ -99,11 +98,11 @@ const ariaRolesByCategory = {
     "meter",
     "progressbar",
     "scrollbar",
+    "separator",
   ],
   structure: [
     "application",
     "article",
-    "comment",
     "blockquote",
     "caption",
     "cell",
@@ -168,73 +167,58 @@ const ariaRolesByCategory = {
 };
 
 const ariaToHtmlMapping = {
-  button:
-    '<button> / <summary> / <input[type="submit"]> / <input[type="reset"]>',
-  caption: "<caption>",
-  cell: "<td>",
-  blockquote: "<blockquote>",
-  code: "<code>",
-  checkbox: '<input[type="checkbox"]>',
-  combobox: "<select>",
-  dialog: "<dialog>",
-  group: "<fieldset> / <details>",
-  figure: "<figure>",
-  form: "<form>",
-  heading: "<h1>-<h6>",
-  img: "<img>",
-  link: "<a[href]>",
-  list: "<ul> / <ol> / <dl>",
-  listbox: "<select[multiple]>",
-  listitem: "<li>",
-  term: "<dfn> / <dt>",
-  definition: "<dd>",
-  option: "<option>",
-  generic: "<div>",
-  paragraph: "<p>",
-  meter: "<meter>",
-  progressbar: "<progress>",
-  slider: '<input[type="range"]>',
-  radio: '<input[type="radio"]>',
-  region: "<section>",
-  row: "<tr>",
-  rowgroup: "<thead> / <tbody> / <tfoot>",
-  rowheader: '<th[scope="row"]>',
-  columnheader: '<th[scope="col"]>',
-  search: "<search>",
-  searchbox: '<input[type="search"]>',
-  strong: "<strong>",
-  status: "<output>",
-  emphasis: "<em>",
-  separator: "<hr>",
-  deletion: "<del>",
-  insertion: "<ins>",
-  spinbutton: '<input[type="number"]>',
-  textbox: '<input[type="text"]> / <textarea>',
-  table: "<table>",
-  article: "<article>",
-  banner: "<header>",
-  complementary: "<aside>",
-  contentinfo: "<footer>",
-  main: "<main>",
-  navigation: "<nav>",
-  subscript: "<sub>",
-  superscript: "<sup>",
-  time: "<time>",
+  button: ["<button>", "<summary>", '<input[type="submit"]>', '<input[type="reset]'],
+  caption: ["<caption>"],
+  cell: ["<td>"],
+  blockquote: ["<blockquote>"],
+  code: ["<code>"],
+  checkbox: ['<input[type="checkbox"]>'],
+  combobox: ["<select>"],
+  dialog: ["<dialog>"],
+  group: ["<fieldset>", "<details>"],
+  figure: ["<figure>"],
+  form: ["<form>"],
+  heading: ["<h1>-<h6>"],
+  img: ["<img>"],
+  link: ["<a[href]>"],
+  list: ["<ul>", "<ol>", "<dl>"],
+  listbox: ["<select[multiple]>"],
+  listitem: ["<li>"],
+  term: ["<dfn>", "<dt>"],
+  definition: ["<dd>"],
+  option: ["<option>"],
+  generic: ["<div>"],
+  paragraph: ["<p>"],
+  meter: ["<meter>"],
+  progressbar: ["<progress>"],
+  slider: ['<input[type="range"]>'],
+  radio: ['<input[type="radio"]>'],
+  region: ["<section>"],
+  row: ["<tr>"],
+  rowgroup: ["<thead>", "<tbody>", "<tfoot>"],
+  rowheader: ['<th[scope="row"]>'],
+  columnheader: ['<th[scope="col"]>'],
+  search: ["<search>"],
+  searchbox: ['<input[type="search"]>'],
+  strong: ["<strong>"],
+  status: ["<output>"],
+  emphasis: ["<em>"],
+  separator: ["<hr>"],
+  deletion: ["<del>"],
+  insertion: ["<ins>"],
+  spinbutton: ['<input[type="number"]>'],
+  textbox: ['<input[type="text"]>', '<textarea>'],
+  table: ["<table>"],
+  article: ["<article>"],
+  banner: ["<header>"],
+  complementary: ["<aside>"],
+  contentinfo: ["<footer>"],
+  main: ["<main>"],
+  navigation: ["<nav>"],
+  subscript: ["<sub>"],
+  superscript: ["<sup>"],
+  time: ["<time>"],
 };
-
-const ariaFormControls = [
-  "checkbox",
-  "combobox",
-  "listbox",
-  "radiogroup",
-  "radio",
-  "slider",
-  "spinbutton",
-  "textbox",
-  "searchbox",
-  "option",
-  "switch",
-];
 
 const mappedAriaRolesToDescriptions = {
   alert: "A live region for important, time-sensitive information.",
@@ -322,8 +306,10 @@ const mappedAriaRolesToDescriptions = {
     "A large perceivable section of a web page or document, that typically contains a collection of items and objects.",
   row: "A row of cells in a grid. This is an interactive widget only if it is a descendant of a treegrid.",
   rowgroup: "A group containing one or more row elements in a grid.",
+  separator: "A divider that separates and distinguishes sections of content or groups of menuitems.",
   search: "A landmark region that contains a search facility.",
   searchbox: "A type of textbox intended for specifying search criteria.",
+  scrollbar: "A graphical object that controls the scrolling of content within a viewing area, regardless of whether the content is fully displayed within the viewing area.",
   section: "A generic section of a document or application.",
   status: "A status message that is not interactive.",
   strong: "A range of text with strong importance, seriousness, or urgency.",
@@ -360,6 +346,33 @@ const allowedAriaRolesByHtmlElement = {
     "tab",
     "treeitem",
   ],
+  "<abbr>": ["*"],
+  "<address>": ["*"],
+  '<article>': [
+    "article",
+    "application",
+    "document",
+    "feed",
+    "main",
+    "none",
+    "presentation",
+    "region",
+  ],
+  "<aside>": [
+    "complementary",
+    "feed",
+    "none",
+    "note",
+    "presentation",
+    "region",
+    "search",
+  ],
+  "<audio>": ["application"],
+  "<b>": ["*"],
+  // "<bdi>": ["*"],
+  // "<bdo>": ["*"],
+  "<blockquote>": ["*"],
+  "<br>": ["none", "presentation"],
   "<button>": [
     "button",
     "checkbox",
@@ -373,13 +386,112 @@ const allowedAriaRolesByHtmlElement = {
     "switch",
     "tab",
   ],
+  "<canvas>": ["*"],
+  "<caption>": ["caption"],
+  "<cite>": ["*"],
+  "<code>": ["*"],
+  "<custom-element>": ["*"],
+  "<data>": ["*"],
+  "<datalist>": ["listbox"],
+  "<del>": ["*"],
+  "<details>": ["group"],
+  "<dfn>": ["*"],
+  "<dialog>": ["dialog", "alertdialog"],
+  "<div>": ["*"],
+  "<dl>": ["group", "list", "none", "presentation"],
+  "<dt>": ["listitem"],
+  "<em>": ["*"],
+  "<embed>": ["application", "document", "img", "none", "presentation"],
+  "<fieldset>": ["group", "none", "presentation", "radiogroup"],
+  "<figcaption>": ["group", "none", "presentation"],
+  "<figure>": ["*"],
+  "<footer>": ["contentinfo", "group", "none", "presentation"],
+  "<form>": ["form", "none", "presentation", "search"],
+  "<h1>-<h6>": ["heading"],
+  "<header>": ["banner", "group", "none", "presentation"],
+  "<hgroup>": ["*"],
+  "<hr>": ["separator", "none", "presentation"],
+  "<i>": ["*"],
+  "<iframe>": ["application", "document", "img", "none", "presentation"],
+  "<img>": [
+    "img",
+    "button",
+    "checkbox",
+    "link",
+    "menuitem",
+    "menuitemcheckbox",
+    "menuitemradio",
+    "meter",
+    "option",
+    "progressbar",
+    "radio",
+    "scrollbar",
+    "separator",
+    "slider",
+    "switch",
+    "tab",
+    "treeitem",
+  ],
+  "<input[type=checkbox]>": ["checkbox", "button", "menuitemcheckbox", "option", "switch"],
+  "<input[type=number]>": ["spinbutton"],
+  "<input[type=radio]>": ["radio", "menuitemradio"],
+  "<input[type=range]>": ["slider"],
+  "<input[type=text]>": ["textbox", "combobox", "searchbox", "spinbutton"],
+  "<ins>": ["*"],
+  "<kbd>": ["*"],
+  "<li>": ["listitem"],
+  "<main>": ["main"],
+  "<mark>": ["*"],
+  "<math>": ["math"],
+  "<menu>": ["list", "group", "listbox", "menu", "menubar", "none", "presentation", "radiogroup", "tablist", "toolbar", "tree"],
+  "<meter>": ["meter"],
+  "<nav>": ["navigation", "menu", "menubar", "none", "presentation", "tablist"],
+  "<object>": ["application", "document", "img"],
+  "<ol>": ["list", "group", "listbox", "menu", "menubar", "none", "presentation", "radiogroup", "tablist", "toolbar", "tree"],
+  "<optgroup>": ["group"],
+  "<option>": ["option"],
+  "<output>": ["*"],
+  "<p>": ["*"],
+  "<pre>": ["*"],
+  "<progress>": ["progressbar"],
+  "<q>": ["*"],
+  // "<rp>": ["*"],
+  // "<rt>": ["*"],
+  // "<ruby>": ["*"],
+  "<s>": ["deletion"],
+  "<samp>": ["*"],
+  "<search>": ["search"],
+  "<section>": ["region", "alert", "alertdialog", "application", "banner", "complementary", "contentinfo", "dialog", "document", "feed", "log", "main", "marquee", "navigation", "none", "presentation", "search", "status", "tabpanel"],
+  "<select>": ["menu", "combobox"],
+  "<select[multiple]>": ["listbox"],
+  "<small>": ["*"],
+  "<span>": ["*"],
+  "<strong>": ["strong"],
+  "<sub>": ["subscript"],
+  "<sup>": ["superscript"],
+  "<summary>": ["button"],
+  "<svg>": ["*"],
+  "<table>": ["*"],
+  "<tbody>": ["*"],
+  "<td>": ["cell", "gridcell"],
+  "<textarea>": ["textbox"],
+  "<tfoot>": ["*"],
+  "<th>": ["cell", "columnheader", "rowheader"],
+  "<thead>": ["*"],
+  "<time>": ["*"],
+  "<tr>": ["row"],
+  "<u>": ["*"],
+  "<ul>": ["list", "group", "listbox", "menu", "menubar", "none", "presentation", "radiogroup", "tablist", "toolbar", "tree"],
+  "<var>": ["*"],
+  "<video>": ["application"],
+  "<wbr>": ["none", "presentation"],
 };
 
 const mappedAbstractAriaRolesToBackgroundColors = {
-  composite: "#4f3067",
-  landmark: "rgb(255, 150, 80)",
+  composite: "#371453",
+  landmark: "rgb(255, 102, 0)",
   structure: "yellow",
-  widget: "#691717",
+  widget: "#5b0303",
   window: "rgb(255, 150, 255)",
   live: "rgb(100, 255, 100)",
 };
@@ -396,14 +508,34 @@ const mappedAbstractAriaRolesToTextColors = {
 const ariaRolesWithOnlyPhrasingDescendants = [
   "button",
   "checkbox",
-  "img",
   "menuitem",
   "menuitemcheckbox",
   "menuitemradio",
+  "meter",
   "option",
   "radio",
   "switch",
   "tab",
+  "treeitem",
+  "scrollbar",
+  "separator",
+  "slider",
+
+  "code",
+  "definition",
+  "deletion",
+  "emphasis",
+  "heading",
+  "img",
+  "insertion",
+  "paragraph",
+  "progressbar",
+  "strong",
+  "subscript",
+  "superscript",
+  "time",
+  "tooltip",
+  "term",
 ];
 
 const mappedAriaRolesToContentType = {
@@ -501,82 +633,65 @@ function ARIAPeriodicTable() {
 
           :root {
             font-family: sans-serif;
-            --num-columns: 1;
+            font-size: 15px;
           }
 
-          @media (min-width: 420px) {
-            :root {
-              --num-columns: 4;
-            }
-          }
-
-          @media (min-width: 900px) {
-            :root {
-              --num-columns: 8;
-            }
-          }
-
-          @media (min-width: 1200px) {
-            :root {
-              --num-columns: 12;
-            }
+          body {
+            background: black;
           }
 
           .periodic-table__root {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, .25fr));
             place-content: center;
             list-style: none;
             padding: 0;
+            grid-template-columns: 100%;
+          }
+
+          @media (min-width: 600px) {
+            .periodic-table__root {
+              grid-template-columns: repeat(auto-fill, minmax(8em, 1fr));
+            }
           }
 
           .periodic-table__subgrid {
             display: grid;
             grid-template-columns: subgrid;
             grid-auto-flow: dense;
-            font-size: 16px;
+            font-size: 1em;
           }
 
           .periodic-table__subgrid-area {
             grid-column: 1 / -1;
-            border-top: 2px solid black;
-            border-left: 2px solid black;
           }
 
           .periodic-table__subgrid-area .periodic-table__subgrid-area-heading {
-            background: black;
+            background: #515151;
             color: white;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            border-bottom: 4px solid black;
+            border-right: 4px solid black;
           }
 
           .periodic-table__subgrid-row {
             display: contents;
           }
 
-          /*
-            .periodic-table__subgrid > * {
-              grid-column: span var(--num-columns);
-            }
-
-            h2 {
-              margin: 0;
-              font-size: 24px;
-              text-align: center;
-            }
-
-            h3 {
-              font-size: 20px;
-              margin-bottom: 0;
-            }
-          */
+          h1 {
+            text-align: center;
+            font-size: 1.5em;
+            color: white;
+          }
 
           .periodic-table__subgrid-area h2 {
             grid-column: 1 / -1;
-            border-bottom: 2px solid black;
-            border-right: 2px solid black;
+            border-bottom: 4px solid black;
+            border-right: 4px solid black;
             text-align: center;
             margin: 0;
             padding: 1em 0;
-            font-size: inherit;
+            font-size: 1.333em;
           }
 
           ul {
@@ -589,10 +704,15 @@ function ARIAPeriodicTable() {
             display: grid;
             width: 100%;
             word-break: break-word;
-            aspect-ratio: 1;
             height: 100%;
-            border-bottom: 2px solid black;
-            border-right: 2px solid black;
+            border-bottom: 4px solid black;
+            border-right: 4px solid black;
+          }
+
+          @media (min-width: 600px) {
+            .aria-role {
+              aspect-ratio: 1;
+            }
           }
 
           ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
@@ -612,12 +732,16 @@ function ARIAPeriodicTable() {
           }
 
           .aria-role--content-type-phrasing:is(.aria-role--abstract-role-widget, .aria-role--abstract-role-composite) {
-            background-color: #0e5469;
+            background-color: #074153;
             color: white;
           }
 
-          .aria-role--only-phrasing-descendants:not(.aria-role--content-type-phrasing) {
-            background-image: linear-gradient(45deg, #0e5469 50%, transparent 50%);
+          .aria-role--interactive.aria-role--only-phrasing-descendants:not(.aria-role--content-type-phrasing) {
+            background-image: linear-gradient(45deg, #074153 50%, transparent 50%);
+          }
+
+          .aria-role--non-interactive.aria-role--only-phrasing-descendants:not(.aria-role--content-type-phrasing) {
+            background-image: linear-gradient(45deg, rgb(160, 175, 255) 50%, transparent 50%);
           }
 
           .aria-role__summary {
@@ -626,10 +750,11 @@ function ARIAPeriodicTable() {
             height: 100%;
             width: 100%;
             place-content: center;
-            padding: 8px;
+            padding: 1em;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 1em;
             font-weight: bold;
+            text-decoration: underline;
           }
           
           .aria-role__dialog {
@@ -679,6 +804,19 @@ function ARIAPeriodicTable() {
             clip: rect(0, 0, 0, 0);
             border: 0;
           }
+
+          .is-strong {
+            font-weight: bold;
+          }
+
+          dialog table {
+            border-collapse: collapse;
+          }
+
+          dialog :is(td, th) {
+            padding: 8px;
+            border: 1px solid black;
+          }
         `,
         }}
       />
@@ -691,7 +829,9 @@ function ARIAPeriodicTable() {
                 className="periodic-table__subgrid periodic-table__subgrid-area"
                 key={type}
               >
-                <h2 className="periodic-table__subgrid-area-heading">{type}</h2>
+                <h2 className="periodic-table__subgrid-area-heading">
+                  {type}
+                </h2>
                 <ul
                   className="periodic-table__subgrid periodic-table__subgrid-row"
                   style={{}}
@@ -768,6 +908,11 @@ function ARIAPeriodicTable() {
                                   aria-label={role}
                                   className={`
                                 aria-role
+                                aria-role--${
+                                  type === "interactive"
+                                    ?
+                                  'interactive' : 'non-interactive'
+                                }
                                 aria-role--abstract-role-${abstractAriaRole}
                                 ${
                                   ariaRolesWithOnlyPhrasingDescendants.includes(
@@ -814,18 +959,7 @@ function ARIAPeriodicTable() {
                                             ] || "--"}
                                           </td>
                                         </tr>
-                                        <tr className="aria-role__row">
-                                          <th
-                                            className="aria-role__column-header"
-                                            scope="col"
-                                          >
-                                            HTML Elements with Implicit ARIA
-                                            Role
-                                          </th>
-                                          <td className="aria-role__cell">
-                                            {ariaToHtmlMapping[role] || "--"}
-                                          </td>
-                                        </tr>
+                                        
                                         <tr className="aria-role__row">
                                           <th
                                             className="aria-role__column-header"
@@ -835,6 +969,42 @@ function ARIAPeriodicTable() {
                                           </th>
                                           <td className="aria-role__cell">
                                             <p>{description}</p>
+                                          </td>
+                                        </tr>
+
+                                        <tr className="aria-role__row">
+                                          <th
+                                            className="aria-role__column-header"
+                                            scope="col"
+                                          >
+                                            HTML Elements with Implicit ARIA
+                                            Role
+                                          </th>
+                                          <td className="aria-role__cell">
+                                            <ul>
+                                              {(ariaToHtmlMapping[role] || []).map((htmlElement) => (
+                                                <li key={htmlElement}>{htmlElement}</li>
+                                              ))}
+                                            </ul>
+                                          </td>
+                                        </tr>
+                                        
+                                        <tr className="aria-role__row">
+                                          <th
+                                            className="aria-role__column-header"
+                                            scope="col"
+                                          >
+                                            Allowed HTML Elements
+                                          </th>
+                                          <td className="aria-role__cell">
+                                            <details>
+                                              <summary>See Allowed HTML Elements</summary>
+                                              <ul>
+                                                {Object.entries(allowedAriaRolesByHtmlElement).filter(([_, roles]) => roles.includes(role) || roles.includes('*')).map(([tagName, roles]) => (
+                                                  <li className={roles.includes('*') ? '' : 'is-strong'} key={tagName}>{tagName}</li>
+                                                ))}
+                                              </ul>
+                                            </details>
                                           </td>
                                         </tr>
                                       </table>
