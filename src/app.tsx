@@ -666,7 +666,7 @@ function ARIAPeriodicTable() {
           }
 
           .periodic-table__subgrid-area .periodic-table__subgrid-area-heading {
-            background: #515151;
+            background: #353535;
             color: white;
             letter-spacing: 0.25em;
             text-transform: uppercase;
@@ -705,8 +705,8 @@ function ARIAPeriodicTable() {
             width: 100%;
             word-break: break-word;
             height: 100%;
-            border-bottom: 4px solid black;
-            border-right: 4px solid black;
+            border-radius: 8px;
+            background-image: linear-gradient(45deg, rgba(0, 0, 0, .333), transparent), linear-gradient(45deg, transparent, rgba(255, 255, 255, .333));
           }
 
           @media (min-width: 600px) {
@@ -726,6 +726,15 @@ function ARIAPeriodicTable() {
             })
             .join("")}
 
+            .aria-role--non-interactive {
+              text-shadow: 0 0 4px white;
+              border: 4px solid black;
+            }
+            .aria-role--interactive {
+              text-shadow: 0 0 4px black;
+              border: 4px solid black;
+            }
+
           .aria-role--content-type-phrasing {
             background-color: rgb(160, 175, 255);
             color: black;
@@ -737,11 +746,11 @@ function ARIAPeriodicTable() {
           }
 
           .aria-role--interactive.aria-role--only-phrasing-descendants:not(.aria-role--content-type-phrasing) {
-            background-image: linear-gradient(45deg, #074153 50%, transparent 50%);
+            background-image: linear-gradient(45deg, rgba(0, 0, 0, .333), transparent), linear-gradient(45deg, transparent, rgba(255, 255, 255, .333)), linear-gradient(45deg, #074153 50%, transparent 50%);
           }
 
           .aria-role--non-interactive.aria-role--only-phrasing-descendants:not(.aria-role--content-type-phrasing) {
-            background-image: linear-gradient(45deg, rgb(160, 175, 255) 50%, transparent 50%);
+            background-image: linear-gradient(45deg, rgba(0, 0, 0, .333), transparent), linear-gradient(45deg, transparent, rgba(255, 255, 255, .333)), linear-gradient(45deg, rgb(160, 175, 255) 50%, transparent 50%);
           }
 
           .aria-role__summary {
@@ -754,7 +763,6 @@ function ARIAPeriodicTable() {
             cursor: pointer;
             font-size: 1em;
             font-weight: bold;
-            text-decoration: underline;
           }
           
           .aria-role__dialog {
