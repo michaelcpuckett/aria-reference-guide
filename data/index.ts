@@ -5,7 +5,6 @@ export { ariaRolesWithOnlyPhrasingDescendants } from "./ariaRolesWithOnlyPhrasin
 export { ariaToHtmlMapping } from "./ariaToHtmlMapping";
 export { mappedAbstractAriaRolesToBackgroundColors } from "./mappedAbstractAriaRolesToBackgroundColors";
 export { mappedAbstractAriaRolesToDescriptions } from "./mappedAbstractAriaRolesToDescriptions";
-export { mappedAbstractAriaRolesToTextColors } from "./mappedAbstractAriaRolesToTextColors";
 export { mappedAbstractAriaRolesToTitles } from "./mappedAbstractAriaRolesToTitles";
 export { mappedAriaRolesToContentTypes } from "./mappedAriaRolesToContentTypes";
 export { mappedAriaRolesToDescriptions } from "./mappedAriaRolesToDescriptions";

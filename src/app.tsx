@@ -29,38 +29,52 @@ function ARIAPeriodicTable() {
       />
       <main>
         <h1 id="h1-title" className="page-title">Periodic Table of ARIA Roles</h1>
-          <span id="list-title" hidden>
-            ARIA Roles by Type
-          </span>
-          <ul className="periodic-table__root" aria-labelledby="list-title">
-            {Object.entries(abstractAriaRolesByType).map(
-              ([type, abstractAriaRoles]) => {
-                return (
-                  <li
-                    aria-labelledby={`periodic-table__type--${type}`}
-                    className="periodic-table__subgrid periodic-table__subgrid-area"
-                    key={type}
+        <span id="list-title" hidden>
+          ARIA Roles by Type
+        </span>
+        <ul className="periodic-table__root" aria-labelledby="list-title">
+          {Object.entries(abstractAriaRolesByType).map(
+            ([type, abstractAriaRoles]) => {
+              return (
+                <li
+                  aria-labelledby={`periodic-table__type--${type}`}
+                  className={`periodic-table__subgrid periodic-table__subgrid-area periodic-table__subgrid-area--${type}`}
+                  key={type}
+                >
+                  <h2
+                    className="periodic-table__subgrid-area-heading"
+                    id={`periodic-table__type--${type}`}
                   >
-                    <h2
-                      className="periodic-table__subgrid-area-heading"
-                      id={`periodic-table__type--${type}`}
-                    >
-                      {type}
-                    </h2>
-                    <ul
-                      className="periodic-table__subgrid periodic-table__subgrid-row"
-                      aria-labelledby={`periodic-table__type--${type}`}
-                    >
-                      {abstractAriaRoles.map((abstractAriaRole) => {
-                        const ariaRoles = (
-                          ariaRolesByCategory[abstractAriaRole] || []
-                        ).sort((a?: string, b?: string) =>
-                          a?.localeCompare(b || "")
-                        );
+                    {type}
+                  </h2>
+                  <ul
+                    className="periodic-table__subgrid periodic-table__subgrid-row"
+                    aria-labelledby={`periodic-table__type--${type}`}
+                  >
+                    {abstractAriaRoles.map((abstractAriaRole) => {
+                      const ariaRoles = ariaRolesByCategory[abstractAriaRole] || [];
+                      const rolesWithOnlyPhrasingDescendants = ariaRoles.filter(
+                        (role) =>
+                          ariaRolesWithOnlyPhrasingDescendants.includes(role)
+                      ).sort((a?: string, b?: string) =>
+                        a?.localeCompare(b || "")
+                      );
+                      const rolesWithoutOnlyPhrasingDescendants = ariaRoles.filter(
+                        (role) =>
+                          !ariaRolesWithOnlyPhrasingDescendants.includes(role)
+                      ).sort((a?: string, b?: string) =>
+                        a?.localeCompare(b || "")
+                      );
+
+                      return [["", rolesWithoutOnlyPhrasingDescendants], [" (Phrasing Descendants Only)", rolesWithOnlyPhrasingDescendants]].map(([name, roles]) => {
                         const title =
                           mappedAbstractAriaRolesToTitles[abstractAriaRole];
                         const description =
                           mappedAbstractAriaRolesToDescriptions[abstractAriaRole];
+
+                        if (!roles.length) {
+                          return null;
+                        }
 
                         return (
                           <li
@@ -72,53 +86,13 @@ function ARIAPeriodicTable() {
                               id={`aria-abstract-role--${abstractAriaRole}`}
                               className="periodic-table__subgrid-heading"
                             >
-                              {title}
+                              {title}{name}
                             </h3>
                             <ul
                               className="periodic-table__subgrid periodic-table__subgrid-row"
                               aria-labelledby={`aria-abstract-role--${abstractAriaRole}`}
                             >
-                              {ariaRoles
-                                .sort((a, b) => {
-                                  const isAPhrasing = (
-                                    mappedAriaRolesToContentTypes[a] || []
-                                  ).includes("phrasing");
-                                  const isBPhrasing = (
-                                    mappedAriaRolesToContentTypes[b] || []
-                                  ).includes("phrasing");
-                                  const isAPhrasingDescedantsOnly =
-                                    ariaRolesWithOnlyPhrasingDescendants.includes(
-                                      a
-                                    );
-                                  const isBPhrasingDescedantsOnly =
-                                    ariaRolesWithOnlyPhrasingDescendants.includes(
-                                      b
-                                    );
-
-                                  if (isAPhrasing && !isBPhrasing) {
-                                    return 1;
-                                  }
-
-                                  if (!isAPhrasing && isBPhrasing) {
-                                    return -1;
-                                  }
-
-                                  if (
-                                    isAPhrasingDescedantsOnly &&
-                                    !isBPhrasingDescedantsOnly
-                                  ) {
-                                    return 1;
-                                  }
-
-                                  if (
-                                    !isAPhrasingDescedantsOnly &&
-                                    isBPhrasingDescedantsOnly
-                                  ) {
-                                    return -1;
-                                  }
-
-                                  return a.localeCompare(b);
-                                })
+                              {roles
                                 .map((role) => {
                                   const displayName =
                                     mappedAriaRolesToDisplayNames[role] || role;
@@ -127,27 +101,27 @@ function ARIAPeriodicTable() {
                                     <li
                                       aria-label={role}
                                       className={`
-                                  aria-role
-                                  aria-role--${
-                                    type === "interactive"
-                                      ? "interactive"
-                                      : "non-interactive"
-                                  }
-                                  aria-role--abstract-role-${abstractAriaRole}
-                                  ${
-                                    ariaRolesWithOnlyPhrasingDescendants.includes(
-                                      role
-                                    )
-                                      ? "aria-role--only-phrasing-descendants"
-                                      : ""
-                                  }
-                                  ${(mappedAriaRolesToContentTypes[role] || [])
-                                    .map(
-                                      (contentType) =>
-                                        `aria-role--content-type-${contentType}`
-                                    )
-                                    .join(" ")}
-                                `}
+                                        aria-role
+                                        aria-role--${
+                                          type === "interactive"
+                                            ? "interactive"
+                                            : "non-interactive"
+                                        }
+                                        aria-role--abstract-role-${abstractAriaRole}
+                                        ${
+                                          ariaRolesWithOnlyPhrasingDescendants.includes(
+                                            role
+                                          )
+                                            ? "aria-role--only-phrasing-descendants"
+                                            : ""
+                                        }
+                                        ${(mappedAriaRolesToContentTypes[role] || [])
+                                          .map(
+                                            (contentType) =>
+                                              `aria-role--content-type-${contentType}`
+                                          )
+                                          .join(" ")}
+                                      `}
                                       key={role}
                                     >
                                       <expansion-button role="none">
@@ -261,13 +235,14 @@ function ARIAPeriodicTable() {
                             </ul>
                           </li>
                         );
-                      })}
-                    </ul>
-                  </li>
-                );
-              }
-            )}
-          </ul>
+                      });
+                    })}
+                  </ul>
+                </li>
+              );
+            }
+          )}
+        </ul>
       </main>
 
       <script

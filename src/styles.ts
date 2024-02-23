@@ -1,7 +1,4 @@
-import {
-  mappedAbstractAriaRolesToBackgroundColors,
-  mappedAbstractAriaRolesToTextColors,
-} from "../data";
+import { mappedAbstractAriaRolesToBackgroundColors } from "../data";
 
 export default `
 * {
@@ -10,7 +7,7 @@ export default `
 
 :root {
   font-family: sans-serif;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 body {
@@ -46,10 +43,10 @@ body {
 .periodic-table__subgrid-area .periodic-table__subgrid-area-heading {
   background: #353535;
   color: white;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  border-bottom: 4px solid black;
-  border-right: 4px solid black;
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 1em;
+  font-size: 1.333em;
 }
 
 .periodic-table__subgrid-row {
@@ -62,15 +59,11 @@ body {
   color: white;
 }
 
-.periodic-table__subgrid-area h2 {
-  grid-column: 1 / -1;
-  border-bottom: 4px solid black;
-  border-right: 4px solid black;
-  text-align: center;
-  margin: 0;
-  padding: 1em 0;
-  font-size: 1.333em;
+/*
+.periodic-table__subgrid-area--interactive .aria-role__summary {
+  color: black;
 }
+*/
 
 ul {
   padding: 0;
@@ -84,7 +77,6 @@ ul {
   word-break: break-word;
   height: 100%;
   border-radius: 8px;
-  background-image: linear-gradient(45deg, rgba(0, 0, 0, .333), transparent), linear-gradient(45deg, transparent, rgba(255, 255, 255, .333));
 }
 
 @media (min-width: 600px) {
@@ -97,13 +89,17 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
   .map(([role, color]) => {
     return `
     .aria-role--abstract-role-${role} {
-      background-color: ${color};
-      color: ${mappedAbstractAriaRolesToTextColors[role]};
+      border: 2px solid ${color};
+      color: white;
+
+      &:hover {
+        background-color: ${color};
+        color: black;
+      }
     }
   `;
   })
   .join("")}
-
   
 .aria-role__summary {
   text-align: center;
@@ -111,14 +107,18 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
   height: 100%;
   width: 100%;
   place-content: center;
+  place-self: center;
   padding: 1em;
   cursor: pointer;
   font: inherit;
-  font-weight: bold;
   background: none;
   border: 0;
+  margin: auto;
+  color: inherit;
+  text-decoration: underline;
 }
 
+/*
 .aria-role--interactive .aria-role__summary {
   color: white;
 }
@@ -136,14 +136,17 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
   background-color: #05401e;
   color: white;
 }
+*/
 
+/*
 .aria-role--interactive.aria-role--only-phrasing-descendants:not(.aria-role--content-type-phrasing) {
-  background-image: linear-gradient(45deg, rgba(0, 0, 0, .333), transparent), linear-gradient(45deg, transparent, rgba(255, 255, 255, .333)), linear-gradient(45deg, #05401e 50%, transparent 50%);
+  background-image: linear-gradient(45deg, #05401e 50%, transparent 50%);
 }
 
 .aria-role--non-interactive.aria-role--only-phrasing-descendants:not(.aria-role--content-type-phrasing) {
-  background-image: linear-gradient(45deg, rgba(0, 0, 0, .333), transparent), linear-gradient(45deg, transparent, rgba(255, 255, 255, .333)), linear-gradient(45deg, rgb(160, 175, 255) 50%, transparent 50%);
+  background-image: linear-gradient(45deg, rgb(160, 175, 255) 50%, transparent 50%);
 }
+*/
 
 .aria-role__dialog {
   min-height: 0;
