@@ -5,8 +5,8 @@ import ReactDOMServer from "react-dom/server";
 const app = express();
 
 const abstractAriaRolesByType = {
-  interactive: ["composite", "widget"],
   "non-interactive": ["landmark", "structure", "live", "window"],
+  interactive: ["composite", "widget"],
 };
 
 const mappedAbstractAriaRolesToTitles = {
@@ -167,7 +167,12 @@ const ariaRolesByCategory = {
 };
 
 const ariaToHtmlMapping = {
-  button: ["<button>", "<summary>", '<input[type="submit"]>', '<input[type="reset]'],
+  button: [
+    "<button>",
+    "<summary>",
+    '<input[type="submit"]>',
+    '<input[type="reset]',
+  ],
   caption: ["<caption>"],
   cell: ["<td>"],
   blockquote: ["<blockquote>"],
@@ -207,7 +212,7 @@ const ariaToHtmlMapping = {
   deletion: ["<del>"],
   insertion: ["<ins>"],
   spinbutton: ['<input[type="number"]>'],
-  textbox: ['<input[type="text"]>', '<textarea>'],
+  textbox: ['<input[type="text"]>', "<textarea>"],
   table: ["<table>"],
   article: ["<article>"],
   banner: ["<header>"],
@@ -306,10 +311,12 @@ const mappedAriaRolesToDescriptions = {
     "A large perceivable section of a web page or document, that typically contains a collection of items and objects.",
   row: "A row of cells in a grid. This is an interactive widget only if it is a descendant of a treegrid.",
   rowgroup: "A group containing one or more row elements in a grid.",
-  separator: "A divider that separates and distinguishes sections of content or groups of menuitems.",
+  separator:
+    "A divider that separates and distinguishes sections of content or groups of menuitems.",
   search: "A landmark region that contains a search facility.",
   searchbox: "A type of textbox intended for specifying search criteria.",
-  scrollbar: "A graphical object that controls the scrolling of content within a viewing area, regardless of whether the content is fully displayed within the viewing area.",
+  scrollbar:
+    "A graphical object that controls the scrolling of content within a viewing area, regardless of whether the content is fully displayed within the viewing area.",
   section: "A generic section of a document or application.",
   status: "A status message that is not interactive.",
   strong: "A range of text with strong importance, seriousness, or urgency.",
@@ -348,7 +355,7 @@ const allowedAriaRolesByHtmlElement = {
   ],
   "<abbr>": ["*"],
   "<address>": ["*"],
-  '<article>': [
+  "<article>": [
     "article",
     "application",
     "document",
@@ -432,7 +439,13 @@ const allowedAriaRolesByHtmlElement = {
     "tab",
     "treeitem",
   ],
-  "<input[type=checkbox]>": ["checkbox", "button", "menuitemcheckbox", "option", "switch"],
+  "<input[type=checkbox]>": [
+    "checkbox",
+    "button",
+    "menuitemcheckbox",
+    "option",
+    "switch",
+  ],
   "<input[type=number]>": ["spinbutton"],
   "<input[type=radio]>": ["radio", "menuitemradio"],
   "<input[type=range]>": ["slider"],
@@ -443,11 +456,35 @@ const allowedAriaRolesByHtmlElement = {
   "<main>": ["main"],
   "<mark>": ["*"],
   "<math>": ["math"],
-  "<menu>": ["list", "group", "listbox", "menu", "menubar", "none", "presentation", "radiogroup", "tablist", "toolbar", "tree"],
+  "<menu>": [
+    "list",
+    "group",
+    "listbox",
+    "menu",
+    "menubar",
+    "none",
+    "presentation",
+    "radiogroup",
+    "tablist",
+    "toolbar",
+    "tree",
+  ],
   "<meter>": ["meter"],
   "<nav>": ["navigation", "menu", "menubar", "none", "presentation", "tablist"],
   "<object>": ["application", "document", "img"],
-  "<ol>": ["list", "group", "listbox", "menu", "menubar", "none", "presentation", "radiogroup", "tablist", "toolbar", "tree"],
+  "<ol>": [
+    "list",
+    "group",
+    "listbox",
+    "menu",
+    "menubar",
+    "none",
+    "presentation",
+    "radiogroup",
+    "tablist",
+    "toolbar",
+    "tree",
+  ],
   "<optgroup>": ["group"],
   "<option>": ["option"],
   "<output>": ["*"],
@@ -461,7 +498,27 @@ const allowedAriaRolesByHtmlElement = {
   "<s>": ["deletion"],
   "<samp>": ["*"],
   "<search>": ["search"],
-  "<section>": ["region", "alert", "alertdialog", "application", "banner", "complementary", "contentinfo", "dialog", "document", "feed", "log", "main", "marquee", "navigation", "none", "presentation", "search", "status", "tabpanel"],
+  "<section>": [
+    "region",
+    "alert",
+    "alertdialog",
+    "application",
+    "banner",
+    "complementary",
+    "contentinfo",
+    "dialog",
+    "document",
+    "feed",
+    "log",
+    "main",
+    "marquee",
+    "navigation",
+    "none",
+    "presentation",
+    "search",
+    "status",
+    "tabpanel",
+  ],
   "<select>": ["menu", "combobox"],
   "<select[multiple]>": ["listbox"],
   "<small>": ["*"],
@@ -481,17 +538,29 @@ const allowedAriaRolesByHtmlElement = {
   "<time>": ["*"],
   "<tr>": ["row"],
   "<u>": ["*"],
-  "<ul>": ["list", "group", "listbox", "menu", "menubar", "none", "presentation", "radiogroup", "tablist", "toolbar", "tree"],
+  "<ul>": [
+    "list",
+    "group",
+    "listbox",
+    "menu",
+    "menubar",
+    "none",
+    "presentation",
+    "radiogroup",
+    "tablist",
+    "toolbar",
+    "tree",
+  ],
   "<var>": ["*"],
   "<video>": ["application"],
   "<wbr>": ["none", "presentation"],
 };
 
 const mappedAbstractAriaRolesToBackgroundColors = {
-  composite: "#371453",
+  composite: "#2b0847",
   landmark: "rgb(255, 102, 0)",
   structure: "yellow",
-  widget: "#5b0303",
+  widget: "#4c0303",
   window: "rgb(255, 150, 255)",
   live: "rgb(100, 255, 100)",
 };
@@ -623,7 +692,7 @@ const mappedAriaRolesToContentType = {
 
 function ARIAPeriodicTable() {
   return (
-    <div>
+    <>
       <style
         dangerouslySetInnerHTML={{
           __html: `
@@ -633,7 +702,7 @@ function ARIAPeriodicTable() {
 
           :root {
             font-family: sans-serif;
-            font-size: 15px;
+            font-size: 18px;
           }
 
           body {
@@ -645,6 +714,7 @@ function ARIAPeriodicTable() {
             place-content: center;
             list-style: none;
             padding: 0;
+            gap: 8px;
             grid-template-columns: 100%;
           }
 
@@ -659,6 +729,7 @@ function ARIAPeriodicTable() {
             grid-template-columns: subgrid;
             grid-auto-flow: dense;
             font-size: 1em;
+            gap: 4px;
           }
 
           .periodic-table__subgrid-area {
@@ -726,33 +797,7 @@ function ARIAPeriodicTable() {
             })
             .join("")}
 
-            .aria-role--non-interactive {
-              text-shadow: 0 0 4px white;
-              border: 4px solid black;
-            }
-            .aria-role--interactive {
-              text-shadow: 0 0 4px black;
-              border: 4px solid black;
-            }
-
-          .aria-role--content-type-phrasing {
-            background-color: rgb(160, 175, 255);
-            color: black;
-          }
-
-          .aria-role--content-type-phrasing:is(.aria-role--abstract-role-widget, .aria-role--abstract-role-composite) {
-            background-color: #074153;
-            color: white;
-          }
-
-          .aria-role--interactive.aria-role--only-phrasing-descendants:not(.aria-role--content-type-phrasing) {
-            background-image: linear-gradient(45deg, rgba(0, 0, 0, .333), transparent), linear-gradient(45deg, transparent, rgba(255, 255, 255, .333)), linear-gradient(45deg, #074153 50%, transparent 50%);
-          }
-
-          .aria-role--non-interactive.aria-role--only-phrasing-descendants:not(.aria-role--content-type-phrasing) {
-            background-image: linear-gradient(45deg, rgba(0, 0, 0, .333), transparent), linear-gradient(45deg, transparent, rgba(255, 255, 255, .333)), linear-gradient(45deg, rgb(160, 175, 255) 50%, transparent 50%);
-          }
-
+            
           .aria-role__summary {
             text-align: center;
             display: grid;
@@ -761,10 +806,38 @@ function ARIAPeriodicTable() {
             place-content: center;
             padding: 1em;
             cursor: pointer;
-            font-size: 1em;
+            font: inherit;
             font-weight: bold;
+            background: none;
+            border: 0;
           }
-          
+
+          .aria-role--interactive .aria-role__summary {
+            color: white;
+          }
+
+          .aria-role--non-interactive .aria-role__summary {
+            color: black;
+          }
+
+          .aria-role--content-type-phrasing {
+            background-color: rgb(160, 175, 255);
+            color: black;
+          }
+
+          .aria-role--content-type-phrasing:is(.aria-role--abstract-role-widget, .aria-role--abstract-role-composite) {
+            background-color: #05401e;
+            color: white;
+          }
+
+          .aria-role--interactive.aria-role--only-phrasing-descendants:not(.aria-role--content-type-phrasing) {
+            background-image: linear-gradient(45deg, rgba(0, 0, 0, .333), transparent), linear-gradient(45deg, transparent, rgba(255, 255, 255, .333)), linear-gradient(45deg, #05401e 50%, transparent 50%);
+          }
+
+          .aria-role--non-interactive.aria-role--only-phrasing-descendants:not(.aria-role--content-type-phrasing) {
+            background-image: linear-gradient(45deg, rgba(0, 0, 0, .333), transparent), linear-gradient(45deg, transparent, rgba(255, 255, 255, .333)), linear-gradient(45deg, rgb(160, 175, 255) 50%, transparent 50%);
+          }
+
           .aria-role__dialog {
             min-height: 0;
             max-height: none;
@@ -828,98 +901,111 @@ function ARIAPeriodicTable() {
         `,
         }}
       />
-      <h1>ARIA Roles</h1>
-      <ul className="periodic-table__root">
-        {Object.entries(abstractAriaRolesByType).map(
-          ([type, abstractAriaRoles]) => {
-            return (
-              <li
-                className="periodic-table__subgrid periodic-table__subgrid-area"
-                key={type}
-              >
-                <h2 className="periodic-table__subgrid-area-heading">
-                  {type}
-                </h2>
-                <ul
-                  className="periodic-table__subgrid periodic-table__subgrid-row"
-                  style={{}}
+      <main>
+        <h1 id="h1-title">Periodic Table of ARIA Roles</h1>
+        <span id="list-title" hidden>
+          ARIA Roles by Type
+        </span>
+        <ul className="periodic-table__root" aria-labelledby="list-title">
+          {Object.entries(abstractAriaRolesByType).map(
+            ([type, abstractAriaRoles]) => {
+              return (
+                <li
+                  aria-labelledby={`periodic-table__type--${type}`}
+                  className="periodic-table__subgrid periodic-table__subgrid-area"
+                  key={type}
                 >
-                  {abstractAriaRoles.map((abstractAriaRole) => {
-                    const ariaRoles = (
-                      ariaRolesByCategory[abstractAriaRole] || []
-                    ).sort((a?: string, b?: string) =>
-                      a?.localeCompare(b || "")
-                    );
-                    const title =
-                      mappedAbstractAriaRolesToTitles[abstractAriaRole];
-                    const description =
-                      mappedAbstractAriaRolesToDescriptions[abstractAriaRole];
+                  <h2
+                    className="periodic-table__subgrid-area-heading"
+                    id={`periodic-table__type--${type}`}
+                  >
+                    {type}
+                  </h2>
+                  <ul
+                    className="periodic-table__subgrid periodic-table__subgrid-row"
+                    aria-labelledby={`periodic-table__type--${type}`}
+                  >
+                    {abstractAriaRoles.map((abstractAriaRole) => {
+                      const ariaRoles = (
+                        ariaRolesByCategory[abstractAriaRole] || []
+                      ).sort((a?: string, b?: string) =>
+                        a?.localeCompare(b || "")
+                      );
+                      const title =
+                        mappedAbstractAriaRolesToTitles[abstractAriaRole];
+                      const description =
+                        mappedAbstractAriaRolesToDescriptions[abstractAriaRole];
 
-                    return (
-                      <li
-                        key={abstractAriaRole}
-                        className="periodic-table__subgrid periodic-table__subgrid-row"
-                        style={{}}
-                      >
-                        <h3 className="visually-hidden">{title}</h3>
-                        <ul
+                      return (
+                        <li
+                          role="none"
+                          key={abstractAriaRole}
                           className="periodic-table__subgrid periodic-table__subgrid-row"
-                          style={{}}
                         >
-                          {ariaRoles
-                            .sort((a, b) => {
-                              const isAPhrasing = (
-                                mappedAriaRolesToContentType[a] || []
-                              ).includes("phrasing");
-                              const isBPhrasing = (
-                                mappedAriaRolesToContentType[b] || []
-                              ).includes("phrasing");
-                              const isAPhrasingDescedantsOnly =
-                                ariaRolesWithOnlyPhrasingDescendants.includes(
-                                  a
-                                );
-                              const isBPhrasingDescedantsOnly =
-                                ariaRolesWithOnlyPhrasingDescendants.includes(
-                                  b
-                                );
+                          <h3
+                            id={`aria-abstract-role--${abstractAriaRole}`}
+                            className="visually-hidden"
+                          >
+                            {title}
+                          </h3>
+                          <ul
+                            className="periodic-table__subgrid periodic-table__subgrid-row"
+                            aria-labelledby={`aria-abstract-role--${abstractAriaRole}`}
+                          >
+                            {ariaRoles
+                              .sort((a, b) => {
+                                const isAPhrasing = (
+                                  mappedAriaRolesToContentType[a] || []
+                                ).includes("phrasing");
+                                const isBPhrasing = (
+                                  mappedAriaRolesToContentType[b] || []
+                                ).includes("phrasing");
+                                const isAPhrasingDescedantsOnly =
+                                  ariaRolesWithOnlyPhrasingDescendants.includes(
+                                    a
+                                  );
+                                const isBPhrasingDescedantsOnly =
+                                  ariaRolesWithOnlyPhrasingDescendants.includes(
+                                    b
+                                  );
 
-                              if (isAPhrasing && !isBPhrasing) {
-                                return 1;
-                              }
+                                if (isAPhrasing && !isBPhrasing) {
+                                  return 1;
+                                }
 
-                              if (!isAPhrasing && isBPhrasing) {
-                                return -1;
-                              }
+                                if (!isAPhrasing && isBPhrasing) {
+                                  return -1;
+                                }
 
-                              if (
-                                isAPhrasingDescedantsOnly &&
-                                !isBPhrasingDescedantsOnly
-                              ) {
-                                return 1;
-                              }
+                                if (
+                                  isAPhrasingDescedantsOnly &&
+                                  !isBPhrasingDescedantsOnly
+                                ) {
+                                  return 1;
+                                }
 
-                              if (
-                                !isAPhrasingDescedantsOnly &&
-                                isBPhrasingDescedantsOnly
-                              ) {
-                                return -1;
-                              }
+                                if (
+                                  !isAPhrasingDescedantsOnly &&
+                                  isBPhrasingDescedantsOnly
+                                ) {
+                                  return -1;
+                                }
 
-                              return a.localeCompare(b);
-                            })
-                            .map((role) => {
-                              const displayName =
-                                mappedAriaRolesToDisplayNames[role] || role;
+                                return a.localeCompare(b);
+                              })
+                              .map((role) => {
+                                const displayName =
+                                  mappedAriaRolesToDisplayNames[role] || role;
 
-                              return (
-                                <li
-                                  aria-label={role}
-                                  className={`
+                                return (
+                                  <li
+                                    aria-label={role}
+                                    className={`
                                 aria-role
                                 aria-role--${
                                   type === "interactive"
-                                    ?
-                                  'interactive' : 'non-interactive'
+                                    ? "interactive"
+                                    : "non-interactive"
                                 }
                                 aria-role--abstract-role-${abstractAriaRole}
                                 ${
@@ -936,101 +1022,127 @@ function ARIAPeriodicTable() {
                                   )
                                   .join(" ")}
                               `}
-                                  key={role}
-                                >
-                                  <expansion-button
-                                    role="button"
-                                    aria-haspopup="dialog"
-                                    class="aria-role__summary"
-                                    tabIndex={0}
-                                    dangerouslySetInnerHTML={{
-                                      __html: displayName,
-                                    }}
-                                  ></expansion-button>
-                                  <dialog className="aria-role__dialog">
-                                    <close-dialog-button>
-                                      <button type="button">Close</button>
-                                    </close-dialog-button>
-                                    <div className="aria-role__details">
-                                      <h1>{role}</h1>
-                                      <table className="aria-role__table">
-                                        <tr className="aria-role__row">
-                                          <th
-                                            className="aria-role__column-header"
-                                            scope="col"
-                                          >
-                                            Description
-                                          </th>
-                                          <td className="aria-role__cell">
-                                            {mappedAriaRolesToDescriptions[
-                                              role
-                                            ] || "--"}
-                                          </td>
-                                        </tr>
-                                        
-                                        <tr className="aria-role__row">
-                                          <th
-                                            className="aria-role__column-header"
-                                            scope="col"
-                                          >
-                                            Category Description
-                                          </th>
-                                          <td className="aria-role__cell">
-                                            <p>{description}</p>
-                                          </td>
-                                        </tr>
+                                    key={role}
+                                  >
+                                    <expansion-button role="none">
+                                      <button
+                                        type="button"
+                                        aria-haspopup="dialog"
+                                        className="aria-role__summary"
+                                        aria-label={role}
+                                        dangerouslySetInnerHTML={{
+                                          __html: displayName,
+                                        }}
+                                      ></button>
+                                    </expansion-button>
+                                    <dialog className="aria-role__dialog">
+                                      <close-dialog-button>
+                                        <button type="button">Close</button>
+                                      </close-dialog-button>
+                                      <div className="aria-role__details">
+                                        <h1>{role}</h1>
+                                        <table className="aria-role__table">
+                                          <tr className="aria-role__row">
+                                            <th
+                                              className="aria-role__column-header"
+                                              scope="col"
+                                            >
+                                              Description
+                                            </th>
+                                            <td className="aria-role__cell">
+                                              {mappedAriaRolesToDescriptions[
+                                                role
+                                              ] || "--"}
+                                            </td>
+                                          </tr>
 
-                                        <tr className="aria-role__row">
-                                          <th
-                                            className="aria-role__column-header"
-                                            scope="col"
-                                          >
-                                            HTML Elements with Implicit ARIA
-                                            Role
-                                          </th>
-                                          <td className="aria-role__cell">
-                                            <ul>
-                                              {(ariaToHtmlMapping[role] || []).map((htmlElement) => (
-                                                <li key={htmlElement}>{htmlElement}</li>
-                                              ))}
-                                            </ul>
-                                          </td>
-                                        </tr>
-                                        
-                                        <tr className="aria-role__row">
-                                          <th
-                                            className="aria-role__column-header"
-                                            scope="col"
-                                          >
-                                            Allowed HTML Elements
-                                          </th>
-                                          <td className="aria-role__cell">
-                                            <details>
-                                              <summary>See Allowed HTML Elements</summary>
+                                          <tr className="aria-role__row">
+                                            <th
+                                              className="aria-role__column-header"
+                                              scope="col"
+                                            >
+                                              Category Description
+                                            </th>
+                                            <td className="aria-role__cell">
+                                              <p>{description}</p>
+                                            </td>
+                                          </tr>
+
+                                          <tr className="aria-role__row">
+                                            <th
+                                              className="aria-role__column-header"
+                                              scope="col"
+                                            >
+                                              HTML Elements with Implicit ARIA
+                                              Role
+                                            </th>
+                                            <td className="aria-role__cell">
                                               <ul>
-                                                {Object.entries(allowedAriaRolesByHtmlElement).filter(([_, roles]) => roles.includes(role) || roles.includes('*')).map(([tagName, roles]) => (
-                                                  <li className={roles.includes('*') ? '' : 'is-strong'} key={tagName}>{tagName}</li>
+                                                {(
+                                                  ariaToHtmlMapping[role] || []
+                                                ).map((htmlElement) => (
+                                                  <li key={htmlElement}>
+                                                    {htmlElement}
+                                                  </li>
                                                 ))}
                                               </ul>
-                                            </details>
-                                          </td>
-                                        </tr>
-                                      </table>
-                                    </div>
-                                  </dialog>
-                                </li>
-                              );
-                            })}
-                        </ul>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </li>
-            );
-          }
-        )}
-      </ul>
+                                            </td>
+                                          </tr>
+
+                                          <tr className="aria-role__row">
+                                            <th
+                                              className="aria-role__column-header"
+                                              scope="col"
+                                            >
+                                              Allowed HTML Elements
+                                            </th>
+                                            <td className="aria-role__cell">
+                                              <details>
+                                                <summary>
+                                                  See Allowed HTML Elements
+                                                </summary>
+                                                <ul>
+                                                  {Object.entries(
+                                                    allowedAriaRolesByHtmlElement
+                                                  )
+                                                    .filter(
+                                                      ([_, roles]) =>
+                                                        roles.includes(role) ||
+                                                        roles.includes("*")
+                                                    )
+                                                    .map(([tagName, roles]) => (
+                                                      <li
+                                                        className={
+                                                          roles.includes("*")
+                                                            ? ""
+                                                            : "is-strong"
+                                                        }
+                                                        key={tagName}
+                                                      >
+                                                        {tagName}
+                                                      </li>
+                                                    ))}
+                                                </ul>
+                                              </details>
+                                            </td>
+                                          </tr>
+                                        </table>
+                                      </div>
+                                    </dialog>
+                                  </li>
+                                );
+                              })}
+                          </ul>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </li>
+              );
+            }
+          )}
+        </ul>
+      </main>
 
       <script
         dangerouslySetInnerHTML={{
@@ -1039,25 +1151,25 @@ function ARIAPeriodicTable() {
           constructor() {
             super();
 
-            const clickHandler = () => {
-              const containerElement = this.closest('.aria-role');
-              const dialogElement = containerElement.querySelector('dialog');
+            const buttonElement = this.querySelector('button');
 
-              if (!dialogElement) {
-                return;
-              }
+            if (!buttonElement) {
+              throw new Error('No button element found');
+            }
 
-              dialogElement.showModal();
-            };
-
-            this.addEventListener('click', clickHandler);
-            this.addEventListener('keydown', (event) => {
-              if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                clickHandler();
-              }
-            });
+            buttonElement.addEventListener('click', this.clickHandler);
           }
+
+          clickHandler = () => {
+            const containerElement = this.closest('.aria-role');
+            const dialogElement = containerElement.querySelector('dialog');
+
+            if (!dialogElement) {
+              return;
+            }
+
+            dialogElement.showModal();
+          };
         });
 
         customElements.define('close-dialog-button', class extends HTMLElement {
@@ -1086,7 +1198,7 @@ function ARIAPeriodicTable() {
       `,
         }}
       ></script>
-    </div>
+    </>
   );
 }
 
