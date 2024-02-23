@@ -1,0 +1,12 @@
+export { abstractAriaRolesByType } from "./abstractAriaRolesByType";
+export { allowedAriaRolesByHtmlElement } from "./allowedAriaRolesByHtmlElement";
+export { ariaRolesByCategory } from "./ariaRolesByCategory";
+export { ariaRolesWithOnlyPhrasingDescendants } from "./ariaRolesWithOnlyPhrasingDescendants";
+export { ariaToHtmlMapping } from "./ariaToHtmlMapping";
+export { mappedAbstractAriaRolesToBackgroundColors } from "./mappedAbstractAriaRolesToBackgroundColors";
+export { mappedAbstractAriaRolesToDescriptions } from "./mappedAbstractAriaRolesToDescriptions";
+export { mappedAbstractAriaRolesToTextColors } from "./mappedAbstractAriaRolesToTextColors";
+export { mappedAbstractAriaRolesToTitles } from "./mappedAbstractAriaRolesToTitles";
+export { mappedAriaRolesToContentTypes } from "./mappedAriaRolesToContentTypes";
+export { mappedAriaRolesToDescriptions } from "./mappedAriaRolesToDescriptions";
+export { mappedAriaRolesToDisplayNames } from "./mappedAriaRolesToDisplayNames";
