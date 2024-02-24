@@ -3,6 +3,6 @@ export const mappedAbstractAriaRolesToBackgroundColors = {
   landmark: "rgb(255, 102, 0)",
   structure: "yellow",
   widget: "red",
-  window: "purple",
+  window: "lightblue",
   live: "rgb(100, 255, 100)",
 };

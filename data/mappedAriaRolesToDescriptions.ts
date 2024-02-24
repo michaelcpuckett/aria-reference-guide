@@ -4,7 +4,7 @@ export const mappedAriaRolesToDescriptions = {
   application:
     "A region that represents an application. For user agents that support browse modes, this role switches to keyboard passthrough mode.",
   article:
-    "A section of a page that consists of a composition that forms an independent part of a document, page, or site.",
+    "A section of a page that forms an independent part of a document, page, or site.",
   banner:
     "A region that contains mostly site-oriented content, rather than page-specific content.",
   button:

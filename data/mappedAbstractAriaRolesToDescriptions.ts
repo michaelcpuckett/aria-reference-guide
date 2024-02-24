@@ -1,12 +1,12 @@
 export const mappedAbstractAriaRolesToDescriptions = {
   composite:
-    "Composites are made up of multiple interactive widgets. Focus management may be handled by the composite element.",
+    "Represents a container for multiple interactive widgets. Focus management may be handled by this role.",
   landmark:
-    "Landmarks define top-level sections of a page that should appear in a site map or table of contents.",
-  structure: "Structures represent non-interactive document semantics.",
+    "Represents a top-level section of a page that should appear in a site map or table of contents.",
+  structure:
+    "Represents a non-interactive part of a page with document semantics.",
   widget:
-    "Widgets represent focusable, interactive elements. For user agents with browsing modes, widgets switch the mode to keyboard passthrough.",
-  window:
-    "Windows represent dialogs or windows that are children of the main window.",
-  live: "Live regions represent dynamic content or announcements that may be updated without user interaction.",
+    "Represents a focusable, interactive element. For user agents with different modes, this role switches the mode to keyboard passthrough.",
+  window: "Represents a dialog window that is a child of the main window.",
+  live: "Represents dynamic content or an announcement that may be updated without user interaction.",
 };

@@ -14,13 +14,23 @@ export default `
 
     clickHandler = () => {
       const containerElement = this.closest('.aria-role');
-      const dialogElement = containerElement.querySelector('dialog');
+      const dialogElement = window.document.querySelector(\`#dialog-for-\${this.getAttribute('data-role')}\`);
 
       if (!dialogElement) {
         return;
       }
 
-      dialogElement.showModal();
+      const openDialogElements = window.document.querySelectorAll('dialog[open]');
+
+      for (const openDialogElement of openDialogElements) {
+        openDialogElement.close();
+      }
+
+      if (matchMedia('(min-width: 600px)').matches) {
+        dialogElement.show();
+      } else {
+        dialogElement.showModal();
+      }
     };
   });
 
