@@ -19,13 +19,14 @@ body {
 
 @media (min-width: 1024px) {
   body {
-    gap: 2em;
     grid-template-columns: minmax(0, 1fr) 28em;
   }
 
   main {
     grid-column: 1 / span 2;
-    padding-top: 1em;
+    padding: 1em 0;
+    display: grid;
+    place-items: center;
   }
 
   body:has(dialog[open]) main {
@@ -49,6 +50,7 @@ body {
 @media (min-width: 1024px) {
   .periodic-table__root {
     grid-template-columns: repeat(auto-fill, minmax(6em, 1fr));
+    width: 100%;
   }
 }
 
@@ -188,15 +190,17 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
   min-width: 0;
   max-width: none;
   border: 0;
-  overscroll-behavior: contain;
+  overscroll-behavior: none;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   overflow: auto;
   padding: 0;
-  background: black;
-  color: white;
+
+  &:focus { 
+    outline: 0;
+  }
 }
 
 .aria-role__dialog-content {
@@ -204,6 +208,17 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
   place-content: flex-start;
   position: relative;
   padding: 1em;
+  background: white;
+  color: black;
+  color-scheme: light;
+}
+
+.aria-role__dialog-content > [tabindex="-1"]:focus {
+  outline: 0;
+}
+
+.aria-role__dialog-content:has(> [tabindex="-1"]:focus) {
+  outline: 2px solid white;
 }
 
 @media (min-width: 1024px) {
@@ -213,15 +228,12 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
 
   .aria-role__dialog-content {
     position: fixed;
-    top: 2em;
-    height: calc(100dvh - 4em);
+    top: 1em;
+    height: calc(100dvh - 2em);
     overflow: auto;
     border: 2px solid white;
-    margin-right: 2em;
+    margin-right: 1em;
     border-radius: 8px;
-    background: white;
-    color: black;
-    color-schema: light;
   }
 }
 
@@ -269,6 +281,7 @@ dialog table {
 dialog :is(td, th) {
   padding: 8px;
   border: 1px solid;
+  text-align: left;
 }
 
 dialog table p {
