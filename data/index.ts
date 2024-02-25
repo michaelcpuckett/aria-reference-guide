@@ -9,3 +9,4 @@ export { mappedAbstractAriaRolesToTitles } from "./mappedAbstractAriaRolesToTitl
 export { mappedAriaRolesToContentTypes } from "./mappedAriaRolesToContentTypes";
 export { mappedAriaRolesToDescriptions } from "./mappedAriaRolesToDescriptions";
 export { mappedAriaRolesToDisplayNames } from "./mappedAriaRolesToDisplayNames";
+export { mappedAriaTypesToTitles } from "./mappedAriaTypesToTitles";

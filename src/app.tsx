@@ -12,6 +12,7 @@ import {
   mappedAriaRolesToContentTypes,
   mappedAriaRolesToDescriptions,
   mappedAriaRolesToDisplayNames,
+  mappedAriaTypesToTitles,
 } from "../data";
 
 import scripts from "./scripts";
@@ -49,7 +50,7 @@ function ARIAPeriodicTable() {
                     className="periodic-table__subgrid-area-heading"
                     id={`periodic-table__type--${type}`}
                   >
-                    {type}
+                    {mappedAriaTypesToTitles[type] + " Roles"}
                   </h2>
                   <ul
                     className="periodic-table__subgrid periodic-table__subgrid-row"
@@ -116,8 +117,9 @@ function ARIAPeriodicTable() {
 
                                 dialogElements.push(
                                   <dialog
-                                    className="aria-role__dialog"
+                                    className={`aria-role__dialog aria-role__dialog--abstract-role-${abstractAriaRole}`}
                                     id={`dialog-for-${role}`}
+                                    aria-labelledby={`aria-role__dialog-heading--${role}`}
                                     key={role}
                                   >
                                     <div className="aria-role__dialog-content">
@@ -136,11 +138,14 @@ function ARIAPeriodicTable() {
                                       >
                                         <h1
                                           className="aria-role__dialog-heading"
+                                          id={`aria-role__dialog-heading--${role}`}
+                                          aria-label={`The ${role} role`}
                                           dangerouslySetInnerHTML={{
-                                            __html:
+                                            __html: `The <code>${
                                               mappedAriaRolesToDisplayNames[
                                                 role
-                                              ] || role,
+                                              ] || role
+                                            }</code> role`,
                                           }}
                                         ></h1>
                                         <div className="aria-role__details">

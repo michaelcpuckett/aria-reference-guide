@@ -17,7 +17,7 @@
     display: grid;
   }
 
-  @media (min-width: 1024px) {
+  @media screen and (min-width: 1024px) {
     body {
       grid-template-columns: minmax(0, 1fr) 28em;
     }
@@ -38,16 +38,15 @@
 
   .periodic-table__root {
     display: grid;
-    place-content: center;
     list-style: none;
     gap: 8px;
     grid-template-columns: 100%;
     padding: 0 1em;
   }
 
-  @media (min-width: 1024px) {
+  @media screen and (min-width: 1024px) {
     .periodic-table__root {
-      grid-template-columns: repeat(auto-fill, minmax(6em, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(6em, 0fr));
       width: 100%;
     }
   }
@@ -64,12 +63,18 @@
   }
 
   .periodic-table__subgrid-area .periodic-table__subgrid-area-heading {
-    background: #353535;
     color: white;
     grid-column: 1 / -1;
     margin: 0;
-    padding: 1em;
-    font-size: 1.333em;
+    padding: 1em 0 0.1em;
+    font-size: 1.5em;
+    font-weight: normal;
+    border-bottom: 2px solid white;
+  }
+
+  .periodic-table__subgrid-area:nth-child(2)
+    .periodic-table__subgrid-area-heading {
+    padding-top: 2em;
   }
 
   .periodic-table__subgrid-row {
@@ -80,6 +85,9 @@
     text-align: center;
     font-size: 1.5em;
     color: white;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0;
   }
 
   /*
@@ -100,108 +108,70 @@
     word-break: break-word;
     height: 100%;
     border-radius: 8px;
+    --hsl-color: hsl(var(--color), 80%, 87.5%);
+    --hsl-alt-color: hsl(var(--color), 80%, 22.5%);
+    background-color: var(--hsl-alt-color);
+    border: 2px solid var(--hsl-color);
+    color: white;
+
+    &:hover {
+      background-color: var(--hsl-color);
+      color: black;
+    }
   }
 
-  @media (min-width: 1024px) {
+  @media screen and (min-width: 1024px) {
     .aria-role {
-      aspect-ratio: 1;
+      min-height: 6em;
     }
   }
 
   .aria-role--abstract-role-composite {
-    background-color: rgb(255, 150, 255);
-    background-image: linear-gradient(
-      45deg,
-      rgba(0, 0, 0, 0.75) 50%,
-      rgba(0, 0, 0, 0.75) 50%
-    );
-    color: white;
-    border: 2px solid rgb(255, 150, 255);
+    --color: 0deg;
+  }
 
-    &:hover {
-      background-image: none;
-      color: black;
-    }
+  .aria-role__dialog--abstract-role-composite .aria-role__dialog-content {
+    --color: 0deg;
   }
 
   .aria-role--abstract-role-landmark {
-    background-color: rgb(255, 102, 0);
-    background-image: linear-gradient(
-      45deg,
-      rgba(0, 0, 0, 0.75) 50%,
-      rgba(0, 0, 0, 0.75) 50%
-    );
-    color: white;
-    border: 2px solid rgb(255, 102, 0);
+    --color: 60deg;
+  }
 
-    &:hover {
-      background-image: none;
-      color: black;
-    }
+  .aria-role__dialog--abstract-role-landmark .aria-role__dialog-content {
+    --color: 60deg;
   }
 
   .aria-role--abstract-role-structure {
-    background-color: yellow;
-    background-image: linear-gradient(
-      45deg,
-      rgba(0, 0, 0, 0.75) 50%,
-      rgba(0, 0, 0, 0.75) 50%
-    );
-    color: white;
-    border: 2px solid yellow;
+    --color: 120deg;
+  }
 
-    &:hover {
-      background-image: none;
-      color: black;
-    }
+  .aria-role__dialog--abstract-role-structure .aria-role__dialog-content {
+    --color: 120deg;
   }
 
   .aria-role--abstract-role-widget {
-    background-color: red;
-    background-image: linear-gradient(
-      45deg,
-      rgba(0, 0, 0, 0.75) 50%,
-      rgba(0, 0, 0, 0.75) 50%
-    );
-    color: white;
-    border: 2px solid red;
+    --color: 180deg;
+  }
 
-    &:hover {
-      background-image: none;
-      color: black;
-    }
+  .aria-role__dialog--abstract-role-widget .aria-role__dialog-content {
+    --color: 180deg;
   }
 
   .aria-role--abstract-role-window {
-    background-color: lightblue;
-    background-image: linear-gradient(
-      45deg,
-      rgba(0, 0, 0, 0.75) 50%,
-      rgba(0, 0, 0, 0.75) 50%
-    );
-    color: white;
-    border: 2px solid lightblue;
+    --color: 240deg;
+  }
 
-    &:hover {
-      background-image: none;
-      color: black;
-    }
+  .aria-role__dialog--abstract-role-window .aria-role__dialog-content {
+    --color: 240deg;
   }
 
   .aria-role--abstract-role-live {
-    background-color: rgb(100, 255, 100);
-    background-image: linear-gradient(
-      45deg,
-      rgba(0, 0, 0, 0.75) 50%,
-      rgba(0, 0, 0, 0.75) 50%
-    );
-    color: white;
-    border: 2px solid rgb(100, 255, 100);
+    --color: 300deg;
+  }
 
-    &:hover {
-      background-image: none;
-      color: black;
-    }
+  .aria-role__dialog--abstract-role-live .aria-role__dialog-content {
+    --color: 300deg;
   }
 
   .aria-role__summary {
@@ -281,12 +251,17 @@
 
   .aria-role__dialog-content {
     display: grid;
-    place-content: flex-start;
+    place-content: stretch;
     position: relative;
     padding: 1em;
     background: white;
     color: black;
     color-scheme: light;
+  }
+
+  .aria-role__dialog-content {
+    /*background-color: hsl(0deg, 0%, 87.5%);*/
+    background-color: hsl(var(--color), 80%, 87.5%);
   }
 
   .aria-role__dialog-content > [tabindex="-1"]:focus {
@@ -298,7 +273,7 @@
     outline-offset: 2px;
   }
 
-  @media (min-width: 1024px) {
+  @media screen and (min-width: 1024px) {
     .aria-role__dialog {
       position: static;
     }
@@ -306,12 +281,13 @@
     .aria-role__dialog-content {
       position: fixed;
       top: 1em;
+      height: 100%;
       max-height: calc(100dvh - 2em);
       overflow: auto;
       border: 2px solid white;
       margin-right: 1em;
       border-radius: 8px;
-      transition: max-height 0.5s ease-in-out;
+      transition: max-height 0.125s ease-in-out;
     }
   }
 
@@ -322,11 +298,11 @@
   .aria-role__table {
     margin: 0;
     list-style: none;
-    padding: 8px;
     display: grid;
     place-content: center;
-    place-items: center;
-    grid-auto-columns: 1fr;
+    place-items: stretch;
+    grid-auto-columns: 100%;
+    margin-top: 1em;
   }
 
   .aria-role__dfn {
@@ -334,6 +310,11 @@
     padding: 0;
     text-align: center;
     display: block;
+  }
+
+  .aria-role__column-header,
+  .aria-role__cell {
+    background-color: white;
   }
 
   .visually-hidden {
@@ -353,11 +334,14 @@
 
   dialog table {
     border-collapse: collapse;
+    border-left: 1px solid;
+    border-top: 1px solid;
   }
 
   dialog :is(td, th) {
     padding: 8px;
-    border: 1px solid;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
     text-align: left;
   }
 
@@ -373,6 +357,8 @@
     margin: 0;
     padding: 0.5em 0;
     grid-column: 1 / -1;
+    font-style: italic;
+    font-weight: normal;
   }
 
   .list {
@@ -405,6 +391,7 @@
     padding: 0.5em 0.667em 0.667em;
 
     &:focus {
+      outline-offset: 2px;
       outline: 2px solid black;
     }
   }
@@ -421,7 +408,7 @@
         class="periodic-table__subgrid-area-heading"
         id="periodic-table__type--non-interactive"
       >
-        non-interactive
+        Non-interactive Roles
       </h2>
       <ul
         class="periodic-table__subgrid periodic-table__subgrid-row"
@@ -1328,7 +1315,7 @@
         class="periodic-table__subgrid-area-heading"
         id="periodic-table__type--interactive"
       >
-        interactive
+        Interactive Roles
       </h2>
       <ul
         class="periodic-table__subgrid periodic-table__subgrid-row"
@@ -1404,7 +1391,7 @@
                   class="aria-role__summary"
                   aria-label="menubar"
                 >
-                  menubar
+                  menu<wbr />bar
                 </button></expansion-button
               >
             </li>
@@ -1867,7 +1854,11 @@
     </li>
   </ul>
 </main>
-<dialog class="aria-role__dialog" id="dialog-for-banner">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-landmark"
+  id="dialog-for-banner"
+  aria-labelledby="aria-role__dialog-heading--banner"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -1875,7 +1866,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">banner</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--banner"
+        aria-label="The banner role"
+      >
+        The <code>banner</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -1932,7 +1929,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-complementary">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-landmark"
+  id="dialog-for-complementary"
+  aria-labelledby="aria-role__dialog-heading--complementary"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -1940,8 +1941,12 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">
-        com<wbr />ple<wbr />men<wbr />tary
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--complementary"
+        aria-label="The complementary role"
+      >
+        The <code>com<wbr />ple<wbr />men<wbr />tary</code> role
       </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
@@ -2000,7 +2005,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-contentinfo">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-landmark"
+  id="dialog-for-contentinfo"
+  aria-labelledby="aria-role__dialog-heading--contentinfo"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -2008,7 +2017,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">con<wbr />tent<wbr />info</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--contentinfo"
+        aria-label="The contentinfo role"
+      >
+        The <code>con<wbr />tent<wbr />info</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -2065,7 +2080,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-form">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-landmark"
+  id="dialog-for-form"
+  aria-labelledby="aria-role__dialog-heading--form"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -2073,7 +2092,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">form</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--form"
+        aria-label="The form role"
+      >
+        The <code>form</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -2129,7 +2154,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-main">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-landmark"
+  id="dialog-for-main"
+  aria-labelledby="aria-role__dialog-heading--main"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -2137,7 +2166,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">main</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--main"
+        aria-label="The main role"
+      >
+        The <code>main</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -2194,7 +2229,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-navigation">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-landmark"
+  id="dialog-for-navigation"
+  aria-labelledby="aria-role__dialog-heading--navigation"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -2202,7 +2241,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">navi<wbr />gation</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--navigation"
+        aria-label="The navigation role"
+      >
+        The <code>navi<wbr />gation</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -2259,7 +2304,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-region">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-landmark"
+  id="dialog-for-region"
+  aria-labelledby="aria-role__dialog-heading--region"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -2267,7 +2316,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">region</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--region"
+        aria-label="The region role"
+      >
+        The <code>region</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -2325,7 +2380,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-search">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-landmark"
+  id="dialog-for-search"
+  aria-labelledby="aria-role__dialog-heading--search"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -2333,7 +2392,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">search</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--search"
+        aria-label="The search role"
+      >
+        The <code>search</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -2391,7 +2456,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-application">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-application"
+  aria-labelledby="aria-role__dialog-heading--application"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -2399,8 +2468,12 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">
-        app<wbr />li<wbr />ca<wbr />tion
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--application"
+        aria-label="The application role"
+      >
+        The <code>app<wbr />li<wbr />ca<wbr />tion</code> role
       </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
@@ -2464,7 +2537,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-article">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-article"
+  aria-labelledby="aria-role__dialog-heading--article"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -2472,7 +2549,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">arti<wbr />cle</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--article"
+        aria-label="The article role"
+      >
+        The <code>arti<wbr />cle</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -2528,7 +2611,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-blockquote">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-blockquote"
+  aria-labelledby="aria-role__dialog-heading--blockquote"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -2536,7 +2623,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">block<wbr />quote</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--blockquote"
+        aria-label="The blockquote role"
+      >
+        The <code>block<wbr />quote</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -2589,7 +2682,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-caption">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-caption"
+  aria-labelledby="aria-role__dialog-heading--caption"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -2597,7 +2694,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">caption</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--caption"
+        aria-label="The caption role"
+      >
+        The <code>caption</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -2650,7 +2753,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-cell">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-cell"
+  aria-labelledby="aria-role__dialog-heading--cell"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -2658,7 +2765,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">cell</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--cell"
+        aria-label="The cell role"
+      >
+        The <code>cell</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -2712,7 +2825,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-columnheader">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-columnheader"
+  aria-labelledby="aria-role__dialog-heading--columnheader"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -2720,7 +2837,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">column<wbr />header*</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--columnheader"
+        aria-label="The columnheader role"
+      >
+        The <code>column<wbr />header*</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -2777,7 +2900,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-document">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-document"
+  aria-labelledby="aria-role__dialog-heading--document"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -2785,7 +2912,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">docu<wbr />ment</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--document"
+        aria-label="The document role"
+      >
+        The <code>docu<wbr />ment</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -2846,7 +2979,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-feed">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-feed"
+  aria-labelledby="aria-role__dialog-heading--feed"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -2854,7 +2991,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">feed</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--feed"
+        aria-label="The feed role"
+      >
+        The <code>feed</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -2912,7 +3055,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-figure">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-figure"
+  aria-labelledby="aria-role__dialog-heading--figure"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -2920,7 +3067,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">figure</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--figure"
+        aria-label="The figure role"
+      >
+        The <code>figure</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -2977,7 +3130,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-generic">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-generic"
+  aria-labelledby="aria-role__dialog-heading--generic"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -2985,7 +3142,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">generic</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--generic"
+        aria-label="The generic role"
+      >
+        The <code>generic</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -3040,7 +3203,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-group">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-group"
+  aria-labelledby="aria-role__dialog-heading--group"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -3048,7 +3215,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">group</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--group"
+        aria-label="The group role"
+      >
+        The <code>group</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -3115,7 +3288,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-list">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-list"
+  aria-labelledby="aria-role__dialog-heading--list"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -3123,7 +3300,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">list</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--list"
+        aria-label="The list role"
+      >
+        The <code>list</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -3183,7 +3366,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-listitem">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-listitem"
+  aria-labelledby="aria-role__dialog-heading--listitem"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -3191,7 +3378,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">listitem</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--listitem"
+        aria-label="The listitem role"
+      >
+        The <code>listitem</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -3245,7 +3438,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-mark">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-mark"
+  aria-labelledby="aria-role__dialog-heading--mark"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -3253,7 +3450,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">mark</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--mark"
+        aria-label="The mark role"
+      >
+        The <code>mark</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -3308,7 +3511,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-math">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-math"
+  aria-labelledby="aria-role__dialog-heading--math"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -3316,7 +3523,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">math</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--math"
+        aria-label="The math role"
+      >
+        The <code>math</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -3371,7 +3584,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-none">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-none"
+  aria-labelledby="aria-role__dialog-heading--none"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -3379,7 +3596,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">none</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--none"
+        aria-label="The none role"
+      >
+        The <code>none</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -3452,7 +3675,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-note">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-note"
+  aria-labelledby="aria-role__dialog-heading--note"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -3460,7 +3687,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">note</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--note"
+        aria-label="The note role"
+      >
+        The <code>note</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -3516,7 +3749,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-presentation">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-presentation"
+  aria-labelledby="aria-role__dialog-heading--presentation"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -3524,7 +3761,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">presen<wbr />tation</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--presentation"
+        aria-label="The presentation role"
+      >
+        The <code>presen<wbr />tation</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -3597,7 +3840,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-row">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-row"
+  aria-labelledby="aria-role__dialog-heading--row"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -3605,7 +3852,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">row*</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--row"
+        aria-label="The row role"
+      >
+        The <code>row*</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -3661,7 +3914,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-rowgroup">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-rowgroup"
+  aria-labelledby="aria-role__dialog-heading--rowgroup"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -3669,7 +3926,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">row<wbr />group</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--rowgroup"
+        aria-label="The rowgroup role"
+      >
+        The <code>row<wbr />group</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -3728,7 +3991,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-rowheader">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-rowheader"
+  aria-labelledby="aria-role__dialog-heading--rowheader"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -3736,7 +4003,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">row<wbr />header*</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--rowheader"
+        aria-label="The rowheader role"
+      >
+        The <code>row<wbr />header*</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -3793,7 +4066,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-table">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-table"
+  aria-labelledby="aria-role__dialog-heading--table"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -3801,7 +4078,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">table</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--table"
+        aria-label="The table role"
+      >
+        The <code>table</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -3856,7 +4139,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-tabpanel">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-tabpanel"
+  aria-labelledby="aria-role__dialog-heading--tabpanel"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -3864,7 +4151,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">tab<wbr />panel</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--tabpanel"
+        aria-label="The tabpanel role"
+      >
+        The <code>tab<wbr />panel</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -3920,7 +4213,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-toolbar">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-toolbar"
+  aria-labelledby="aria-role__dialog-heading--toolbar"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -3928,7 +4225,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">tool<wbr />bar</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--toolbar"
+        aria-label="The toolbar role"
+      >
+        The <code>tool<wbr />bar</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -3985,7 +4288,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-code">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-code"
+  aria-labelledby="aria-role__dialog-heading--code"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -3993,7 +4300,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">code</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--code"
+        aria-label="The code role"
+      >
+        The <code>code</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -4046,7 +4359,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-definition">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-definition"
+  aria-labelledby="aria-role__dialog-heading--definition"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -4054,7 +4371,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">defi<wbr />ni<wbr />tion</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--definition"
+        aria-label="The definition role"
+      >
+        The <code>defi<wbr />ni<wbr />tion</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -4107,7 +4430,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-deletion">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-deletion"
+  aria-labelledby="aria-role__dialog-heading--deletion"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -4115,7 +4442,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">del<wbr />etion</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--deletion"
+        aria-label="The deletion role"
+      >
+        The <code>del<wbr />etion</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -4171,7 +4504,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-emphasis">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-emphasis"
+  aria-labelledby="aria-role__dialog-heading--emphasis"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -4179,7 +4516,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">emph<wbr />asis</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--emphasis"
+        aria-label="The emphasis role"
+      >
+        The <code>emph<wbr />asis</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -4235,7 +4578,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-heading">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-heading"
+  aria-labelledby="aria-role__dialog-heading--heading"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -4243,7 +4590,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">heading</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--heading"
+        aria-label="The heading role"
+      >
+        The <code>heading</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -4298,7 +4651,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-img">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-img"
+  aria-labelledby="aria-role__dialog-heading--img"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -4306,7 +4663,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">img</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--img"
+        aria-label="The img role"
+      >
+        The <code>img</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -4364,7 +4727,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-insertion">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-insertion"
+  aria-labelledby="aria-role__dialog-heading--insertion"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -4372,7 +4739,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">ins<wbr />ertion</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--insertion"
+        aria-label="The insertion role"
+      >
+        The <code>ins<wbr />ertion</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -4427,7 +4800,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-paragraph">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-paragraph"
+  aria-labelledby="aria-role__dialog-heading--paragraph"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -4435,7 +4812,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">para<wbr />graph</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--paragraph"
+        aria-label="The paragraph role"
+      >
+        The <code>para<wbr />graph</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -4488,7 +4871,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-separator">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-separator"
+  aria-labelledby="aria-role__dialog-heading--separator"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -4496,7 +4883,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">separ<wbr />ator*</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--separator"
+        aria-label="The separator role"
+      >
+        The <code>separ<wbr />ator*</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -4553,7 +4946,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-strong">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-strong"
+  aria-labelledby="aria-role__dialog-heading--strong"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -4561,7 +4958,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">strong</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--strong"
+        aria-label="The strong role"
+      >
+        The <code>strong</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -4616,7 +5019,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-subscript">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-subscript"
+  aria-labelledby="aria-role__dialog-heading--subscript"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -4624,7 +5031,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">sub<wbr />script</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--subscript"
+        aria-label="The subscript role"
+      >
+        The <code>sub<wbr />script</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -4680,7 +5093,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-superscript">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-superscript"
+  aria-labelledby="aria-role__dialog-heading--superscript"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -4688,7 +5105,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">super<wbr />script</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--superscript"
+        aria-label="The superscript role"
+      >
+        The <code>super<wbr />script</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -4744,7 +5167,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-term">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-term"
+  aria-labelledby="aria-role__dialog-heading--term"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -4752,7 +5179,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">term</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--term"
+        aria-label="The term role"
+      >
+        The <code>term</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -4809,7 +5242,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-time">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-time"
+  aria-labelledby="aria-role__dialog-heading--time"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -4817,7 +5254,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">time</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--time"
+        aria-label="The time role"
+      >
+        The <code>time</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -4870,7 +5313,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-tooltip">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
+  id="dialog-for-tooltip"
+  aria-labelledby="aria-role__dialog-heading--tooltip"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -4878,7 +5325,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">tool<wbr />tip</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--tooltip"
+        aria-label="The tooltip role"
+      >
+        The <code>tool<wbr />tip</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -4932,7 +5385,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-alert">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-live"
+  id="dialog-for-alert"
+  aria-labelledby="aria-role__dialog-heading--alert"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -4940,7 +5397,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">alert</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--alert"
+        aria-label="The alert role"
+      >
+        The <code>alert</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -4995,7 +5458,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-log">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-live"
+  id="dialog-for-log"
+  aria-labelledby="aria-role__dialog-heading--log"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -5003,7 +5470,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">log</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--log"
+        aria-label="The log role"
+      >
+        The <code>log</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -5059,7 +5532,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-marquee">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-live"
+  id="dialog-for-marquee"
+  aria-labelledby="aria-role__dialog-heading--marquee"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -5067,7 +5544,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">mar<wbr />quee</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--marquee"
+        aria-label="The marquee role"
+      >
+        The <code>mar<wbr />quee</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -5123,7 +5606,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-status">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-live"
+  id="dialog-for-status"
+  aria-labelledby="aria-role__dialog-heading--status"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -5131,7 +5618,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">status</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--status"
+        aria-label="The status role"
+      >
+        The <code>status</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -5187,7 +5680,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-timer">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-live"
+  id="dialog-for-timer"
+  aria-labelledby="aria-role__dialog-heading--timer"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -5195,7 +5692,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">timer</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--timer"
+        aria-label="The timer role"
+      >
+        The <code>timer</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -5247,7 +5750,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-alertdialog">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-window"
+  id="dialog-for-alertdialog"
+  aria-labelledby="aria-role__dialog-heading--alertdialog"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -5255,7 +5762,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">alert<wbr />dialog</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--alertdialog"
+        aria-label="The alertdialog role"
+      >
+        The <code>alert<wbr />dialog</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -5310,7 +5823,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-dialog">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-window"
+  id="dialog-for-dialog"
+  aria-labelledby="aria-role__dialog-heading--dialog"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -5318,7 +5835,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">dialog</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--dialog"
+        aria-label="The dialog role"
+      >
+        The <code>dialog</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -5374,7 +5897,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-grid">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-composite"
+  id="dialog-for-grid"
+  aria-labelledby="aria-role__dialog-heading--grid"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -5382,7 +5909,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">grid</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--grid"
+        aria-label="The grid role"
+      >
+        The <code>grid</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -5437,7 +5970,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-listbox">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-composite"
+  id="dialog-for-listbox"
+  aria-labelledby="aria-role__dialog-heading--listbox"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -5445,7 +5982,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">listbox</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--listbox"
+        aria-label="The listbox role"
+      >
+        The <code>listbox</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -5505,7 +6048,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-menu">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-composite"
+  id="dialog-for-menu"
+  aria-labelledby="aria-role__dialog-heading--menu"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -5513,7 +6060,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">menu</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--menu"
+        aria-label="The menu role"
+      >
+        The <code>menu</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -5572,7 +6125,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-menubar">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-composite"
+  id="dialog-for-menubar"
+  aria-labelledby="aria-role__dialog-heading--menubar"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -5580,7 +6137,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">menubar</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--menubar"
+        aria-label="The menubar role"
+      >
+        The <code>menu<wbr />bar</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -5639,7 +6202,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-radiogroup">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-composite"
+  id="dialog-for-radiogroup"
+  aria-labelledby="aria-role__dialog-heading--radiogroup"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -5647,7 +6214,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">radio<wbr />group</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--radiogroup"
+        aria-label="The radiogroup role"
+      >
+        The <code>radio<wbr />group</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -5703,7 +6276,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-row">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-composite"
+  id="dialog-for-row"
+  aria-labelledby="aria-role__dialog-heading--row"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -5711,7 +6288,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">row*</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--row"
+        aria-label="The row role"
+      >
+        The <code>row*</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -5767,7 +6350,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-tablist">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-composite"
+  id="dialog-for-tablist"
+  aria-labelledby="aria-role__dialog-heading--tablist"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -5775,7 +6362,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">tablist</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--tablist"
+        aria-label="The tablist role"
+      >
+        The <code>tablist</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -5831,7 +6424,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-tree">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-composite"
+  id="dialog-for-tree"
+  aria-labelledby="aria-role__dialog-heading--tree"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -5839,7 +6436,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">tree</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--tree"
+        aria-label="The tree role"
+      >
+        The <code>tree</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -5897,7 +6500,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-treegrid">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-composite"
+  id="dialog-for-treegrid"
+  aria-labelledby="aria-role__dialog-heading--treegrid"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -5905,7 +6512,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">tree<wbr />grid</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--treegrid"
+        aria-label="The treegrid role"
+      >
+        The <code>tree<wbr />grid</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -5960,7 +6573,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-columnheader">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-widget"
+  id="dialog-for-columnheader"
+  aria-labelledby="aria-role__dialog-heading--columnheader"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -5968,7 +6585,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">column<wbr />header*</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--columnheader"
+        aria-label="The columnheader role"
+      >
+        The <code>column<wbr />header*</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -6026,7 +6649,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-combobox">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-widget"
+  id="dialog-for-combobox"
+  aria-labelledby="aria-role__dialog-heading--combobox"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -6034,7 +6661,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">combo<wbr />box</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--combobox"
+        aria-label="The combobox role"
+      >
+        The <code>combo<wbr />box</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -6094,7 +6727,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-gridcell">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-widget"
+  id="dialog-for-gridcell"
+  aria-labelledby="aria-role__dialog-heading--gridcell"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -6102,7 +6739,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">grid<wbr />cell</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--gridcell"
+        aria-label="The gridcell role"
+      >
+        The <code>grid<wbr />cell</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -6159,7 +6802,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-link">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-widget"
+  id="dialog-for-link"
+  aria-labelledby="aria-role__dialog-heading--link"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -6167,7 +6814,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">link</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--link"
+        aria-label="The link role"
+      >
+        The <code>link</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -6227,7 +6880,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-rowheader">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-widget"
+  id="dialog-for-rowheader"
+  aria-labelledby="aria-role__dialog-heading--rowheader"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -6235,7 +6892,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">row<wbr />header*</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--rowheader"
+        aria-label="The rowheader role"
+      >
+        The <code>row<wbr />header*</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -6293,7 +6956,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-searchbox">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-widget"
+  id="dialog-for-searchbox"
+  aria-labelledby="aria-role__dialog-heading--searchbox"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -6301,7 +6968,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">search<wbr />box</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--searchbox"
+        aria-label="The searchbox role"
+      >
+        The <code>search<wbr />box</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -6360,7 +7033,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-spinbutton">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-widget"
+  id="dialog-for-spinbutton"
+  aria-labelledby="aria-role__dialog-heading--spinbutton"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -6368,7 +7045,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">spin<wbr />button</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--spinbutton"
+        aria-label="The spinbutton role"
+      >
+        The <code>spin<wbr />button</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -6429,7 +7112,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-textbox">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-widget"
+  id="dialog-for-textbox"
+  aria-labelledby="aria-role__dialog-heading--textbox"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -6437,7 +7124,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">text<wbr />box</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--textbox"
+        aria-label="The textbox role"
+      >
+        The <code>text<wbr />box</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -6494,7 +7187,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-button">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-widget"
+  id="dialog-for-button"
+  aria-labelledby="aria-role__dialog-heading--button"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -6502,7 +7199,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">button</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--button"
+        aria-label="The button role"
+      >
+        The <code>button</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -6570,7 +7273,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-checkbox">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-widget"
+  id="dialog-for-checkbox"
+  aria-labelledby="aria-role__dialog-heading--checkbox"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -6578,7 +7285,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">check<wbr />box</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--checkbox"
+        aria-label="The checkbox role"
+      >
+        The <code>check<wbr />box</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -6641,7 +7354,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-menuitem">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-widget"
+  id="dialog-for-menuitem"
+  aria-labelledby="aria-role__dialog-heading--menuitem"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -6649,7 +7366,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">menu<wbr />item</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--menuitem"
+        aria-label="The menuitem role"
+      >
+        The <code>menu<wbr />item</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -6707,7 +7430,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-menuitemcheckbox">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-widget"
+  id="dialog-for-menuitemcheckbox"
+  aria-labelledby="aria-role__dialog-heading--menuitemcheckbox"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -6715,8 +7442,12 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">
-        menu<wbr />item<wbr />check<wbr />box
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--menuitemcheckbox"
+        aria-label="The menuitemcheckbox role"
+      >
+        The <code>menu<wbr />item<wbr />check<wbr />box</code> role
       </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
@@ -6777,7 +7508,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-menuitemradio">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-widget"
+  id="dialog-for-menuitemradio"
+  aria-labelledby="aria-role__dialog-heading--menuitemradio"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -6785,7 +7520,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">menu<wbr />item<wbr />radio</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--menuitemradio"
+        aria-label="The menuitemradio role"
+      >
+        The <code>menu<wbr />item<wbr />radio</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -6845,7 +7586,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-meter">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-widget"
+  id="dialog-for-meter"
+  aria-labelledby="aria-role__dialog-heading--meter"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -6853,7 +7598,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">meter</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--meter"
+        aria-label="The meter role"
+      >
+        The <code>meter</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -6908,7 +7659,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-option">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-widget"
+  id="dialog-for-option"
+  aria-labelledby="aria-role__dialog-heading--option"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -6916,7 +7671,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">option</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--option"
+        aria-label="The option role"
+      >
+        The <code>option</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -6974,7 +7735,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-progressbar">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-widget"
+  id="dialog-for-progressbar"
+  aria-labelledby="aria-role__dialog-heading--progressbar"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -6982,7 +7747,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">prog<wbr />ress<wbr />bar</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--progressbar"
+        aria-label="The progressbar role"
+      >
+        The <code>prog<wbr />ress<wbr />bar</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -7041,7 +7812,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-radio">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-widget"
+  id="dialog-for-radio"
+  aria-labelledby="aria-role__dialog-heading--radio"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -7049,7 +7824,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">radio</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--radio"
+        aria-label="The radio role"
+      >
+        The <code>radio</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -7110,7 +7891,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-scrollbar">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-widget"
+  id="dialog-for-scrollbar"
+  aria-labelledby="aria-role__dialog-heading--scrollbar"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -7118,7 +7903,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">scroll<wbr />bar</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--scrollbar"
+        aria-label="The scrollbar role"
+      >
+        The <code>scroll<wbr />bar</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -7176,7 +7967,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-separator">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-widget"
+  id="dialog-for-separator"
+  aria-labelledby="aria-role__dialog-heading--separator"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -7184,7 +7979,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">separ<wbr />ator*</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--separator"
+        aria-label="The separator role"
+      >
+        The <code>separ<wbr />ator*</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -7242,7 +8043,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-slider">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-widget"
+  id="dialog-for-slider"
+  aria-labelledby="aria-role__dialog-heading--slider"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -7250,7 +8055,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">slider</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--slider"
+        aria-label="The slider role"
+      >
+        The <code>slider</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -7309,7 +8120,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-switch">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-widget"
+  id="dialog-for-switch"
+  aria-labelledby="aria-role__dialog-heading--switch"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -7317,7 +8132,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">switch</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--switch"
+        aria-label="The switch role"
+      >
+        The <code>switch</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -7377,7 +8198,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-tab">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-widget"
+  id="dialog-for-tab"
+  aria-labelledby="aria-role__dialog-heading--tab"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -7385,7 +8210,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">tab</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--tab"
+        aria-label="The tab role"
+      >
+        The <code>tab</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">
@@ -7441,7 +8272,11 @@
     </div>
   </div>
 </dialog>
-<dialog class="aria-role__dialog" id="dialog-for-treeitem">
+<dialog
+  class="aria-role__dialog aria-role__dialog--abstract-role-widget"
+  id="dialog-for-treeitem"
+  aria-labelledby="aria-role__dialog-heading--treeitem"
+>
   <div class="aria-role__dialog-content">
     <close-dialog-button
       ><button type="button" aria-label="Close Dialog">
@@ -7449,7 +8284,13 @@
       </button></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1 class="aria-role__dialog-heading">tree<wbr />item</h1>
+      <h1
+        class="aria-role__dialog-heading"
+        id="aria-role__dialog-heading--treeitem"
+        aria-label="The treeitem role"
+      >
+        The <code>tree<wbr />item</code> role
+      </h1>
       <div class="aria-role__details">
         <table class="aria-role__table">
           <tr class="aria-role__row">

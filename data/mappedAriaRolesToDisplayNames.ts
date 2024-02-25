@@ -23,6 +23,7 @@ export const mappedAriaRolesToDisplayNames = {
   columnheader: "column<wbr />header*",
   rowheader: "row<wbr />header*",
   row: "row*",
+  menubar: "menu<wbr />bar",
   menuitemcheckbox: "menu<wbr />item<wbr />check<wbr />box",
   separator: "separ<wbr />ator*",
   menuitemradio: "menu<wbr />item<wbr />radio",

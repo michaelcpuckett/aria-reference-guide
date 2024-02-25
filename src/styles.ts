@@ -8,7 +8,7 @@ export default `
 :root {
   font-family: system-ui, sans-serif;
   font-size: 18px;
-  color-scheme: dark;
+  color-scheme: dark; 
 }
 
 body {
@@ -17,7 +17,7 @@ body {
   display: grid;
 }
 
-@media (min-width: 1024px) {
+@media screen and (min-width: 1024px) {
   body {
     grid-template-columns: minmax(0, 1fr) 28em;
   }
@@ -38,16 +38,15 @@ body {
 
 .periodic-table__root {
   display: grid;
-  place-content: center;
   list-style: none;
   gap: 8px;
   grid-template-columns: 100%;
   padding: 0 1em;
 }
 
-@media (min-width: 1024px) {
+@media screen and (min-width: 1024px) {
   .periodic-table__root {
-    grid-template-columns: repeat(auto-fill, minmax(6em, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(6em, 0fr));
     width: 100%;
   }
 }
@@ -64,12 +63,18 @@ body {
 }
 
 .periodic-table__subgrid-area .periodic-table__subgrid-area-heading {
-  background: #353535;
   color: white;
   grid-column: 1 / -1;
   margin: 0;
-  padding: 1em;
-  font-size: 1.333em;
+  padding: 1em 0 .1em;
+  font-size: 1.5em;
+  font-weight: normal;
+  border-bottom: 2px solid white;
+}
+
+.periodic-table__subgrid-area:nth-child(2)
+  .periodic-table__subgrid-area-heading {
+  padding-top: 2em;
 }
 
 .periodic-table__subgrid-row {
@@ -80,6 +85,9 @@ body {
   text-align: center;
   font-size: 1.5em;
   color: white;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0;
 }
 
 /*
@@ -100,27 +108,33 @@ ul {
   word-break: break-word;
   height: 100%;
   border-radius: 8px;
+  --hsl-color: hsl(var(--color), 80%, 87.5%);
+  --hsl-alt-color: hsl(var(--color), 80%, 22.5%);
+  background-color: var(--hsl-alt-color);
+  border: 2px solid var(--hsl-color);
+  color: white;
+
+  &:hover {
+    background-color: var(--hsl-color);
+    color: black;
+  }
 }
 
-@media (min-width: 1024px) {
+@media screen and (min-width: 1024px) {
   .aria-role {
-    aspect-ratio: 1;
+    min-height: 6em;
   }
 }
 
 ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
-  .map(([role, color]) => {
+  .map(([role], index, { length }) => {
     return `
     .aria-role--abstract-role-${role} {
-      background-color: ${color};
-      background-image: linear-gradient(45deg, rgba(0, 0, 0, .75) 50%, rgba(0, 0, 0, .75) 50%);
-      color: white;
-      border: 2px solid ${color};
+      --color: ${(index / length) * 360}deg;
+    }
 
-      &:hover {
-        background-image: none;
-        color: black;
-      }
+    .aria-role__dialog--abstract-role-${role} .aria-role__dialog-content {
+      --color: ${(index / length) * 360}deg;
     }
   `;
   })
@@ -203,12 +217,17 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
 
 .aria-role__dialog-content {
   display: grid;
-  place-content: flex-start;
+  align-content: flex-start;
   position: relative;
   padding: 1em;
   background: white;
   color: black;
   color-scheme: light;
+}
+
+.aria-role__dialog-content {
+  /*background-color: hsl(0deg, 0%, 87.5%);*/
+  background-color: hsl(var(--color), 80%, 87.5%);
 }
 
 .aria-role__dialog-content > [tabindex="-1"]:focus {
@@ -220,7 +239,7 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
   outline-offset: 2px;
 }
 
-@media (min-width: 1024px) {
+@media screen and (min-width: 1024px) {
   .aria-role__dialog {
     position: static;
   }
@@ -228,12 +247,13 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
   .aria-role__dialog-content {
     position: fixed;
     top: 1em;
+    height: 100%;
     max-height: calc(100dvh - 2em);
     overflow: auto;
     border: 2px solid white;
     margin-right: 1em;
     border-radius: 8px;
-    transition: max-height 0.5s ease-in-out;
+    transition: max-height 0.125s ease-in-out;
   }
 }
 
@@ -245,11 +265,11 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
 .aria-role__table {
   margin: 0;
   list-style: none;
-  padding: 8px;
   display: grid;
   place-content: center;
-  place-items: center;
-  grid-auto-columns: 1fr;
+  place-items: stretch;
+  grid-auto-columns: 100%;
+  margin-top: 1em;
 }
 
 .aria-role__dfn {
@@ -257,6 +277,11 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
   padding: 0;
   text-align: center;
   display: block;
+}
+
+.aria-role__column-header,
+.aria-role__cell {
+  background-color: white;
 }
 
 .visually-hidden {
@@ -276,11 +301,14 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
 
 dialog table {
   border-collapse: collapse;
+  border-left: 1px solid;
+  border-top: 1px solid;
 }
 
 dialog :is(td, th) {
   padding: 8px;
-  border: 1px solid;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
   text-align: left;
 }
 
@@ -296,6 +324,8 @@ dialog table p {
   margin: 0;
   padding: .5em 0;
   grid-column: 1 / -1;
+  font-style: italic;
+  font-weight: normal;
 }
 
 .list {
@@ -328,6 +358,7 @@ close-dialog-button button {
   padding: .5em .667em .667em;
 
   &:focus {
+    outline-offset: 2px;
     outline: 2px solid black;
   }
 }
