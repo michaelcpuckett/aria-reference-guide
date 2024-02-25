@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node ./src/app.tsx"
+    "start": "ts-node ./src/app.tsx",
+    "test-webkit": "npx playwright wk http://localhost:10101"
   },
   "author": "",
   "license": "ISC",

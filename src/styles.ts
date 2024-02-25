@@ -25,8 +25,6 @@ body {
   main {
     grid-column: 1 / span 2;
     padding: 1em 0;
-    display: grid;
-    place-items: center;
   }
 
   body:has(dialog[open]) main {
