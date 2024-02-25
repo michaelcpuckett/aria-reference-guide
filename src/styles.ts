@@ -228,11 +228,12 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
   .aria-role__dialog-content {
     position: fixed;
     top: 1em;
-    height: calc(100dvh - 2em);
+    max-height: calc(100dvh - 2em);
     overflow: auto;
     border: 2px solid white;
     margin-right: 1em;
     border-radius: 8px;
+    transition: max-height 0.5s ease-in-out;
   }
 }
 
