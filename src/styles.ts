@@ -219,6 +219,7 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
 
 .aria-role__dialog-content:has(> [tabindex="-1"]:focus) {
   outline: 2px solid white;
+  outline-offset: 2px;
 }
 
 @media (min-width: 1024px) {
