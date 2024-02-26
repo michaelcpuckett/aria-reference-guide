@@ -5,15 +5,23 @@ export default `
   box-sizing: border-box;
 }
 
+:focus:not(:focus-visible) {
+  outline: 0;
+}
+
 :root {
   font-family: system-ui, sans-serif;
   color-scheme: dark;
   font-size: 17px;
+
+  @media print {
+    color-scheme: light;
+  }
 }
 
 body {
   margin: 0;
-  background: black;
+  background: #252525;
   display: grid;
 
   @media print {
@@ -42,7 +50,11 @@ body {
 }
 
 @media print {
-  body:has(.aria-role__dialog[open]) main {
+  body:has(:is(.aria-role__dialog:target, .aria-role__dialog[open])) main {
+    display: none !important;
+  }
+
+  close-dialog-button {
     display: none !important;
   }
 }
@@ -178,8 +190,9 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
   font-weight: 600;
   text-decoration-color: var(--hsl-color);
 
-  &:focus {
+  &:focus-visible {
     outline: 4px solid white;
+    outline-offset: 2px;
   }
 }
 
@@ -232,6 +245,7 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
   max-width: none;
   border: 0;
   overscroll-behavior: none;
+  background: none;
   top: 0;
   left: 0;
   width: 100%;
@@ -239,7 +253,7 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
   overflow: auto;
   padding: 0;
 
-  &:focus { 
+  &:focus-visible { 
     outline: 0;
   }
 }
@@ -259,7 +273,7 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
   background-color: hsl(var(--color), 80%, 87.5%);
 }
 
-.aria-role__dialog-content > [tabindex="-1"]:focus {
+.aria-role__dialog-content > [tabindex="-1"]:focus-visible {
   outline: 0;
 }
 
@@ -310,7 +324,7 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
 
 .aria-role__column-header,
 .aria-role__cell {
-  background-color: white;
+  background-color: hsl(var(--color), 80%, 97.5%);
 
   @media print {
     color: black;
@@ -375,6 +389,7 @@ dialog table p {
   align-self: center;
   width: 100%;
   word-break: break-word;
+  font-size: 1.75em;
 }
 
 close-dialog-button {
@@ -394,8 +409,9 @@ close-dialog-button a {
   line-height: 1;
   padding: .5em .667em .667em;
   text-decoration: none;
+  background-color: hsl(var(--color), 80%, 97.5%);
 
-  &:focus {
+  &:focus-visible {
     outline-offset: 2px;
     outline: 2px solid black;
   }
