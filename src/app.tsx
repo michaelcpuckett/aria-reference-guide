@@ -82,7 +82,7 @@ function ARIAPeriodicTable() {
                       return [
                         ["", rolesWithoutPresentationalChildren],
                         [
-                          " - Presentational Children",
+                          " with Presentational Children",
                           rolesWithPresentationalChildren,
                         ],
                       ].map(([name, roles]) => {

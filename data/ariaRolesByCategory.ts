@@ -45,7 +45,6 @@ export const ariaRolesByCategory = {
     "insertion",
     "list",
     "listitem",
-    "mark",
     "math",
     "none",
     "note",

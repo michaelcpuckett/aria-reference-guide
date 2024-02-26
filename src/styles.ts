@@ -7,7 +7,8 @@ export default `
 
 :root {
   font-family: system-ui, sans-serif;
-  color-scheme: dark; 
+  color-scheme: dark;
+  font-size: 17px;
 }
 
 body {
