@@ -18,7 +18,7 @@ export const ariaToHtmlMapping = {
   heading: ["<h1>-<h6>"],
   img: ["<img>"],
   link: ["<a[href]>"],
-  list: ["<ul>", "<ol>", "<dl>"],
+  list: ["<ul>", "<ol>", "<menu>"],
   listbox: ["<select[multiple]>"],
   listitem: ["<li>"],
   term: ["<dfn>", "<dt>"],

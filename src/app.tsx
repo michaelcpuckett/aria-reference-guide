@@ -5,7 +5,7 @@ import {
   abstractAriaRolesByType,
   allowedAriaRolesByHtmlElement,
   ariaRolesByCategory,
-  ariaRolesWithOnlyPhrasingDescendants,
+  ariaRolesWithPresentationalChildren,
   ariaToHtmlMapping,
   mappedAbstractAriaRolesToDescriptions,
   mappedAbstractAriaRolesToTitles,
@@ -63,27 +63,27 @@ function ARIAPeriodicTable() {
                     {abstractAriaRoles.map((abstractAriaRole) => {
                       const ariaRoles =
                         ariaRolesByCategory[abstractAriaRole] || [];
-                      const rolesWithOnlyPhrasingDescendants = ariaRoles
+                      const rolesWithPresentationalChildren = ariaRoles
                         .filter((role) =>
-                          ariaRolesWithOnlyPhrasingDescendants.includes(role)
+                          ariaRolesWithPresentationalChildren.includes(role)
                         )
                         .sort((a?: string, b?: string) =>
                           a?.localeCompare(b || "")
                         );
-                      const rolesWithoutOnlyPhrasingDescendants = ariaRoles
+                      const rolesWithoutPresentationalChildren = ariaRoles
                         .filter(
                           (role) =>
-                            !ariaRolesWithOnlyPhrasingDescendants.includes(role)
+                            !ariaRolesWithPresentationalChildren.includes(role)
                         )
                         .sort((a?: string, b?: string) =>
                           a?.localeCompare(b || "")
                         );
 
                       return [
-                        ["", rolesWithoutOnlyPhrasingDescendants],
+                        ["", rolesWithoutPresentationalChildren],
                         [
-                          " (Phrasing Descendants Only)",
-                          rolesWithOnlyPhrasingDescendants,
+                          " - Presentational Children",
+                          rolesWithPresentationalChildren,
                         ],
                       ].map(([name, roles]) => {
                         const title =
@@ -335,7 +335,7 @@ function ARIAPeriodicTable() {
                                         }
                                         aria-role--abstract-role-${abstractAriaRole}
                                         ${
-                                          ariaRolesWithOnlyPhrasingDescendants.includes(
+                                          ariaRolesWithPresentationalChildren.includes(
                                             role
                                           )
                                             ? "aria-role--only-phrasing-descendants"

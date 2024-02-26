@@ -7,7 +7,6 @@ export default `
 
 :root {
   font-family: system-ui, sans-serif;
-  font-size: 18px;
   color-scheme: dark; 
 }
 
@@ -15,6 +14,10 @@ body {
   margin: 0;
   background: black;
   display: grid;
+
+  @media print {
+    background: white;
+  }
 }
 
 @media screen and (min-width: 1024px) {
@@ -27,19 +30,24 @@ body {
     padding: 1em 0;
   }
 
-  body:has(dialog[open]) main {
+  body:has(.aria-role__dialog[open]) main {
     grid-column: 1 / 2;
   }
 
-  dialog[open] {
+  .aria-role__dialog[open] {
     grid-column: 2 / 3;
+  }
+}
+
+@media print {
+  body:has(.aria-role__dialog[open]) main {
+    display: none !important;
   }
 }
 
 .periodic-table__root {
   display: grid;
   list-style: none;
-  gap: 8px;
   grid-template-columns: 100%;
   padding: 0 1em;
 }
@@ -54,7 +62,6 @@ body {
 .periodic-table__subgrid {
   display: grid;
   grid-template-columns: subgrid;
-  font-size: 1em;
   gap: 4px;
 }
 
@@ -69,7 +76,11 @@ body {
   padding: 1em 0 .1em;
   font-size: 1.5em;
   font-weight: normal;
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid;
+
+  @media print {
+    color: black;
+  }
 }
 
 .periodic-table__subgrid-area:nth-child(2)
@@ -88,6 +99,10 @@ body {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   margin-bottom: 0;
+
+  @media print {
+    color: black;
+  }
 }
 
 /*
@@ -118,6 +133,11 @@ ul {
     background-color: var(--hsl-color);
     color: black;
   }
+
+  @media print {
+    color: black;
+    break-inside: avoid;
+  }
 }
 
 @media screen and (min-width: 1024px) {
@@ -133,7 +153,7 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
       --color: ${(index / length) * 360}deg;
     }
 
-    .aria-role__dialog--abstract-role-${role} .aria-role__dialog-content {
+    .aria-role__dialog--abstract-role-${role} {
       --color: ${(index / length) * 360}deg;
     }
   `;
@@ -141,13 +161,12 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
   .join("")}
   
 .aria-role__summary {
-  text-align: center;
   display: grid;
   height: 100%;
   width: 100%;
-  place-content: center;
+  align-content: center;
   place-self: center;
-  padding: 1em;
+  padding: .5em;
   cursor: pointer;
   font: inherit;
   background: none;
@@ -159,6 +178,13 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
 
   &:focus {
     outline: 4px solid white;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .aria-role__summary {
+    justify-content: center;
+    text-align: center;
   }
 }
 
@@ -283,6 +309,10 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
 .aria-role__column-header,
 .aria-role__cell {
   background-color: white;
+
+  @media print {
+    color: black;
+  }
 }
 
 .visually-hidden {
@@ -327,6 +357,10 @@ dialog table p {
   grid-column: 1 / -1;
   font-style: italic;
   font-weight: normal;
+
+  @media print {
+    color: black;
+  }
 }
 
 .list {
@@ -348,9 +382,9 @@ close-dialog-button {
 close-dialog-button a {
   flex: 0 0 auto;
   background: none;
-  border: 2px solid blue;
+  border: 2px solid;
   font: inherit;
-  color: blue;
+  color: hsl(var(--color), 80%, 22.5%);
   border-radius: 50%;
   align-self: center;
   justify-self: flex-end;

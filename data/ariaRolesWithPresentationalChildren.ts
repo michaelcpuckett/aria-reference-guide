@@ -1,4 +1,4 @@
-export const ariaRolesWithOnlyPhrasingDescendants = [
+export const ariaRolesWithPresentationalChildren = [
   "button",
   "checkbox",
   "menuitem",

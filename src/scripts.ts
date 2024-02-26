@@ -37,14 +37,8 @@ export default `
         openDialogElement.close();
       }
 
-      if (matchMedia('(min-width: 600px)').matches) {
+      if (matchMedia('(min-width: 1024px)').matches) {
         this.dialogElement.show();
-
-        if (!openDialogElements.length) {
-          window.requestAnimationFrame(() => {
-            this.buttonElement.scrollIntoView({ block: 'center' });
-          });
-        }
       } else {
         this.dialogElement.showModal();
       }
