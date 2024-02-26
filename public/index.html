@@ -1,20 +1,23 @@
 <!DOCTYPE html>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<style>
+<meta name="viewport" content="width=device-width, initial-scale=1" /><style>
   * {
     box-sizing: border-box;
   }
 
   :root {
     font-family: system-ui, sans-serif;
-    font-size: 18px;
     color-scheme: dark;
+    font-size: 17px;
   }
 
   body {
     margin: 0;
     background: black;
     display: grid;
+
+    @media print {
+      background: white;
+    }
   }
 
   @media screen and (min-width: 1024px) {
@@ -27,19 +30,24 @@
       padding: 1em 0;
     }
 
-    body:has(dialog[open]) main {
+    body:has(.aria-role__dialog[open]) main {
       grid-column: 1 / 2;
     }
 
-    dialog[open] {
+    .aria-role__dialog[open] {
       grid-column: 2 / 3;
+    }
+  }
+
+  @media print {
+    body:has(.aria-role__dialog[open]) main {
+      display: none !important;
     }
   }
 
   .periodic-table__root {
     display: grid;
     list-style: none;
-    gap: 8px;
     grid-template-columns: 100%;
     padding: 0 1em;
   }
@@ -54,7 +62,6 @@
   .periodic-table__subgrid {
     display: grid;
     grid-template-columns: subgrid;
-    font-size: 1em;
     gap: 4px;
   }
 
@@ -69,7 +76,11 @@
     padding: 1em 0 0.1em;
     font-size: 1.5em;
     font-weight: normal;
-    border-bottom: 2px solid white;
+    border-bottom: 2px solid;
+
+    @media print {
+      color: black;
+    }
   }
 
   .periodic-table__subgrid-area:nth-child(2)
@@ -88,6 +99,10 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     margin-bottom: 0;
+
+    @media print {
+      color: black;
+    }
   }
 
   /*
@@ -118,6 +133,11 @@
       background-color: var(--hsl-color);
       color: black;
     }
+
+    @media print {
+      color: black;
+      break-inside: avoid;
+    }
   }
 
   @media screen and (min-width: 1024px) {
@@ -130,7 +150,7 @@
     --color: 0deg;
   }
 
-  .aria-role__dialog--abstract-role-composite .aria-role__dialog-content {
+  .aria-role__dialog--abstract-role-composite {
     --color: 0deg;
   }
 
@@ -138,7 +158,7 @@
     --color: 60deg;
   }
 
-  .aria-role__dialog--abstract-role-landmark .aria-role__dialog-content {
+  .aria-role__dialog--abstract-role-landmark {
     --color: 60deg;
   }
 
@@ -146,7 +166,7 @@
     --color: 120deg;
   }
 
-  .aria-role__dialog--abstract-role-structure .aria-role__dialog-content {
+  .aria-role__dialog--abstract-role-structure {
     --color: 120deg;
   }
 
@@ -154,7 +174,7 @@
     --color: 180deg;
   }
 
-  .aria-role__dialog--abstract-role-widget .aria-role__dialog-content {
+  .aria-role__dialog--abstract-role-widget {
     --color: 180deg;
   }
 
@@ -162,7 +182,7 @@
     --color: 240deg;
   }
 
-  .aria-role__dialog--abstract-role-window .aria-role__dialog-content {
+  .aria-role__dialog--abstract-role-window {
     --color: 240deg;
   }
 
@@ -170,18 +190,17 @@
     --color: 300deg;
   }
 
-  .aria-role__dialog--abstract-role-live .aria-role__dialog-content {
+  .aria-role__dialog--abstract-role-live {
     --color: 300deg;
   }
 
   .aria-role__summary {
-    text-align: center;
     display: grid;
     height: 100%;
     width: 100%;
-    place-content: center;
+    align-content: center;
     place-self: center;
-    padding: 1em;
+    padding: 0.5em;
     cursor: pointer;
     font: inherit;
     background: none;
@@ -189,9 +208,17 @@
     margin: auto;
     color: inherit;
     font-weight: 600;
+    text-decoration-color: var(--hsl-color);
 
     &:focus {
       outline: 4px solid white;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .aria-role__summary {
+      justify-content: center;
+      text-align: center;
     }
   }
 
@@ -315,6 +342,10 @@
   .aria-role__column-header,
   .aria-role__cell {
     background-color: white;
+
+    @media print {
+      color: black;
+    }
   }
 
   .visually-hidden {
@@ -359,6 +390,10 @@
     grid-column: 1 / -1;
     font-style: italic;
     font-weight: normal;
+
+    @media print {
+      color: black;
+    }
   }
 
   .list {
@@ -377,18 +412,19 @@
     display: contents;
   }
 
-  close-dialog-button button {
+  close-dialog-button a {
     flex: 0 0 auto;
     background: none;
-    border: 2px solid blue;
+    border: 2px solid;
     font: inherit;
-    color: blue;
+    color: hsl(var(--color), 80%, 22.5%);
     border-radius: 50%;
     align-self: center;
     justify-self: flex-end;
     font-weight: bold;
     line-height: 1;
     padding: 0.5em 0.667em 0.667em;
+    text-decoration: none;
 
     &:focus {
       outline-offset: 2px;
@@ -429,14 +465,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-landmark aria-role--content-type-flow aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="banner"
-                ><button
-                  type="button"
+                ><a
+                  href="#banner"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--banner"
+                  aria-expanded="false"
                   aria-label="banner"
-                >
-                  banner
-                </button></expansion-button
+                  >banner</a
+                ></expansion-button
               >
             </li>
             <li
@@ -444,14 +481,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-landmark aria-role--content-type-flow aria-role--content-type-sectioning aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="complementary"
-                ><button
-                  type="button"
+                ><a
+                  href="#complementary"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--complementary"
+                  aria-expanded="false"
                   aria-label="complementary"
-                >
-                  com<wbr />ple<wbr />men<wbr />tary
-                </button></expansion-button
+                  >com<wbr />ple<wbr />men<wbr />tary</a
+                ></expansion-button
               >
             </li>
             <li
@@ -459,14 +497,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-landmark aria-role--content-type-flow aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="contentinfo"
-                ><button
-                  type="button"
+                ><a
+                  href="#contentinfo"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--contentinfo"
+                  aria-expanded="false"
                   aria-label="contentinfo"
-                >
-                  con<wbr />tent<wbr />info
-                </button></expansion-button
+                  >con<wbr />tent<wbr />info</a
+                ></expansion-button
               >
             </li>
             <li
@@ -474,14 +513,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-landmark aria-role--content-type-flow aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="form"
-                ><button
-                  type="button"
+                ><a
+                  href="#form"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--form"
+                  aria-expanded="false"
                   aria-label="form"
-                >
-                  form
-                </button></expansion-button
+                  >form</a
+                ></expansion-button
               >
             </li>
             <li
@@ -489,14 +529,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-landmark aria-role--content-type-flow"
             >
               <expansion-button role="none" data-role="main"
-                ><button
-                  type="button"
+                ><a
+                  href="#main"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--main"
+                  aria-expanded="false"
                   aria-label="main"
-                >
-                  main
-                </button></expansion-button
+                  >main</a
+                ></expansion-button
               >
             </li>
             <li
@@ -504,14 +545,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-landmark aria-role--content-type-flow aria-role--content-type-sectioning aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="navigation"
-                ><button
-                  type="button"
+                ><a
+                  href="#navigation"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--navigation"
+                  aria-expanded="false"
                   aria-label="navigation"
-                >
-                  navi<wbr />gation
-                </button></expansion-button
+                  >navi<wbr />gation</a
+                ></expansion-button
               >
             </li>
             <li
@@ -519,14 +561,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-landmark aria-role--content-type-flow aria-role--content-type-sectioning aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="region"
-                ><button
-                  type="button"
+                ><a
+                  href="#region"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--region"
+                  aria-expanded="false"
                   aria-label="region"
-                >
-                  region
-                </button></expansion-button
+                  >region</a
+                ></expansion-button
               >
             </li>
             <li
@@ -534,14 +577,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-landmark aria-role--content-type-flow aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="search"
-                ><button
-                  type="button"
+                ><a
+                  href="#search"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--search"
+                  aria-expanded="false"
                   aria-label="search"
-                >
-                  search
-                </button></expansion-button
+                  >search</a
+                ></expansion-button
               >
             </li>
           </div>
@@ -563,14 +607,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--content-type-flow"
             >
               <expansion-button role="none" data-role="application"
-                ><button
-                  type="button"
+                ><a
+                  href="#application"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--application"
+                  aria-expanded="false"
                   aria-label="application"
-                >
-                  app<wbr />li<wbr />ca<wbr />tion
-                </button></expansion-button
+                  >app<wbr />li<wbr />ca<wbr />tion</a
+                ></expansion-button
               >
             </li>
             <li
@@ -578,14 +623,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--content-type-flow aria-role--content-type-sectioning aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="article"
-                ><button
-                  type="button"
+                ><a
+                  href="#article"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--article"
+                  aria-expanded="false"
                   aria-label="article"
-                >
-                  arti<wbr />cle
-                </button></expansion-button
+                  >arti<wbr />cle</a
+                ></expansion-button
               >
             </li>
             <li
@@ -593,14 +639,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--content-type-flow aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="blockquote"
-                ><button
-                  type="button"
+                ><a
+                  href="#blockquote"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--blockquote"
+                  aria-expanded="false"
                   aria-label="blockquote"
-                >
-                  block<wbr />quote
-                </button></expansion-button
+                  >block<wbr />quote</a
+                ></expansion-button
               >
             </li>
             <li
@@ -608,14 +655,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure"
             >
               <expansion-button role="none" data-role="caption"
-                ><button
-                  type="button"
+                ><a
+                  href="#caption"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--caption"
+                  aria-expanded="false"
                   aria-label="caption"
-                >
-                  caption
-                </button></expansion-button
+                  >caption</a
+                ></expansion-button
               >
             </li>
             <li
@@ -623,14 +671,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure"
             >
               <expansion-button role="none" data-role="cell"
-                ><button
-                  type="button"
+                ><a
+                  href="#cell"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--cell"
+                  aria-expanded="false"
                   aria-label="cell"
-                >
-                  cell
-                </button></expansion-button
+                  >cell</a
+                ></expansion-button
               >
             </li>
             <li
@@ -638,14 +687,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure"
             >
               <expansion-button role="none" data-role="columnheader"
-                ><button
-                  type="button"
+                ><a
+                  href="#columnheader"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--columnheader"
+                  aria-expanded="false"
                   aria-label="columnheader"
-                >
-                  column<wbr />header*
-                </button></expansion-button
+                  >column<wbr />header*</a
+                ></expansion-button
               >
             </li>
             <li
@@ -653,14 +703,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--content-type-flow"
             >
               <expansion-button role="none" data-role="document"
-                ><button
-                  type="button"
+                ><a
+                  href="#document"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--document"
+                  aria-expanded="false"
                   aria-label="document"
-                >
-                  docu<wbr />ment
-                </button></expansion-button
+                  >docu<wbr />ment</a
+                ></expansion-button
               >
             </li>
             <li
@@ -668,14 +719,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--content-type-flow"
             >
               <expansion-button role="none" data-role="feed"
-                ><button
-                  type="button"
+                ><a
+                  href="#feed"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--feed"
+                  aria-expanded="false"
                   aria-label="feed"
-                >
-                  feed
-                </button></expansion-button
+                  >feed</a
+                ></expansion-button
               >
             </li>
             <li
@@ -683,14 +735,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--content-type-flow aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="figure"
-                ><button
-                  type="button"
+                ><a
+                  href="#figure"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--figure"
+                  aria-expanded="false"
                   aria-label="figure"
-                >
-                  figure
-                </button></expansion-button
+                  >figure</a
+                ></expansion-button
               >
             </li>
             <li
@@ -698,14 +751,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--content-type-flow aria-role--content-type-phrasing aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="generic"
-                ><button
-                  type="button"
+                ><a
+                  href="#generic"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--generic"
+                  aria-expanded="false"
                   aria-label="generic"
-                >
-                  generic
-                </button></expansion-button
+                  >generic</a
+                ></expansion-button
               >
             </li>
             <li
@@ -713,14 +767,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--content-type-flow aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="group"
-                ><button
-                  type="button"
+                ><a
+                  href="#group"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--group"
+                  aria-expanded="false"
                   aria-label="group"
-                >
-                  group
-                </button></expansion-button
+                  >group</a
+                ></expansion-button
               >
             </li>
             <li
@@ -728,14 +783,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--content-type-flow"
             >
               <expansion-button role="none" data-role="list"
-                ><button
-                  type="button"
+                ><a
+                  href="#list"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--list"
+                  aria-expanded="false"
                   aria-label="list"
-                >
-                  list
-                </button></expansion-button
+                  >list</a
+                ></expansion-button
               >
             </li>
             <li
@@ -743,29 +799,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure"
             >
               <expansion-button role="none" data-role="listitem"
-                ><button
-                  type="button"
+                ><a
+                  href="#listitem"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--listitem"
+                  aria-expanded="false"
                   aria-label="listitem"
-                >
-                  listitem
-                </button></expansion-button
-              >
-            </li>
-            <li
-              aria-label="mark"
-              class="aria-role aria-role--non-interactive aria-role--abstract-role-structure"
-            >
-              <expansion-button role="none" data-role="mark"
-                ><button
-                  type="button"
-                  aria-haspopup="dialog"
-                  class="aria-role__summary"
-                  aria-label="mark"
-                >
-                  mark
-                </button></expansion-button
+                  >listitem</a
+                ></expansion-button
               >
             </li>
             <li
@@ -773,14 +815,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--content-type-flow"
             >
               <expansion-button role="none" data-role="math"
-                ><button
-                  type="button"
+                ><a
+                  href="#math"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--math"
+                  aria-expanded="false"
                   aria-label="math"
-                >
-                  math
-                </button></expansion-button
+                  >math</a
+                ></expansion-button
               >
             </li>
             <li
@@ -788,14 +831,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure"
             >
               <expansion-button role="none" data-role="none"
-                ><button
-                  type="button"
+                ><a
+                  href="#none"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--none"
+                  aria-expanded="false"
                   aria-label="none"
-                >
-                  none
-                </button></expansion-button
+                  >none</a
+                ></expansion-button
               >
             </li>
             <li
@@ -803,14 +847,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--content-type-flow"
             >
               <expansion-button role="none" data-role="note"
-                ><button
-                  type="button"
+                ><a
+                  href="#note"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--note"
+                  aria-expanded="false"
                   aria-label="note"
-                >
-                  note
-                </button></expansion-button
+                  >note</a
+                ></expansion-button
               >
             </li>
             <li
@@ -818,14 +863,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure"
             >
               <expansion-button role="none" data-role="presentation"
-                ><button
-                  type="button"
+                ><a
+                  href="#presentation"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--presentation"
+                  aria-expanded="false"
                   aria-label="presentation"
-                >
-                  presen<wbr />tation
-                </button></expansion-button
+                  >presen<wbr />tation</a
+                ></expansion-button
               >
             </li>
             <li
@@ -833,14 +879,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure"
             >
               <expansion-button role="none" data-role="row"
-                ><button
-                  type="button"
+                ><a
+                  href="#row"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--row"
+                  aria-expanded="false"
                   aria-label="row"
-                >
-                  row*
-                </button></expansion-button
+                  >row*</a
+                ></expansion-button
               >
             </li>
             <li
@@ -848,14 +895,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure"
             >
               <expansion-button role="none" data-role="rowgroup"
-                ><button
-                  type="button"
+                ><a
+                  href="#rowgroup"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--rowgroup"
+                  aria-expanded="false"
                   aria-label="rowgroup"
-                >
-                  row<wbr />group
-                </button></expansion-button
+                  >row<wbr />group</a
+                ></expansion-button
               >
             </li>
             <li
@@ -863,14 +911,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure"
             >
               <expansion-button role="none" data-role="rowheader"
-                ><button
-                  type="button"
+                ><a
+                  href="#rowheader"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--rowheader"
+                  aria-expanded="false"
                   aria-label="rowheader"
-                >
-                  row<wbr />header*
-                </button></expansion-button
+                  >row<wbr />header*</a
+                ></expansion-button
               >
             </li>
             <li
@@ -878,14 +927,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--content-type-flow aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="table"
-                ><button
-                  type="button"
+                ><a
+                  href="#table"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--table"
+                  aria-expanded="false"
                   aria-label="table"
-                >
-                  table
-                </button></expansion-button
+                  >table</a
+                ></expansion-button
               >
             </li>
             <li
@@ -893,14 +943,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--content-type-flow"
             >
               <expansion-button role="none" data-role="tabpanel"
-                ><button
-                  type="button"
+                ><a
+                  href="#tabpanel"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--tabpanel"
+                  aria-expanded="false"
                   aria-label="tabpanel"
-                >
-                  tab<wbr />panel
-                </button></expansion-button
+                  >tab<wbr />panel</a
+                ></expansion-button
               >
             </li>
             <li
@@ -908,14 +959,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--content-type-flow"
             >
               <expansion-button role="none" data-role="toolbar"
-                ><button
-                  type="button"
+                ><a
+                  href="#toolbar"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--toolbar"
+                  aria-expanded="false"
                   aria-label="toolbar"
-                >
-                  tool<wbr />bar
-                </button></expansion-button
+                  >tool<wbr />bar</a
+                ></expansion-button
               >
             </li>
           </div>
@@ -926,7 +978,7 @@
             class="periodic-table__subgrid-heading"
           >
             Structure Roles<!-- -->
-            (Phrasing Descendants Only)
+            with Presentational Children
           </h3>
           <div
             role="list"
@@ -938,14 +990,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--only-phrasing-descendants aria-role--content-type-flow aria-role--content-type-phrasing aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="code"
-                ><button
-                  type="button"
+                ><a
+                  href="#code"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--code"
+                  aria-expanded="false"
                   aria-label="code"
-                >
-                  code
-                </button></expansion-button
+                  >code</a
+                ></expansion-button
               >
             </li>
             <li
@@ -953,14 +1006,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--only-phrasing-descendants aria-role--content-type-flow aria-role--content-type-phrasing aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="definition"
-                ><button
-                  type="button"
+                ><a
+                  href="#definition"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--definition"
+                  aria-expanded="false"
                   aria-label="definition"
-                >
-                  defi<wbr />ni<wbr />tion
-                </button></expansion-button
+                  >defi<wbr />ni<wbr />tion</a
+                ></expansion-button
               >
             </li>
             <li
@@ -968,14 +1022,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--only-phrasing-descendants aria-role--content-type-flow aria-role--content-type-phrasing"
             >
               <expansion-button role="none" data-role="deletion"
-                ><button
-                  type="button"
+                ><a
+                  href="#deletion"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--deletion"
+                  aria-expanded="false"
                   aria-label="deletion"
-                >
-                  del<wbr />etion
-                </button></expansion-button
+                  >del<wbr />etion</a
+                ></expansion-button
               >
             </li>
             <li
@@ -983,14 +1038,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--only-phrasing-descendants aria-role--content-type-flow aria-role--content-type-phrasing aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="emphasis"
-                ><button
-                  type="button"
+                ><a
+                  href="#emphasis"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--emphasis"
+                  aria-expanded="false"
                   aria-label="emphasis"
-                >
-                  emph<wbr />asis
-                </button></expansion-button
+                  >emph<wbr />asis</a
+                ></expansion-button
               >
             </li>
             <li
@@ -998,14 +1054,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--only-phrasing-descendants aria-role--content-type-flow aria-role--content-type-heading aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="heading"
-                ><button
-                  type="button"
+                ><a
+                  href="#heading"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--heading"
+                  aria-expanded="false"
                   aria-label="heading"
-                >
-                  heading
-                </button></expansion-button
+                  >heading</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1013,14 +1070,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--only-phrasing-descendants aria-role--content-type-flow aria-role--content-type-phrasing aria-role--content-type-embedded aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="img"
-                ><button
-                  type="button"
+                ><a
+                  href="#img"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--img"
+                  aria-expanded="false"
                   aria-label="img"
-                >
-                  img
-                </button></expansion-button
+                  >img</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1028,14 +1086,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--only-phrasing-descendants aria-role--content-type-flow aria-role--content-type-phrasing aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="insertion"
-                ><button
-                  type="button"
+                ><a
+                  href="#insertion"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--insertion"
+                  aria-expanded="false"
                   aria-label="insertion"
-                >
-                  ins<wbr />ertion
-                </button></expansion-button
+                  >ins<wbr />ertion</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1043,14 +1102,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--only-phrasing-descendants aria-role--content-type-flow aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="paragraph"
-                ><button
-                  type="button"
+                ><a
+                  href="#paragraph"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--paragraph"
+                  aria-expanded="false"
                   aria-label="paragraph"
-                >
-                  para<wbr />graph
-                </button></expansion-button
+                  >para<wbr />graph</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1058,14 +1118,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--only-phrasing-descendants"
             >
               <expansion-button role="none" data-role="separator"
-                ><button
-                  type="button"
+                ><a
+                  href="#separator"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--separator"
+                  aria-expanded="false"
                   aria-label="separator"
-                >
-                  separ<wbr />ator*
-                </button></expansion-button
+                  >separ<wbr />ator*</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1073,14 +1134,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--only-phrasing-descendants aria-role--content-type-flow aria-role--content-type-phrasing aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="strong"
-                ><button
-                  type="button"
+                ><a
+                  href="#strong"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--strong"
+                  aria-expanded="false"
                   aria-label="strong"
-                >
-                  strong
-                </button></expansion-button
+                  >strong</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1088,14 +1150,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--only-phrasing-descendants aria-role--content-type-flow aria-role--content-type-phrasing aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="subscript"
-                ><button
-                  type="button"
+                ><a
+                  href="#subscript"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--subscript"
+                  aria-expanded="false"
                   aria-label="subscript"
-                >
-                  sub<wbr />script
-                </button></expansion-button
+                  >sub<wbr />script</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1103,14 +1166,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--only-phrasing-descendants aria-role--content-type-flow aria-role--content-type-phrasing aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="superscript"
-                ><button
-                  type="button"
+                ><a
+                  href="#superscript"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--superscript"
+                  aria-expanded="false"
                   aria-label="superscript"
-                >
-                  super<wbr />script
-                </button></expansion-button
+                  >super<wbr />script</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1118,14 +1182,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--only-phrasing-descendants aria-role--content-type-phrasing"
             >
               <expansion-button role="none" data-role="term"
-                ><button
-                  type="button"
+                ><a
+                  href="#term"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--term"
+                  aria-expanded="false"
                   aria-label="term"
-                >
-                  term
-                </button></expansion-button
+                  >term</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1133,14 +1198,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--only-phrasing-descendants aria-role--content-type-flow aria-role--content-type-phrasing aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="time"
-                ><button
-                  type="button"
+                ><a
+                  href="#time"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--time"
+                  aria-expanded="false"
                   aria-label="time"
-                >
-                  time
-                </button></expansion-button
+                  >time</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1148,14 +1214,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-structure aria-role--only-phrasing-descendants aria-role--content-type-flow"
             >
               <expansion-button role="none" data-role="tooltip"
-                ><button
-                  type="button"
+                ><a
+                  href="#tooltip"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--tooltip"
+                  aria-expanded="false"
                   aria-label="tooltip"
-                >
-                  tool<wbr />tip
-                </button></expansion-button
+                  >tool<wbr />tip</a
+                ></expansion-button
               >
             </li>
           </div>
@@ -1177,14 +1244,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-live aria-role--content-type-flow"
             >
               <expansion-button role="none" data-role="alert"
-                ><button
-                  type="button"
+                ><a
+                  href="#alert"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--alert"
+                  aria-expanded="false"
                   aria-label="alert"
-                >
-                  alert
-                </button></expansion-button
+                  >alert</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1192,14 +1260,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-live aria-role--content-type-flow"
             >
               <expansion-button role="none" data-role="log"
-                ><button
-                  type="button"
+                ><a
+                  href="#log"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--log"
+                  aria-expanded="false"
                   aria-label="log"
-                >
-                  log
-                </button></expansion-button
+                  >log</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1207,14 +1276,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-live aria-role--content-type-flow"
             >
               <expansion-button role="none" data-role="marquee"
-                ><button
-                  type="button"
+                ><a
+                  href="#marquee"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--marquee"
+                  aria-expanded="false"
                   aria-label="marquee"
-                >
-                  mar<wbr />quee
-                </button></expansion-button
+                  >mar<wbr />quee</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1222,14 +1292,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-live aria-role--content-type-flow"
             >
               <expansion-button role="none" data-role="status"
-                ><button
-                  type="button"
+                ><a
+                  href="#status"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--status"
+                  aria-expanded="false"
                   aria-label="status"
-                >
-                  status
-                </button></expansion-button
+                  >status</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1237,14 +1308,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-live aria-role--content-type-flow"
             >
               <expansion-button role="none" data-role="timer"
-                ><button
-                  type="button"
+                ><a
+                  href="#timer"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--timer"
+                  aria-expanded="false"
                   aria-label="timer"
-                >
-                  timer
-                </button></expansion-button
+                  >timer</a
+                ></expansion-button
               >
             </li>
           </div>
@@ -1266,14 +1338,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-window aria-role--content-type-flow"
             >
               <expansion-button role="none" data-role="alertdialog"
-                ><button
-                  type="button"
+                ><a
+                  href="#alertdialog"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--alertdialog"
+                  aria-expanded="false"
                   aria-label="alertdialog"
-                >
-                  alert<wbr />dialog
-                </button></expansion-button
+                  >alert<wbr />dialog</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1281,14 +1354,15 @@
               class="aria-role aria-role--non-interactive aria-role--abstract-role-window aria-role--content-type-flow"
             >
               <expansion-button role="none" data-role="dialog"
-                ><button
-                  type="button"
+                ><a
+                  href="#dialog"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--dialog"
+                  aria-expanded="false"
                   aria-label="dialog"
-                >
-                  dialog
-                </button></expansion-button
+                  >dialog</a
+                ></expansion-button
               >
             </li>
           </div>
@@ -1324,14 +1398,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-composite aria-role--content-type-flow aria-role--content-type-interactive aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="grid"
-                ><button
-                  type="button"
+                ><a
+                  href="#grid"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--grid"
+                  aria-expanded="false"
                   aria-label="grid"
-                >
-                  grid
-                </button></expansion-button
+                  >grid</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1339,14 +1414,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-composite aria-role--content-type-flow aria-role--content-type-interactive aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="listbox"
-                ><button
-                  type="button"
+                ><a
+                  href="#listbox"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--listbox"
+                  aria-expanded="false"
                   aria-label="listbox"
-                >
-                  listbox
-                </button></expansion-button
+                  >listbox</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1354,14 +1430,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-composite aria-role--content-type-flow aria-role--content-type-interactive"
             >
               <expansion-button role="none" data-role="menu"
-                ><button
-                  type="button"
+                ><a
+                  href="#menu"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--menu"
+                  aria-expanded="false"
                   aria-label="menu"
-                >
-                  menu
-                </button></expansion-button
+                  >menu</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1369,14 +1446,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-composite aria-role--content-type-flow aria-role--content-type-interactive"
             >
               <expansion-button role="none" data-role="menubar"
-                ><button
-                  type="button"
+                ><a
+                  href="#menubar"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--menubar"
+                  aria-expanded="false"
                   aria-label="menubar"
-                >
-                  menu<wbr />bar
-                </button></expansion-button
+                  >menu<wbr />bar</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1384,14 +1462,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-composite aria-role--content-type-flow aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="radiogroup"
-                ><button
-                  type="button"
+                ><a
+                  href="#radiogroup"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--radiogroup"
+                  aria-expanded="false"
                   aria-label="radiogroup"
-                >
-                  radio<wbr />group
-                </button></expansion-button
+                  >radio<wbr />group</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1399,14 +1478,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-composite"
             >
               <expansion-button role="none" data-role="row"
-                ><button
-                  type="button"
+                ><a
+                  href="#row"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--row"
+                  aria-expanded="false"
                   aria-label="row"
-                >
-                  row*
-                </button></expansion-button
+                  >row*</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1414,14 +1494,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-composite aria-role--content-type-flow aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="tablist"
-                ><button
-                  type="button"
+                ><a
+                  href="#tablist"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--tablist"
+                  aria-expanded="false"
                   aria-label="tablist"
-                >
-                  tablist
-                </button></expansion-button
+                  >tablist</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1429,14 +1510,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-composite aria-role--content-type-flow"
             >
               <expansion-button role="none" data-role="tree"
-                ><button
-                  type="button"
+                ><a
+                  href="#tree"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--tree"
+                  aria-expanded="false"
                   aria-label="tree"
-                >
-                  tree
-                </button></expansion-button
+                  >tree</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1444,14 +1526,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-composite aria-role--content-type-flow"
             >
               <expansion-button role="none" data-role="treegrid"
-                ><button
-                  type="button"
+                ><a
+                  href="#treegrid"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--treegrid"
+                  aria-expanded="false"
                   aria-label="treegrid"
-                >
-                  tree<wbr />grid
-                </button></expansion-button
+                  >tree<wbr />grid</a
+                ></expansion-button
               >
             </li>
           </div>
@@ -1473,14 +1556,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-widget"
             >
               <expansion-button role="none" data-role="columnheader"
-                ><button
-                  type="button"
+                ><a
+                  href="#columnheader"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--columnheader"
+                  aria-expanded="false"
                   aria-label="columnheader"
-                >
-                  column<wbr />header*
-                </button></expansion-button
+                  >column<wbr />header*</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1488,14 +1572,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-widget aria-role--content-type-flow aria-role--content-type-phrasing aria-role--content-type-interactive aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="combobox"
-                ><button
-                  type="button"
+                ><a
+                  href="#combobox"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--combobox"
+                  aria-expanded="false"
                   aria-label="combobox"
-                >
-                  combo<wbr />box
-                </button></expansion-button
+                  >combo<wbr />box</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1503,14 +1588,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-widget aria-role--content-type-interactive"
             >
               <expansion-button role="none" data-role="gridcell"
-                ><button
-                  type="button"
+                ><a
+                  href="#gridcell"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--gridcell"
+                  aria-expanded="false"
                   aria-label="gridcell"
-                >
-                  grid<wbr />cell
-                </button></expansion-button
+                  >grid<wbr />cell</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1518,14 +1604,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-widget aria-role--content-type-flow aria-role--content-type-phrasing aria-role--content-type-interactive aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="link"
-                ><button
-                  type="button"
+                ><a
+                  href="#link"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--link"
+                  aria-expanded="false"
                   aria-label="link"
-                >
-                  link
-                </button></expansion-button
+                  >link</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1533,14 +1620,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-widget"
             >
               <expansion-button role="none" data-role="rowheader"
-                ><button
-                  type="button"
+                ><a
+                  href="#rowheader"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--rowheader"
+                  aria-expanded="false"
                   aria-label="rowheader"
-                >
-                  row<wbr />header*
-                </button></expansion-button
+                  >row<wbr />header*</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1548,14 +1636,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-widget aria-role--content-type-flow aria-role--content-type-phrasing aria-role--content-type-interactive"
             >
               <expansion-button role="none" data-role="searchbox"
-                ><button
-                  type="button"
+                ><a
+                  href="#searchbox"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--searchbox"
+                  aria-expanded="false"
                   aria-label="searchbox"
-                >
-                  search<wbr />box
-                </button></expansion-button
+                  >search<wbr />box</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1563,14 +1652,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-widget aria-role--content-type-flow aria-role--content-type-phrasing aria-role--content-type-interactive"
             >
               <expansion-button role="none" data-role="spinbutton"
-                ><button
-                  type="button"
+                ><a
+                  href="#spinbutton"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--spinbutton"
+                  aria-expanded="false"
                   aria-label="spinbutton"
-                >
-                  spin<wbr />button
-                </button></expansion-button
+                  >spin<wbr />button</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1578,14 +1668,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-widget aria-role--content-type-interactive"
             >
               <expansion-button role="none" data-role="textbox"
-                ><button
-                  type="button"
+                ><a
+                  href="#textbox"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--textbox"
+                  aria-expanded="false"
                   aria-label="textbox"
-                >
-                  text<wbr />box
-                </button></expansion-button
+                  >text<wbr />box</a
+                ></expansion-button
               >
             </li>
           </div>
@@ -1596,7 +1687,7 @@
             class="periodic-table__subgrid-heading"
           >
             Widget Roles<!-- -->
-            (Phrasing Descendants Only)
+            with Presentational Children
           </h3>
           <div
             role="list"
@@ -1608,14 +1699,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-widget aria-role--only-phrasing-descendants aria-role--content-type-flow aria-role--content-type-phrasing aria-role--content-type-interactive aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="button"
-                ><button
-                  type="button"
+                ><a
+                  href="#button"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--button"
+                  aria-expanded="false"
                   aria-label="button"
-                >
-                  button
-                </button></expansion-button
+                  >button</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1623,14 +1715,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-widget aria-role--only-phrasing-descendants aria-role--content-type-flow aria-role--content-type-phrasing aria-role--content-type-interactive"
             >
               <expansion-button role="none" data-role="checkbox"
-                ><button
-                  type="button"
+                ><a
+                  href="#checkbox"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--checkbox"
+                  aria-expanded="false"
                   aria-label="checkbox"
-                >
-                  check<wbr />box
-                </button></expansion-button
+                  >check<wbr />box</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1638,14 +1731,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-widget aria-role--only-phrasing-descendants aria-role--content-type-interactive"
             >
               <expansion-button role="none" data-role="menuitem"
-                ><button
-                  type="button"
+                ><a
+                  href="#menuitem"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--menuitem"
+                  aria-expanded="false"
                   aria-label="menuitem"
-                >
-                  menu<wbr />item
-                </button></expansion-button
+                  >menu<wbr />item</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1653,14 +1747,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-widget aria-role--only-phrasing-descendants aria-role--content-type-interactive"
             >
               <expansion-button role="none" data-role="menuitemcheckbox"
-                ><button
-                  type="button"
+                ><a
+                  href="#menuitemcheckbox"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--menuitemcheckbox"
+                  aria-expanded="false"
                   aria-label="menuitemcheckbox"
-                >
-                  menu<wbr />item<wbr />check<wbr />box
-                </button></expansion-button
+                  >menu<wbr />item<wbr />check<wbr />box</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1668,14 +1763,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-widget aria-role--only-phrasing-descendants aria-role--content-type-interactive"
             >
               <expansion-button role="none" data-role="menuitemradio"
-                ><button
-                  type="button"
+                ><a
+                  href="#menuitemradio"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--menuitemradio"
+                  aria-expanded="false"
                   aria-label="menuitemradio"
-                >
-                  menu<wbr />item<wbr />radio
-                </button></expansion-button
+                  >menu<wbr />item<wbr />radio</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1683,14 +1779,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-widget aria-role--only-phrasing-descendants aria-role--content-type-flow aria-role--content-type-phrasing aria-role--content-type-palpable"
             >
               <expansion-button role="none" data-role="meter"
-                ><button
-                  type="button"
+                ><a
+                  href="#meter"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--meter"
+                  aria-expanded="false"
                   aria-label="meter"
-                >
-                  meter
-                </button></expansion-button
+                  >meter</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1698,14 +1795,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-widget aria-role--only-phrasing-descendants aria-role--content-type-interactive"
             >
               <expansion-button role="none" data-role="option"
-                ><button
-                  type="button"
+                ><a
+                  href="#option"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--option"
+                  aria-expanded="false"
                   aria-label="option"
-                >
-                  option
-                </button></expansion-button
+                  >option</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1713,14 +1811,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-widget aria-role--only-phrasing-descendants aria-role--content-type-flow aria-role--content-type-phrasing"
             >
               <expansion-button role="none" data-role="progressbar"
-                ><button
-                  type="button"
+                ><a
+                  href="#progressbar"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--progressbar"
+                  aria-expanded="false"
                   aria-label="progressbar"
-                >
-                  prog<wbr />ress<wbr />bar
-                </button></expansion-button
+                  >prog<wbr />ress<wbr />bar</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1728,14 +1827,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-widget aria-role--only-phrasing-descendants aria-role--content-type-flow aria-role--content-type-phrasing aria-role--content-type-interactive"
             >
               <expansion-button role="none" data-role="radio"
-                ><button
-                  type="button"
+                ><a
+                  href="#radio"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--radio"
+                  aria-expanded="false"
                   aria-label="radio"
-                >
-                  radio
-                </button></expansion-button
+                  >radio</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1743,14 +1843,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-widget aria-role--only-phrasing-descendants"
             >
               <expansion-button role="none" data-role="scrollbar"
-                ><button
-                  type="button"
+                ><a
+                  href="#scrollbar"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--scrollbar"
+                  aria-expanded="false"
                   aria-label="scrollbar"
-                >
-                  scroll<wbr />bar
-                </button></expansion-button
+                  >scroll<wbr />bar</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1758,14 +1859,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-widget aria-role--only-phrasing-descendants"
             >
               <expansion-button role="none" data-role="separator"
-                ><button
-                  type="button"
+                ><a
+                  href="#separator"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--separator"
+                  aria-expanded="false"
                   aria-label="separator"
-                >
-                  separ<wbr />ator*
-                </button></expansion-button
+                  >separ<wbr />ator*</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1773,14 +1875,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-widget aria-role--only-phrasing-descendants aria-role--content-type-flow aria-role--content-type-phrasing aria-role--content-type-interactive"
             >
               <expansion-button role="none" data-role="slider"
-                ><button
-                  type="button"
+                ><a
+                  href="#slider"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--slider"
+                  aria-expanded="false"
                   aria-label="slider"
-                >
-                  slider
-                </button></expansion-button
+                  >slider</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1788,14 +1891,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-widget aria-role--only-phrasing-descendants aria-role--content-type-flow aria-role--content-type-phrasing aria-role--content-type-interactive"
             >
               <expansion-button role="none" data-role="switch"
-                ><button
-                  type="button"
+                ><a
+                  href="#switch"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--switch"
+                  aria-expanded="false"
                   aria-label="switch"
-                >
-                  switch
-                </button></expansion-button
+                  >switch</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1803,14 +1907,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-widget aria-role--only-phrasing-descendants aria-role--content-type-interactive"
             >
               <expansion-button role="none" data-role="tab"
-                ><button
-                  type="button"
+                ><a
+                  href="#tab"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--tab"
+                  aria-expanded="false"
                   aria-label="tab"
-                >
-                  tab
-                </button></expansion-button
+                  >tab</a
+                ></expansion-button
               >
             </li>
             <li
@@ -1818,14 +1923,15 @@
               class="aria-role aria-role--interactive aria-role--abstract-role-widget aria-role--only-phrasing-descendants aria-role--content-type-interactive"
             >
               <expansion-button role="none" data-role="treeitem"
-                ><button
-                  type="button"
+                ><a
+                  href="#treeitem"
                   aria-haspopup="dialog"
                   class="aria-role__summary"
+                  id="aria-role__summary--treeitem"
+                  aria-expanded="false"
                   aria-label="treeitem"
-                >
-                  tree<wbr />item
-                </button></expansion-button
+                  >tree<wbr />item</a
+                ></expansion-button
               >
             </li>
           </div>
@@ -1836,14 +1942,14 @@
 </main>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-landmark"
-  id="dialog-for-banner"
+  id="banner"
   aria-labelledby="aria-role__dialog-heading--banner"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--banner" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -1858,7 +1964,7 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A region that contains mostly site-oriented content, rather than
+              A landmark that contains mostly site-oriented content, rather than
               page-specific content.
             </td>
           </tr>
@@ -1911,14 +2017,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-landmark"
-  id="dialog-for-complementary"
+  id="complementary"
   aria-labelledby="aria-role__dialog-heading--complementary"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--complementary" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -1933,9 +2039,9 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A supporting section of the document, designed to be complementary
-              to the main content at a similar level in the DOM hierarchy, but
-              remains meaningful when separated from the main content.
+              A landmark that is designed to be complementary to the main
+              content at a similar level in the DOM hierarchy, but remaining
+              meaningful when separated from the main content.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -1987,14 +2093,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-landmark"
-  id="dialog-for-contentinfo"
+  id="contentinfo"
   aria-labelledby="aria-role__dialog-heading--contentinfo"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--contentinfo" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -2009,8 +2115,7 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A large perceivable region that contains information about the
-              parent document.
+              A landmark that contains information about the parent document.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -2062,14 +2167,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-landmark"
-  id="dialog-for-form"
+  id="form"
   aria-labelledby="aria-role__dialog-heading--form"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--form" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -2136,14 +2241,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-landmark"
-  id="dialog-for-main"
+  id="main"
   aria-labelledby="aria-role__dialog-heading--main"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--main" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -2158,7 +2263,7 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              The main content area of a document.
+              A landmark containing the main content of a document.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -2211,14 +2316,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-landmark"
-  id="dialog-for-navigation"
+  id="navigation"
   aria-labelledby="aria-role__dialog-heading--navigation"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--navigation" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -2233,8 +2338,8 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A collection of navigational elements (usually links) for
-              navigating the document or related documents.
+              A landmark containing a collection of navigational elements
+              (usually links) for navigating the document or related documents.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -2286,14 +2391,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-landmark"
-  id="dialog-for-region"
+  id="region"
   aria-labelledby="aria-role__dialog-heading--region"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--region" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -2308,8 +2413,12 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A large perceivable section of a web page or document, that
-              typically contains a collection of items and objects.
+              A landmark containing content that is relevant to a specific,
+              author-specified purpose and sufficiently important that users
+              will likely want to be able to navigate to the section easily and
+              to have it listed in a summary of the page. Such a page summary
+              could be generated dynamically by a user agent or assistive
+              technology.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -2362,14 +2471,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-landmark"
-  id="dialog-for-search"
+  id="search"
   aria-labelledby="aria-role__dialog-heading--search"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--search" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -2438,14 +2547,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-application"
+  id="application"
   aria-labelledby="aria-role__dialog-heading--application"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--application" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -2460,9 +2569,10 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A region that represents an application. For user agents that
-              support browse modes, this role switches to keyboard passthrough
-              mode.
+              A container with focusable descendants, similar to a composite,
+              but with a non-standard interaction model. For user agents that
+              support browse modes, this role switches to passthrough mode so
+              that user events can be processed with JavaScript.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -2519,14 +2629,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-article"
+  id="article"
   aria-labelledby="aria-role__dialog-heading--article"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--article" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -2593,14 +2703,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-blockquote"
+  id="blockquote"
   aria-labelledby="aria-role__dialog-heading--blockquote"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--blockquote" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -2614,7 +2724,9 @@
         <table class="aria-role__table">
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
-            <td class="aria-role__cell">--</td>
+            <td class="aria-role__cell">
+              A section of content that is quoted from another source.
+            </td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -2664,14 +2776,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-caption"
+  id="caption"
   aria-labelledby="aria-role__dialog-heading--caption"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--caption" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -2685,7 +2797,10 @@
         <table class="aria-role__table">
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
-            <td class="aria-role__cell">--</td>
+            <td class="aria-role__cell">
+              Visible content that names, and may also describe, a figure,
+              table, grid, or treegrid.
+            </td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -2741,14 +2856,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-cell"
+  id="cell"
   aria-labelledby="aria-role__dialog-heading--cell"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--cell" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -2762,7 +2877,7 @@
         <table class="aria-role__table">
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
-            <td class="aria-role__cell">--</td>
+            <td class="aria-role__cell">A cell in a tabular container.</td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -2819,14 +2934,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-columnheader"
+  id="columnheader"
   aria-labelledby="aria-role__dialog-heading--columnheader"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--columnheader" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -2841,8 +2956,7 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A cell containing header information for a column. This may be
-              interactive if it is a descendant of a grid.
+              A cell containing header information for a column.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -2907,14 +3021,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-document"
+  id="document"
   aria-labelledby="aria-role__dialog-heading--document"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--document" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -2929,9 +3043,8 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A region that represents document content (as opposed to a web
-              application.) For user agents that support browse modes, this role
-              switches to document browse mode.
+              An element containing content that assistive technology users may
+              want to browse in a reading mode.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -2986,14 +3099,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-feed"
+  id="feed"
   aria-labelledby="aria-role__dialog-heading--feed"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--feed" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -3062,14 +3175,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-figure"
+  id="figure"
   aria-labelledby="aria-role__dialog-heading--figure"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--figure" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -3084,9 +3197,8 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A figure is a block of content that is self-contained and
-              typically referenced as a single unit from the main flow of the
-              document.
+              A perceivable section of content that typically contains a
+              graphical document, images, code snippets, or example text.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -3137,14 +3249,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-generic"
+  id="generic"
   aria-labelledby="aria-role__dialog-heading--generic"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--generic" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -3159,7 +3271,8 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A catch-all element without semantics.
+              A nameless container element that has no semantic meaning on its
+              own.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -3210,14 +3323,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-group"
+  id="group"
   aria-labelledby="aria-role__dialog-heading--group"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--group" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -3232,7 +3345,7 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A set of user interface objects which are not intended to be
+              A set of user interface objects that is not intended to be
               included in a page summary or table of contents by assistive
               technologies.
             </td>
@@ -3295,14 +3408,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-list"
+  id="list"
   aria-labelledby="aria-role__dialog-heading--list"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--list" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -3317,7 +3430,7 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A group of non-interactive list items.
+              A section containing listitem elements.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -3345,7 +3458,7 @@
               <ul>
                 <li>&lt;ul&gt;</li>
                 <li>&lt;ol&gt;</li>
-                <li>&lt;dl&gt;</li>
+                <li>&lt;menu&gt;</li>
               </ul>
             </td>
           </tr>
@@ -3373,14 +3486,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-listitem"
+  id="listitem"
   aria-labelledby="aria-role__dialog-heading--listitem"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--listitem" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -3451,87 +3564,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-mark"
-  aria-labelledby="aria-role__dialog-heading--mark"
->
-  <div class="aria-role__dialog-content">
-    <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
-    >
-    <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
-      <h1
-        class="aria-role__dialog-heading"
-        id="aria-role__dialog-heading--mark"
-        aria-label="The mark role"
-      >
-        The <code>mark</code> role
-      </h1>
-      <div class="aria-role__details">
-        <table class="aria-role__table">
-          <tr class="aria-role__row">
-            <th class="aria-role__column-header" scope="col">Description</th>
-            <td class="aria-role__cell">
-              A run of text in one document marked or highlighted for reference
-              purposes, due to its relevance in another context.
-            </td>
-          </tr>
-          <tr class="aria-role__row">
-            <th class="aria-role__column-header" scope="col">
-              Content Category
-            </th>
-            <td class="aria-role__cell"><p>Structure</p></td>
-          </tr>
-          <tr class="aria-role__row">
-            <th class="aria-role__column-header" scope="col">
-              Category Description
-            </th>
-            <td class="aria-role__cell">
-              <p>
-                Represents a non-interactive part of a page with document
-                semantics.
-              </p>
-            </td>
-          </tr>
-          <tr class="aria-role__row">
-            <th class="aria-role__column-header" scope="col">
-              HTML Elements with Implicit ARIA Role
-            </th>
-            <td class="aria-role__cell">
-              <ul>
-                <li>--</li>
-              </ul>
-            </td>
-          </tr>
-          <tr class="aria-role__row">
-            <th class="aria-role__column-header" scope="col">
-              Allowed HTML Elements
-            </th>
-            <td class="aria-role__cell">
-              <ul class="list">
-                <li>
-                  &lt;div&gt;, &lt;span&gt;, &lt;p&gt;, other elements that can
-                  receive any role
-                </li>
-              </ul>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </div>
-</dialog>
-<dialog
-  class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-math"
+  id="math"
   aria-labelledby="aria-role__dialog-heading--math"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--math" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -3597,14 +3637,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-none"
+  id="none"
   aria-labelledby="aria-role__dialog-heading--none"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--none" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -3688,14 +3728,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-note"
+  id="note"
   aria-labelledby="aria-role__dialog-heading--note"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--note" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -3762,14 +3802,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-presentation"
+  id="presentation"
   aria-labelledby="aria-role__dialog-heading--presentation"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--presentation" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -3853,14 +3893,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-row"
+  id="row"
   aria-labelledby="aria-role__dialog-heading--row"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--row" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -3875,8 +3915,7 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A row of cells in a grid. This is an interactive widget only if it
-              is a descendant of a treegrid.
+              A row of cells in a tabular container.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -3940,14 +3979,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-rowgroup"
+  id="rowgroup"
   aria-labelledby="aria-role__dialog-heading--rowgroup"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--rowgroup" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -3962,7 +4001,8 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A group containing one or more row elements in a grid.
+              A structure containing one or more row elements in a tabular
+              container.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -4023,14 +4063,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-rowheader"
+  id="rowheader"
   aria-labelledby="aria-role__dialog-heading--rowheader"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--rowheader" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -4045,8 +4085,7 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A cell containing header information for a row. This may be
-              interactive if it is a descendant of a grid.
+              A cell containing header information for a row.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -4111,14 +4150,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-table"
+  id="table"
   aria-labelledby="aria-role__dialog-heading--table"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--table" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -4133,7 +4172,7 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A non-interactive set of tabular data, with rows and columns.
+              A section containing data arranged in rows and columns.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -4184,14 +4223,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-tabpanel"
+  id="tabpanel"
   aria-labelledby="aria-role__dialog-heading--tabpanel"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--tabpanel" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -4258,14 +4297,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-toolbar"
+  id="toolbar"
   aria-labelledby="aria-role__dialog-heading--toolbar"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--toolbar" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -4280,7 +4319,8 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A collection of commonly used function buttons.
+              A collection of commonly used function buttons or controls
+              represented in compact visual form.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -4333,14 +4373,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-code"
+  id="code"
   aria-labelledby="aria-role__dialog-heading--code"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--code" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -4354,7 +4394,7 @@
         <table class="aria-role__table">
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
-            <td class="aria-role__cell">A piece of computer code.</td>
+            <td class="aria-role__cell">A fragment of computer code.</td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -4404,14 +4444,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-definition"
+  id="definition"
   aria-labelledby="aria-role__dialog-heading--definition"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--definition" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -4475,14 +4515,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-deletion"
+  id="deletion"
   aria-labelledby="aria-role__dialog-heading--deletion"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--deletion" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -4497,7 +4537,8 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              An element containing deleted content.
+              Content that is marked as removed or content that is being
+              suggested for removal.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -4549,14 +4590,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-emphasis"
+  id="emphasis"
   aria-labelledby="aria-role__dialog-heading--emphasis"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--emphasis" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -4570,10 +4611,7 @@
         <table class="aria-role__table">
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
-            <td class="aria-role__cell">
-              A range of text with a different semantic meaning than the
-              surrounding content.
-            </td>
+            <td class="aria-role__cell">One or more emphasized characters.</td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -4623,14 +4661,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-heading"
+  id="heading"
   aria-labelledby="aria-role__dialog-heading--heading"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--heading" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -4645,7 +4683,7 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A header that introduces the section.
+              A heading for a section of the page.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -4696,14 +4734,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-img"
+  id="img"
   aria-labelledby="aria-role__dialog-heading--img"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--img" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -4772,14 +4810,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-insertion"
+  id="insertion"
   aria-labelledby="aria-role__dialog-heading--insertion"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--insertion" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -4794,7 +4832,8 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              An element containing inserted content.
+              An insertion contains content that is marked as added or content
+              that is being suggested for addition. See related deletion.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -4845,14 +4884,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-paragraph"
+  id="paragraph"
   aria-labelledby="aria-role__dialog-heading--paragraph"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--paragraph" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -4866,7 +4905,7 @@
         <table class="aria-role__table">
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
-            <td class="aria-role__cell">A paragraph of text.</td>
+            <td class="aria-role__cell">A paragraph of content.</td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -4916,14 +4955,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-separator"
+  id="separator"
   aria-labelledby="aria-role__dialog-heading--separator"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--separator" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -4998,14 +5037,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-strong"
+  id="strong"
   aria-labelledby="aria-role__dialog-heading--strong"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--strong" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -5020,7 +5059,7 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A range of text with strong importance, seriousness, or urgency.
+              Content that is important, serious, or urgent.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -5071,14 +5110,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-subscript"
+  id="subscript"
   aria-labelledby="aria-role__dialog-heading--subscript"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--subscript" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -5092,10 +5131,7 @@
         <table class="aria-role__table">
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
-            <td class="aria-role__cell">
-              A subscript is a character that is set slightly below the normal
-              line of type.
-            </td>
+            <td class="aria-role__cell">One or more subscripted characters.</td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -5145,14 +5181,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-superscript"
+  id="superscript"
   aria-labelledby="aria-role__dialog-heading--superscript"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--superscript" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -5167,8 +5203,7 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A superscript is a character that is set slightly above the normal
-              line of type.
+              One or more superscripted characters.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -5219,14 +5254,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-term"
+  id="term"
   aria-labelledby="aria-role__dialog-heading--term"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--term" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -5294,14 +5329,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-time"
+  id="time"
   aria-labelledby="aria-role__dialog-heading--time"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--time" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -5315,7 +5350,9 @@
         <table class="aria-role__table">
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
-            <td class="aria-role__cell">A specific period in time.</td>
+            <td class="aria-role__cell">
+              Represents a specific point in time.
+            </td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -5365,14 +5402,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-structure"
-  id="dialog-for-tooltip"
+  id="tooltip"
   aria-labelledby="aria-role__dialog-heading--tooltip"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--tooltip" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -5437,14 +5474,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-live"
-  id="dialog-for-alert"
+  id="alert"
   aria-labelledby="aria-role__dialog-heading--alert"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--alert" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -5459,7 +5496,10 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A live region for important, time-sensitive information.
+              A type of live region with important, and usually time-sensitive,
+              information. Alerts are used to convey messages that may be
+              immediately important to users. An alert is processed as an
+              assertive, atomic live region.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -5510,14 +5550,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-live"
-  id="dialog-for-log"
+  id="log"
   aria-labelledby="aria-role__dialog-heading--log"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--log" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -5584,14 +5624,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-live"
-  id="dialog-for-marquee"
+  id="marquee"
   aria-labelledby="aria-role__dialog-heading--marquee"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--marquee" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -5658,14 +5698,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-live"
-  id="dialog-for-status"
+  id="status"
   aria-labelledby="aria-role__dialog-heading--status"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--status" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -5680,7 +5720,9 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A status message that is not interactive.
+              A type of live region whose content is advisory information for
+              the user but is not important enough to justify an alert, often
+              but not necessarily presented as a status bar.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -5732,14 +5774,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-live"
-  id="dialog-for-timer"
+  id="timer"
   aria-labelledby="aria-role__dialog-heading--timer"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--timer" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -5753,7 +5795,11 @@
         <table class="aria-role__table">
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
-            <td class="aria-role__cell">--</td>
+            <td class="aria-role__cell">
+              A type of live region containing a numerical counter which
+              indicates an amount of elapsed time from a start point, or the
+              time remaining until an end point.
+            </td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -5802,14 +5848,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-window"
-  id="dialog-for-alertdialog"
+  id="alertdialog"
   aria-labelledby="aria-role__dialog-heading--alertdialog"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--alertdialog" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -5824,7 +5870,9 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A type of dialog that contains an alert message.
+              A type of dialog that contains an alert message. Alert dialogs are
+              used to convey messages to alert the user. Unlike alert,
+              alertdialog can receive a response from the user.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -5875,14 +5923,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-window"
-  id="dialog-for-dialog"
+  id="dialog"
   aria-labelledby="aria-role__dialog-heading--dialog"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--dialog" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -5897,8 +5945,7 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A dialog is a descendant window of the primary window of a web
-              application.
+              A descendant window of the primary window of a web application.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -5949,14 +5996,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-composite"
-  id="dialog-for-grid"
+  id="grid"
   aria-labelledby="aria-role__dialog-heading--grid"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--grid" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -5971,8 +6018,10 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A grid is an interactive control which contains cells of tabular
-              data arranged in rows and columns (like a table).
+              A composite widget containing a collection of one or more rows
+              with one or more cells where some or all cells in the grid are
+              focusable by using methods of two-dimensional navigation, such as
+              directional arrow keys.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -6022,14 +6071,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-composite"
-  id="dialog-for-listbox"
+  id="listbox"
   aria-labelledby="aria-role__dialog-heading--listbox"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--listbox" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -6100,14 +6149,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-composite"
-  id="dialog-for-menu"
+  id="menu"
   aria-labelledby="aria-role__dialog-heading--menu"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--menu" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -6122,7 +6171,10 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A type of widget that offers a list of choices to the user.
+              A type of widget that offers a list of choices to the user, often
+              a list of common actions or functions that the user can invoke.
+              The menu role is appropriate when a list of menu items is
+              presented in a manner similar to a menu on a desktop application.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -6177,14 +6229,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-composite"
-  id="dialog-for-menubar"
+  id="menubar"
   aria-labelledby="aria-role__dialog-heading--menubar"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--menubar" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -6254,14 +6306,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-composite"
-  id="dialog-for-radiogroup"
+  id="radiogroup"
   aria-labelledby="aria-role__dialog-heading--radiogroup"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--radiogroup" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -6328,14 +6380,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-composite"
-  id="dialog-for-row"
+  id="row"
   aria-labelledby="aria-role__dialog-heading--row"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--row" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -6350,8 +6402,7 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A row of cells in a grid. This is an interactive widget only if it
-              is a descendant of a treegrid.
+              A row of cells in a tabular container.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -6415,14 +6466,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-composite"
-  id="dialog-for-tablist"
+  id="tablist"
   aria-labelledby="aria-role__dialog-heading--tablist"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--tablist" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -6436,7 +6487,9 @@
         <table class="aria-role__table">
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
-            <td class="aria-role__cell">--</td>
+            <td class="aria-role__cell">
+              A list of tab elements, which are references to tabpanel elements.
+            </td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -6489,14 +6542,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-composite"
-  id="dialog-for-tree"
+  id="tree"
   aria-labelledby="aria-role__dialog-heading--tree"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--tree" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -6511,8 +6564,8 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A type of list that may contain sub-level elements that can be
-              expanded and collapsed.
+              A widget that allows the user to select one or more items from a
+              hierarchically organized collection.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -6565,14 +6618,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-composite"
-  id="dialog-for-treegrid"
+  id="treegrid"
   aria-labelledby="aria-role__dialog-heading--treegrid"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--treegrid" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -6638,14 +6691,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-widget"
-  id="dialog-for-columnheader"
+  id="columnheader"
   aria-labelledby="aria-role__dialog-heading--columnheader"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--columnheader" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -6660,8 +6713,7 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A cell containing header information for a column. This may be
-              interactive if it is a descendant of a grid.
+              A cell containing header information for a column.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -6727,14 +6779,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-widget"
-  id="dialog-for-combobox"
+  id="combobox"
   aria-labelledby="aria-role__dialog-heading--combobox"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--combobox" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -6749,9 +6801,9 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A presentation of a select; usually similar to a textbox where
-              users can type ahead to select an option, or type to enter
-              arbitrary text as a new item in the list.
+              An input that controls another element, such as a listbox or grid,
+              that can dynamically pop up to help the user set the value of the
+              input.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -6805,14 +6857,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-widget"
-  id="dialog-for-gridcell"
+  id="gridcell"
   aria-labelledby="aria-role__dialog-heading--gridcell"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--gridcell" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -6826,10 +6878,7 @@
         <table class="aria-role__table">
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
-            <td class="aria-role__cell">
-              A cell in a grid or treegrid. This is an interactive widget only
-              if it is a descendant of a treetgrid.
-            </td>
+            <td class="aria-role__cell">A cell in a grid or treegrid.</td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -6886,14 +6935,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-widget"
-  id="dialog-for-link"
+  id="link"
   aria-labelledby="aria-role__dialog-heading--link"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--link" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -6964,14 +7013,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-widget"
-  id="dialog-for-rowheader"
+  id="rowheader"
   aria-labelledby="aria-role__dialog-heading--rowheader"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--rowheader" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -6986,8 +7035,7 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A cell containing header information for a row. This may be
-              interactive if it is a descendant of a grid.
+              A cell containing header information for a row.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -7053,14 +7101,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-widget"
-  id="dialog-for-searchbox"
+  id="searchbox"
   aria-labelledby="aria-role__dialog-heading--searchbox"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--searchbox" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -7130,14 +7178,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-widget"
-  id="dialog-for-spinbutton"
+  id="spinbutton"
   aria-labelledby="aria-role__dialog-heading--spinbutton"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--spinbutton" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -7152,8 +7200,8 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A form of range that expects a user to select from among discrete
-              choices.
+              A form of range that expects the user to select from among
+              discrete choices.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -7209,14 +7257,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-widget"
-  id="dialog-for-textbox"
+  id="textbox"
   aria-labelledby="aria-role__dialog-heading--textbox"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--textbox" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -7230,7 +7278,9 @@
         <table class="aria-role__table">
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
-            <td class="aria-role__cell">--</td>
+            <td class="aria-role__cell">
+              An input that allows free-form text as its value.
+            </td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -7284,14 +7334,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-widget"
-  id="dialog-for-button"
+  id="button"
   aria-labelledby="aria-role__dialog-heading--button"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--button" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -7370,14 +7420,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-widget"
-  id="dialog-for-checkbox"
+  id="checkbox"
   aria-labelledby="aria-role__dialog-heading--checkbox"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--checkbox" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -7451,14 +7501,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-widget"
-  id="dialog-for-menuitem"
+  id="menuitem"
   aria-labelledby="aria-role__dialog-heading--menuitem"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--menuitem" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -7473,7 +7523,7 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              An option in a group of choices contained by a menu or menubar.
+              An option in a set of choices contained by a menu or menubar.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -7533,14 +7583,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-widget"
-  id="dialog-for-menuitemcheckbox"
+  id="menuitemcheckbox"
   aria-labelledby="aria-role__dialog-heading--menuitemcheckbox"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--menuitemcheckbox" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -7617,14 +7667,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-widget"
-  id="dialog-for-menuitemradio"
+  id="menuitemradio"
   aria-labelledby="aria-role__dialog-heading--menuitemradio"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--menuitemradio" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -7639,8 +7689,8 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A checkable menuitem in a group of menuitemradio roles, only one
-              of which can be checked at a time.
+              A checkable menuitem in a set of elements with the same role, only
+              one of which can be checked at a time.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -7701,14 +7751,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-widget"
-  id="dialog-for-meter"
+  id="meter"
   aria-labelledby="aria-role__dialog-heading--meter"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--meter" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -7722,7 +7772,10 @@
         <table class="aria-role__table">
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
-            <td class="aria-role__cell">A measurement within a known range.</td>
+            <td class="aria-role__cell">
+              An element that represents a scalar measurement within a known
+              range, or a fractional value.
+            </td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -7774,14 +7827,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-widget"
-  id="dialog-for-option"
+  id="option"
   aria-labelledby="aria-role__dialog-heading--option"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--option" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -7795,7 +7848,7 @@
         <table class="aria-role__table">
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
-            <td class="aria-role__cell">A selectable item in a select list.</td>
+            <td class="aria-role__cell">A selectable item in a listbox.</td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -7856,14 +7909,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-widget"
-  id="dialog-for-progressbar"
+  id="progressbar"
   aria-labelledby="aria-role__dialog-heading--progressbar"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--progressbar" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -7878,9 +7931,10 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A type of live region containing a numerical counter which
-              indicates an amount of elapsed time from a start point, or the
-              time remaining until an end point.
+              An element that displays the progress status for tasks that take a
+              long time. A progressbar indicates that the user&#x27;s request
+              has been received and the application is making progress toward
+              completing the requested action.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -7933,14 +7987,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-widget"
-  id="dialog-for-radio"
+  id="radio"
   aria-labelledby="aria-role__dialog-heading--radio"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--radio" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -7955,8 +8009,8 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A checkable input in a group of radio roles, only one of which can
-              be checked at a time.
+              A checkable input in a group of elements with the same role, only
+              one of which can be checked at a time.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -8012,14 +8066,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-widget"
-  id="dialog-for-scrollbar"
+  id="scrollbar"
   aria-labelledby="aria-role__dialog-heading--scrollbar"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--scrollbar" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -8088,14 +8142,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-widget"
-  id="dialog-for-separator"
+  id="separator"
   aria-labelledby="aria-role__dialog-heading--separator"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--separator" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -8171,14 +8225,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-widget"
-  id="dialog-for-slider"
+  id="slider"
   aria-labelledby="aria-role__dialog-heading--slider"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--slider" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -8193,8 +8247,7 @@
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">Description</th>
             <td class="aria-role__cell">
-              A user input where the user selects a value from within a given
-              range.
+              An input where the user selects a value from within a given range.
             </td>
           </tr>
           <tr class="aria-role__row">
@@ -8248,14 +8301,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-widget"
-  id="dialog-for-switch"
+  id="switch"
   aria-labelledby="aria-role__dialog-heading--switch"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--switch" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -8326,14 +8379,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-widget"
-  id="dialog-for-tab"
+  id="tab"
   aria-labelledby="aria-role__dialog-heading--tab"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--tab" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -8406,14 +8459,14 @@
 </dialog>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-widget"
-  id="dialog-for-treeitem"
+  id="treeitem"
   aria-labelledby="aria-role__dialog-heading--treeitem"
 >
   <div class="aria-role__dialog-content">
     <close-dialog-button
-      ><button type="button" aria-label="Close Dialog">
-        ×
-      </button></close-dialog-button
+      ><a href="#aria-role__summary--treeitem" aria-label="Close Dialog"
+        >×</a
+      ></close-dialog-button
     >
     <div role="region" aria-label="Scrollable Dialog Content" tabindex="-1">
       <h1
@@ -8490,36 +8543,66 @@
       constructor() {
         super();
 
-        const buttonElement = this.querySelector("button");
+        const dialogElement = window.document.querySelector(
+          `#${this.getAttribute("data-role")}`
+        );
+
+        if (!dialogElement) {
+          throw new Error("No dialog element found");
+        }
+
+        this.dialogElement = dialogElement;
+
+        const buttonElement = this.querySelector("a");
 
         if (!buttonElement) {
           throw new Error("No button element found");
         }
 
-        buttonElement.addEventListener("click", this.clickHandler);
+        this.buttonElement = buttonElement;
+
+        window.addEventListener("hashchange", this.handleHashChange);
+        this.buttonElement.addEventListener("click", this.handleButtonClick);
       }
 
-      clickHandler = () => {
-        const containerElement = this.closest(".aria-role");
-        const dialogElement = window.document.querySelector(
-          `#dialog-for-${this.getAttribute("data-role")}`
+      handleButtonClick = (event) => {
+        event.preventDefault();
+        this.buttonElement.setAttribute("aria-expanded", "true");
+        window.history.pushState({}, "", `#${this.dialogElement.id}`);
+        window.dispatchEvent(new Event("hashchange"));
+      };
+
+      openDialog = () => {
+        const openDialogElements = Array.from(
+          window.document.querySelectorAll("dialog[open]")
         );
-
-        if (!dialogElement) {
-          return;
-        }
-
-        const openDialogElements =
-          window.document.querySelectorAll("dialog[open]");
 
         for (const openDialogElement of openDialogElements) {
           openDialogElement.close();
         }
 
-        if (matchMedia("(min-width: 600px)").matches) {
-          dialogElement.show();
+        if (matchMedia("(min-width: 1024px)").matches) {
+          this.dialogElement.show();
         } else {
-          dialogElement.showModal();
+          this.dialogElement.showModal();
+        }
+      };
+
+      closeDialog = () => {
+        if (!this.dialogElement.open) {
+          return;
+        }
+
+        this.buttonElement.setAttribute("aria-expanded", "false");
+
+        this.dialogElement.close();
+      };
+
+      handleHashChange = (event) => {
+        if (window.location.hash === "#" + this.dialogElement.id) {
+          this.openDialog();
+        } else {
+          this.closeDialog();
         }
       };
     }
@@ -8531,20 +8614,16 @@
       constructor() {
         super();
 
-        const buttonElement = this.querySelector("button");
+        const buttonElement = this.querySelector("a");
 
         if (!buttonElement) {
           throw new Error("No button element found");
         }
 
-        buttonElement.addEventListener("click", () => {
-          const dialogElement = this.closest("dialog");
-
-          if (!dialogElement) {
-            return;
-          }
-
-          dialogElement.close();
+        buttonElement.addEventListener("click", (event) => {
+          event.preventDefault();
+          window.history.pushState({}, "", window.location.pathname);
+          window.dispatchEvent(new Event("hashchange"));
         });
       }
     }

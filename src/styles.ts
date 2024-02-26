@@ -31,11 +31,12 @@ body {
     padding: 1em 0;
   }
 
-  body:has(.aria-role__dialog[open]) main {
+  body:has(.aria-role__dialog[open], .aria-role__dialog:target) main {
     grid-column: 1 / 2;
   }
 
-  .aria-role__dialog[open] {
+  .aria-role__dialog[open],
+  .aria-role__dialog:target {
     grid-column: 2 / 3;
   }
 }
@@ -398,5 +399,13 @@ close-dialog-button a {
     outline-offset: 2px;
     outline: 2px solid black;
   }
+}
+
+role-dialog {
+  display: contents;
+}
+
+dialog:target {
+  display: grid;
 }
 `;

@@ -3,7 +3,7 @@ export default `
     constructor() {
       super();
 
-      const dialogElement = window.document.querySelector(\`#\${this.getAttribute('data-role')}\`);
+      const dialogElement = window.document.querySelector(\`role-dialog[data-role=\${this.getAttribute('data-role')}]\`);
 
       if (!dialogElement) {
         throw new Error('No dialog element found');
@@ -25,40 +25,15 @@ export default `
 
     handleButtonClick = (event) => {
       event.preventDefault();
-      this.buttonElement.setAttribute('aria-expanded', 'true');
-      window.history.pushState({}, '', \`#\${this.dialogElement.id}\`);
+      window.history.pushState({}, '', '#' + this.dialogElement.getAttribute('data-role'));
       window.dispatchEvent(new Event('hashchange'));
     }
 
-    openDialog = () => {
-      const openDialogElements = Array.from(window.document.querySelectorAll('dialog[open]'));
-
-      for (const openDialogElement of openDialogElements) {
-        openDialogElement.close();
-      }
-
-      if (matchMedia('(min-width: 1024px)').matches) {
-        this.dialogElement.show();
-      } else {
-        this.dialogElement.showModal();
-      }
-    }
-
-    closeDialog = () => {
-      if (!this.dialogElement.open) {
-        return;
-      }
-
-      this.buttonElement.setAttribute('aria-expanded', 'false');
-
-      this.dialogElement.close();
-    }
-
     handleHashChange = (event) => {
-      if (window.location.hash === '#' + this.dialogElement.id) {
-        this.openDialog();
+      if (window.location.hash === '#' + this.dialogElement.getAttribute('data-role')) {
+        this.dialogElement.openDialog();
       } else {
-        this.closeDialog();
+        this.dialogElement.closeDialog();
       }
     }
   });
@@ -78,6 +53,60 @@ export default `
         window.history.pushState({}, '', window.location.pathname);
         window.dispatchEvent(new Event('hashchange'));
       });
+    }
+  });
+
+  customElements.define('role-dialog', class extends HTMLElement {
+    constructor() {
+      super();
+
+      const dialogElement = this.querySelector('dialog');
+
+      if (!dialogElement) {
+        throw new Error('No dialog element found');
+      }
+
+      this.dialogElement = dialogElement;
+
+      const buttonElement = window.document.querySelector(\`expansion-button[data-role=\${this.getAttribute('data-role')}]\`);
+
+      if (!buttonElement) {
+        throw new Error('No button element found');
+      }
+
+      this.buttonElement = buttonElement;
+    }
+
+    connectedCallback() {
+      if (window.location.hash === '#' + this.getAttribute('data-role')) {
+        this.openDialog();
+      }
+    }
+    
+    openDialog = () => {
+      const openDialogElements = Array.from(window.document.querySelectorAll('dialog[open]'));
+
+      for (const openDialogElement of openDialogElements) {
+        openDialogElement.close();
+      }
+
+      if (matchMedia('(min-width: 1024px)').matches) {
+        this.dialogElement.show();
+      } else {
+        this.dialogElement.showModal();
+      }
+
+      this.buttonElement.setAttribute('aria-expanded', 'true');
+    }
+
+    closeDialog = () => {
+      if (!this.dialogElement.open) {
+        return;
+      }
+
+      this.buttonElement.setAttribute('aria-expanded', 'false');
+
+      this.dialogElement.close();
     }
   });
 `;
