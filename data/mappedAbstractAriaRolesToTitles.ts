@@ -1,7 +1,7 @@
 export const mappedAbstractAriaRolesToTitles = {
   composite: "Composite",
   landmark: "Landmark",
-  structure: "Structural",
+  structure: "Structure",
   widget: "Widget",
   window: "Window",
   live: "Live Region",

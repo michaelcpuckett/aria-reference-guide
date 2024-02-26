@@ -155,6 +155,7 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
   margin: auto;
   color: inherit;
   font-weight: 600;
+  text-decoration-color: var(--hsl-color);
 
   &:focus {
     outline: 4px solid white;
@@ -344,7 +345,7 @@ close-dialog-button {
   display: contents;
 }
 
-close-dialog-button button {
+close-dialog-button a {
   flex: 0 0 auto;
   background: none;
   border: 2px solid blue;
@@ -356,6 +357,7 @@ close-dialog-button button {
   font-weight: bold;
   line-height: 1;
   padding: .5em .667em .667em;
+  text-decoration: none;
 
   &:focus {
     outline-offset: 2px;

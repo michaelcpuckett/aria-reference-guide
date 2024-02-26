@@ -10,8 +10,10 @@ import {
   mappedAbstractAriaRolesToDescriptions,
   mappedAbstractAriaRolesToTitles,
   mappedAriaRolesToContentTypes,
+  mappedAriaRolesToContextRoles,
   mappedAriaRolesToDescriptions,
   mappedAriaRolesToDisplayNames,
+  mappedAriaRolesToNotes,
   mappedAriaTypesToTitles,
 } from "../data";
 
@@ -37,11 +39,16 @@ function ARIAPeriodicTable() {
         <span id="list-title" hidden>
           ARIA Roles by Type
         </span>
-        <ul className="periodic-table__root" aria-labelledby="list-title">
+        <div
+          role="list"
+          className="periodic-table__root"
+          aria-labelledby="list-title"
+        >
           {Object.entries(abstractAriaRolesByType).map(
             ([type, abstractAriaRoles]) => {
               return (
-                <li
+                <div
+                  role="listitem"
                   aria-labelledby={`periodic-table__type--${type}`}
                   className={`periodic-table__subgrid periodic-table__subgrid-area periodic-table__subgrid-area--${type}`}
                   key={type}
@@ -52,10 +59,7 @@ function ARIAPeriodicTable() {
                   >
                     {mappedAriaTypesToTitles[type] + " Roles"}
                   </h2>
-                  <ul
-                    className="periodic-table__subgrid periodic-table__subgrid-row"
-                    aria-labelledby={`periodic-table__type--${type}`}
-                  >
+                  <div className="periodic-table__subgrid periodic-table__subgrid-row">
                     {abstractAriaRoles.map((abstractAriaRole) => {
                       const ariaRoles =
                         ariaRolesByCategory[abstractAriaRole] || [];
@@ -95,8 +99,7 @@ function ARIAPeriodicTable() {
                         }
 
                         return (
-                          <li
-                            role="none"
+                          <div
                             key={abstractAriaRole}
                             className="periodic-table__subgrid periodic-table__subgrid-row"
                           >
@@ -107,29 +110,60 @@ function ARIAPeriodicTable() {
                               {title}
                               {name}
                             </h3>
-                            <ul
-                              className="periodic-table__subgrid periodic-table__subgrid-row"
+                            <div
+                              role="list"
                               aria-labelledby={`aria-abstract-role--${abstractAriaRole}`}
+                              className="periodic-table__subgrid periodic-table__subgrid-row"
                             >
                               {roles.map((role) => {
                                 const displayName =
                                   mappedAriaRolesToDisplayNames[role] || role;
 
+                                const roleTitle =
+                                  mappedAriaRolesToDisplayNames[role] || role;
+                                const abstractTitle =
+                                  mappedAbstractAriaRolesToTitles[
+                                    abstractAriaRole
+                                  ];
+
+                                let contentCategory = abstractTitle;
+
+                                const mayBeInteractive =
+                                  roleTitle.endsWith("*");
+                                if (mayBeInteractive) {
+                                  contentCategory = [];
+
+                                  for (const [key, value] of Object.entries(
+                                    ariaRolesByCategory
+                                  )) {
+                                    if (value.includes(role)) {
+                                      contentCategory.push(
+                                        mappedAbstractAriaRolesToTitles[key]
+                                      );
+                                    }
+                                  }
+
+                                  contentCategory = contentCategory
+                                    .sort()
+                                    .map((category) => `${category}*`)
+                                    .join(", ");
+                                }
+
                                 dialogElements.push(
                                   <dialog
                                     className={`aria-role__dialog aria-role__dialog--abstract-role-${abstractAriaRole}`}
-                                    id={`dialog-for-${role}`}
+                                    id={role}
                                     aria-labelledby={`aria-role__dialog-heading--${role}`}
                                     key={role}
                                   >
                                     <div className="aria-role__dialog-content">
                                       <close-dialog-button>
-                                        <button
-                                          type="button"
+                                        <a
+                                          href={`#aria-role__summary--${role}`}
                                           aria-label="Close Dialog"
                                         >
                                           &times;
-                                        </button>
+                                        </a>
                                       </close-dialog-button>
                                       <div
                                         role="region"
@@ -141,11 +175,7 @@ function ARIAPeriodicTable() {
                                           id={`aria-role__dialog-heading--${role}`}
                                           aria-label={`The ${role} role`}
                                           dangerouslySetInnerHTML={{
-                                            __html: `The <code>${
-                                              mappedAriaRolesToDisplayNames[
-                                                role
-                                              ] || role
-                                            }</code> role`,
+                                            __html: `The <code>${roleTitle}</code> role`,
                                           }}
                                         ></h1>
                                         <div className="aria-role__details">
@@ -172,15 +202,28 @@ function ARIAPeriodicTable() {
                                                 Content Category
                                               </th>
                                               <td className="aria-role__cell">
-                                                <p>
-                                                  {
-                                                    mappedAbstractAriaRolesToTitles[
-                                                      abstractAriaRole
-                                                    ]
-                                                  }
-                                                </p>
+                                                <p>{contentCategory}</p>
                                               </td>
                                             </tr>
+
+                                            {mayBeInteractive && (
+                                              <tr className="aria-role__row">
+                                                <th
+                                                  className="aria-role__column-header"
+                                                  scope="col"
+                                                >
+                                                  *Note
+                                                </th>
+                                                <td className="aria-role__cell">
+                                                  May be interactive or
+                                                  non-interactive depending on
+                                                  the context:{" "}
+                                                  {mappedAriaRolesToNotes[
+                                                    role
+                                                  ] || ""}
+                                                </td>
+                                              </tr>
+                                            )}
 
                                             <tr className="aria-role__row">
                                               <th
@@ -193,6 +236,24 @@ function ARIAPeriodicTable() {
                                                 <p>{description}</p>
                                               </td>
                                             </tr>
+
+                                            {mappedAriaRolesToContextRoles[
+                                              role
+                                            ] && (
+                                              <tr className="aria-role__row">
+                                                <th
+                                                  className="aria-role__column-header"
+                                                  scope="col"
+                                                >
+                                                  Required Context Roles
+                                                </th>
+                                                <td className="aria-role__cell">
+                                                  {mappedAriaRolesToContextRoles[
+                                                    role
+                                                  ].join(", ")}
+                                                </td>
+                                              </tr>
+                                            )}
 
                                             <tr className="aria-role__row">
                                               <th
@@ -296,30 +357,32 @@ function ARIAPeriodicTable() {
                                       role="none"
                                       data-role={role}
                                     >
-                                      <button
-                                        type="button"
+                                      <a
+                                        href={`#${role}`}
                                         aria-haspopup="dialog"
                                         className="aria-role__summary"
+                                        id={`aria-role__summary--${role}`}
+                                        aria-expanded="false"
                                         aria-label={role}
                                         dangerouslySetInnerHTML={{
                                           __html: displayName,
                                         }}
-                                      ></button>
+                                      ></a>
                                     </expansion-button>
                                   </li>
                                 );
                               })}
-                            </ul>
-                          </li>
+                            </div>
+                          </div>
                         );
                       });
                     })}
-                  </ul>
-                </li>
+                  </div>
+                </div>
               );
             }
           )}
-        </ul>
+        </div>
       </main>
 
       {dialogElements}

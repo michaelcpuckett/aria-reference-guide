@@ -1,8 +1,10 @@
 export const mappedAriaRolesToDescriptions = {
-  alert: "A live region for important, time-sensitive information.",
-  alertdialog: "A type of dialog that contains an alert message.",
+  alert:
+    "A type of live region with important, and usually time-sensitive, information. Alerts are used to convey messages that may be immediately important to users. An alert is processed as an assertive, atomic live region.",
+  alertdialog:
+    "A type of dialog that contains an alert message. Alert dialogs are used to convey messages to alert the user. Unlike alert, alertdialog can receive a response from the user.",
   application:
-    "A region that represents an application. For user agents that support browse modes, this role switches to keyboard passthrough mode.",
+    "A container with focusable descendants, similar to a composite, but with a non-standard interaction model. For user agents that support browse modes, this role switches to passthrough mode so that user events can be processed with JavaScript.",
   article:
     "A section of a page that forms an independent part of a document, page, or site.",
   banner:

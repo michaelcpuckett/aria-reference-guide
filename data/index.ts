@@ -7,6 +7,8 @@ export { mappedAbstractAriaRolesToBackgroundColors } from "./mappedAbstractAriaR
 export { mappedAbstractAriaRolesToDescriptions } from "./mappedAbstractAriaRolesToDescriptions";
 export { mappedAbstractAriaRolesToTitles } from "./mappedAbstractAriaRolesToTitles";
 export { mappedAriaRolesToContentTypes } from "./mappedAriaRolesToContentTypes";
+export { mappedAriaRolesToContextRoles } from "./mappedAriaRolesToContextRoles";
 export { mappedAriaRolesToDescriptions } from "./mappedAriaRolesToDescriptions";
 export { mappedAriaRolesToDisplayNames } from "./mappedAriaRolesToDisplayNames";
+export { mappedAriaRolesToNotes } from "./mappedAriaRolesToNotes";
 export { mappedAriaTypesToTitles } from "./mappedAriaTypesToTitles";

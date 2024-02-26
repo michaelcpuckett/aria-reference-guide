@@ -251,7 +251,7 @@
 
   .aria-role__dialog-content {
     display: grid;
-    place-content: stretch;
+    align-content: flex-start;
     position: relative;
     padding: 1em;
     background: white;
@@ -399,8 +399,9 @@
 <main>
   <h1 id="h1-title" class="page-title">Periodic Table of ARIA Roles</h1>
   <span id="list-title" hidden="">ARIA Roles by Type</span>
-  <ul class="periodic-table__root" aria-labelledby="list-title">
-    <li
+  <div role="list" class="periodic-table__root" aria-labelledby="list-title">
+    <div
+      role="listitem"
       aria-labelledby="periodic-table__type--non-interactive"
       class="periodic-table__subgrid periodic-table__subgrid-area periodic-table__subgrid-area--non-interactive"
     >
@@ -410,23 +411,18 @@
       >
         Non-interactive Roles
       </h2>
-      <ul
-        class="periodic-table__subgrid periodic-table__subgrid-row"
-        aria-labelledby="periodic-table__type--non-interactive"
-      >
-        <li
-          role="none"
-          class="periodic-table__subgrid periodic-table__subgrid-row"
-        >
+      <div class="periodic-table__subgrid periodic-table__subgrid-row">
+        <div class="periodic-table__subgrid periodic-table__subgrid-row">
           <h3
             id="aria-abstract-role--landmark"
             class="periodic-table__subgrid-heading"
           >
             Landmark Roles
           </h3>
-          <ul
-            class="periodic-table__subgrid periodic-table__subgrid-row"
+          <div
+            role="list"
             aria-labelledby="aria-abstract-role--landmark"
+            class="periodic-table__subgrid periodic-table__subgrid-row"
           >
             <li
               aria-label="banner"
@@ -548,21 +544,19 @@
                 </button></expansion-button
               >
             </li>
-          </ul>
-        </li>
-        <li
-          role="none"
-          class="periodic-table__subgrid periodic-table__subgrid-row"
-        >
+          </div>
+        </div>
+        <div class="periodic-table__subgrid periodic-table__subgrid-row">
           <h3
             id="aria-abstract-role--structure"
             class="periodic-table__subgrid-heading"
           >
-            Structural Roles
+            Structure Roles
           </h3>
-          <ul
-            class="periodic-table__subgrid periodic-table__subgrid-row"
+          <div
+            role="list"
             aria-labelledby="aria-abstract-role--structure"
+            class="periodic-table__subgrid periodic-table__subgrid-row"
           >
             <li
               aria-label="application"
@@ -924,22 +918,20 @@
                 </button></expansion-button
               >
             </li>
-          </ul>
-        </li>
-        <li
-          role="none"
-          class="periodic-table__subgrid periodic-table__subgrid-row"
-        >
+          </div>
+        </div>
+        <div class="periodic-table__subgrid periodic-table__subgrid-row">
           <h3
             id="aria-abstract-role--structure"
             class="periodic-table__subgrid-heading"
           >
-            Structural Roles<!-- -->
+            Structure Roles<!-- -->
             (Phrasing Descendants Only)
           </h3>
-          <ul
-            class="periodic-table__subgrid periodic-table__subgrid-row"
+          <div
+            role="list"
             aria-labelledby="aria-abstract-role--structure"
+            class="periodic-table__subgrid periodic-table__subgrid-row"
           >
             <li
               aria-label="code"
@@ -1166,21 +1158,19 @@
                 </button></expansion-button
               >
             </li>
-          </ul>
-        </li>
-        <li
-          role="none"
-          class="periodic-table__subgrid periodic-table__subgrid-row"
-        >
+          </div>
+        </div>
+        <div class="periodic-table__subgrid periodic-table__subgrid-row">
           <h3
             id="aria-abstract-role--live"
             class="periodic-table__subgrid-heading"
           >
             Live Region Roles
           </h3>
-          <ul
-            class="periodic-table__subgrid periodic-table__subgrid-row"
+          <div
+            role="list"
             aria-labelledby="aria-abstract-role--live"
+            class="periodic-table__subgrid periodic-table__subgrid-row"
           >
             <li
               aria-label="alert"
@@ -1257,21 +1247,19 @@
                 </button></expansion-button
               >
             </li>
-          </ul>
-        </li>
-        <li
-          role="none"
-          class="periodic-table__subgrid periodic-table__subgrid-row"
-        >
+          </div>
+        </div>
+        <div class="periodic-table__subgrid periodic-table__subgrid-row">
           <h3
             id="aria-abstract-role--window"
             class="periodic-table__subgrid-heading"
           >
             Window Roles
           </h3>
-          <ul
-            class="periodic-table__subgrid periodic-table__subgrid-row"
+          <div
+            role="list"
             aria-labelledby="aria-abstract-role--window"
+            class="periodic-table__subgrid periodic-table__subgrid-row"
           >
             <li
               aria-label="alertdialog"
@@ -1303,11 +1291,12 @@
                 </button></expansion-button
               >
             </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      role="listitem"
       aria-labelledby="periodic-table__type--interactive"
       class="periodic-table__subgrid periodic-table__subgrid-area periodic-table__subgrid-area--interactive"
     >
@@ -1317,23 +1306,18 @@
       >
         Interactive Roles
       </h2>
-      <ul
-        class="periodic-table__subgrid periodic-table__subgrid-row"
-        aria-labelledby="periodic-table__type--interactive"
-      >
-        <li
-          role="none"
-          class="periodic-table__subgrid periodic-table__subgrid-row"
-        >
+      <div class="periodic-table__subgrid periodic-table__subgrid-row">
+        <div class="periodic-table__subgrid periodic-table__subgrid-row">
           <h3
             id="aria-abstract-role--composite"
             class="periodic-table__subgrid-heading"
           >
             Composite Roles
           </h3>
-          <ul
-            class="periodic-table__subgrid periodic-table__subgrid-row"
+          <div
+            role="list"
             aria-labelledby="aria-abstract-role--composite"
+            class="periodic-table__subgrid periodic-table__subgrid-row"
           >
             <li
               aria-label="grid"
@@ -1470,21 +1454,19 @@
                 </button></expansion-button
               >
             </li>
-          </ul>
-        </li>
-        <li
-          role="none"
-          class="periodic-table__subgrid periodic-table__subgrid-row"
-        >
+          </div>
+        </div>
+        <div class="periodic-table__subgrid periodic-table__subgrid-row">
           <h3
             id="aria-abstract-role--widget"
             class="periodic-table__subgrid-heading"
           >
             Widget Roles
           </h3>
-          <ul
-            class="periodic-table__subgrid periodic-table__subgrid-row"
+          <div
+            role="list"
             aria-labelledby="aria-abstract-role--widget"
+            class="periodic-table__subgrid periodic-table__subgrid-row"
           >
             <li
               aria-label="columnheader"
@@ -1606,12 +1588,9 @@
                 </button></expansion-button
               >
             </li>
-          </ul>
-        </li>
-        <li
-          role="none"
-          class="periodic-table__subgrid periodic-table__subgrid-row"
-        >
+          </div>
+        </div>
+        <div class="periodic-table__subgrid periodic-table__subgrid-row">
           <h3
             id="aria-abstract-role--widget"
             class="periodic-table__subgrid-heading"
@@ -1619,9 +1598,10 @@
             Widget Roles<!-- -->
             (Phrasing Descendants Only)
           </h3>
-          <ul
-            class="periodic-table__subgrid periodic-table__subgrid-row"
+          <div
+            role="list"
             aria-labelledby="aria-abstract-role--widget"
+            class="periodic-table__subgrid periodic-table__subgrid-row"
           >
             <li
               aria-label="button"
@@ -1848,11 +1828,11 @@
                 </button></expansion-button
               >
             </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-  </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
 <dialog
   class="aria-role__dialog aria-role__dialog--abstract-role-landmark"
@@ -2489,7 +2469,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -2569,7 +2549,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -2640,7 +2620,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -2711,7 +2691,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -2723,6 +2703,12 @@
                 semantics.
               </p>
             </td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">
+              Required Context Roles
+            </th>
+            <td class="aria-role__cell">table, grid, treegrid, figure</td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -2782,7 +2768,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -2794,6 +2780,12 @@
                 semantics.
               </p>
             </td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">
+              Required Context Roles
+            </th>
+            <td class="aria-role__cell">row</td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -2857,7 +2849,14 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure*, Widget*</p></td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">*Note</th>
+            <td class="aria-role__cell">
+              May be interactive or non-interactive depending on the context:<!-- -->
+              <!-- -->Interactive when inside a grid or treegrid.
+            </td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -2869,6 +2868,12 @@
                 semantics.
               </p>
             </td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">
+              Required Context Roles
+            </th>
+            <td class="aria-role__cell">row</td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -2933,7 +2938,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -3011,7 +3016,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -3088,7 +3093,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -3161,7 +3166,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -3236,7 +3241,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -3319,7 +3324,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -3395,7 +3400,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -3407,6 +3412,12 @@
                 semantics.
               </p>
             </td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">
+              Required Context Roles
+            </th>
+            <td class="aria-role__cell">list</td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -3470,7 +3481,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -3542,7 +3553,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -3616,7 +3627,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -3707,7 +3718,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -3781,7 +3792,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -3872,7 +3883,14 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Composite*, Structure*</p></td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">*Note</th>
+            <td class="aria-role__cell">
+              May be interactive or non-interactive depending on the context:<!-- -->
+              <!-- -->Interactive when inside a treegrid.
+            </td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -3884,6 +3902,12 @@
                 semantics.
               </p>
             </td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">
+              Required Context Roles
+            </th>
+            <td class="aria-role__cell">rowgroup, grid, table, treegrid</td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -3945,7 +3969,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -3957,6 +3981,12 @@
                 semantics.
               </p>
             </td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">
+              Required Context Roles
+            </th>
+            <td class="aria-role__cell">table, grid, treegrid</td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -4023,7 +4053,14 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure*, Widget*</p></td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">*Note</th>
+            <td class="aria-role__cell">
+              May be interactive or non-interactive depending on the context:<!-- -->
+              <!-- -->Interactive when inside a grid or treegrid.
+            </td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -4035,6 +4072,12 @@
                 semantics.
               </p>
             </td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">
+              Required Context Roles
+            </th>
+            <td class="aria-role__cell">row</td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -4097,7 +4140,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -4171,7 +4214,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -4244,7 +4287,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -4317,7 +4360,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -4388,7 +4431,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -4461,7 +4504,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -4536,7 +4579,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -4609,7 +4652,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -4682,7 +4725,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -4758,7 +4801,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -4829,7 +4872,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -4903,7 +4946,14 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure*, Widget*</p></td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">*Note</th>
+            <td class="aria-role__cell">
+              May be interactive or non-interactive depending on the context:<!-- -->
+              <!-- -->Interactive if focusable.
+            </td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -4977,7 +5027,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -5051,7 +5101,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -5125,7 +5175,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -5198,7 +5248,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -5271,7 +5321,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -5344,7 +5394,7 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Structural</p></td>
+            <td class="aria-role__cell"><p>Structure</p></td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -6308,7 +6358,14 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Composite</p></td>
+            <td class="aria-role__cell"><p>Composite*, Structure*</p></td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">*Note</th>
+            <td class="aria-role__cell">
+              May be interactive or non-interactive depending on the context:<!-- -->
+              <!-- -->Interactive when inside a treegrid.
+            </td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -6320,6 +6377,12 @@
                 management may be handled by this role.
               </p>
             </td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">
+              Required Context Roles
+            </th>
+            <td class="aria-role__cell">rowgroup, grid, table, treegrid</td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -6605,7 +6668,14 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Widget</p></td>
+            <td class="aria-role__cell"><p>Structure*, Widget*</p></td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">*Note</th>
+            <td class="aria-role__cell">
+              May be interactive or non-interactive depending on the context:<!-- -->
+              <!-- -->Interactive when inside a grid or treegrid.
+            </td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -6618,6 +6688,12 @@
                 passthrough.
               </p>
             </td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">
+              Required Context Roles
+            </th>
+            <td class="aria-role__cell">row</td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -6775,6 +6851,12 @@
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
+              Required Context Roles
+            </th>
+            <td class="aria-role__cell">row</td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">
               HTML Elements with Implicit ARIA Role
             </th>
             <td class="aria-role__cell">
@@ -6912,7 +6994,14 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Widget</p></td>
+            <td class="aria-role__cell"><p>Structure*, Widget*</p></td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">*Note</th>
+            <td class="aria-role__cell">
+              May be interactive or non-interactive depending on the context:<!-- -->
+              <!-- -->Interactive when inside a grid or treegrid.
+            </td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -6925,6 +7014,12 @@
                 passthrough.
               </p>
             </td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">
+              Required Context Roles
+            </th>
+            <td class="aria-role__cell">row</td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -7401,6 +7496,12 @@
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
+              Required Context Roles
+            </th>
+            <td class="aria-role__cell">menu, menubar, group</td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">
               HTML Elements with Implicit ARIA Role
             </th>
             <td class="aria-role__cell">
@@ -7475,6 +7576,12 @@
                 passthrough.
               </p>
             </td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">
+              Required Context Roles
+            </th>
+            <td class="aria-role__cell">menu, menubar, group</td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -7553,6 +7660,12 @@
                 passthrough.
               </p>
             </td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">
+              Required Context Roles
+            </th>
+            <td class="aria-role__cell">menu, menubar, group</td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -7701,6 +7814,12 @@
                 passthrough.
               </p>
             </td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">
+              Required Context Roles
+            </th>
+            <td class="aria-role__cell">listbox, group</td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -7999,7 +8118,14 @@
             <th class="aria-role__column-header" scope="col">
               Content Category
             </th>
-            <td class="aria-role__cell"><p>Widget</p></td>
+            <td class="aria-role__cell"><p>Structure*, Widget*</p></td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">*Note</th>
+            <td class="aria-role__cell">
+              May be interactive or non-interactive depending on the context:<!-- -->
+              <!-- -->Interactive if focusable.
+            </td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -8243,6 +8369,12 @@
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
+              Required Context Roles
+            </th>
+            <td class="aria-role__cell">tablist</td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">
               HTML Elements with Implicit ARIA Role
             </th>
             <td class="aria-role__cell">
@@ -8314,6 +8446,12 @@
                 passthrough.
               </p>
             </td>
+          </tr>
+          <tr class="aria-role__row">
+            <th class="aria-role__column-header" scope="col">
+              Required Context Roles
+            </th>
+            <td class="aria-role__cell">tree, group</td>
           </tr>
           <tr class="aria-role__row">
             <th class="aria-role__column-header" scope="col">
@@ -8394,8 +8532,6 @@
         super();
 
         const buttonElement = this.querySelector("button");
-
-        console.log(this, buttonElement);
 
         if (!buttonElement) {
           throw new Error("No button element found");
