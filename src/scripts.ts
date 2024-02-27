@@ -90,7 +90,7 @@ export default `
         openDialogElement.close();
       }
 
-      if (matchMedia('(min-width: 1024px)').matches) {
+      if (matchMedia('(min-width: 960px)').matches) {
         this.dialogElement.show();
       } else {
         this.dialogElement.showModal();

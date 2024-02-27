@@ -48,7 +48,7 @@ export const mappedAriaRolesToDescriptions = {
   heading: "A heading for a section of the page.",
   img: "A container for a collection of elements that form an image.",
   insertion:
-    "An insertion contains content that is marked as added or content that is being suggested for addition. See related deletion.",
+    "An insertion contains content that is marked as added or content that is being suggested for addition.",
   link: "An interactive reference to an internal or external resource that, when activated, causes the user agent to navigate to that resource.",
   list: "A section containing listitem elements.",
   listbox:

@@ -23,29 +23,35 @@ body {
   margin: 0;
   background: #252525;
   display: grid;
+  padding: 0 1em;
+  column-gap: .5em;
+  grid-template-columns: repeat(auto-fit, minmax(0px, 6em));
+  place-content: center;
 
   @media print {
     background: white;
   }
 }
 
-@media screen and (min-width: 1024px) {
+main {
+  padding: 1em 0;
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  place-content: space-between;
+}
+
+@media screen and (min-width: 960px) {
   body {
-    grid-template-columns: minmax(0, 1fr) 28em;
+    place-content: stretch;
   }
 
-  main {
-    grid-column: 1 / span 2;
-    padding: 1em 0;
+  body:has(:is(.aria-role__dialog:target, .aria-role__dialog[open])) main {
+    grid-column: 1 / -5;
   }
 
-  body:has(.aria-role__dialog[open], .aria-role__dialog:target) main {
-    grid-column: 1 / 2;
-  }
-
-  .aria-role__dialog[open],
-  .aria-role__dialog:target {
-    grid-column: 2 / 3;
+  :is(.aria-role__dialog[open], .aria-role__dialog:target) {
+    grid-column: -5 / span 5;
   }
 }
 
@@ -62,25 +68,18 @@ body {
 .periodic-table__root {
   display: grid;
   list-style: none;
-  grid-template-columns: 100%;
-  padding: 0 1em;
-}
-
-@media screen and (min-width: 1024px) {
-  .periodic-table__root {
-    grid-template-columns: repeat(auto-fit, minmax(6em, 0fr));
-    width: 100%;
-  }
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
 }
 
 .periodic-table__subgrid {
   display: grid;
   grid-template-columns: subgrid;
-  gap: 4px;
 }
 
 .periodic-table__subgrid-area {
   grid-column: 1 / -1;
+  row-gap: .5em;
 }
 
 .periodic-table__subgrid-area .periodic-table__subgrid-area-heading {
@@ -113,6 +112,8 @@ body {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   margin-bottom: 0;
+  grid-column: 1 / -1;
+  word-break: break-word;
 
   @media print {
     color: black;
@@ -136,6 +137,7 @@ ul {
   width: 100%;
   word-break: break-word;
   height: 100%;
+  min-height: 6em;
   border-radius: 8px;
   --hsl-color: hsl(var(--color), 80%, 87.5%);
   --hsl-alt-color: hsl(var(--color), 80%, 22.5%);
@@ -151,10 +153,11 @@ ul {
   @media print {
     color: black;
     break-inside: avoid;
+    border-color: var(--hsl-alt-color);
   }
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 960px) {
   .aria-role {
     min-height: 6em;
   }
@@ -180,7 +183,7 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
   width: 100%;
   align-content: center;
   place-self: center;
-  padding: .5em;
+  padding: 1em;
   cursor: pointer;
   font: inherit;
   background: none;
@@ -189,17 +192,13 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
   color: inherit;
   font-weight: 600;
   text-decoration-color: var(--hsl-color);
+  justify-content: center;
+  text-align: center;
+  padding: .5em;
 
   &:focus-visible {
     outline: 4px solid white;
     outline-offset: 2px;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  .aria-role__summary {
-    justify-content: center;
-    text-align: center;
   }
 }
 
@@ -241,17 +240,17 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
   position: fixed;
   min-height: 0;
   max-height: none;
+  height: 100%;
   min-width: 0;
   max-width: none;
-  border: 0;
-  overscroll-behavior: none;
-  background: none;
+  width: 100%;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
+  border: 0;
   padding: 0;
+  background: none;
+  overscroll-behavior: none;
+  overflow: auto;
 
   &:focus-visible { 
     outline: 0;
@@ -277,14 +276,15 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
   outline: 0;
 }
 
-.aria-role__dialog-content:has(> [tabindex="-1"]:focus) {
+.aria-role__dialog-content:has(> [tabindex="-1"]:focus-visible) {
   outline: 2px solid white;
   outline-offset: 2px;
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 960px) {
   .aria-role__dialog {
     position: static;
+    padding: 0 0 0 2em;
   }
 
   .aria-role__dialog-content {
@@ -293,10 +293,10 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
     height: 100%;
     max-height: calc(100dvh - 2em);
     overflow: auto;
-    border: 2px solid white;
     margin-right: 1em;
     border-radius: 8px;
     transition: max-height 0.125s ease-in-out;
+    border: 2px solid hsl(var(--color), 80%, 22.5%);
   }
 }
 

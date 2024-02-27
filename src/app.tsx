@@ -26,7 +26,7 @@ function ARIAPeriodicTable() {
   const dialogElements: React.ReactNode[] = [];
 
   return (
-    <>
+    <html lang="en">
       <style
         dangerouslySetInnerHTML={{
           __html: styles,
@@ -34,7 +34,9 @@ function ARIAPeriodicTable() {
       />
       <main>
         <h1 id="h1-title" className="page-title">
-          Periodic Table of ARIA Roles
+          &nbsp;Periodic&nbsp;Table&nbsp;of&nbsp;
+          <wbr />
+          ARIA&nbsp;Roles
         </h1>
         <span id="list-title" hidden>
           ARIA Roles by Type
@@ -404,7 +406,7 @@ function ARIAPeriodicTable() {
           __html: scripts,
         }}
       ></script>
-    </>
+    </html>
   );
 }
 
