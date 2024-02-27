@@ -322,7 +322,6 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
   display: block;
 }
 
-.aria-role__column-header,
 .aria-role__cell {
   background-color: hsl(var(--color), 80%, 97.5%);
 
@@ -348,15 +347,17 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
 
 dialog table {
   border-collapse: collapse;
-  border-left: 1px solid;
-  border-top: 1px solid;
+  border: 1px solid hsl(var(--color), 80%, 22.5%);
 }
 
 dialog :is(td, th) {
-  padding: 8px;
-  border-right: 1px solid;
-  border-bottom: 1px solid;
+  padding: 4px 8px;
   text-align: left;
+}
+
+dialog th {
+  background: hsl(var(--color), 80%, 22.5%);
+  color: white;
 }
 
 dialog table p {
