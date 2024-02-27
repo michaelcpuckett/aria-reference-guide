@@ -348,16 +348,25 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
 dialog table {
   border-collapse: collapse;
   border: 1px solid hsl(var(--color), 80%, 22.5%);
+
+  @media print {
+    border-color: black;
+  }
 }
 
 dialog :is(td, th) {
-  padding: 4px 8px;
+  padding: 8px;
   text-align: left;
 }
 
 dialog th {
   background: hsl(var(--color), 80%, 22.5%);
   color: white;
+  
+  @media print {
+    background: none;
+    color: black;
+  }
 }
 
 dialog table p {

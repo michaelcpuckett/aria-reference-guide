@@ -212,7 +212,7 @@ function ARIAPeriodicTable() {
                                                   Content Category
                                                 </th>
                                                 <td className="aria-role__cell">
-                                                  <p>{contentCategory}</p>
+                                                  {contentCategory}
                                                 </td>
                                               </tr>
 
@@ -243,7 +243,7 @@ function ARIAPeriodicTable() {
                                                   Category Description
                                                 </th>
                                                 <td className="aria-role__cell">
-                                                  <p>{description}</p>
+                                                  {description}
                                                 </td>
                                               </tr>
 
@@ -258,9 +258,15 @@ function ARIAPeriodicTable() {
                                                     Required Context Roles
                                                   </th>
                                                   <td className="aria-role__cell">
-                                                    {mappedAriaRolesToContextRoles[
-                                                      role
-                                                    ].join(", ")}
+                                                    <ul className="list">
+                                                      {mappedAriaRolesToContextRoles[
+                                                        role
+                                                      ].map((contextRole) => (
+                                                        <li key={contextRole}>
+                                                          {contextRole}
+                                                        </li>
+                                                      ))}
+                                                    </ul>
                                                   </td>
                                                 </tr>
                                               )}
@@ -274,11 +280,11 @@ function ARIAPeriodicTable() {
                                                   ARIA Role
                                                 </th>
                                                 <td className="aria-role__cell">
-                                                  <ul>
+                                                  <ul className="list">
                                                     {(
                                                       ariaToHtmlMapping[
                                                         role
-                                                      ] || ["--"]
+                                                      ] || ["(None)"]
                                                     ).map((htmlElement) => (
                                                       <li key={htmlElement}>
                                                         {htmlElement}
