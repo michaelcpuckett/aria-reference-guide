@@ -27,6 +27,7 @@ function ARIAPeriodicTable() {
 
   return (
     <html lang="en">
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
       <style
         dangerouslySetInnerHTML={{
           __html: styles,
@@ -411,7 +412,7 @@ function ARIAPeriodicTable() {
 }
 
 app.get("/", (req, res) => {
-  const htmlResult = `<!doctype html><meta name="viewport" content="width=device-width, initial-scale=1" />${ReactDOMServer.renderToString(
+  const htmlResult = `<!doctype html>${ReactDOMServer.renderToString(
     <ARIAPeriodicTable />
   )}`;
   res.send(htmlResult);
