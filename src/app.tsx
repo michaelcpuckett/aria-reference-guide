@@ -34,36 +34,44 @@ function ARIAPeriodicTable() {
           __html: styles,
         }}
       />
-      <main>
-        <h1 id="h1-title" className="page-title">
-          &nbsp;Periodic&nbsp;Table&nbsp;of&nbsp;
-          <wbr />
-          ARIA&nbsp;Roles
-        </h1>
-        <span id="list-title" hidden>
-          ARIA Roles by Type
-        </span>
-        <div
-          role="list"
-          className="periodic-table__root"
-          aria-labelledby="list-title"
-        >
-          {Object.entries(abstractAriaRolesByType).map(
-            ([type, abstractAriaRoles]) => {
-              return (
-                <div
-                  role="listitem"
-                  aria-labelledby={`periodic-table__type--${type}`}
-                  className={`periodic-table__subgrid periodic-table__subgrid-area periodic-table__subgrid-area--${type}`}
-                  key={type}
-                >
-                  <h2
-                    className="periodic-table__subgrid-area-heading"
-                    id={`periodic-table__type--${type}`}
+      <div className="container">
+        <main>
+          <h1
+            id="h1-title"
+            className="page-title"
+            aria-label="Periodic Table of ARIA Roles"
+          >
+            Periodic&nbsp;Table&nbsp;of&nbsp;
+            <wbr />
+            ARIA&nbsp;Roles
+          </h1>
+          <span id="list-title" hidden>
+            ARIA Roles by Type
+          </span>
+          <div
+            role="list"
+            className="periodic-table__root"
+            aria-labelledby="list-title"
+          >
+            {Object.entries(abstractAriaRolesByType).map(
+              ([type, abstractAriaRoles]) => {
+                return (
+                  <div
+                    role="listitem"
+                    key={type}
+                    aria-labelledby={`periodic-table__type--${type}`}
+                    className={`
+                      periodic-table__type-area
+                      periodic-table__type-area--${type}
+                      periodic-table__subgrid
+                    `}
                   >
-                    {mappedAriaTypesToTitles[type] + " Roles"}
-                  </h2>
-                  <div className="periodic-table__subgrid periodic-table__subgrid-row">
+                    <h2
+                      className="periodic-table__type-area__heading"
+                      id={`periodic-table__type--${type}`}
+                    >
+                      {mappedAriaTypesToTitles[type] + " Roles"}
+                    </h2>
                     {abstractAriaRoles.map((abstractAriaRole) => {
                       const ariaRoles =
                         ariaRolesByCategory[abstractAriaRole] || [];
@@ -89,7 +97,7 @@ function ARIAPeriodicTable() {
                           " with Presentational Children",
                           rolesWithPresentationalChildren,
                         ],
-                      ].map(([name, roles]) => {
+                      ].map(([name, roles], index) => {
                         const title =
                           mappedAbstractAriaRolesToTitles[abstractAriaRole] +
                           " Roles";
@@ -105,19 +113,33 @@ function ARIAPeriodicTable() {
                         return (
                           <div
                             key={abstractAriaRole}
-                            className="periodic-table__subgrid periodic-table__subgrid-row"
+                            className={`
+                                periodic-table__subgrid
+                                periodic-table__abstract-area
+                                periodic-table__abstract-area--${abstractAriaRole}
+                              `}
                           >
                             <h3
                               id={`aria-abstract-role--${abstractAriaRole}`}
-                              className="periodic-table__subgrid-heading"
+                              className="periodic-table__abstract-area__heading"
                             >
                               {title}
                               {name}
                             </h3>
+                            {index === 0 ? (
+                              <p className="periodic-table__abstract-area__description">
+                                {description}
+                              </p>
+                            ) : (
+                              <p className="periodic-table__abstract-area__description">
+                                The children of these roles are presentational
+                                and do not have semantic value.
+                              </p>
+                            )}
                             <div
                               role="list"
                               aria-labelledby={`aria-abstract-role--${abstractAriaRole}`}
-                              className="periodic-table__subgrid periodic-table__subgrid-row"
+                              className="periodic-table__subgrid periodic-table__role-area"
                             >
                               {roles.map((role) => {
                                 const displayName =
@@ -187,78 +209,109 @@ function ARIAPeriodicTable() {
                                             }}
                                           ></h1>
                                           <div className="aria-role__details">
-                                            <table
+                                            <div
+                                              role="table"
                                               aria-labelledby={`aria-role__dialog-heading--${id}`}
                                               className="aria-role__table"
                                             >
-                                              <tr className="aria-role__row">
-                                                <th
-                                                  className="aria-role__column-header"
-                                                  scope="row"
+                                              <div
+                                                role="row"
+                                                className="aria-role__row"
+                                              >
+                                                <div
+                                                  className="aria-role__row-header"
+                                                  role="rowheader"
                                                 >
                                                   Description
-                                                </th>
-                                                <td className="aria-role__cell">
+                                                </div>
+                                                <div
+                                                  role="cell"
+                                                  className="aria-role__cell"
+                                                >
                                                   {mappedAriaRolesToDescriptions[
                                                     role
                                                   ] || "--"}
-                                                </td>
-                                              </tr>
+                                                </div>
+                                              </div>
 
-                                              <tr className="aria-role__row">
-                                                <th
-                                                  className="aria-role__column-header"
-                                                  scope="row"
+                                              <div
+                                                role="row"
+                                                className="aria-role__row"
+                                              >
+                                                <div
+                                                  className="aria-role__row-header"
+                                                  role="rowheader"
                                                 >
                                                   Content Category
-                                                </th>
-                                                <td className="aria-role__cell">
+                                                </div>
+                                                <div
+                                                  role="cell"
+                                                  className="aria-role__cell"
+                                                >
                                                   {contentCategory}
-                                                </td>
-                                              </tr>
+                                                </div>
+                                              </div>
 
                                               {mayBeInteractive && (
-                                                <tr className="aria-role__row">
-                                                  <th
-                                                    className="aria-role__column-header"
-                                                    scope="row"
+                                                <div
+                                                  role="row"
+                                                  className="aria-role__row"
+                                                >
+                                                  <div
+                                                    className="aria-role__row-header"
+                                                    role="rowheader"
                                                   >
                                                     *Note
-                                                  </th>
-                                                  <td className="aria-role__cell">
+                                                  </div>
+                                                  <div
+                                                    role="cell"
+                                                    className="aria-role__cell"
+                                                  >
                                                     May be interactive or
                                                     non-interactive depending on
                                                     the context:{" "}
                                                     {mappedAriaRolesToNotes[
                                                       role
                                                     ] || ""}
-                                                  </td>
-                                                </tr>
+                                                  </div>
+                                                </div>
                                               )}
 
-                                              <tr className="aria-role__row">
-                                                <th
-                                                  className="aria-role__column-header"
-                                                  scope="row"
+                                              <div
+                                                role="row"
+                                                className="aria-role__row"
+                                              >
+                                                <div
+                                                  className="aria-role__row-header"
+                                                  role="rowheader"
                                                 >
                                                   Category Description
-                                                </th>
-                                                <td className="aria-role__cell">
+                                                </div>
+                                                <div
+                                                  role="cell"
+                                                  className="aria-role__cell"
+                                                >
                                                   {description}
-                                                </td>
-                                              </tr>
+                                                </div>
+                                              </div>
 
                                               {mappedAriaRolesToContextRoles[
                                                 role
                                               ] && (
-                                                <tr className="aria-role__row">
-                                                  <th
-                                                    className="aria-role__column-header"
-                                                    scope="row"
+                                                <div
+                                                  role="row"
+                                                  className="aria-role__row"
+                                                >
+                                                  <div
+                                                    className="aria-role__row-header"
+                                                    role="rowheader"
                                                   >
                                                     Required Context Roles
-                                                  </th>
-                                                  <td className="aria-role__cell">
+                                                  </div>
+                                                  <div
+                                                    role="cell"
+                                                    className="aria-role__cell"
+                                                  >
                                                     <ul className="list">
                                                       {mappedAriaRolesToContextRoles[
                                                         role
@@ -268,19 +321,25 @@ function ARIAPeriodicTable() {
                                                         </li>
                                                       ))}
                                                     </ul>
-                                                  </td>
-                                                </tr>
+                                                  </div>
+                                                </div>
                                               )}
 
-                                              <tr className="aria-role__row">
-                                                <th
-                                                  className="aria-role__column-header"
-                                                  scope="row"
+                                              <div
+                                                role="row"
+                                                className="aria-role__row"
+                                              >
+                                                <div
+                                                  className="aria-role__row-header"
+                                                  role="rowheader"
                                                 >
                                                   HTML Elements with Implicit
                                                   ARIA Role
-                                                </th>
-                                                <td className="aria-role__cell">
+                                                </div>
+                                                <div
+                                                  role="cell"
+                                                  className="aria-role__cell"
+                                                >
                                                   <ul className="list">
                                                     {(
                                                       ariaToHtmlMapping[
@@ -294,17 +353,23 @@ function ARIAPeriodicTable() {
                                                         </li>
                                                       ))}
                                                   </ul>
-                                                </td>
-                                              </tr>
+                                                </div>
+                                              </div>
 
-                                              <tr className="aria-role__row">
-                                                <th
-                                                  className="aria-role__column-header"
-                                                  scope="row"
+                                              <div
+                                                role="row"
+                                                className="aria-role__row"
+                                              >
+                                                <div
+                                                  className="aria-role__row-header"
+                                                  role="rowheader"
                                                 >
                                                   Allowed HTML Elements
-                                                </th>
-                                                <td className="aria-role__cell">
+                                                </div>
+                                                <div
+                                                  role="cell"
+                                                  className="aria-role__cell"
+                                                >
                                                   <ul className="list">
                                                     {Array.from(
                                                       new Set(
@@ -341,30 +406,39 @@ function ARIAPeriodicTable() {
                                                     ))}
                                                     <li key="any">{`<div>, <span>, <p>, other elements that can receive any role`}</li>
                                                   </ul>
-                                                </td>
-                                              </tr>
-                                              <tr className="aria-role__row">
-                                                <th
-                                                  className="aria-role__column-header"
-                                                  scope="row"
+                                                </div>
+                                              </div>
+                                              <div
+                                                role="row"
+                                                className="aria-role__row"
+                                              >
+                                                <div
+                                                  className="aria-role__row-header"
+                                                  role="rowheader"
                                                 >
                                                   Specification Links
-                                                </th>
-                                                <td className="aria-role__cell">
+                                                </div>
+                                                <div
+                                                  role="cell"
+                                                  className="aria-role__cell"
+                                                >
                                                   <ul className="list">
                                                     {Object.entries(links).map(
                                                       ([name, link]) => (
                                                         <li key={link}>
-                                                          <a href={link + role}>
+                                                          <a
+                                                            href={link + role}
+                                                            target="_blank"
+                                                          >
                                                             {name}
                                                           </a>
                                                         </li>
                                                       )
                                                     )}
                                                   </ul>
-                                                </td>
-                                              </tr>
-                                            </table>
+                                                </div>
+                                              </div>
+                                            </div>
                                           </div>
                                         </div>
                                       </div>
@@ -373,9 +447,10 @@ function ARIAPeriodicTable() {
                                 );
 
                                 return (
-                                  <li
-                                    key={role}
+                                  <div
+                                    role="listitem"
                                     aria-label={role}
+                                    key={role}
                                     className={`
                                         aria-role
                                         aria-role--${
@@ -418,7 +493,7 @@ function ARIAPeriodicTable() {
                                         }}
                                       ></a>
                                     </expansion-button>
-                                  </li>
+                                  </div>
                                 );
                               })}
                             </div>
@@ -427,14 +502,13 @@ function ARIAPeriodicTable() {
                       });
                     })}
                   </div>
-                </div>
-              );
-            }
-          )}
-        </div>
-      </main>
-
-      {dialogElements}
+                );
+              }
+            )}
+          </div>
+        </main>
+        {dialogElements}
+      </div>
 
       <script
         dangerouslySetInnerHTML={{
@@ -446,9 +520,9 @@ function ARIAPeriodicTable() {
 }
 
 app.get("/", (req, res) => {
-  const htmlResult = `<!doctype html>${ReactDOMServer.renderToString(
-    <ARIAPeriodicTable />
-  )}`;
+  const htmlResult = `<!doctype html>
+    ${ReactDOMServer.renderToString(<ARIAPeriodicTable />)}
+  `;
   res.send(htmlResult);
 });
 
