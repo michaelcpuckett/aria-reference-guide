@@ -3,6 +3,7 @@ export { allowedAriaRolesByHtmlElement } from "./allowedAriaRolesByHtmlElement";
 export { ariaRolesByCategory } from "./ariaRolesByCategory";
 export { ariaRolesWithPresentationalChildren } from "./ariaRolesWithPresentationalChildren";
 export { ariaToHtmlMapping } from "./ariaToHtmlMapping";
+export { links } from "./links";
 export { mappedAbstractAriaRolesToBackgroundColors } from "./mappedAbstractAriaRolesToBackgroundColors";
 export { mappedAbstractAriaRolesToDescriptions } from "./mappedAbstractAriaRolesToDescriptions";
 export { mappedAbstractAriaRolesToTitles } from "./mappedAbstractAriaRolesToTitles";

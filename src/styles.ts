@@ -139,8 +139,8 @@ ul {
   height: 100%;
   min-height: 6em;
   border-radius: 8px;
-  --hsl-color: hsl(var(--color), 80%, 87.5%);
-  --hsl-alt-color: hsl(var(--color), 80%, 22.5%);
+  --hsl-color: hsl(var(--color), 100%, 87.5%);
+  --hsl-alt-color: hsl(var(--color), 100%, 22.5%);
   background-color: var(--hsl-alt-color);
   border: 2px solid var(--hsl-color);
   color: white;
@@ -269,7 +269,7 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
 
 .aria-role__dialog-content {
   /*background-color: hsl(0deg, 0%, 87.5%);*/
-  background-color: hsl(var(--color), 80%, 87.5%);
+  background-color: hsl(var(--color), 100%, 87.5%);
 }
 
 .aria-role__dialog-content > [tabindex="-1"]:focus-visible {
@@ -296,7 +296,7 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
     margin-right: 1em;
     border-radius: 8px;
     transition: max-height 0.125s ease-in-out;
-    border: 2px solid hsl(var(--color), 80%, 22.5%);
+    border: 2px solid hsl(var(--color), 100%, 22.5%);
   }
 }
 
@@ -323,7 +323,7 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
 }
 
 .aria-role__cell {
-  background-color: hsl(var(--color), 80%, 97.5%);
+  background-color: hsl(var(--color), 100%, 97.5%);
 
   @media print {
     color: black;
@@ -347,7 +347,7 @@ ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
 
 dialog table {
   border-collapse: collapse;
-  border: 1px solid hsl(var(--color), 80%, 22.5%);
+  border: 1px solid hsl(var(--color), 100%, 22.5%);
 
   @media print {
     border-color: black;
@@ -360,7 +360,7 @@ dialog :is(td, th) {
 }
 
 dialog th {
-  background: hsl(var(--color), 80%, 22.5%);
+  background: hsl(var(--color), 100%, 22.5%);
   color: white;
   
   @media print {
@@ -411,7 +411,7 @@ close-dialog-button a {
   background: none;
   border: 2px solid;
   font: inherit;
-  color: hsl(var(--color), 80%, 22.5%);
+  color: hsl(var(--color), 100%, 22.5%);
   border-radius: 50%;
   align-self: center;
   justify-self: flex-end;
@@ -419,7 +419,7 @@ close-dialog-button a {
   line-height: 1;
   padding: .5em .667em .667em;
   text-decoration: none;
-  background-color: hsl(var(--color), 80%, 97.5%);
+  background-color: hsl(var(--color), 100%, 97.5%);
 
   &:focus-visible {
     outline-offset: 2px;

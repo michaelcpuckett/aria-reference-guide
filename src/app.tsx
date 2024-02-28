@@ -7,6 +7,7 @@ import {
   ariaRolesByCategory,
   ariaRolesWithPresentationalChildren,
   ariaToHtmlMapping,
+  links,
   mappedAbstractAriaRolesToDescriptions,
   mappedAbstractAriaRolesToTitles,
   mappedAriaRolesToContentTypes,
@@ -285,11 +286,13 @@ function ARIAPeriodicTable() {
                                                       ariaToHtmlMapping[
                                                         role
                                                       ] || ["(None)"]
-                                                    ).map((htmlElement) => (
-                                                      <li key={htmlElement}>
-                                                        {htmlElement}
-                                                      </li>
-                                                    ))}
+                                                    )
+                                                      .sort()
+                                                      .map((htmlElement) => (
+                                                        <li key={htmlElement}>
+                                                          {htmlElement}
+                                                        </li>
+                                                      ))}
                                                   </ul>
                                                 </td>
                                               </tr>
@@ -325,14 +328,39 @@ function ARIAPeriodicTable() {
                                                           )
                                                       )
                                                     ).map((tagName) => (
-                                                      <li
-                                                        className="is-strong"
-                                                        key={tagName}
-                                                      >
+                                                      <li key={tagName}>
                                                         {tagName}
+                                                        {(
+                                                          ariaToHtmlMapping[
+                                                            role
+                                                          ] || []
+                                                        ).includes(tagName)
+                                                          ? "(Role attribute unnecessary)"
+                                                          : ""}
                                                       </li>
                                                     ))}
                                                     <li key="any">{`<div>, <span>, <p>, other elements that can receive any role`}</li>
+                                                  </ul>
+                                                </td>
+                                              </tr>
+                                              <tr className="aria-role__row">
+                                                <th
+                                                  className="aria-role__column-header"
+                                                  scope="row"
+                                                >
+                                                  Specification Links
+                                                </th>
+                                                <td className="aria-role__cell">
+                                                  <ul className="list">
+                                                    {Object.entries(links).map(
+                                                      ([name, link]) => (
+                                                        <li key={link}>
+                                                          <a href={link + role}>
+                                                            {name}
+                                                          </a>
+                                                        </li>
+                                                      )
+                                                    )}
                                                   </ul>
                                                 </td>
                                               </tr>
