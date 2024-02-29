@@ -510,6 +510,8 @@ function ARIAPeriodicTable() {
         {dialogElements}
       </div>
 
+      <footer>Test</footer>
+
       <script
         dangerouslySetInnerHTML={{
           __html: scripts,
