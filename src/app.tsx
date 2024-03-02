@@ -228,9 +228,11 @@ function ARIAPeriodicTable() {
                                                   role="cell"
                                                   className="aria-role__cell"
                                                 >
-                                                  {mappedAriaRolesToDescriptions[
-                                                    role
-                                                  ] || "--"}
+                                                  <p>
+                                                    {mappedAriaRolesToDescriptions[
+                                                      role
+                                                    ] || "--"}
+                                                  </p>
                                                 </div>
                                               </div>
 
@@ -248,7 +250,7 @@ function ARIAPeriodicTable() {
                                                   role="cell"
                                                   className="aria-role__cell"
                                                 >
-                                                  {contentCategory}
+                                                  <p>{contentCategory}</p>
                                                 </div>
                                               </div>
 
@@ -267,12 +269,14 @@ function ARIAPeriodicTable() {
                                                     role="cell"
                                                     className="aria-role__cell"
                                                   >
-                                                    May be interactive or
-                                                    non-interactive depending on
-                                                    the context:{" "}
-                                                    {mappedAriaRolesToNotes[
-                                                      role
-                                                    ] || ""}
+                                                    <p>
+                                                      May be interactive or
+                                                      non-interactive depending
+                                                      on the context:{" "}
+                                                      {mappedAriaRolesToNotes[
+                                                        role
+                                                      ] || ""}
+                                                    </p>
                                                   </div>
                                                 </div>
                                               )}
@@ -291,7 +295,7 @@ function ARIAPeriodicTable() {
                                                   role="cell"
                                                   className="aria-role__cell"
                                                 >
-                                                  {description}
+                                                  <p>{description}</p>
                                                 </div>
                                               </div>
 

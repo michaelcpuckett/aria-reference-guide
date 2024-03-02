@@ -13,6 +13,7 @@ export default `
     font-family: system-ui, sans-serif;
     color-scheme: dark;
     font-size: 18px;
+    --page-background-color: #252525;
 
     @media print {
       color-scheme: light;
@@ -27,14 +28,14 @@ export default `
     @media screen {
       body {
         margin: 0;
-        background: #252525;
+        background: var(--page-background-color);
       }
 
       .container {
         display: grid;
-        padding: 0 1em;
-        gap: 1em;
-        grid-template-columns: repeat(auto-fill, minmax(.25em, 0fr));
+        padding: 0 3rem;
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fill, minmax(.25rem, 0fr));
         place-content: center;
       }
 
@@ -48,10 +49,12 @@ export default `
       @media screen and (min-width: 960px) {
         .container {
           place-content: stretch;
+          max-width: 1840px;
+          margin: 0 auto;
         }
 
         .container:has(.aria-role__dialog[open], .aria-role__dialog:target) {
-          grid-template-columns: repeat(auto-fill, minmax(.25em, 0fr)) minmax(24em, 33.333%);
+          grid-template-columns: repeat(auto-fill, minmax(.25rem, 0fr)) minmax(32rem, 33.333%);
         }
 
         .container:has(.aria-role__dialog[open], .aria-role__dialog:target) main {
@@ -74,35 +77,36 @@ export default `
         color: white;
         grid-column: 1 / -1;
         margin: 0;
-        padding: 1em 0 .1em;
-        font-size: 1.5em;
+        padding: 1rem 0 0;
+        font-size: 1.5rem;
         font-weight: normal;
+        text-align: center;
       }
 
       .periodic-table__subgrid {
         grid-column: 1 / -1;
-        row-gap: 1em;
+        row-gap: 1rem;
         display: grid;
         grid-template-columns: subgrid;
       }
 
       .page-title {
         text-align: center;
-        font-size: 1.5em;
-        margin: 2em 0;
+        font-size: 1.667rem;
+        margin: 0;
         color: white;
-        letter-spacing: 0.1em;
+        letter-spacing: 0.1rem;
         text-transform: uppercase;
         margin-bottom: 0;
         grid-column: 1 / -1;
         word-break: break-word;
+        
+        padding: 2rem 0 1rem;
+        position: sticky;
+        top: -.51px;
+        background-color: var(--page-background-color);
+        border-bottom: 1px solid;
       }
-
-      /*
-      .periodic-table__subgrid-area--interactive .aria-role__summary {
-        color: black;
-      }
-      */
 
       ul {
         padding: 0;
@@ -115,8 +119,8 @@ export default `
         width: 100%;
         word-break: break-word;
         height: 100%;
-        min-height: 5em;
-        border-radius: 8px;
+        min-height: 5rem;
+        border-radius: .5rem;
         grid-column: span 5;
         --hsl-color: hsl(var(--color), 60%, 87.5%);
         --hsl-alt-color: hsl(var(--color), 60%, 22.5%);
@@ -150,7 +154,7 @@ export default `
         width: 100%;
         align-content: center;
         place-self: center;
-        padding: 1em;
+        padding: 1rem;
         cursor: pointer;
         font: inherit;
         background: none;
@@ -161,7 +165,7 @@ export default `
         text-decoration-color: var(--hsl-color);
         justify-content: center;
         text-align: center;
-        padding: .5em;
+        padding: .5rem;
 
         &:focus-visible {
           outline: 4px solid var(--hsl-color);
@@ -172,36 +176,6 @@ export default `
       .aria-role__row {
         display: grid;
       }
-
-      /*
-      .aria-role--interactive .aria-role__summary {
-        color: white;
-      }
-
-      .aria-role--non-interactive .aria-role__summary {
-        color: black;
-      }
-
-      .aria-role--content-type-phrasing {
-        background-color: rgb(160, 175, 255);
-        color: black;
-      }
-
-      .aria-role--content-type-phrasing:is(.aria-role--abstract-role-widget, .aria-role--abstract-role-composite) {
-        background-color: #05401e;
-        color: white;
-      }
-      */
-
-      /*
-      .aria-role--interactive.aria-role--only-phrasing-descendants:not(.aria-role--content-type-phrasing) {
-        background-image: linear-gradient(45deg, #05401e 50%, transparent 50%);
-      }
-
-      .aria-role--non-interactive.aria-role--only-phrasing-descendants:not(.aria-role--content-type-phrasing) {
-        background-image: linear-gradient(45deg, rgb(160, 175, 255) 50%, transparent 50%);
-      }
-      */
 
       .aria-role__dialog {
         min-height: 0;
@@ -229,7 +203,7 @@ export default `
         display: grid;
         align-content: flex-start;
         position: relative;
-        padding: 1em;
+        padding: 1rem;
         background: white;
         color: black;
         color-scheme: light;
@@ -251,8 +225,9 @@ export default `
 
       @media screen and (min-width: 960px) {
         .aria-role__dialog {
+          margin-left: 2rem;
           position: sticky;
-          top: 1em;
+          top: 1rem;
           margin-top: calc(-100dvh + 2em);
           max-height: calc(100dvh - 2em);
           height: 100%;
@@ -263,7 +238,7 @@ export default `
           overflow: auto;
           grid-column: 1 / -1;
           height: 100%;
-          border-radius: 8px;
+          border-radius: 1rem;
           border: 2px solid hsl(var(--color), 60%, 22.5%);
         }
       }
@@ -280,7 +255,7 @@ export default `
         place-content: center;
         place-items: stretch;
         grid-auto-columns: 100%;
-        margin-top: 1em;
+        margin-top: 1rem;
       }
 
       .aria-role__dfn {
@@ -292,6 +267,10 @@ export default `
 
       .aria-role__cell {
         background-color: hsl(var(--color), 60%, 97.5%);
+
+        & p {
+          margin: 0;
+        }
       }
 
       .visually-hidden {
@@ -319,11 +298,11 @@ export default `
       }
 
       .aria-role__dialog .aria-role__cell {
-        padding: 1em .5em;
+        padding: 1rem .5rem;
       }
 
       .aria-role__dialog .aria-role__row-header {
-        padding: .5em;
+        padding: .5rem;
         background: hsl(var(--color), 60%, 22.5%);
         color: white;
       }
@@ -334,7 +313,6 @@ export default `
         display: flex;
         place-items: center;
         margin: 0;
-        padding: 0 0 .25em;
         grid-column: 2 / -2;
         font-style: italic;
         font-weight: normal;
@@ -343,7 +321,7 @@ export default `
       .periodic-table__abstract-area__description {
         grid-column: 2 / -2;
         margin-top: 0;
-        margin-bottom: .5em;
+        margin-bottom: .5rem;
         color: white;
       }
 
@@ -357,7 +335,7 @@ export default `
         align-self: center;
         width: 100%;
         word-break: break-word;
-        font-size: 1.75em;
+        font-size: 1.75rem;
       }
 
       close-dialog-button {
@@ -375,7 +353,7 @@ export default `
         justify-self: flex-end;
         font-weight: bold;
         line-height: 1;
-        padding: .5em .667em .667em;
+        padding: .5rem .667rem .667rem;
         text-decoration: none;
         background-color: hsl(var(--color), 60%, 97.5%);
 
@@ -393,7 +371,7 @@ export default `
         border: 1px solid hsl(var(--color), 60%, 50%);
         background-color: hsla(var(--color), 60%, 50%, .06125);
         border-radius: 8px;
-        padding: 2em 0;
+        padding: 2rem 0;
       }
 
       .periodic-table__role-area {
@@ -423,6 +401,10 @@ export default `
 
     .aria-role__dialog:is(:target, [open]) {
       display: contents;
+    }
+
+    .aria-role__row-header {
+      font-weight: bold;
     }
   }
 `;
