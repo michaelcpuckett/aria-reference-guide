@@ -180,40 +180,82 @@ function ARIAPeriodicTable() {
                                 }
 
                                 dialogElements.push(
-                                  <role-dialog data-role={id} key={role}>
-                                    <dialog
-                                      className={`aria-role__dialog aria-role__dialog--abstract-role-${abstractAriaRole}`}
-                                      id={`${id}-dialog`}
-                                      aria-labelledby={`aria-role__dialog-heading--${id}`}
-                                    >
-                                      <div className="aria-role__dialog-content">
-                                        <close-dialog-button>
-                                          <a
-                                            href={`#aria-role__summary--${id}`}
-                                            aria-label="Close Dialog"
-                                          >
-                                            &times;
-                                          </a>
-                                        </close-dialog-button>
-                                        <div
-                                          role="region"
-                                          aria-label="Scrollable Dialog Content"
-                                          tabIndex={-1}
+                                  <dialog
+                                    key={role}
+                                    data-role={id}
+                                    className={`aria-role__dialog aria-role__dialog--abstract-role-${abstractAriaRole}`}
+                                    id={`${id}-dialog`}
+                                    aria-labelledby={`aria-role__dialog-heading--${id}`}
+                                  >
+                                    <div className="aria-role__dialog-content">
+                                      <close-dialog-button>
+                                        <a
+                                          href={`#aria-role__summary--${id}`}
+                                          aria-label="Close Dialog"
                                         >
-                                          <h1
-                                            className="aria-role__dialog-heading"
-                                            id={`aria-role__dialog-heading--${id}`}
-                                            aria-label={`The ${role} role`}
-                                            dangerouslySetInnerHTML={{
-                                              __html: `The <code>${roleTitle}</code> role`,
-                                            }}
-                                          ></h1>
-                                          <div className="aria-role__details">
+                                          &times;
+                                        </a>
+                                      </close-dialog-button>
+                                      <div
+                                        role="region"
+                                        aria-label="Scrollable Dialog Content"
+                                        tabIndex={-1}
+                                      >
+                                        <h1
+                                          className="aria-role__dialog-heading"
+                                          id={`aria-role__dialog-heading--${id}`}
+                                          aria-label={`The ${role} role`}
+                                          dangerouslySetInnerHTML={{
+                                            __html: `The <code>${roleTitle}</code> role`,
+                                          }}
+                                        ></h1>
+                                        <div className="aria-role__details">
+                                          <div
+                                            role="table"
+                                            aria-labelledby={`aria-role__dialog-heading--${id}`}
+                                            className="aria-role__table"
+                                          >
                                             <div
-                                              role="table"
-                                              aria-labelledby={`aria-role__dialog-heading--${id}`}
-                                              className="aria-role__table"
+                                              role="row"
+                                              className="aria-role__row"
                                             >
+                                              <div
+                                                className="aria-role__row-header"
+                                                role="rowheader"
+                                              >
+                                                Description
+                                              </div>
+                                              <div
+                                                role="cell"
+                                                className="aria-role__cell"
+                                              >
+                                                <p>
+                                                  {mappedAriaRolesToDescriptions[
+                                                    role
+                                                  ] || "--"}
+                                                </p>
+                                              </div>
+                                            </div>
+
+                                            <div
+                                              role="row"
+                                              className="aria-role__row"
+                                            >
+                                              <div
+                                                className="aria-role__row-header"
+                                                role="rowheader"
+                                              >
+                                                Content Category
+                                              </div>
+                                              <div
+                                                role="cell"
+                                                className="aria-role__cell"
+                                              >
+                                                <p>{contentCategory}</p>
+                                              </div>
+                                            </div>
+
+                                            {mayBeInteractive && (
                                               <div
                                                 role="row"
                                                 className="aria-role__row"
@@ -222,113 +264,45 @@ function ARIAPeriodicTable() {
                                                   className="aria-role__row-header"
                                                   role="rowheader"
                                                 >
-                                                  Description
+                                                  *Note
                                                 </div>
                                                 <div
                                                   role="cell"
                                                   className="aria-role__cell"
                                                 >
                                                   <p>
-                                                    {mappedAriaRolesToDescriptions[
+                                                    May be interactive or
+                                                    non-interactive depending on
+                                                    the context:{" "}
+                                                    {mappedAriaRolesToNotes[
                                                       role
-                                                    ] || "--"}
+                                                    ] || ""}
                                                   </p>
                                                 </div>
                                               </div>
+                                            )}
 
+                                            <div
+                                              role="row"
+                                              className="aria-role__row"
+                                            >
                                               <div
-                                                role="row"
-                                                className="aria-role__row"
+                                                className="aria-role__row-header"
+                                                role="rowheader"
                                               >
-                                                <div
-                                                  className="aria-role__row-header"
-                                                  role="rowheader"
-                                                >
-                                                  Content Category
-                                                </div>
-                                                <div
-                                                  role="cell"
-                                                  className="aria-role__cell"
-                                                >
-                                                  <p>{contentCategory}</p>
-                                                </div>
+                                                Category Description
                                               </div>
-
-                                              {mayBeInteractive && (
-                                                <div
-                                                  role="row"
-                                                  className="aria-role__row"
-                                                >
-                                                  <div
-                                                    className="aria-role__row-header"
-                                                    role="rowheader"
-                                                  >
-                                                    *Note
-                                                  </div>
-                                                  <div
-                                                    role="cell"
-                                                    className="aria-role__cell"
-                                                  >
-                                                    <p>
-                                                      May be interactive or
-                                                      non-interactive depending
-                                                      on the context:{" "}
-                                                      {mappedAriaRolesToNotes[
-                                                        role
-                                                      ] || ""}
-                                                    </p>
-                                                  </div>
-                                                </div>
-                                              )}
-
                                               <div
-                                                role="row"
-                                                className="aria-role__row"
+                                                role="cell"
+                                                className="aria-role__cell"
                                               >
-                                                <div
-                                                  className="aria-role__row-header"
-                                                  role="rowheader"
-                                                >
-                                                  Category Description
-                                                </div>
-                                                <div
-                                                  role="cell"
-                                                  className="aria-role__cell"
-                                                >
-                                                  <p>{description}</p>
-                                                </div>
+                                                <p>{description}</p>
                                               </div>
+                                            </div>
 
-                                              {mappedAriaRolesToContextRoles[
-                                                role
-                                              ] && (
-                                                <div
-                                                  role="row"
-                                                  className="aria-role__row"
-                                                >
-                                                  <div
-                                                    className="aria-role__row-header"
-                                                    role="rowheader"
-                                                  >
-                                                    Required Context Roles
-                                                  </div>
-                                                  <div
-                                                    role="cell"
-                                                    className="aria-role__cell"
-                                                  >
-                                                    <ul className="list">
-                                                      {mappedAriaRolesToContextRoles[
-                                                        role
-                                                      ].map((contextRole) => (
-                                                        <li key={contextRole}>
-                                                          {contextRole}
-                                                        </li>
-                                                      ))}
-                                                    </ul>
-                                                  </div>
-                                                </div>
-                                              )}
-
+                                            {mappedAriaRolesToContextRoles[
+                                              role
+                                            ] && (
                                               <div
                                                 role="row"
                                                 className="aria-role__row"
@@ -337,117 +311,139 @@ function ARIAPeriodicTable() {
                                                   className="aria-role__row-header"
                                                   role="rowheader"
                                                 >
-                                                  HTML Elements with Implicit
-                                                  ARIA Role
+                                                  Required Context Roles
                                                 </div>
                                                 <div
                                                   role="cell"
                                                   className="aria-role__cell"
                                                 >
                                                   <ul className="list">
-                                                    {(
-                                                      ariaToHtmlMapping[
-                                                        role
-                                                      ] || ["(None)"]
-                                                    )
-                                                      .sort()
-                                                      .map((htmlElement) => (
-                                                        <li key={htmlElement}>
-                                                          {htmlElement}
-                                                        </li>
-                                                      ))}
+                                                    {mappedAriaRolesToContextRoles[
+                                                      role
+                                                    ].map((contextRole) => (
+                                                      <li key={contextRole}>
+                                                        {contextRole}
+                                                      </li>
+                                                    ))}
                                                   </ul>
                                                 </div>
                                               </div>
+                                            )}
 
+                                            <div
+                                              role="row"
+                                              className="aria-role__row"
+                                            >
                                               <div
-                                                role="row"
-                                                className="aria-role__row"
+                                                className="aria-role__row-header"
+                                                role="rowheader"
                                               >
-                                                <div
-                                                  className="aria-role__row-header"
-                                                  role="rowheader"
-                                                >
-                                                  Allowed HTML Elements
-                                                </div>
-                                                <div
-                                                  role="cell"
-                                                  className="aria-role__cell"
-                                                >
-                                                  <ul className="list">
-                                                    {Array.from(
-                                                      new Set(
-                                                        Object.entries(
-                                                          allowedAriaRolesByHtmlElement
-                                                        )
-                                                          .filter(
-                                                            ([_, roles]) =>
-                                                              roles.includes(
-                                                                role
-                                                              )
-                                                          )
-                                                          .map(
-                                                            ([tagName]) =>
-                                                              tagName
-                                                          )
-                                                          .concat(
-                                                            ariaToHtmlMapping[
-                                                              role
-                                                            ] || []
-                                                          )
+                                                HTML Elements with Implicit ARIA
+                                                Role
+                                              </div>
+                                              <div
+                                                role="cell"
+                                                className="aria-role__cell"
+                                              >
+                                                <ul className="list">
+                                                  {(
+                                                    ariaToHtmlMapping[role] || [
+                                                      "(None)",
+                                                    ]
+                                                  )
+                                                    .sort()
+                                                    .map((htmlElement) => (
+                                                      <li key={htmlElement}>
+                                                        {htmlElement}
+                                                      </li>
+                                                    ))}
+                                                </ul>
+                                              </div>
+                                            </div>
+
+                                            <div
+                                              role="row"
+                                              className="aria-role__row"
+                                            >
+                                              <div
+                                                className="aria-role__row-header"
+                                                role="rowheader"
+                                              >
+                                                Allowed HTML Elements
+                                              </div>
+                                              <div
+                                                role="cell"
+                                                className="aria-role__cell"
+                                              >
+                                                <ul className="list">
+                                                  {Array.from(
+                                                    new Set(
+                                                      Object.entries(
+                                                        allowedAriaRolesByHtmlElement
                                                       )
-                                                    ).map((tagName) => (
-                                                      <li key={tagName}>
-                                                        {tagName}
-                                                        {(
+                                                        .filter(([_, roles]) =>
+                                                          roles.includes(role)
+                                                        )
+                                                        .map(
+                                                          ([tagName]) => tagName
+                                                        )
+                                                        .concat(
                                                           ariaToHtmlMapping[
                                                             role
                                                           ] || []
-                                                        ).includes(tagName)
-                                                          ? "(Role attribute unnecessary)"
-                                                          : ""}
-                                                      </li>
-                                                    ))}
-                                                    <li key="any">{`<div>, <span>, <p>, other elements that can receive any role`}</li>
-                                                  </ul>
-                                                </div>
+                                                        )
+                                                    )
+                                                  ).map((tagName) => (
+                                                    <li key={tagName}>
+                                                      {tagName}
+                                                      {(
+                                                        ariaToHtmlMapping[
+                                                          role
+                                                        ] || []
+                                                      ).includes(tagName)
+                                                        ? "(Role attribute unnecessary)"
+                                                        : ""}
+                                                    </li>
+                                                  ))}
+                                                  <li key="any">{`<div>, <span>, <p>, other elements that can receive any role`}</li>
+                                                </ul>
+                                              </div>
+                                            </div>
+                                            <div
+                                              role="row"
+                                              className="aria-role__row"
+                                            >
+                                              <div
+                                                className="aria-role__row-header"
+                                                role="rowheader"
+                                              >
+                                                Specification Links
                                               </div>
                                               <div
-                                                role="row"
-                                                className="aria-role__row"
+                                                role="cell"
+                                                className="aria-role__cell"
                                               >
-                                                <div
-                                                  className="aria-role__row-header"
-                                                  role="rowheader"
-                                                >
-                                                  Specification Links
-                                                </div>
-                                                <div
-                                                  role="cell"
-                                                  className="aria-role__cell"
-                                                >
-                                                  <ul className="list">
-                                                    {Object.entries(links).map(
-                                                      ([name, link]) => (
-                                                        <li key={link}>
-                                                          <a
-                                                            href={link + role}
-                                                            target="_blank"
-                                                          >
-                                                            {name}
-                                                          </a>
-                                                        </li>
-                                                      )
-                                                    )}
-                                                  </ul>
-                                                </div>
+                                                <ul className="list">
+                                                  {Object.entries(links).map(
+                                                    ([name, link]) => (
+                                                      <li key={link}>
+                                                        <a
+                                                          href={link + role}
+                                                          target="_blank"
+                                                        >
+                                                          {name}
+                                                        </a>
+                                                      </li>
+                                                    )
+                                                  )}
+                                                </ul>
                                               </div>
                                             </div>
                                           </div>
                                         </div>
                                       </div>
-                                    </dialog>
-                                  </role-dialog>
+                                    </div>
+                                  </dialog>
                                 );
 
                                 return (
@@ -548,7 +544,6 @@ declare global {
   namespace JSX {
     interface IntrinsicElements {
       "expansion-button": CustomElement;
-      "role-dialog": CustomElement;
       "close-dialog-button": CustomElement;
     }
   }

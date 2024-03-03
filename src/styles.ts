@@ -53,15 +53,15 @@ export default `
           margin: 0 auto;
         }
 
-        .container:has(.aria-role__dialog[open], .aria-role__dialog:target) {
+        .container:has(.aria-role__dialog:target) {
           grid-template-columns: repeat(auto-fill, minmax(.25rem, 0fr)) minmax(32rem, 33.333%);
         }
 
-        .container:has(.aria-role__dialog[open], .aria-role__dialog:target) main {
+        .container:has(.aria-role__dialog:target) main {
           grid-column: 1 / -2;
         }
 
-        :is(.aria-role__dialog[open], .aria-role__dialog:target) {
+        :is(.aria-role__dialog:target) {
           grid-column: -2 / -1;
         }
       }
@@ -363,10 +363,6 @@ export default `
         }
       }
 
-      role-dialog {
-        display: contents;
-      }
-
       .periodic-table__abstract-area {
         border: 1px solid hsl(var(--color), 60%, 50%);
         background-color: hsla(var(--color), 60%, 50%, .06125);
@@ -382,16 +378,16 @@ export default `
 
   @supports not (grid-template-columns: subgrid) {
     @media screen {
-      .container:has(:is(.aria-role__dialog:target, .aria-role__dialog[open])) main,
-      body:has(:is(.aria-role__dialog:target, .aria-role__dialog[open])) footer {
+      .container:has(.aria-role__dialog:target) main,
+      body:has(.aria-role__dialog:target) footer {
         display: none !important;
       }
     }
   }
 
   @media print {
-    .container:has(:is(.aria-role__dialog:target, .aria-role__dialog[open])) main,
-    body:has(:is(.aria-role__dialog:target, .aria-role__dialog[open])) footer {
+    .container:has(.aria-role__dialog:target) main,
+    body:has(.aria-role__dialog:target) footer {
       display: none !important;
     }
 
@@ -399,7 +395,7 @@ export default `
       display: none !important;
     }
 
-    .aria-role__dialog:is(:target, [open]) {
+    .aria-role__dialog:target {
       display: contents;
     }
 

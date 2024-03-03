@@ -3,29 +3,23 @@ export default `
     constructor() {
       super();
 
-      const dialogElement = window.document.querySelector(\`role-dialog[data-role=\${this.getAttribute('data-role')}]\`);
+      const triggerElement = this.querySelector('a');
 
-      if (!dialogElement) {
-        throw new Error('No dialog element found');
+      if (!triggerElement) {
+        throw new Error('No trigger element found');
       }
 
-      this.dialogElement = dialogElement;
+      this.triggerElement = triggerElement;
 
-      const buttonElement = this.querySelector('a');
-
-      if (!buttonElement) {
-        throw new Error('No button element found');
-      }
-
-      this.buttonElement = buttonElement;
-
-      this.buttonElement.addEventListener('click', this.handleButtonClick);
+      this.triggerElement.addEventListener('click', this.handletriggerClick);
     }
 
-    handleButtonClick = (event) => {
-      event.preventDefault();
-      window.history.pushState({}, '', '#' + this.dialogElement.getAttribute('data-role'));
-      window.dispatchEvent(new Event('hashchange'));
+    handletriggerClick = (event) => {
+      const windowScrollY = window.scrollY;
+      this.triggerElement.setAttribute('aria-expanded', 'true');
+      window.requestAnimationFrame(() => {
+        window.scrollTo(0, windowScrollY);
+      });
     }
   });
 
@@ -39,98 +33,21 @@ export default `
         throw new Error('No button element found');
       }
 
-      buttonElement.addEventListener('click', (event) => {
-        event.preventDefault();
-        window.history.pushState({}, '', window.location.pathname);
-        window.dispatchEvent(new Event('hashchange'));
-      });
-    }
-  });
-
-  customElements.define('role-dialog', class extends HTMLElement {
-    constructor() {
-      super();
-
-      const dialogElement = this.querySelector('dialog');
-
-      if (!dialogElement) {
-        throw new Error('No dialog element found');
-      }
-
-      this.dialogElement = dialogElement;
-
-      const buttonElement = window.document.querySelector(\`expansion-button[data-role=\${this.getAttribute('data-role')}]\`);
-
-      if (!buttonElement) {
-        throw new Error('No button element found');
-      }
-
       this.buttonElement = buttonElement;
 
+      const triggerElement = window.document.querySelector(\`a[href="#\${this.closest('dialog').getAttribute('id')}"]\`);
 
-      const roleAttr = this.getAttribute('data-role');
-
-      if (!roleAttr) {
-        throw new Error('No role attribute found');
+      if (!triggerElement) {
+        throw new Error('No trigger element found');
       }
 
-      this.roleAttr = roleAttr;
+      this.triggerElement = triggerElement;
 
-      window.addEventListener('hashchange', this.handleHashChange);
+      this.buttonElement.addEventListener('click', this.handleTriggerClick);
     }
 
-    connectedCallback() {
-      if (window.location.hash === '#' + this.roleAttr) {
-        this.openDialog();
-      }
-    }
-    
-    openDialog = () => {
-        const openDialogElements = Array.from(window.document.querySelectorAll('dialog[open]'));
-
-        window.requestAnimationFrame(() => {
-          for (const openDialogElement of openDialogElements) {
-            console.log({
-              openDialogElement,
-            });
-
-            openDialogElement.close();
-          }
-
-          window.requestAnimationFrame(() => {
-            if (matchMedia('(min-width: 960px)').matches) {
-              this.dialogElement.show();
-            } else {
-              this.dialogElement.showModal();
-            }
-
-            window.requestAnimationFrame(() => {
-              this.buttonElement.setAttribute('aria-expanded', 'true');
-            });
-          });
-        });
-    }
-
-    closeDialog = () => {
-      if (!this.dialogElement.open) {
-        return;
-      }
-
-      window.requestAnimationFrame(() => {
-        this.buttonElement.setAttribute('aria-expanded', 'false');
-        
-        window.requestAnimationFrame(() => {
-          this.dialogElement.close();
-        });
-      });
-    }
-
-    handleHashChange = () => {
-      if (window.location.hash === '#' + this.roleAttr) {
-        this.openDialog();
-      } else {
-        this.closeDialog();
-      }
+    handleTriggerClick = (event) => {
+      this.triggerElement.setAttribute('aria-expanded', 'false');
     }
   });
 `;
