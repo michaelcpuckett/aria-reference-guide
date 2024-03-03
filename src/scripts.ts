@@ -19,7 +19,6 @@ export default `
 
       this.buttonElement = buttonElement;
 
-      window.addEventListener('hashchange', this.handleHashChange);
       this.buttonElement.addEventListener('click', this.handleButtonClick);
     }
 
@@ -27,14 +26,6 @@ export default `
       event.preventDefault();
       window.history.pushState({}, '', '#' + this.dialogElement.getAttribute('data-role'));
       window.dispatchEvent(new Event('hashchange'));
-    }
-
-    handleHashChange = (event) => {
-      if (window.location.hash === '#' + this.dialogElement.getAttribute('data-role')) {
-        this.dialogElement.openDialog();
-      } else {
-        this.dialogElement.closeDialog();
-      }
     }
   });
 
@@ -75,28 +66,49 @@ export default `
       }
 
       this.buttonElement = buttonElement;
+
+
+      const roleAttr = this.getAttribute('data-role');
+
+      if (!roleAttr) {
+        throw new Error('No role attribute found');
+      }
+
+      this.roleAttr = roleAttr;
+
+      window.addEventListener('hashchange', this.handleHashChange);
     }
 
     connectedCallback() {
-      if (window.location.hash === '#' + this.getAttribute('data-role')) {
+      if (window.location.hash === '#' + this.roleAttr) {
         this.openDialog();
       }
     }
     
     openDialog = () => {
-      const openDialogElements = Array.from(window.document.querySelectorAll('dialog[open]'));
+        const openDialogElements = Array.from(window.document.querySelectorAll('dialog[open]'));
 
-      for (const openDialogElement of openDialogElements) {
-        openDialogElement.close();
-      }
+        window.requestAnimationFrame(() => {
+          for (const openDialogElement of openDialogElements) {
+            console.log({
+              openDialogElement,
+            });
 
-      if (matchMedia('(min-width: 960px)').matches) {
-        this.dialogElement.show();
-      } else {
-        this.dialogElement.showModal();
-      }
+            openDialogElement.close();
+          }
 
-      this.buttonElement.setAttribute('aria-expanded', 'true');
+          window.requestAnimationFrame(() => {
+            if (matchMedia('(min-width: 960px)').matches) {
+              this.dialogElement.show();
+            } else {
+              this.dialogElement.showModal();
+            }
+
+            window.requestAnimationFrame(() => {
+              this.buttonElement.setAttribute('aria-expanded', 'true');
+            });
+          });
+        });
     }
 
     closeDialog = () => {
@@ -104,9 +116,21 @@ export default `
         return;
       }
 
-      this.buttonElement.setAttribute('aria-expanded', 'false');
+      window.requestAnimationFrame(() => {
+        this.buttonElement.setAttribute('aria-expanded', 'false');
+        
+        window.requestAnimationFrame(() => {
+          this.dialogElement.close();
+        });
+      });
+    }
 
-      this.dialogElement.close();
+    handleHashChange = () => {
+      if (window.location.hash === '#' + this.roleAttr) {
+        this.openDialog();
+      } else {
+        this.closeDialog();
+      }
     }
   });
 `;
