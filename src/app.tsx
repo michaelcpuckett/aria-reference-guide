@@ -28,6 +28,7 @@ function ARIAPeriodicTable() {
 
   return (
     <html lang="en">
+      <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <style
         dangerouslySetInnerHTML={{
@@ -120,7 +121,7 @@ function ARIAPeriodicTable() {
                               `}
                           >
                             <h3
-                              id={`aria-abstract-role--${abstractAriaRole}`}
+                              id={`aria-abstract-role--${abstractAriaRole}-${index}`}
                               className="periodic-table__abstract-area__heading"
                             >
                               {title}
@@ -138,7 +139,7 @@ function ARIAPeriodicTable() {
                             )}
                             <div
                               role="list"
-                              aria-labelledby={`aria-abstract-role--${abstractAriaRole}`}
+                              aria-labelledby={`aria-abstract-role--${abstractAriaRole}-${index}`}
                               className="periodic-table__subgrid periodic-table__role-area"
                             >
                               {roles.map((role) => {
@@ -509,8 +510,6 @@ function ARIAPeriodicTable() {
         </main>
         {dialogElements}
       </div>
-
-      <footer>Test</footer>
 
       <script
         dangerouslySetInnerHTML={{

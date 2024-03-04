@@ -3,6 +3,8 @@ export default `
     constructor() {
       super();
 
+      this.isSafari = window.document.documentElement.classList.has('is-safari');
+
       const triggerElement = this.querySelector('a');
 
       if (!triggerElement) {
@@ -17,9 +19,12 @@ export default `
     handletriggerClick = (event) => {
       const windowScrollY = window.scrollY;
       this.triggerElement.setAttribute('aria-expanded', 'true');
-      window.requestAnimationFrame(() => {
-        window.scrollTo(0, windowScrollY);
-      });
+
+      if (!this.isSafari) {
+        window.requestAnimationFrame(() => {
+          window.scrollTo(0, windowScrollY);
+        });
+      }
     }
   });
 
