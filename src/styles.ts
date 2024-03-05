@@ -130,6 +130,8 @@ export default `
           border: 2px solid var(--hsl-color);
           color: white;
 
+          
+          &.aria-role--only-presentational-children,
           &.aria-role--only-phrasing-descendants {
             background-image: repeating-linear-gradient(
               45deg,
@@ -144,6 +146,7 @@ export default `
             background-color: var(--hsl-color);
             color: black;
 
+            &.aria-role--only-presentational-children,
             &.aria-role--only-phrasing-descendants {
               background-image: repeating-linear-gradient(
                 45deg,
@@ -238,13 +241,17 @@ export default `
 
         .aria-role__dialog-content {
           background-color: var(--hsl-color);
-          background-image: repeating-linear-gradient(
-            45deg,
-            var(--hsl-color),
-            var(--hsl-color) 10px,
-            var(--hsl-light-color) 10px,
-            var(--hsl-light-color) 20px
-          );
+
+          .aria-role__dialog--only-presentational-children &,
+          .aria-role__dialog--only-phrasing-descendants & {
+            background-image: repeating-linear-gradient(
+              45deg,
+              var(--hsl-color),
+              var(--hsl-color) 10px,
+              var(--hsl-light-color) 10px,
+              var(--hsl-light-color) 20px
+            );
+          }
         }
 
         .aria-role__dialog-content > [tabindex="-1"]:focus-visible {

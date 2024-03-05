@@ -1,7 +1,10 @@
 export { abstractAriaRolesByType } from "./abstractAriaRolesByType";
 export { allowedAriaRolesByHtmlElement } from "./allowedAriaRolesByHtmlElement";
 export { ariaRolesByCategory } from "./ariaRolesByCategory";
-export { ariaRolesWithPresentationalChildren } from "./ariaRolesWithPresentationalChildren";
+export {
+  ariaRolesWithPresentationalChildren,
+  ariaRolesWithPhrasingDescendants,
+} from "./ariaRolesWithPresentationalChildren";
 export { ariaToHtmlMapping } from "./ariaToHtmlMapping";
 export { links } from "./links";
 export { mappedAbstractAriaRolesToBackgroundColors } from "./mappedAbstractAriaRolesToBackgroundColors";

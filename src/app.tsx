@@ -6,6 +6,7 @@ import {
   allowedAriaRolesByHtmlElement,
   ariaRolesByCategory,
   ariaRolesWithPresentationalChildren,
+  ariaRolesWithPhrasingDescendants,
   ariaToHtmlMapping,
   links,
   mappedAbstractAriaRolesToDescriptions,
@@ -78,7 +79,7 @@ function ARIAPeriodicTable() {
                         ariaRolesByCategory[abstractAriaRole] || [];
                       const rolesWithPresentationalChildren = ariaRoles
                         .filter((role) =>
-                          ariaRolesWithPresentationalChildren.includes(role)
+                          ariaRolesWithPresentationalChildren.includes(role) || ariaRolesWithPhrasingDescendants.includes(role)
                         )
                         .sort((a?: string, b?: string) =>
                           a?.localeCompare(b || "")
@@ -86,22 +87,19 @@ function ARIAPeriodicTable() {
                       const rolesWithoutPresentationalChildren = ariaRoles
                         .filter(
                           (role) =>
-                            !ariaRolesWithPresentationalChildren.includes(role)
+                            !ariaRolesWithPresentationalChildren.includes(role) && !ariaRolesWithPhrasingDescendants.includes(role)
                         )
                         .sort((a?: string, b?: string) =>
                           a?.localeCompare(b || "")
                         );
 
                       return [
-                        ["", rolesWithoutPresentationalChildren],
-                        [
-                          " with Presentational Children",
-                          rolesWithPresentationalChildren,
-                        ],
-                      ].map(([name, roles], index) => {
+                        rolesWithoutPresentationalChildren,
+                        rolesWithPresentationalChildren,
+                      ].map((roles, index) => {
                         const title =
                           mappedAbstractAriaRolesToTitles[abstractAriaRole] +
-                          " Roles";
+                          " Roles" + (index === 1 ? (abstractAriaRole === 'structure' ? " (with Phrasing Descendants)" : " (with Presentational Children)"): "");
                         const description =
                           mappedAbstractAriaRolesToDescriptions[
                             abstractAriaRole
@@ -125,18 +123,21 @@ function ARIAPeriodicTable() {
                               className="periodic-table__abstract-area__heading"
                             >
                               {title}
-                              {name}
                             </h3>
                             {index === 0 ? (
                               <p className="periodic-table__abstract-area__description">
                                 {description}
                               </p>
+                            ) : (abstractAriaRole === 'structure' ? (
+                              <p className="periodic-table__abstract-area__description">
+                                The descendants of these roles must be text or phrasing content.
+                              </p>
                             ) : (
                               <p className="periodic-table__abstract-area__description">
-                                The children of these roles are presentational
+                                Any children of these roles are presentational
                                 and do not have semantic value.
                               </p>
-                            )}
+                            ))}
                             <div
                               role="list"
                               aria-labelledby={`aria-abstract-role--${abstractAriaRole}-${index}`}
@@ -184,7 +185,9 @@ function ARIAPeriodicTable() {
                                   <dialog
                                     key={role}
                                     data-role={id}
-                                    className={`aria-role__dialog aria-role__dialog--abstract-role-${abstractAriaRole}`}
+                                    className={`aria-role__dialog aria-role__dialog--abstract-role-${abstractAriaRole} ${ariaRolesWithPresentationalChildren.includes(
+                                      role
+                                    ) ? 'aria-role__dialog--only-phrasing-descendants' : ''}`}
                                     id={`${id}-dialog`}
                                     aria-labelledby={`aria-role__dialog-heading--${id}`}
                                   >
@@ -330,9 +333,6 @@ function ARIAPeriodicTable() {
                                                 </div>
                                               </div>
                                             )}
-                                            {ariaRolesWithPresentationalChildren.includes(
-                                            role
-                                          ) ? (
                                             <div
                                               role="row"
                                               className="aria-role__row"
@@ -341,40 +341,31 @@ function ARIAPeriodicTable() {
                                                 className="aria-role__row-header"
                                                 role="rowheader"
                                               >
-                                                Children Presentational
+                                                Allowed content
                                               </div>
                                               <div
                                                 role="cell"
                                                 className="aria-role__cell"
                                               >
                                                 <p>
-                                                  True; this role can only contain text. Accessibility APIs do not have a way of representing semantic elements contained inside. Browsers automatically apply role `presentation` to all descendant elements. This means that semantics of any descendant elements are not conveyed to assistive technologies.
+                                                {ariaRolesWithPhrasingDescendants.includes(
+                                                  role
+                                                ) ? (
+                                                    <p>
+                                                      This role can only contain text or phrasing (text) content.
+                                                    </p>
+                                                  ) : ((ariaRolesWithPresentationalChildren.includes(role) ? (
+                                                    <p>
+                                                      This role can only contain text. <em>The semantics of any descendant elements are not conveyed to assistive technologies.</em> Browsers automatically apply the presentation role to all descendant elements.
+                                                    </p>
+                                                  ) : (
+                                                    <p>
+                                                      Any content.
+                                                    </p>
+                                                  )))}
                                                 </p>
                                               </div>
                                             </div>
-                                          ) : null}
-                                            <div
-                                              role="row"
-                                              className="aria-role__row"
-                                            >
-                                              <div
-                                                className="aria-role__row-header"
-                                                role="rowheader"
-                                              >
-                                                Description
-                                              </div>
-                                              <div
-                                                role="cell"
-                                                className="aria-role__cell"
-                                              >
-                                                <p>
-                                                  {mappedAriaRolesToDescriptions[
-                                                    role
-                                                  ] || "--"}
-                                                </p>
-                                              </div>
-                                            </div>
-
                                             <div
                                               role="row"
                                               className="aria-role__row"
@@ -506,6 +497,13 @@ function ARIAPeriodicTable() {
                                         aria-role--abstract-role-${abstractAriaRole}
                                         ${
                                           ariaRolesWithPresentationalChildren.includes(
+                                            role
+                                          )
+                                            ? "aria-role--only-presentational-children"
+                                            : ""
+                                        }
+                                        ${
+                                          ariaRolesWithPhrasingDescendants.includes(
                                             role
                                           )
                                             ? "aria-role--only-phrasing-descendants"

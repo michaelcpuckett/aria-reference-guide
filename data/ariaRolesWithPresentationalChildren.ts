@@ -13,7 +13,10 @@ export const ariaRolesWithPresentationalChildren = [
   "scrollbar",
   "separator",
   "slider",
+  "progressbar",
+];
 
+export const ariaRolesWithPhrasingDescendants = [
   "code",
   "definition",
   "deletion",
@@ -22,7 +25,6 @@ export const ariaRolesWithPresentationalChildren = [
   "img",
   "insertion",
   "paragraph",
-  "progressbar",
   "strong",
   "subscript",
   "superscript",
