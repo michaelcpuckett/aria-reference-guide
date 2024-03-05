@@ -3,8 +3,6 @@ export default `
     constructor() {
       super();
 
-      this.isSafari = window.document.documentElement.classList.has('is-safari');
-
       const triggerElement = this.querySelector('a');
 
       if (!triggerElement) {
@@ -12,19 +10,18 @@ export default `
       }
 
       this.triggerElement = triggerElement;
+    }
 
+    connectedCallback() {
       this.triggerElement.addEventListener('click', this.handletriggerClick);
     }
 
-    handletriggerClick = (event) => {
-      const windowScrollY = window.scrollY;
-      this.triggerElement.setAttribute('aria-expanded', 'true');
+    disconnectedCallback() {
+      this.triggerElement.removeEventListener('click', this.handletriggerClick);
+    }
 
-      if (!this.isSafari) {
-        window.requestAnimationFrame(() => {
-          window.scrollTo(0, windowScrollY);
-        });
-      }
+    handletriggerClick = (event) => {
+      this.triggerElement.setAttribute('aria-expanded', 'true');
     }
   });
 
@@ -40,15 +37,33 @@ export default `
 
       this.buttonElement = buttonElement;
 
-      const triggerElement = window.document.querySelector(\`a[href="#\${this.closest('dialog').getAttribute('id')}"]\`);
+      const dialogElement = this.closest('dialog');
+
+      if (!dialogElement) {
+        throw new Error('No dialog element found');
+      }
+
+      const dialogId = dialogElement.getAttribute('id');
+
+      if (!dialogId) {
+        throw new Error('Dialog element has no id');
+      }
+
+      const triggerElement = window.document.querySelector(\`a[href="#\${dialogId}"]\`);
 
       if (!triggerElement) {
         throw new Error('No trigger element found');
       }
 
       this.triggerElement = triggerElement;
+    }
 
+    connectedCallback() {
       this.buttonElement.addEventListener('click', this.handleTriggerClick);
+    }
+
+    disconnectedCallback() {
+      this.buttonElement.removeEventListener('click', this.handleTriggerClick);
     }
 
     handleTriggerClick = (event) => {

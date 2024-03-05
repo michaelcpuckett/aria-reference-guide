@@ -330,6 +330,50 @@ function ARIAPeriodicTable() {
                                                 </div>
                                               </div>
                                             )}
+                                            {ariaRolesWithPresentationalChildren.includes(
+                                            role
+                                          ) ? (
+                                            <div
+                                              role="row"
+                                              className="aria-role__row"
+                                            >
+                                              <div
+                                                className="aria-role__row-header"
+                                                role="rowheader"
+                                              >
+                                                Children Presentational
+                                              </div>
+                                              <div
+                                                role="cell"
+                                                className="aria-role__cell"
+                                              >
+                                                <p>
+                                                  True; this role can only contain text. Accessibility APIs do not have a way of representing semantic elements contained inside. Browsers automatically apply role `presentation` to all descendant elements. This means that semantics of any descendant elements are not conveyed to assistive technologies.
+                                                </p>
+                                              </div>
+                                            </div>
+                                          ) : null}
+                                            <div
+                                              role="row"
+                                              className="aria-role__row"
+                                            >
+                                              <div
+                                                className="aria-role__row-header"
+                                                role="rowheader"
+                                              >
+                                                Description
+                                              </div>
+                                              <div
+                                                role="cell"
+                                                className="aria-role__cell"
+                                              >
+                                                <p>
+                                                  {mappedAriaRolesToDescriptions[
+                                                    role
+                                                  ] || "--"}
+                                                </p>
+                                              </div>
+                                            </div>
 
                                             <div
                                               role="row"

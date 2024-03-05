@@ -124,13 +124,35 @@ export default `
           grid-column: span 5;
           --hsl-color: hsl(var(--color), 60%, 87.5%);
           --hsl-alt-color: hsl(var(--color), 60%, 22.5%);
+          --hsl-dark-color: hsl(var(--color), 60%, 15%);
+          --hsl-light-color: hsl(var(--color), 60%, 80%);
           background-color: var(--hsl-alt-color);
           border: 2px solid var(--hsl-color);
           color: white;
 
+          &.aria-role--only-phrasing-descendants {
+            background-image: repeating-linear-gradient(
+              45deg,
+              var(--hsl-alt-color),
+              var(--hsl-alt-color) 10px,
+              var(--hsl-dark-color) 10px,
+              var(--hsl-dark-color) 20px
+            );
+          }
+
           &:hover {
             background-color: var(--hsl-color);
             color: black;
+
+            &.aria-role--only-phrasing-descendants {
+              background-image: repeating-linear-gradient(
+                45deg,
+                var(--hsl-color),
+                var(--hsl-color) 10px,
+                var(--hsl-light-color) 10px,
+                var(--hsl-light-color) 20px
+              );
+            }
           }
         }
 
@@ -194,6 +216,10 @@ export default `
           overflow: auto;
           grid-template-columns: subgrid;
           grid-row: 1 / -1;
+          --hsl-color: hsl(var(--color), 60%, 87.5%);
+          --hsl-alt-color: hsl(var(--color), 60%, 22.5%);
+          --hsl-dark-color: hsl(var(--color), 60%, 15%);
+          --hsl-light-color: hsl(var(--color), 60%, 80%);
 
           &:focus-visible { 
             outline: 0;
@@ -211,8 +237,14 @@ export default `
         }
 
         .aria-role__dialog-content {
-          /*background-color: hsl(0deg, 0%, 87.5%);*/
-          background-color: hsl(var(--color), 60%, 87.5%);
+          background-color: var(--hsl-color);
+          background-image: repeating-linear-gradient(
+            45deg,
+            var(--hsl-color),
+            var(--hsl-color) 10px,
+            var(--hsl-light-color) 10px,
+            var(--hsl-light-color) 20px
+          );
         }
 
         .aria-role__dialog-content > [tabindex="-1"]:focus-visible {
@@ -228,19 +260,20 @@ export default `
           .aria-role__dialog {
             margin-left: 2rem;
             position: sticky;
-            top: 1rem;
-            margin-top: calc(-100dvh + 2em);
-            max-height: calc(100dvh - 2em);
+            top: 0;
+            margin-top: -100dvh;
+            max-height: 100vh;
             height: 100%;
             width: 100%;
           }
 
           .aria-role__dialog-content {
             overflow: auto;
+            overflow-x: hidden;
             grid-column: 1 / -1;
             height: 100%;
-            border-radius: 1rem;
-            border: 2px solid hsl(var(--color), 60%, 22.5%);
+            border-left: 2px solid var(--alt-color);
+            border-right: 2px solid var(--alt-color);
           }
         }
 
@@ -367,7 +400,7 @@ export default `
         .periodic-table__abstract-area {
           border: 1px solid hsl(var(--color), 60%, 50%);
           background-color: hsla(var(--color), 60%, 50%, .06125);
-          border-radius: 8px;
+          border-radius: 1rem;
           padding: 2rem 0;
         }
 
