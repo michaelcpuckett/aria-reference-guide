@@ -24,6 +24,10 @@ export default `
     display: grid;
   }
 
+  dfn {
+    display: block;
+  }
+
   @supports (grid-template-columns: subgrid) {
     @media screen {
         body {
@@ -31,9 +35,17 @@ export default `
           background: var(--page-background-color);
         }
 
+        body:has(.aria-role__dialog:target) {
+          overflow: hidden;
+        
+          @media screen and (min-width: 1170px) {
+            overflow: auto;
+          }
+        }
+
         .container {
           display: grid;
-          padding: 0 3rem;
+          padding: 0 1rem;
           gap: 1rem;
           grid-template-columns: repeat(auto-fill, minmax(.25rem, 0fr));
           place-content: center;
@@ -44,13 +56,15 @@ export default `
           grid-template-columns: subgrid;
           place-content: space-between;
           grid-column: 1 / -1;
+          padding-bottom: 1rem;
         }
 
         @media screen and (min-width: 1170px) {
           .container {
             place-content: stretch;
-            max-width: 1840px;
+            max-width: 113rem;
             margin: 0 auto;
+            padding: 0 3rem;
           }
 
           .container:has(.aria-role__dialog:target) {
@@ -106,6 +120,7 @@ export default `
           top: -.51px;
           background-color: var(--page-background-color);
           border-bottom: 1px solid;
+          z-index: 1;
         }
 
         ul {
@@ -121,24 +136,27 @@ export default `
           height: 100%;
           min-height: 5rem;
           border-radius: .5rem;
-          grid-column: span 5;
+          grid-column: 1 / -1;
           --hsl-color: hsl(var(--color), 60%, 87.5%);
           --hsl-alt-color: hsl(var(--color), 60%, 22.5%);
-          --hsl-dark-color: hsl(var(--color), 60%, 15%);
+          --hsl-dark-color: hsl(var(--color), 60%, 18.5%);
           --hsl-light-color: hsl(var(--color), 60%, 80%);
-          background-color: var(--hsl-alt-color);
+          background-color: var(--hsl-dark-color);
           border: 2px solid var(--hsl-color);
           color: white;
 
+          @media screen and (min-width: 600px) {
+            grid-column: span 5;
+          }
           
           &.aria-role--only-presentational-children,
           &.aria-role--only-phrasing-descendants {
             background-image: repeating-linear-gradient(
               45deg,
-              var(--hsl-alt-color),
+              transparent,
+              transparent 10px,
               var(--hsl-alt-color) 10px,
-              var(--hsl-dark-color) 10px,
-              var(--hsl-dark-color) 20px
+              var(--hsl-alt-color) 20px
             );
           }
 
@@ -215,13 +233,14 @@ export default `
           border: 0;
           padding: 0;
           background: none;
-          overscroll-behavior: none;
-          overflow: auto;
           grid-template-columns: subgrid;
           grid-row: 1 / -1;
+          overflow: auto;
+          will-change: transform;
+          z-index: 2;
           --hsl-color: hsl(var(--color), 60%, 87.5%);
           --hsl-alt-color: hsl(var(--color), 60%, 22.5%);
-          --hsl-dark-color: hsl(var(--color), 60%, 15%);
+          --hsl-dark-color: hsl(var(--color), 60%, 18.5%);
           --hsl-light-color: hsl(var(--color), 60%, 80%);
 
           &:focus-visible { 
@@ -339,11 +358,11 @@ export default `
         }
 
         .aria-role__dialog .aria-role__cell {
-          padding: 1rem .5rem;
+          padding: 1rem;
         }
 
         .aria-role__dialog .aria-role__row-header {
-          padding: .5rem;
+          padding: .5rem 1rem;
           background: hsl(var(--color), 60%, 22.5%);
           color: white;
         }
@@ -354,6 +373,7 @@ export default `
           display: flex;
           place-items: center;
           margin: 0;
+          font-size: 1.333rem;
           grid-column: 2 / -2;
           font-style: italic;
           font-weight: normal;
@@ -390,11 +410,16 @@ export default `
           font: inherit;
           color: hsl(var(--color), 60%, 22.5%);
           border-radius: 50%;
-          align-self: center;
           justify-self: flex-end;
+          display: flex;
+          place-content: center;
+          place-items: center;
           font-weight: bold;
-          line-height: 1;
-          padding: .5rem .667rem .667rem;
+          width: 3rem;
+          height: 3rem;
+          aspect-ratio: 1;
+          font-family: Helvetica, Arial, sans-serif;
+          font-size: 1.5rem;
           text-decoration: none;
           background-color: hsl(var(--color), 60%, 97.5%);
 
@@ -419,16 +444,14 @@ export default `
 
   @supports not (grid-template-columns: subgrid) {
     @media screen {
-      .container:has(.aria-role__dialog:target) main,
-      body:has(.aria-role__dialog:target) footer {
+      .container:has(.aria-role__dialog:target) main {
         display: none !important;
       }
     }
   }
 
   @media print {
-    .container:has(.aria-role__dialog:target) main,
-    body:has(.aria-role__dialog:target) footer {
+    .container:has(.aria-role__dialog:target) main {
       display: none !important;
     }
 

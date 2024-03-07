@@ -87,7 +87,7 @@ export const mappedAriaRolesToDescriptions = {
   spinbutton:
     "A form of range that expects the user to select from among discrete choices.",
   region:
-    "A landmark containing content that is relevant to a specific, author-specified purpose and sufficiently important that users will likely want to be able to navigate to the section easily and to have it listed in a summary of the page. Such a page summary could be generated dynamically by a user agent or assistive technology.",
+    "A landmark containing content that is relevant to a specific, author-specified purpose and sufficiently important that users will likely want to be able to navigate to the section easily and to have it listed in a summary of the page.",
   row: "A row of cells in a tabular container.",
   rowgroup:
     "A structure containing one or more row elements in a tabular container.",

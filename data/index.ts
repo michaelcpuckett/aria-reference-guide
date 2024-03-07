@@ -16,3 +16,4 @@ export { mappedAriaRolesToDescriptions } from "./mappedAriaRolesToDescriptions";
 export { mappedAriaRolesToDisplayNames } from "./mappedAriaRolesToDisplayNames";
 export { mappedAriaRolesToNotes } from "./mappedAriaRolesToNotes";
 export { mappedAriaTypesToTitles } from "./mappedAriaTypesToTitles";
+export { mappedAriaRolesToAllowedDescendants } from "./mappedAriaRolesToAllowedDescendants";

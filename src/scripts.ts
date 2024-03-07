@@ -67,7 +67,13 @@ export default `
     }
 
     handleTriggerClick = (event) => {
+      const windowY = window.scrollY;
+
       this.triggerElement.setAttribute('aria-expanded', 'false');
+
+      window.requestAnimationFrame(() => {
+        window.scrollTo(0, windowY);
+      });
     }
   });
 `;

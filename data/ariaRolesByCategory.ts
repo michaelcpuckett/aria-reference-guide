@@ -1,4 +1,4 @@
-export const ariaRolesByCategory = {
+export const ariaRolesByCategory: { [key: string]: string[] } = {
   widget: [
     "button",
     "combobox",

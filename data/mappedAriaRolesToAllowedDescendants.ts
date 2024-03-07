@@ -1,0 +1,101 @@
+export const mappedAriaRolesToAllowedDescendants = {
+  alert: "Flow content but with no main element descendants.",
+  alertdialog: "Flow content",
+  application: "Flow content",
+  article: "Flow content but with no main element descendants.",
+  banner:
+    "Flow content but with no main, header, or footer element descendants.",
+  blockquote: "Flow content but with no main element descendants.",
+  button:
+    "Phrasing content, but with no interactive content descendants, and no descendants with a tabindex attribute specified.",
+  caption: "Flow content but with no main or table element descendants.",
+  cell: "Flow content but with no main element descendants.",
+  checkbox:
+    "Phrasing content, but with no interactive content descendants, and no descendants with a tabindex attribute specified.",
+  code: "Phrasing content",
+  columnheader:
+    "Flow content but with no main, header, or footer element descendants.",
+  combobox: "Flow content but with no main element descendants.",
+  complementary: "Flow content but with no main element descendants.",
+  contentinfo:
+    "Flow content but with no main, header, or footer element descendants.",
+  definition: "Phrasing content",
+  deletion: "Phrasing content",
+  dialog: "Flow content",
+  directory: "Flow content but with no main element descendants.",
+  document: "Flow content",
+  emphasis: "Phrasing content",
+  feed: "Flow content but with no main element descendants.",
+  figure: "Flow content but with no main element descendants.",
+  form: "Flow content, but with no form element descendants.",
+  generic: "Flow content",
+  grid: "This role requires specific descendant roles. These may include row and rowgroup roles.",
+  gridcell: "Flow content but with no main element descendants.",
+  group: "Flow content",
+  heading: "Phrasing content",
+  img: "Phrasing content, but with no interactive content descendants.",
+  insertion: "Phrasing content",
+  link: "Flow content, but with no interactive content descendants, and no descendants with a tabindex attribute specified.",
+  list: "This role requires specific descendant roles. These may include listitem roles.",
+  listbox:
+    "This role requires specific descendant roles. These may include option and group roles.",
+  listitem: "Flow content but with no main element descendants.",
+  log: "Flow content, but with no main element descendants.",
+  main: "Flow content, but with no main element descendants.",
+  marquee: "Flow content, but with no main element descendants.",
+  math: "Flow content",
+  menu: "This role requires specific descendant roles. These may include menuitem, menuitemcheckbox, and menuitemradio roles.",
+  menubar:
+    "This role requires specific descendant roles. These may include menuitem, menuitemcheckbox, and menuitemradio roles.",
+  menuitem:
+    "Phrasing content, but with no interactive content descendants, and no descendants with a tabindex attribute specified.",
+  menuitemcheckbox:
+    "Phrasing content, but with no interactive content descendants, and no descendants with a tabindex attribute specified.",
+  menuitemradio:
+    "Phrasing content, but with no interactive content descendants, and no descendants with a tabindex attribute specified.",
+  meter: "Phrasing content, but with no meter element descendants.",
+  navigation: "Flow content, but with no main element descendants.",
+  none: "Transparent",
+  note: "Flow content, but with no main element descendants.",
+  option:
+    "Phrasing content, but with no interactive content descendants, and no descendants with a tabindex attribute specified.",
+  paragraph: "Phrasing content",
+  presentation: "Transparent",
+  progressbar: "Phrasing content, but with no progress element descendants.",
+  radio:
+    "Phrasing content, but with no interactive content descendants, and no descendants with a tabindex attribute specified.",
+  radiogroup: "Flow content",
+  region: "Flow content, but with no main element descendants.",
+  row: "This role requires specific descendant roles. These may include cell, rowheader, and columnheader roles.",
+  rowgroup:
+    "This role requires specific descendant roles. These may include row roles.",
+  rowheader: "Flow content but with no main element descendants.",
+  scrollbar: "Phrasing content",
+  search: "Flow content but with no main element descendants.",
+  searchbox: "Flow content but with no main element descendants.",
+  separator: "Phrasing content",
+  slider: "Phrasing content",
+  spinbutton: "Flow content but with no main element descendants.",
+  status: "Flow content but with no main element descendants.",
+  strong: "Phrasing content",
+  subscript: "Phrasing content",
+  superscript: "Phrasing content",
+  switch:
+    "Phrasing content, but with no interactive content descendants, and no descendants with a tabindex attribute specified.",
+  tab: "Phrasing content, but with no interactive content descendants, and no descendants with a tabindex attribute specified.",
+  table:
+    "This role requires specific descendant roles. These may include row and rowgroup roles.",
+  tablist:
+    "This role requires specific descendant roles. These may include tab roles.",
+  tabpanel: "Flow content",
+  term: "Phrasing content",
+  textbox: "Flow content but with no main element descendants.",
+  time: "Phrasing content",
+  timer: "Flow content but with no main element descendants.",
+  toolbar: "Flow content but with no main element descendants.",
+  tooltip: "Phrasing content",
+  tree: "This role requires specific descendant roles. These may include treeitem and group roles.",
+  treegrid:
+    "This role requires specific descendant roles. These may include row and rowgroup roles.",
+  treeitem: "Phrasing content",
+};
