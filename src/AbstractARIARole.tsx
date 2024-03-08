@@ -27,10 +27,10 @@ export function AbstractARIARole({
   return (
     <div
       className={`
-                            periodic-table__subgrid
-                            periodic-table__abstract-area
-                            periodic-table__abstract-area--${abstractAriaRole}
-                          `}
+        periodic-table__subgrid
+        periodic-table__abstract-area
+        periodic-table__abstract-area--${abstractAriaRole}
+      `}
     >
       <h3
         id={`aria-abstract-role--${abstractAriaRole}`}

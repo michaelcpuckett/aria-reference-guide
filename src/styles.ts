@@ -75,17 +75,22 @@ export default `
             max-width: 113rem;
             margin: 0 auto;
             padding: 0 3rem;
-            grid-template-columns: repeat(auto-fill, minmax(.25rem, 0fr)) 26rem;
+            grid-template-columns: repeat(auto-fill, minmax(.25rem, 0fr));
           }
 
-          main {
-            grid-column: 1 / -2;
-          }
+          body:has(.dialog:target) {
+            & .container {
+              grid-template-columns: repeat(auto-fill, minmax(.25rem, 0fr)) 26rem;
+            }
 
-          body:not(:has(.dialog--aria-role:target)) .dialog--about,
-          .dialog--aria-role:target {
-            display: grid;
-            grid-column: -2 / -1;
+            & main {
+              grid-column: 1 / -2;
+            }
+
+            & .dialog:target {
+              display: grid;
+              grid-column: -2 / -1;
+            }
           }
         }
 

@@ -76,6 +76,11 @@ export function ARIAPeriodicTable() {
           aria-labelledby="dialog__heading--about"
         >
           <div className="dialog__content dialog__content--about">
+            <close-dialog-button>
+              <a href={`#about-trigger`} aria-label="Close Dialog">
+                &times;
+              </a>
+            </close-dialog-button>
             <div
               role="region"
               aria-label="Scrollable Dialog Content"
