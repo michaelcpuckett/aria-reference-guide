@@ -21,7 +21,13 @@ export default `
     }
 
     handletriggerClick = (event) => {
-      this.triggerElement.setAttribute('aria-expanded', 'true');
+      const windowY = window.scrollY;
+
+      this.triggerElement.setAttribute('aria-expanded', 'false');
+
+      window.requestAnimationFrame(() => {
+        window.scrollTo(0, windowY);
+      });
     }
   });
 
