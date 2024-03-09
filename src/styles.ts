@@ -9,6 +9,10 @@ export default `
     outline: 0;
   }
 
+  role-dialog {
+    display: contents;
+  }
+
   :root {
     font-family: system-ui, sans-serif;
     color-scheme: dark;
@@ -27,10 +31,10 @@ export default `
           background: var(--page-background-color);
         }
 
-        body:has(.dialog--aria-role:target) {
+        body:has(.dialog--aria-role[open]) {
           overflow: hidden;
         
-          @media screen and (min-width: 1170px) {
+          @media screen and (min-width: 1024px) {
             overflow: auto;
           }
         }
@@ -52,12 +56,12 @@ export default `
           padding-bottom: 1rem;
         }
 
-        .dialog--aria-role:target {
+        .dialog--aria-role[open] {
           display: grid;
           grid-column: 1 / -1;
         }
         
-        @media screen and (max-width: 1169px) {
+        @media screen and (max-width: 1092px) {
           body {
             display: grid;
             grid-column: 1 / -1;
@@ -69,16 +73,16 @@ export default `
           }
         }
 
-        @media screen and (min-width: 1170px) {
+        @media screen and (min-width: 1093px) {
           .container {
             place-content: stretch;
-            max-width: 113rem;
+            max-width: 1428px;
             margin: 0 auto;
             padding: 0 3rem;
             grid-template-columns: repeat(auto-fill, minmax(.25rem, 0fr));
           }
 
-          body:has(.dialog:target) {
+          body:has(.dialog[open]) {
             & .container {
               grid-template-columns: repeat(auto-fill, minmax(.25rem, 0fr)) 26rem;
             }
@@ -87,7 +91,7 @@ export default `
               grid-column: 1 / -2;
             }
 
-            & .dialog:target {
+            & .dialog[open] {
               display: grid;
               grid-column: -2 / -1;
             }
@@ -119,7 +123,7 @@ export default `
           position: sticky;
           top: -.51px;
           background-color: var(--page-background-color);
-          border-bottom: 1px solid hsl(0, 0%, 10%);
+          border-bottom: 2px solid hsl(0, 0%, 10%);
           z-index: 1;
         }
 
@@ -241,15 +245,15 @@ export default `
           max-height: none;
           height: 100%;
           min-width: 0;
-          max-width: none;
+          max-width: 480px;
           width: 100%;
           top: 0;
           left: 0;
           border: 0;
           padding: 0;
           background: none;
-          grid-template-columns: subgrid;
           grid-row: 1 / -1;
+          grid-template-columns: 100%;
           overflow: auto;
           will-change: transform;
           z-index: 2;
@@ -262,17 +266,22 @@ export default `
           &:focus-visible { 
             outline: 0;
           }
+
+          &::backdrop {
+            background: rgba(0, 0, 0, 0.75);
+            cursor: pointer;
+          }
         }
 
         .dialog__content {
           display: grid;
+          grid-template-columns: 100%;
           align-content: flex-start;
           position: relative;
           padding: 1rem;
           background: white;
           color: black;
           color-scheme: light;
-          grid-column: 1 / -1;
         }
 
         .dialog__content--aria-role {
@@ -299,26 +308,21 @@ export default `
           outline-offset: 2px;
         }
 
-        @media screen and (min-width: 1170px) {
+        @media screen and (min-width: 1093px) {
           .dialog {
             margin-left: 2rem;
+            width: calc(100% - 2rem);
             position: sticky;
             top: calc(3rem + 2px);
             margin-top: calc(-100dvh + 3rem);
             max-height: calc(100vh - 3rem);
+            max-width: none;
             height: 100%;
-            width: 100%;
-          }
-
-          .dialog__content {
-            padding-left: 1rem;
-            padding-right: 1rem;
           }
 
           .dialog__content {
             overflow: auto;
             overflow-x: hidden;
-            grid-column: 1 / -1;
             height: 100%;
             border-left: 2px solid var(--alt-color);
             border-right: 2px solid var(--alt-color);
@@ -471,14 +475,14 @@ export default `
 
   @supports not (grid-template-columns: subgrid) {
     @media screen {
-      .container:has(.dialog--aria-role:target) main {
+      .container:has(.dialog--aria-role[open]) main {
         display: none !important;
       }
     }
   }
 
   @media print {
-    .container:has(.dialog--aria-role:target) main {
+    .container:has(.dialog--aria-role[open]) main {
       display: none !important;
     }
 
@@ -486,7 +490,7 @@ export default `
       display: none !important;
     }
 
-    .dialog--aria-role:target {
+    .dialog--aria-role[open] {
       display: contents;
     }
 

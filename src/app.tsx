@@ -29,6 +29,7 @@ declare global {
     interface IntrinsicElements {
       "expansion-button": CustomElement;
       "close-dialog-button": CustomElement;
+      "role-dialog": CustomElement;
     }
   }
 }
