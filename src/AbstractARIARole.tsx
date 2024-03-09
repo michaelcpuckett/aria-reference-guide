@@ -26,6 +26,8 @@ export function AbstractARIARole({
 }: AbstractARIARoleProps) {
   return (
     <div
+      role="listitem"
+      aria-labelledby={`aria-abstract-role--${abstractAriaRole}`}
       className={`
         periodic-table__subgrid
         periodic-table__abstract-area
