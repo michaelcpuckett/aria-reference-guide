@@ -27,7 +27,7 @@ export default `
     }
   }
 
-  window.addEventListener('DOMContentLoadeds', handleHashChange);
+  window.addEventListener('DOMContentLoaded', handleHashChange);
   window.addEventListener('hashchange', handleHashChange);
 
   window.matchMedia('(max-width: 1092px)').addEventListener('change', (event) => {
