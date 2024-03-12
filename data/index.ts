@@ -9,7 +9,7 @@ export { ariaToHtmlMapping } from "./ariaToHtmlMapping";
 export { links } from "./links";
 export { mappedAbstractAriaRolesToBackgroundColors } from "./mappedAbstractAriaRolesToBackgroundColors";
 export { mappedAbstractAriaRolesToDescriptions } from "./mappedAbstractAriaRolesToDescriptions";
-export { mappedAbstractAriaRolesToTitles } from "./mappedAbstractAriaRolesToTitles";
+export { mappedAbstractAriaRolesToDisplayNames as mappedAbstractAriaRolesToTitles } from "./mappedAbstractAriaRolesToDisplayNames";
 export { mappedAriaRolesToContentTypes } from "./mappedAriaRolesToContentTypes";
 export { mappedAriaRolesToContextRoles } from "./mappedAriaRolesToContextRoles";
 export { mappedAriaRolesToDescriptions } from "./mappedAriaRolesToDescriptions";

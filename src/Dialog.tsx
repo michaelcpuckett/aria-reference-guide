@@ -88,7 +88,7 @@ export function Dialog({
               id={`dialog__heading--${id}`}
               aria-label={`The ${role} role`}
               dangerouslySetInnerHTML={{
-                __html: `The <code>${roleTitle}</code> role`,
+                __html: `The ${roleTitle} role`,
               }}
             ></h2>
             <div className="aria-role__details">

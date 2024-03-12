@@ -48,7 +48,13 @@ export default `
     }
   });
 
-  customElements.define('expansion-button', class extends HTMLElement {
+  class PeriodicElement extends HTMLElement {
+    connectedCallback() {
+      this.setAttribute('is-defined', '');
+    }
+  }
+
+  customElements.define('expansion-button', class extends PeriodicElement {
     constructor() {
       super();
 
@@ -62,6 +68,7 @@ export default `
     }
 
     connectedCallback() {
+      super.connectedCallback();
       this.triggerElement.addEventListener('click', this.handletriggerClick);
     }
 
@@ -80,7 +87,7 @@ export default `
     }
   });
 
-  customElements.define('close-dialog-button', class extends HTMLElement {
+  customElements.define('close-dialog-button', class extends PeriodicElement {
     constructor() {
       super();
 
@@ -114,6 +121,7 @@ export default `
     }
 
     connectedCallback() {
+      super.connectedCallback();
       this.buttonElement.addEventListener('click', this.handleTriggerClick);
     }
 
@@ -132,7 +140,7 @@ export default `
     }
   });
 
-  window.customElements.define('role-dialog', class extends HTMLElement {
+  window.customElements.define('role-dialog', class extends PeriodicElement {
     constructor() {
       super();
 
@@ -146,6 +154,7 @@ export default `
     }
 
     connectedCallback() {
+      super.connectedCallback();
       this.dialogElement.addEventListener('click', this.handleBackdropClick);
     }
 
@@ -163,6 +172,47 @@ export default `
           window.scrollTo(0, windowY);
         });
       }
+    }
+  });
+
+  customElements.define('abstract-aria-role', class extends PeriodicElement {
+    constructor() {
+      super();
+
+      const summaryElement = this.querySelector('summary');
+
+      if (!summaryElement) {
+        throw new Error('No summary element found');
+      }
+
+      this.summaryElement = summaryElement;
+
+      const headingElement = this.querySelector('h3');
+
+      if (!headingElement) {
+        throw new Error('No heading element found');
+      }
+
+      this.headingElement = headingElement;
+    }
+
+    connectedCallback() {
+      super.connectedCallback();
+      this.headingElement.addEventListener('click', this.handleHeadingClick);
+      this.headingElement.addEventListener('keydown', this.handleHeadingClick);
+    }
+
+    disconnectedCallback() {
+      this.headingElement.removeEventListener('click', this.handleHeadingClick);
+      this.headingElement.removeEventListener('keydown', this.handleHeadingClick);
+    }
+
+    handleHeadingClick = (event) => {
+      if (event instanceof KeyboardEvent && !['Enter', ' '].includes(event.key)) {
+        return;
+      }
+
+      this.summaryElement.click();
     }
   });
 `;

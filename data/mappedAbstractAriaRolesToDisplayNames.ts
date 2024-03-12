@@ -1,4 +1,4 @@
-export const mappedAbstractAriaRolesToTitles = {
+export const mappedAbstractAriaRolesToDisplayNames = {
   composite: "Composite",
   landmark: "Landmark",
   structure: "Structure",

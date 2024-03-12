@@ -9,10 +9,11 @@ export default `
     outline: 0;
   }
 
-  role-dialog {
+  :not(:defined),
+  [is-defined] {
     display: contents;
   }
-
+  
   :root {
     font-family: system-ui, sans-serif;
     color-scheme: dark;
@@ -29,6 +30,10 @@ export default `
         body {
           margin: 0;
           background: var(--page-background-color);
+          grid-template-rows: 100%;
+          grid-template-columns: 100%;
+          display: grid;
+          height: 100vh;
         }
 
         body:has(.dialog--aria-role[open]) {
@@ -43,17 +48,19 @@ export default `
           display: grid;
           padding: 0 1rem;
           gap: 1rem;
-          grid-template-columns: repeat(auto-fill, minmax(.25rem, 0fr));
-          place-content: center;
-          background-color: #1a1a1a;
+          grid-template-columns: clamp(12rem, 400px, 25%) 1fr;
+          place-content: flex-start;
+          place-items: flex-start;
         }
 
         main {
           display: grid;
           grid-template-columns: subgrid;
           place-content: space-between;
-          grid-column: 1 / -1;
+          grid-column: 1 / 2;
           padding-bottom: 1rem;
+          grid-template-columns: 100%;
+          background: #1a1a1a;
         }
 
         .dialog--aria-role[open] {
@@ -75,26 +82,30 @@ export default `
 
         @media screen and (min-width: 1093px) {
           .container {
-            place-content: stretch;
-            max-width: 1428px;
-            margin: 0 auto;
-            padding: 0 3rem;
-            grid-template-columns: repeat(auto-fill, minmax(.25rem, 0fr));
+            place-content: flex-start;
+            place-items: flex-start;
+            margin: 0;
+            grid-template-columns: clamp(12rem, 300px, 25%) minmax(1fr, 800px);
+            grid-template-rows: max-content 1fr;
+            position: relative;
+            padding: 0;
+            column-gap: 1rem;
           }
 
-          body:has(.dialog[open]) {
-            & .container {
-              grid-template-columns: repeat(auto-fill, minmax(.25rem, 0fr)) 26rem;
-            }
+          main {
+            grid-column: 1 / 2;
+            grid-row: 1 / 3;
+            height: 100%;
+            overflow-y: scroll;
+            position: fixed;
+            width: clamp(12rem, 300px, 25%);
+            top: 0;
+          }
 
-            & main {
-              grid-column: 1 / -2;
-            }
-
-            & .dialog[open] {
-              display: grid;
-              grid-column: -2 / -1;
-            }
+          .dialog[open] {
+            display: grid;
+            grid-column: 2 / -1;
+            grid-row: 1 / 2;
           }
         }
 
@@ -103,20 +114,28 @@ export default `
           list-style: none;
           grid-template-columns: subgrid;
           grid-column: 1 / -1;
-          row-gap: 1rem;
-          padding: 1rem 0;
         }
 
         .periodic-table__subgrid {
           grid-column: 1 / -1;
-          row-gap: 1rem;
           display: grid;
           grid-template-columns: subgrid;
         }
 
+        .periodic-table__role-area {
+          display: grid;
+          row-gap: 1rem;
+          padding: 0 1rem 1rem 1rem;
+        }
+
+        .periodic-table__abstract-area__heading:focus-visible {
+          outline: 4px solid white;
+          position: relative;
+          z-index: 1;
+        }
+
         .page-header {
           margin: 0 auto;
-          max-width: 113rem;
           width: 100%;
           grid-column: 1 / -1;
           padding: 1rem 3rem;
@@ -125,6 +144,7 @@ export default `
           background-color: var(--page-background-color);
           border-bottom: 2px solid hsl(0, 0%, 10%);
           z-index: 1;
+          display: none;
         }
 
         .periodic-table__heading {
@@ -153,9 +173,7 @@ export default `
           width: 100%;
           word-break: break-word;
           height: 100%;
-          min-height: 5rem;
           border-radius: .5rem;
-          grid-column: 1 / -1;
           --hsl-color: hsl(var(--color), 60%, 87.5%);
           --hsl-alt-color: hsl(var(--color), 60%, 22.5%);
           --hsl-dark-color: hsl(var(--color), 60%, 18.5%);
@@ -163,10 +181,6 @@ export default `
           background-color: var(--hsl-dark-color);
           border: 2px solid var(--hsl-color);
           color: white;
-
-          @media screen and (min-width: 600px) {
-            grid-column: span 5;
-          }
           
           &.aria-role--only-presentational-children,
           &.aria-role--only-phrasing-descendants {
@@ -254,7 +268,6 @@ export default `
           background: none;
           grid-row: 1 / -1;
           grid-template-columns: 100%;
-          overflow: auto;
           will-change: transform;
           z-index: 2;
           background: white;
@@ -265,11 +278,6 @@ export default `
 
           &:focus-visible { 
             outline: 0;
-          }
-
-          &::backdrop {
-            background: rgba(0, 0, 0, 0.75);
-            cursor: pointer;
           }
         }
 
@@ -310,20 +318,15 @@ export default `
 
         @media screen and (min-width: 1093px) {
           .dialog {
-            margin-left: 2rem;
-            width: calc(100% - 2rem);
-            position: sticky;
-            top: calc(3rem + 2px);
-            margin-top: calc(-100dvh + 3rem);
-            max-height: calc(100vh - 3rem);
-            max-width: none;
+            margin: 0;
+            max-width: 800px;
+            position: relative;
+            z-index: 0;
             height: 100%;
+            overflow: auto;
           }
 
           .dialog__content {
-            overflow: auto;
-            overflow-x: hidden;
-            height: 100%;
             border-left: 2px solid var(--alt-color);
             border-right: 2px solid var(--alt-color);
           }
@@ -401,20 +404,20 @@ export default `
 
         .periodic-table__abstract-area__heading {
           color: white;
-          height: 100%;
           display: flex;
           place-items: center;
           margin: 0;
-          font-size: 1.5rem;
-          grid-column: 2 / -2;
+          font-size: calc((24 / 18) * 1rem);
           font-weight: normal;
+          cursor: pointer;
+          padding: 1rem;
         }
 
         .periodic-table__abstract-area__description {
-          grid-column: 2 / -2;
           margin-top: 0;
           margin-bottom: .5rem;
           color: white;
+          font-size: .9em;
         }
 
         .list {
@@ -428,10 +431,6 @@ export default `
           width: 100%;
           word-break: break-word;
           font-size: 1.5rem;
-        }
-
-        close-dialog-button {
-          display: contents;
         }
 
         close-dialog-button a {
@@ -463,12 +462,7 @@ export default `
         .periodic-table__abstract-area {
           border: 2px solid hsl(var(--color), 60%, 50%);
           background-color: hsla(var(--color), 60%, 50%, .06125);
-          border-radius: 1rem;
-          padding: 2rem 0;
-        }
-
-        .periodic-table__role-area {
-          grid-column: 2 / -2;
+          container-type: inline-size;
         }
       }
   }
