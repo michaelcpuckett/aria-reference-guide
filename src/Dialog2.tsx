@@ -52,7 +52,7 @@ export function Dialog2({
   const allowedContent = mappedAriaRolesToAllowedDescendants[role] || "N/A";
 
   return (
-    <main>
+    <dialog open aria-modal="false" aria-labelledby={`dialog__heading--${id}`}>
       <div className="dialog__content dialog__content--aria-role">
         <h2
           className="dialog__heading dialog__heading--aria-role"
@@ -189,6 +189,6 @@ export function Dialog2({
           </table>
         </div>
       </div>
-    </main>
+    </dialog>
   );
 }

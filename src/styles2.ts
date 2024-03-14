@@ -17,13 +17,13 @@ export default `
     font-family: system-ui, sans-serif;
 
     @media screen {
-      --page-background-color: #252525;
+      --background-color: #252525;
       height: 100%;
       color-scheme: dark;
     }
 
     @media print {
-      --page-background-color: Canvas;
+      --background-color: Canvas;
       color-scheme: light;
     }
   }
@@ -39,12 +39,14 @@ export default `
     @media screen {
       list-style: none;
       padding: 0;
+      margin: 0;
     }
   }
 
   summary {
     @media screen {
       cursor: pointer;
+      line-height: 1;
     }
   }
 
@@ -74,21 +76,35 @@ export default `
     @media screen and (max-width: 767px) {
       display: grid;
       grid-template-columns: 1rem 1fr 1rem;
-      grid-template-rows: auto 1fr 1rem 5fr;
+      grid-template-rows: auto calc(3rem + 8px) 1rem 1fr;
       height: 100%;
+
+      &:has(.nav__details[open]) {
+        & nav {
+          grid-row: 2 / 5;
+          z-index: 1;
+        }
+
+        & dialog {
+          height: 0;
+          overflow: hidden;
+        }
+      }
     }
 
     @media screen and (min-width: 768px) {
       display: grid;
-      grid-template-columns: 1rem 15rem 1fr 1rem;
+      grid-template-columns: 1rem 15rem 0 1fr 1rem;
       grid-template-rows: auto 1fr;
       column-gap: 1rem;
+      row-gap: 1rem;
       position: relative;
       height: 100%;
     }
 
     @media screen and (min-width: 1112px) {
-      grid-template-columns: 1fr 1rem calc(968px / 5) 1rem calc((968px / 5) * 4) 1rem 1fr;
+      column-gap: 0;
+      grid-template-columns: 1fr 1rem 15rem 2rem 49.4rem 1rem 1fr;
     }
   }
 
@@ -106,7 +122,7 @@ export default `
     @media screen {
       margin: 0;
       padding: 1rem;
-      background-color: var(--page-background-color);
+      background-color: var(--background-color);
       font-size: 1rem;
       line-height: 1;
       font-weight: normal;
@@ -118,9 +134,12 @@ export default `
 
   nav {
     @media screen and (max-width: 767px) {
-      grid-column: 2 / 3;
-      grid-row: 2 / 3;
+      grid-template-columns: subgrid;
+      grid-column: 1 / -1;
       overflow: auto;
+      position: sticky;
+      top: 3rem;
+      background-color: black;
     }
 
     @media screen and (min-width: 768px) {
@@ -128,19 +147,62 @@ export default `
       grid-column: 2 / 3;
       grid-row: 2 / 3;
       overflow: auto;
-      height: calc(100% - 3rem);
+      height: calc(100% - 4rem);
       width: 15rem;
+      padding-top: 2px;
+    }
+
+    @media screen and (min-width: 1112px) {
+      grid-column: 3 / 4;
     }
   }
 
-  main {
+  .nav__details {
+    display: flex;
+    width: calc(100% - 8px);
+    margin: auto;
+    grid-column: 2 / 3;
+
+    @media screen and (min-width: 768px) {
+      display: contents;
+    }
+  }
+
+  .nav__summary {
+    border-radius: .5rem;
+    display: flex;
+    place-items: center;
+    height: 3rem;
+    line-height: 1;
+    padding: 0 1rem;
+    margin-top: 4px;
+    background-color: white;
+    color: black;
+
+    @media screen and (min-width: 768px) {
+      display: none;
+    }
+  }
+
+  dialog {
+    position: static;
+    min-height: 0;
+    max-height: none;
+    height: 100%;
+    min-width: 0;
+    max-width: none;
+    width: 100%;
+    border: 0;
+    padding: 0;
+    margin: 0;
+
     @media screen and (max-width: 767px) {
       grid-column: 2 / 3;
       grid-row: 4 / 5;
     }
 
     @media screen and (min-width: 768px) {
-      grid-column: 3 / 4;
+      grid-column: 4 / 5;
       grid-row: 2 / 3;
     }
 
@@ -149,10 +211,17 @@ export default `
     }
   }
 
+  .dialog__heading {
+    margin: 0;
+  }
+
   .nav__list {
     display: grid;
     row-gap: 1rem;
-    margin-right: 1rem;
+
+    @media screen and (max-width: 767px) {
+      margin: 1rem 0;
+    }
   }
   
   ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
@@ -175,13 +244,13 @@ export default `
   .nav__list-item {
     display: block;
     color: white;
-    background-color: var(--medium-color);
+    background-color: var(--dark-color);
     border: 2px solid var(--light-color);
     border-radius: .5rem;
     margin: 0 2px;
 
     &:has(.nav__list-item__summary:hover):has(.nav__list-item__details:not([open])) {
-      background: var(--lightest-color);
+      background: var(--light-color);
       border-color: transparent;
 
       & .nav__list-item__summary {
@@ -205,15 +274,15 @@ export default `
     display: block;
     color: white;
     padding: .75rem;
-    background-color: var(--medium-color);
-    border: 1px solid var(--light-color);
+    background-color: var(--dark-color);
+    border: 2px solid var(--light-color);
     border-radius: .5rem;
     word-break: break-word;
 
     &:hover {
       color: black;
-      background-color: var(--lightest-color);
-      border-color: transparent;
+      background-color: var(--light-color);
+      border-color: var(--dark-color);
     }
   }
 `;

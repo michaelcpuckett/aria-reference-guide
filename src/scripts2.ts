@@ -7,7 +7,7 @@ export default `
     }
 
     const html = await fetch(\`/role/\${hash}\`).then(res => res.text());
-    window.document.querySelector('main').replaceWith(new DOMParser().parseFromString(html, 'text/html').querySelector('main'));
+    window.document.querySelector('dialog').replaceWith(new DOMParser().parseFromString(html, 'text/html').querySelector('dialog'));
   }
 
   handleHashChange();

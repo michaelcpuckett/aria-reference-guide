@@ -2,7 +2,6 @@ import { AbstractARIARole2 } from "./AbstractARIARole2";
 import {
   abstractAriaRolesByType,
   ariaRolesByCategory,
-  mappedAbstractAriaRolesToDescriptions,
   mappedAbstractAriaRolesToTitles,
   mappedAriaRolesToDisplayNames,
 } from "../data";
@@ -21,72 +20,74 @@ export function ARIAPeriodicTable2() {
           __html: styles,
         }}
       />
-      <div className="container">
-        <header role="banner" className="page-header">
-          <h1 className="periodic-table__heading" id="h1-title">
+      <main className="container">
+        <header role="banner" className="header">
+          <h1 className="heading" id="heading">
             Periodic Table of ARIA Roles
           </h1>
         </header>
-        <nav aria-labelledby="nav-title">
-          <h2 className="visually-hidden" id="nav-title">
-            ARIA Roles by Abstract Role
-          </h2>
-          <ul className="nav__list">
-            {Object.entries(abstractAriaRolesByType).map(
-              ([type, abstractRoles]) => {
-                return abstractRoles.map((abstractRole, index) => {
-                  const abstractRoleDisplayName =
-                    mappedAbstractAriaRolesToTitles[abstractRole] ||
-                    abstractRole;
+        <nav role="navigation" className="nav">
+          <details className="nav__details" open>
+            <summary className="nav__summary">
+              ARIA Roles by Abstract Role
+            </summary>
+            <ul className="nav__list">
+              {Object.entries(abstractAriaRolesByType).map(
+                ([type, abstractRoles]) => {
+                  return abstractRoles.map((abstractRole, index) => {
+                    const abstractRoleDisplayName =
+                      mappedAbstractAriaRolesToTitles[abstractRole] ||
+                      abstractRole;
 
-                  return (
-                    <li
-                      key={abstractRole}
-                      className={`nav__list-item nav__list-item--${abstractRole}`}
-                    >
-                      <details
-                        name="accordion"
-                        className="nav__list-item__details"
-                        open={index === 0}
+                    return (
+                      <li
+                        key={abstractRole}
+                        className={`nav__list-item nav__list-item--${abstractRole}`}
                       >
-                        <summary className="nav__list-item__summary">
-                          {abstractRoleDisplayName}s
-                        </summary>
-                        <ul
-                          aria-label={`${abstractRole} Roles`}
-                          className="nav__list-item__sublist"
+                        <details
+                          name="accordion"
+                          className="nav__list-item__details"
+                          open={index === 0}
                         >
-                          {ariaRolesByCategory[abstractRole].map((role) => {
-                            const roleDisplayName =
-                              mappedAriaRolesToDisplayNames[role] || role;
+                          <summary className="nav__list-item__summary">
+                            {abstractRoleDisplayName}s
+                          </summary>
+                          <ul
+                            aria-label={`${abstractRole} Roles`}
+                            className="nav__list-item__sublist"
+                          >
+                            {ariaRolesByCategory[abstractRole].map((role) => {
+                              const roleDisplayName =
+                                mappedAriaRolesToDisplayNames[role] || role;
 
-                            return (
-                              <li
-                                key={role}
-                                className="nav__list-item__sublist-item"
-                              >
-                                <a
-                                  href={`#${role}`}
-                                  aria-label={role}
-                                  className="nav__list-item__sublist-item__link"
-                                  dangerouslySetInnerHTML={{
-                                    __html: roleDisplayName,
-                                  }}
-                                />
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </details>
-                    </li>
-                  );
-                });
-              }
-            )}
-          </ul>
+                              return (
+                                <li
+                                  key={role}
+                                  className="nav__list-item__sublist-item"
+                                >
+                                  <a
+                                    href={`#${role}`}
+                                    aria-label={role}
+                                    className="nav__list-item__sublist-item__link"
+                                    dangerouslySetInnerHTML={{
+                                      __html: roleDisplayName,
+                                    }}
+                                  />
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </details>
+                      </li>
+                    );
+                  });
+                }
+              )}
+            </ul>
+          </details>
         </nav>
 
-        <main aria-labelledby="dialog__heading--about">
+        <dialog aria-modal="false" aria-labelledby="dialog__heading--about">
           <h2
             className="dialog__heading dialog__heading--about"
             id="dialog__heading--about"
@@ -108,8 +109,8 @@ export function ARIAPeriodicTable2() {
             ARIA role, and each section is further divided into different ARIA
             roles.
           </p>
-        </main>
-      </div>
+        </dialog>
+      </main>
 
       <script
         dangerouslySetInnerHTML={{
