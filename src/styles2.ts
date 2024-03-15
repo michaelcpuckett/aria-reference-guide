@@ -3,6 +3,7 @@ import { mappedAbstractAriaRolesToBackgroundColors } from "../data";
 export default `
   * {
     box-sizing: border-box;
+    align-items: start;
   }
 
   :focus:not(:focus-visible) {
@@ -15,10 +16,10 @@ export default `
 
   :root {
     font-family: system-ui, sans-serif;
+    font-size: 16px;
 
     @media screen {
       --background-color: #252525;
-      height: 100%;
       color-scheme: dark;
     }
 
@@ -31,7 +32,6 @@ export default `
   body {
     @media screen {
       margin: 0;
-      height: 100%;
     }
   }
 
@@ -47,7 +47,13 @@ export default `
     @media screen {
       cursor: pointer;
       line-height: 1;
+      font: inherit;
     }
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
   }
 
   tr {
@@ -56,6 +62,20 @@ export default `
 
   th {
     text-align: left;
+    border-bottom: 2px solid var(--light-color);
+    font-size: 1.25rem;
+  }
+
+  table a {
+    color: var(--light-color);
+  }
+
+  td p {
+    margin: .5rem 0;
+  }
+
+  tr:not(:first-child) th {
+    margin-top: 1rem;
   }
 
   .visually-hidden {
@@ -78,33 +98,34 @@ export default `
       grid-template-columns: 1rem 1fr 1rem;
       grid-template-rows: auto calc(3rem + 8px) 1rem 1fr;
       height: 100%;
-
+  
       &:has(.nav__details[open]) {
         & nav {
           grid-row: 2 / 5;
           z-index: 1;
         }
-
+  
         & dialog {
           height: 0;
           overflow: hidden;
         }
       }
     }
-
+  
     @media screen and (min-width: 768px) {
       display: grid;
       grid-template-columns: 1rem 15rem 0 1fr 1rem;
-      grid-template-rows: auto 1fr;
+      grid-template-rows: auto 1fr 0;
       column-gap: 1rem;
       row-gap: 1rem;
       position: relative;
       height: 100%;
+      contain: content;
     }
-
-    @media screen and (min-width: 1112px) {
+  
+    @media screen and (min-width: 1138px) {
       column-gap: 0;
-      grid-template-columns: 1fr 1rem 15rem 2rem 49.4rem 1rem 1fr;
+      grid-template-columns: 1fr 1rem 1rem 15rem 2rem 49.4rem 1rem 1rem 1fr;
     }
   }
 
@@ -143,17 +164,17 @@ export default `
     }
 
     @media screen and (min-width: 768px) {
-      position: fixed;
+      position: sticky;
+      top: 4rem;
+      height: calc(100vh - 5rem);
       grid-column: 2 / 3;
       grid-row: 2 / 3;
       overflow: auto;
-      height: calc(100% - 4rem);
-      width: 15rem;
       padding-top: 2px;
     }
 
-    @media screen and (min-width: 1112px) {
-      grid-column: 3 / 4;
+    @media screen and (min-width: 1138px) {
+      grid-column: 4 / 5;
     }
   }
 
@@ -196,6 +217,11 @@ export default `
     padding: 0;
     margin: 0;
 
+    background-color: var(--darkest-color);
+    border-radius: .5rem;
+    border: 2px solid var(--light-color);
+    padding: 1rem;
+
     @media screen and (max-width: 767px) {
       grid-column: 2 / 3;
       grid-row: 4 / 5;
@@ -206,13 +232,15 @@ export default `
       grid-row: 2 / 3;
     }
 
-    @media screen and (min-width: 1112px) {
-      grid-column: 5 / 6;
+    @media screen and (min-width: 1138px) {
+      grid-column: 6 / 7;
     }
   }
 
   .dialog__heading {
-    margin: 0;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.75rem;
   }
 
   .nav__list {
@@ -227,15 +255,16 @@ export default `
   ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
     .map(([abstractRole], index, { length }) => {
       return `
+        .dialog--is-abstract-role-${abstractRole},
         .nav__list-item--${abstractRole} {
           --base-color: ${(index / length) * 360}deg;
-          --lightest-color: hsla(var(--base-color), 60%, 95%, .875);
+          --lightest-color: hsla(var(--base-color), 60%, 93.5%, .875);
           --lighter-color: hsl(var(--base-color), 60%, 87.5%);
-          --light-color: hsl(var(--base-color), 60%, 80%);
+          --light-color: hsl(var(--base-color), 60%, 82%);
           --medium-color: hsla(var(--base-color), 60%, 50%, 0.25);
-          --dark-color: hsl(var(--base-color), 60%, 20%);
+          --dark-color: hsl(var(--base-color), 60%, 18%);
           --darker-color: hsl(var(--base-color), 60%, 13.5%);
-          --darkest-color: hsla(var(--base-color), 60%, 5%, .875);
+          --darkest-color: hsla(var(--base-color), 60%, 7.5%, .875);
         }
       `;
     })

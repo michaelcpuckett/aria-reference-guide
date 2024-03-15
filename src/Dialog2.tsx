@@ -52,7 +52,12 @@ export function Dialog2({
   const allowedContent = mappedAriaRolesToAllowedDescendants[role] || "N/A";
 
   return (
-    <dialog open aria-modal="false" aria-labelledby={`dialog__heading--${id}`}>
+    <dialog
+      open
+      className={`dialog--is-aria-role-${role} dialog--is-abstract-role-${abstractAriaRole}`}
+      aria-modal="false"
+      aria-labelledby={`dialog__heading--${id}`}
+    >
       <div className="dialog__content dialog__content--aria-role">
         <h2
           className="dialog__heading dialog__heading--aria-role"
@@ -113,13 +118,11 @@ export function Dialog2({
               <th scope="row">Content Category</th>
               <td className="aria-role__cell">
                 <ul className="list">
-                  {(mappedAriaRolesToContentTypes[role] || []).map(
-                    (contentType) => (
-                      <li key={contentType}>
-                        {mappedContentTypesToTitles[contentType]}
-                      </li>
-                    )
-                  )}
+                  {mappedAriaRolesToContentTypes[role].map((contentType) => (
+                    <li key={contentType}>
+                      {mappedContentTypesToTitles[contentType] || "N/A"}
+                    </li>
+                  ))}
                 </ul>
               </td>
             </tr>
