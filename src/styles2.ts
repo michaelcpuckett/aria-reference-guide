@@ -4,6 +4,7 @@ export default `
   * {
     box-sizing: border-box;
     align-items: start;
+    vertical-align: initial;
   }
 
   :focus:not(:focus-visible) {
@@ -64,6 +65,7 @@ export default `
     text-align: left;
     border-bottom: 2px solid var(--light-color);
     font-size: 1.25rem;
+    font-weight: normal;
   }
 
   table a {
@@ -216,6 +218,7 @@ export default `
     border: 0;
     padding: 0;
     margin: 0;
+    inset: auto;
 
     background-color: var(--darkest-color);
     border-radius: .5rem;
@@ -301,17 +304,17 @@ export default `
 
   .nav__list-item__sublist-item__link {
     display: block;
-    color: white;
+    color: var(--lightest-color);
     padding: .75rem;
-    background-color: var(--dark-color);
+    background-color: var(--darkest-color);
     border: 2px solid var(--light-color);
     border-radius: .5rem;
     word-break: break-word;
 
     &:hover {
-      color: black;
-      background-color: var(--light-color);
-      border-color: var(--dark-color);
+      color: var(--darkest-color);
+      background-color: var(--lightest-color);
+      border-color: var(--lightest-color);
     }
   }
 `;
