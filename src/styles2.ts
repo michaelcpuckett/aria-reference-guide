@@ -98,18 +98,13 @@ export default `
     @media screen and (max-width: calc(48rem - 1px)) {
       display: grid;
       grid-template-columns: 1rem 1fr 1rem;
-      grid-template-rows: auto calc(3rem + 8px) 1rem 1fr;
+      grid-template-rows: auto 1rem calc(3rem + 8px) 1rem 1fr;
       height: 100%;
   
       &:has(.nav__details[open]) {
         & nav {
-          grid-row: 2 / 5;
+          grid-row: 3 / 6;
           z-index: 1;
-        }
-  
-        & dialog {
-          height: 0;
-          overflow: hidden;
         }
       }
     }
@@ -125,7 +120,7 @@ export default `
       contain: content;
     }
   
-    @media screen and (min-width: 96rem) {
+    @media screen and (min-width: 86rem) {
       column-gap: 0;
       grid-template-columns: 1fr 1rem 1rem 15rem 1rem 64rem 1rem 1rem 1fr;
     }
@@ -137,7 +132,7 @@ export default `
       grid-row: 1 / 2;
       position: sticky;
       top: 0;
-      z-index: 1;
+      z-index: 2;
     }
   }
 
@@ -157,13 +152,14 @@ export default `
 
   nav {
     @media screen and (max-width: calc(48rem - 1px)) {
-      grid-template-columns: subgrid;
-      grid-column: 1 / -1;
       overflow: auto;
-      position: sticky;
-      top: 3rem;
       background-color: black;
-      width: calc(100% - 1rem);
+      grid-column: 2 / 3;
+      grid-row: 3 / 4;
+
+      &:has(.nav__details[open]) {
+        height: 100%;
+      }
     }
 
     @media screen and (min-width: 48rem) {
@@ -176,12 +172,12 @@ export default `
       width: 100%;
     }
 
-    @media screen and (min-width: 96rem) {
+    @media screen and (min-width: 86rem) {
       grid-column: 4 / 5;
     }
   }
 
-  .nav__sticky-container {
+  .nav__inner-container {
     @media screen and (min-width: 48rem) {
       width: calc(100% + var(--scrollbar-width, 1rem));
       overflow-y: scroll;
@@ -191,9 +187,6 @@ export default `
 
   .nav__details {
     display: flex;
-    width: calc(100% - 8px);
-    margin: auto;
-    grid-column: 2 / 3;
 
     @media screen and (min-width: 48rem) {
       display: contents;
@@ -204,10 +197,9 @@ export default `
     border-radius: .5rem;
     display: flex;
     place-items: center;
-    height: 3rem;
+    height: 3.5rem;
     line-height: 1;
     padding: 0 1rem;
-    margin-top: 4px;
     background-color: white;
     color: black;
 
@@ -236,7 +228,11 @@ export default `
 
     @media screen and (max-width: calc(48rem - 1px)) {
       grid-column: 2 / 3;
-      grid-row: 4 / 5;
+      grid-row: 5 / 6;
+
+      .container:has(.nav__details[open]) & {
+        display: none;
+      }
     }
 
     @media screen and (min-width: 48rem) {
@@ -244,7 +240,7 @@ export default `
       grid-row: 2 / 3;
     }
 
-    @media screen and (min-width: 96rem) {
+    @media screen and (min-width: 86rem) {
       grid-column: 6 / 7;
     }
   }
@@ -288,7 +284,6 @@ export default `
     background-color: var(--dark-color);
     border: 2px solid var(--light-color);
     border-radius: .5rem;
-    margin: 0 2px;
 
     &:has(.nav__list-item__summary:hover):has(.nav__list-item__details:not([open])) {
       background: var(--light-color);

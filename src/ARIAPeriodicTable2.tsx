@@ -27,7 +27,7 @@ export function ARIAPeriodicTable2() {
           </h1>
         </header>
         <nav role="navigation" className="nav">
-          <div className="nav__sticky-container">
+          <div className="nav__inner-container">
             <details className="nav__details" open>
               <summary className="nav__summary">
                 ARIA Roles by Abstract Role
