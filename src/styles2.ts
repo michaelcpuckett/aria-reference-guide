@@ -174,6 +174,10 @@ export default `
     &[aria-expanded="true"] [data-show="off"] {
       display: none;
     }
+
+    @media screen and (min-width: 48rem) {
+      display: none;
+    }
   }
 
   [data-icon="menu"] {
