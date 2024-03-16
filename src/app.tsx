@@ -1,9 +1,9 @@
 import express from "express";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
+import { abstractAriaRolesByType, ariaRolesByCategory } from "../data";
 import { ARIAPeriodicTable } from "./ARIAPeriodicTable";
 import { ARIAPeriodicTable2 } from "./ARIAPeriodicTable2";
-import { abstractAriaRolesByType, ariaRolesByCategory } from "../data";
 import { Dialog2 } from "./Dialog2";
 
 const app = express();
@@ -67,6 +67,7 @@ declare global {
       "close-dialog-button": CustomElement;
       "role-dialog": CustomElement;
       "abstract-aria-role": CustomElement;
+      "menu-button": CustomElement;
     }
   }
 }

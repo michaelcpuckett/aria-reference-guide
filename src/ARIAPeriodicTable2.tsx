@@ -1,4 +1,3 @@
-import { AbstractARIARole2 } from "./AbstractARIARole2";
 import {
   abstractAriaRolesByType,
   ariaRolesByCategory,
@@ -26,93 +25,100 @@ export function ARIAPeriodicTable2() {
             Periodic Table of ARIA Roles
           </h1>
         </header>
+        <menu-button>
+          <button
+            aria-expanded="false"
+            aria-controls="menu"
+            type="button"
+            className="menu-button"
+          >
+            <svg
+              data-show="off"
+              data-icon="menu"
+              viewBox="0 0 100 80"
+              width="1rem"
+              height="1rem"
+              fill="none"
+            >
+              <rect fill="currentColor" width="100" height="16"></rect>
+              <rect fill="currentColor" y="32" width="100" height="16"></rect>
+              <rect fill="currentColor" y="64" width="100" height="16"></rect>
+            </svg>
+            <span data-show="off">Menu</span>
+            <svg
+              data-show="on"
+              data-icon="close"
+              width="1rem"
+              height="1rem"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289Z"
+                fill="currentColor"
+              />
+            </svg>
+            <span data-show="on">Close</span>
+          </button>
+        </menu-button>
         <nav role="navigation" className="nav">
           <div className="nav__inner-container">
-            <details className="nav__details" open>
-              <summary className="nav__summary">
-                <svg
-                  data-icon="menu"
-                  viewBox="0 0 100 80"
-                  width="1rem"
-                  height="1rem"
-                >
-                  <rect width="100" height="16"></rect>
-                  <rect y="32" width="100" height="16"></rect>
-                  <rect y="64" width="100" height="16"></rect>
-                </svg>
-                <svg
-                  data-icon="close"
-                  width="1rem"
-                  height="1rem"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289Z"
-                    fill="#0F1729"
-                  />
-                </svg>
-                <span className="visually-hidden">
-                  ARIA Roles by Abstract Role
-                </span>
-              </summary>
-              <ul className="nav__list">
-                {Object.entries(abstractAriaRolesByType).map(
-                  ([type, abstractRoles]) => {
-                    return abstractRoles.map((abstractRole, index) => {
-                      const abstractRoleDisplayName =
-                        mappedAbstractAriaRolesToTitles[abstractRole] ||
-                        abstractRole;
+            <ul className="nav__list" id="menu">
+              {Object.entries(abstractAriaRolesByType).map(
+                ([type, abstractRoles]) => {
+                  return abstractRoles.map((abstractRole, index) => {
+                    const abstractRoleDisplayName =
+                      mappedAbstractAriaRolesToTitles[abstractRole] ||
+                      abstractRole;
 
-                      return (
-                        <li
-                          key={abstractRole}
-                          className={`nav__list-item nav__list-item--${abstractRole}`}
+                    return (
+                      <li
+                        key={abstractRole}
+                        className={`nav__list-item nav__list-item--${abstractRole}`}
+                      >
+                        <details
+                          name="accordion"
+                          className="nav__list-item__details"
+                          open={index === 0}
                         >
-                          <details
-                            name="accordion"
-                            className="nav__list-item__details"
-                            open={index === 0}
+                          <summary className="nav__list-item__summary">
+                            {abstractRoleDisplayName}s
+                          </summary>
+                          <ul
+                            aria-label={`${abstractRole} Roles`}
+                            className="nav__list-item__sublist"
                           >
-                            <summary className="nav__list-item__summary">
-                              {abstractRoleDisplayName}s
-                            </summary>
-                            <ul
-                              aria-label={`${abstractRole} Roles`}
-                              className="nav__list-item__sublist"
-                            >
-                              {ariaRolesByCategory[abstractRole].map((role) => {
-                                const roleDisplayName =
-                                  mappedAriaRolesToDisplayNames[role] || role;
+                            {ariaRolesByCategory[abstractRole].map((role) => {
+                              const roleDisplayName =
+                                mappedAriaRolesToDisplayNames[role] || role;
 
-                                return (
-                                  <li
-                                    key={role}
-                                    className="nav__list-item__sublist-item"
-                                  >
-                                    <a
-                                      href={`#${role}`}
-                                      aria-label={role}
-                                      className="nav__list-item__sublist-item__link"
-                                      dangerouslySetInnerHTML={{
-                                        __html: roleDisplayName,
-                                      }}
-                                    />
-                                  </li>
-                                );
-                              })}
-                            </ul>
-                          </details>
-                        </li>
-                      );
-                    });
-                  }
-                )}
-              </ul>
-            </details>
+                              return (
+                                <li
+                                  key={role}
+                                  className="nav__list-item__sublist-item"
+                                >
+                                  <a
+                                    href={`#${role}`}
+                                    aria-label={role}
+                                    className="nav__list-item__sublist-item__link"
+                                    dangerouslySetInnerHTML={{
+                                      __html: roleDisplayName,
+                                    }}
+                                  />
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </details>
+                      </li>
+                    );
+                  });
+                }
+              )}
+            </ul>
           </div>
         </nav>
 

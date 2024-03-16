@@ -13,18 +13,21 @@ export default `
 
   :focus-visible {
     outline: 4px dashed white;
+    outline-offset: 1px;
   }
 
   :root {
     font-family: system-ui, sans-serif;
 
     @media screen {
-      --background-color: #252525;
+      --header-background-color: #252525;
+      --page-background-color: black;
       color-scheme: dark;
+      min-height: 100%;
     }
 
     @media print {
-      --background-color: Canvas;
+      --header-background-color: Canvas;
       color-scheme: light;
     }
   }
@@ -33,6 +36,8 @@ export default `
     @media screen {
       margin: 0;
       overflow-y: scroll;
+      background-color: var(--page-background-color);
+      min-height: 100%;
     }
   }
 
@@ -98,7 +103,7 @@ export default `
     @media screen and (max-width: calc(48rem - 1px)) {
       display: grid;
       grid-template-columns: 1rem 1fr 1rem;
-      grid-template-rows: 3rem 1fr;
+      grid-template-rows: 3rem 3rem auto 0;
       row-gap: 1rem;
       height: 100%;
     }
@@ -127,14 +132,64 @@ export default `
       position: sticky;
       top: 0;
       z-index: 2;
+      display: flex;
+      background-color: var(--header-background-color);
+      place-content: center;
+      padding: 1rem;
     }
+  }
+
+  menu-button {
+    display: contents;
+  }
+
+  .menu-button {
+    cursor: pointer;
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    display: flex;
+    place-content: center;
+    place-items: center;
+    gap: .75rem;
+    font: inherit;
+    font-size: 1.125rem;
+    line-height: 1;
+    background: none;
+    padding: .125rem .5rem;
+    margin: 0;
+    border: 0;
+    height: 100%;
+    border: 2px solid white;
+    border-radius: .5rem;
+
+    &[aria-expanded="true"] {
+      background-color: white;
+      color: black;
+    }
+
+    &:not([aria-expanded="true"]) [data-show="on"] {
+      display: none;
+    }
+
+    &[aria-expanded="true"] [data-show="off"] {
+      display: none;
+    }
+  }
+
+  [data-icon="menu"] {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+
+  [data-icon="close"] {
+    height: 2rem;
+    width: 2rem;
+    margin-right: -.5rem;
   }
 
   h1 {
     @media screen {
       margin: 0;
-      padding: 1rem;
-      background-color: var(--background-color);
       font-size: 1rem;
       line-height: 1;
       font-weight: normal;
@@ -146,15 +201,15 @@ export default `
 
   nav {
     @media screen and (max-width: calc(48rem - 1px)) {
-      overflow: auto;
       grid-column: 2 / 3;
-      grid-row: 1 / 2;
-      z-index: 2;
+      grid-row: 3 / 4;
+      width: calc(100% + 8px);
+      left: -5px;
+      top: -5px;
+      position: relative;
 
-      &:has(.nav__details[open]) {
-        position: sticky;
-        max-height: 100vh;
-        top: 0rem;
+      .container:has(.menu-button[aria-expanded="true"]) & {
+        max-height: calc(100% - 1rem);
       }
     }
 
@@ -181,37 +236,6 @@ export default `
     }
   }
 
-  .nav__details {
-    display: flex;
-
-    @media screen and (min-width: 48rem) {
-      display: contents;
-    }
-  }
-
-  .nav__summary {
-    display: flex;
-    gap: 1rem;
-    line-height: 1;
-    background-color: white;
-    color: black;
-    margin: 1rem 1rem 3rem;
-    font-weight: bold;
-    width: max-content;
-
-    .nav__details:not([open]) & [data-icon="close"] {
-      display: none;
-    }
-
-    .nav__details[open] & [data-icon="menu"] {
-      display: none;
-    }
-
-    @media screen and (min-width: 48rem) {
-      display: none;
-    }
-  }
-
   dialog {
     position: static;
     min-height: 0;
@@ -232,9 +256,9 @@ export default `
 
     @media screen and (max-width: calc(48rem - 1px)) {
       grid-column: 2 / 3;
-      grid-row: 2 / 3;
+      grid-row: 3 / 4;
 
-      .container:has(.nav__details[open]) & {
+      .container:has(.menu-button[aria-expanded="true"]) & {
         display: none;
       }
     }
@@ -260,7 +284,12 @@ export default `
     row-gap: 1rem;
 
     @media screen and (max-width: calc(48rem - 1px)) {
-      margin: 1rem 0;
+      max-height: calc(100% - 5px);
+      margin: 5px;
+
+      .container:has(.menu-button:not([aria-expanded="true"])) & {
+        display: none;
+      }
     }
   }
   
@@ -270,13 +299,13 @@ export default `
         .dialog--is-abstract-role-${abstractRole},
         .nav__list-item--${abstractRole} {
           --base-color: ${(index / length) * 360}deg;
-          --lightest-color: hsla(var(--base-color), 60%, 93.5%, .875);
+          --lightest-color: hsl(var(--base-color), 60%, 93.5%);
           --lighter-color: hsl(var(--base-color), 60%, 87.5%);
           --light-color: hsl(var(--base-color), 60%, 82%);
           --medium-color: hsla(var(--base-color), 60%, 50%, 0.25);
           --dark-color: hsl(var(--base-color), 60%, 18%);
           --darker-color: hsl(var(--base-color), 60%, 13.5%);
-          --darkest-color: hsla(var(--base-color), 60%, 7.5%, .875);
+          --darkest-color: hsl(var(--base-color), 60%, 7.5%);
         }
       `;
     })
@@ -291,7 +320,7 @@ export default `
 
     &:has(.nav__list-item__summary:hover):has(.nav__list-item__details:not([open])) {
       background: var(--light-color);
-      border-color: transparent;
+      border-color: var(--darkest-color);
 
       & .nav__list-item__summary {
         color: black;
