@@ -220,11 +220,13 @@ export default `
     @media screen and (min-width: 48rem) {
       position: sticky;
       max-height: calc(100vh - 5rem);
-      top: 4rem;
+      top: calc(4rem - 5px);
       grid-column: 2 / 3;
       grid-row: 2 / 3;
       overflow: hidden;
       width: 100%;
+      margin: -5px;
+      width: calc(100% + 10px);
     }
 
     @media screen and (min-width: 86rem) {
@@ -294,6 +296,10 @@ export default `
       .container:has(.menu-button:not([aria-expanded="true"])) & {
         display: none;
       }
+    }
+
+    @media screen and (min-width: 48rem) {
+      margin: 5px;
     }
   }
   
