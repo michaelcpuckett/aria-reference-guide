@@ -98,15 +98,9 @@ export default `
     @media screen and (max-width: calc(48rem - 1px)) {
       display: grid;
       grid-template-columns: 1rem 1fr 1rem;
-      grid-template-rows: auto 1rem calc(3rem + 8px) 1rem 1fr;
+      grid-template-rows: 3rem 1fr;
+      row-gap: 1rem;
       height: 100%;
-  
-      &:has(.nav__details[open]) {
-        & nav {
-          grid-row: 3 / 6;
-          z-index: 1;
-        }
-      }
     }
   
     @media screen and (min-width: 48rem) {
@@ -153,12 +147,14 @@ export default `
   nav {
     @media screen and (max-width: calc(48rem - 1px)) {
       overflow: auto;
-      background-color: black;
       grid-column: 2 / 3;
-      grid-row: 3 / 4;
+      grid-row: 1 / 2;
+      z-index: 2;
 
       &:has(.nav__details[open]) {
-        height: 100%;
+        position: sticky;
+        max-height: 100vh;
+        top: 0rem;
       }
     }
 
@@ -194,14 +190,22 @@ export default `
   }
 
   .nav__summary {
-    border-radius: .5rem;
     display: flex;
-    place-items: center;
-    height: 3.5rem;
+    gap: 1rem;
     line-height: 1;
-    padding: 0 1rem;
     background-color: white;
     color: black;
+    margin: 1rem 1rem 3rem;
+    font-weight: bold;
+    width: max-content;
+
+    .nav__details:not([open]) & [data-icon="close"] {
+      display: none;
+    }
+
+    .nav__details[open] & [data-icon="menu"] {
+      display: none;
+    }
 
     @media screen and (min-width: 48rem) {
       display: none;
@@ -228,7 +232,7 @@ export default `
 
     @media screen and (max-width: calc(48rem - 1px)) {
       grid-column: 2 / 3;
-      grid-row: 5 / 6;
+      grid-row: 2 / 3;
 
       .container:has(.nav__details[open]) & {
         display: none;
