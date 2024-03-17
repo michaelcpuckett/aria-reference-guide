@@ -17,6 +17,23 @@ export default `
 
     const html = await fetch(\`/role/\${hash}\`).then(res => res.text());
     window.document.querySelector('dialog').replaceWith(new DOMParser().parseFromString(html, 'text/html').querySelector('dialog'));
+    
+    const firstFocusableElement = window.document.querySelector('dialog h2');
+
+    if (!firstFocusableElement) {
+      return;
+    }
+
+    window.scrollTo(0, 0);
+    firstFocusableElement.focus();
+
+    const menuElement = window.document.querySelector('menu-button button');
+
+    if (!menuElement) {
+      return;
+    }
+
+    menuElement.setAttribute('aria-expanded', 'false');
   }
 
   handleHashChange();

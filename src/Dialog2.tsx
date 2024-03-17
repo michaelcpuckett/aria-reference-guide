@@ -1,19 +1,17 @@
-import React from "react";
 import {
   allowedAriaRolesByHtmlElement,
+  ariaRolesByCategory,
   ariaRolesWithPresentationalChildren,
-  ariaRolesWithPhrasingDescendants,
   ariaToHtmlMapping,
   links,
+  mappedAbstractAriaRolesToTitles,
+  mappedAriaRolesToAllowedDescendants,
   mappedAriaRolesToContentTypes,
   mappedAriaRolesToContextRoles,
   mappedAriaRolesToDescriptions,
+  mappedAriaRolesToDisplayNames,
   mappedAriaRolesToNotes,
   mappedContentTypesToTitles,
-  mappedAriaRolesToAllowedDescendants,
-  mappedAbstractAriaRolesToTitles,
-  ariaRolesByCategory,
-  mappedAriaRolesToDisplayNames,
 } from "../data";
 
 interface DialogProps {
@@ -63,6 +61,7 @@ export function Dialog2({
           className="dialog__heading dialog__heading--aria-role"
           id={`dialog__heading--${id}`}
           aria-label={`The ${role} role`}
+          tabIndex={-1}
           dangerouslySetInnerHTML={{
             __html: `The ${roleTitle} role`,
           }}
