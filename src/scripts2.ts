@@ -1,6 +1,14 @@
 export default `
   function calculateScrollbarWidth() {
-    const scrollbarWidth = window.innerWidth - window.document.documentElement.clientWidth;
+    const divElement = window.document.createElement('div');
+    divElement.style.width = '100px';
+    divElement.style.height = '100px';
+    divElement.style.overflow = 'scroll';
+    divElement.style.position = 'absolute';
+    divElement.style.top = '-9999px';
+    window.document.body.appendChild(divElement);
+    const scrollbarWidth = divElement.offsetWidth - divElement.clientWidth;
+    divElement.remove();
     window.document.documentElement.style.setProperty('--scrollbar-width', \`\${scrollbarWidth}px\`);
   }
 
@@ -8,7 +16,7 @@ export default `
 
   window.addEventListener('resize', calculateScrollbarWidth);
 
-  async function handleHashChange() {
+  async function handleHashChange(shouldFocus) {
     const hash = window.location.hash.slice(1);
 
     if (!hash) {
@@ -16,16 +24,14 @@ export default `
     }
 
     const html = await fetch(\`/role/\${hash}\`).then(res => res.text());
-    window.document.querySelector('dialog').replaceWith(new DOMParser().parseFromString(html, 'text/html').querySelector('dialog'));
+    const newDialogElement = new DOMParser().parseFromString(html, 'text/html').querySelector('dialog');
+    window.document.querySelector('dialog').replaceWith(newDialogElement);
     
-    const firstFocusableElement = window.document.querySelector('dialog h2');
+    const firstFocusableElement = newDialogElement.querySelector('[tabindex]');
 
     if (!firstFocusableElement) {
       return;
     }
-
-    window.scrollTo(0, 0);
-    firstFocusableElement.focus();
 
     const menuElement = window.document.querySelector('menu-button button');
 
@@ -34,11 +40,16 @@ export default `
     }
 
     menuElement.setAttribute('aria-expanded', 'false');
+
+    if (shouldFocus) {
+      window.scrollTo(0, 0);
+      firstFocusableElement.focus();
+    }
   }
 
   handleHashChange();
 
-  window.addEventListener('hashchange', handleHashChange);
+  window.addEventListener('hashchange', () => handleHashChange(true));
 
   window.customElements.define('menu-button', class extends HTMLElement {
     constructor() {
