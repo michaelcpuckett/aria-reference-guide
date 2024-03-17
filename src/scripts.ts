@@ -1,218 +1,80 @@
 export default `
-  function handleHashChange() {
-    const targetElement = window.document.querySelector(window.location.hash);
+  function calculateScrollbarWidth() {
+    const divElement = window.document.createElement('div');
+    divElement.style.width = '100px';
+    divElement.style.height = '100px';
+    divElement.style.overflow = 'scroll';
+    divElement.style.position = 'absolute';
+    divElement.style.top = '-9999px';
+    window.document.body.appendChild(divElement);
+    const scrollbarWidth = divElement.offsetWidth - divElement.clientWidth;
+    divElement.remove();
+    window.document.documentElement.style.setProperty('--scrollbar-width', \`\${scrollbarWidth}px\`);
+  }
 
-    if (!targetElement) {
+  calculateScrollbarWidth();
+
+  window.addEventListener('resize', calculateScrollbarWidth);
+
+  async function handleHashChange(shouldFocus) {
+    const hash = window.location.hash.slice(1);
+
+    if (!hash) {
       return;
     }
 
-    const currentDialogElement = window.document.querySelector('dialog[open]');
-      
-    if (currentDialogElement) {
-      currentDialogElement.close();
-    }
+    const html = await fetch(\`/role/\${hash}\`).then(res => res.text());
+    const newDialogElement = new DOMParser().parseFromString(html, 'text/html').querySelector('dialog');
+    window.document.querySelector('dialog').replaceWith(newDialogElement);
+    
+    const firstFocusableElement = newDialogElement.querySelector('[tabindex]');
 
-    const isSmall = window.matchMedia('(max-width: 1092px)').matches;
-
-    if (targetElement instanceof HTMLDialogElement) {
-      if (isSmall) {
-        targetElement.setAttribute('aria-modal', 'true');
-        targetElement.showModal();
-      } else {
-        targetElement.removeAttribute('aria-modal');
-        targetElement.show();
-      }
-    } else {
-      targetElement.focus();
-    }
-  }
-
-  window.addEventListener('DOMContentLoaded', handleHashChange);
-  window.addEventListener('hashchange', handleHashChange);
-
-  window.matchMedia('(max-width: 1092px)').addEventListener('change', (event) => {
-    const dialogElement = window.document.querySelector('dialog[open]');
-
-    if (!dialogElement) {
+    if (!firstFocusableElement) {
       return;
     }
 
-    if (event.matches) {
-      dialogElement.setAttribute('aria-modal', 'true');
-      dialogElement.close();
-      dialogElement.showModal();
-    } else {
-      dialogElement.removeAttribute('aria-modal');
-      dialogElement.close();
-      dialogElement.show();
-    }
-  });
+    const menuElement = window.document.querySelector('menu-button button');
 
-  class PeriodicElement extends HTMLElement {
-    connectedCallback() {
-      this.setAttribute('is-defined', '');
+    if (!menuElement) {
+      return;
+    }
+
+    menuElement.setAttribute('aria-expanded', 'false');
+
+    if (shouldFocus) {
+      window.scrollTo(0, 0);
+      firstFocusableElement.focus();
     }
   }
 
-  customElements.define('expansion-button', class extends PeriodicElement {
+  handleHashChange();
+
+  window.addEventListener('hashchange', () => handleHashChange(true));
+
+  window.customElements.define('menu-button', class extends HTMLElement {
     constructor() {
       super();
 
-      const triggerElement = this.querySelector('a');
-
-      if (!triggerElement) {
-        throw new Error('No trigger element found');
-      }
-
-      this.triggerElement = triggerElement;
-    }
-
-    connectedCallback() {
-      super.connectedCallback();
-      this.triggerElement.addEventListener('click', this.handletriggerClick);
-    }
-
-    disconnectedCallback() {
-      this.triggerElement.removeEventListener('click', this.handletriggerClick);
-    }
-
-    handletriggerClick = (event) => {
-      const windowY = window.scrollY;
-
-      this.triggerElement.setAttribute('aria-expanded', 'false');
-
-      window.requestAnimationFrame(() => {
-        window.scrollTo(0, windowY);
-      });
-    }
-  });
-
-  customElements.define('close-dialog-button', class extends PeriodicElement {
-    constructor() {
-      super();
-
-      const buttonElement = this.querySelector('a');
+      const buttonElement = this.querySelector('button');
 
       if (!buttonElement) {
         throw new Error('No button element found');
       }
 
       this.buttonElement = buttonElement;
-
-      const dialogElement = this.closest('dialog');
-
-      if (!dialogElement) {
-        throw new Error('No dialog element found');
-      }
-
-      const dialogId = dialogElement.getAttribute('id');
-
-      if (!dialogId) {
-        throw new Error('Dialog element has no id');
-      }
-
-      const triggerElement = window.document.querySelector(\`a[href="#\${dialogId}"]\`);
-
-      if (!triggerElement) {
-        throw new Error('No trigger element found');
-      }
-
-      this.triggerElement = triggerElement;
     }
 
     connectedCallback() {
-      super.connectedCallback();
-      this.buttonElement.addEventListener('click', this.handleTriggerClick);
+      this.buttonElement.addEventListener('click', this.handleClick);
     }
 
     disconnectedCallback() {
-      this.buttonElement.removeEventListener('click', this.handleTriggerClick);
+      this.buttonElement.removeEventListener('click', this.handleClick);
     }
 
-    handleTriggerClick = (event) => {
-      const windowY = window.scrollY;
-
-      this.triggerElement.setAttribute('aria-expanded', 'false');
-
-      window.requestAnimationFrame(() => {
-        window.scrollTo(0, windowY);
-      });
-    }
-  });
-
-  window.customElements.define('role-dialog', class extends PeriodicElement {
-    constructor() {
-      super();
-
-      const dialogElement = this.querySelector('dialog');
-
-      if (!dialogElement) {
-        throw new Error('No dialog element found');
-      }
-
-      this.dialogElement = dialogElement;
-    }
-
-    connectedCallback() {
-      super.connectedCallback();
-      this.dialogElement.addEventListener('click', this.handleBackdropClick);
-    }
-
-    disconnectedCallback() {
-      this.dialogElement.removeEventListener('click', this.handleBackdropClick);
-    }
-
-    handleBackdropClick = (event) => {
-      if (event.target === this.dialogElement) {
-        const windowY = window.scrollY;
-
-        this.dialogElement.close();
-
-        window.requestAnimationFrame(() => {
-          window.scrollTo(0, windowY);
-        });
-      }
-    }
-  });
-
-  customElements.define('abstract-aria-role', class extends PeriodicElement {
-    constructor() {
-      super();
-
-      const summaryElement = this.querySelector('summary');
-
-      if (!summaryElement) {
-        throw new Error('No summary element found');
-      }
-
-      this.summaryElement = summaryElement;
-
-      const headingElement = this.querySelector('h3');
-
-      if (!headingElement) {
-        throw new Error('No heading element found');
-      }
-
-      this.headingElement = headingElement;
-    }
-
-    connectedCallback() {
-      super.connectedCallback();
-      this.headingElement.addEventListener('click', this.handleHeadingClick);
-      this.headingElement.addEventListener('keydown', this.handleHeadingClick);
-    }
-
-    disconnectedCallback() {
-      this.headingElement.removeEventListener('click', this.handleHeadingClick);
-      this.headingElement.removeEventListener('keydown', this.handleHeadingClick);
-    }
-
-    handleHeadingClick = (event) => {
-      if (event instanceof KeyboardEvent && !['Enter', ' '].includes(event.key)) {
-        return;
-      }
-
-      this.summaryElement.click();
-    }
+    handleClick = () => {
+      const isExpanded = this.buttonElement.getAttribute('aria-expanded') === 'true';
+      this.buttonElement.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+    };
   });
 `;

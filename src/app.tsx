@@ -3,21 +3,13 @@ import React from "react";
 import ReactDOMServer from "react-dom/server";
 import { abstractAriaRolesByType, ariaRolesByCategory } from "../data";
 import { ARIAPeriodicTable } from "./ARIAPeriodicTable";
-import { ARIAPeriodicTable2 } from "./ARIAPeriodicTable2";
-import { Dialog2 } from "./Dialog2";
+import { ARIARoleDialog } from "./ARIARoleDialog";
 
 const app = express();
 
 app.get("/", (req, res) => {
   const htmlResult = `<!doctype html>
     ${ReactDOMServer.renderToString(<ARIAPeriodicTable />)}
-  `;
-  res.send(htmlResult);
-});
-
-app.get("/test", (req, res) => {
-  const htmlResult = `<!doctype html>
-    ${ReactDOMServer.renderToString(<ARIAPeriodicTable2 />)}
   `;
   res.send(htmlResult);
 });
@@ -37,7 +29,7 @@ app.get("/role/:role", (req, res) => {
 
   const htmlResult = `<!doctype html>
     ${ReactDOMServer.renderToString(
-      <Dialog2
+      <ARIARoleDialog
         role={req.params.role}
         abstractAriaRole={abstractRole}
         id={req.params.role}
@@ -63,10 +55,6 @@ type CustomElement = React.DetailedHTMLProps<
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      "expansion-button": CustomElement;
-      "close-dialog-button": CustomElement;
-      "role-dialog": CustomElement;
-      "abstract-aria-role": CustomElement;
       "menu-button": CustomElement;
     }
   }

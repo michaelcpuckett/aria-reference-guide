@@ -3,493 +3,398 @@ import { mappedAbstractAriaRolesToBackgroundColors } from "../data";
 export default `
   * {
     box-sizing: border-box;
+    align-items: start;
+    vertical-align: initial;
   }
 
   :focus:not(:focus-visible) {
     outline: 0;
   }
 
-  :not(:defined),
-  [is-defined] {
-    display: contents;
+  :focus-visible {
+    outline: 4px dashed white;
+    outline-offset: 1px;
   }
-  
+
+  dialog a:focus-visible {
+    outline-offset: 4px;
+  }
+
   :root {
     font-family: system-ui, sans-serif;
-    color-scheme: dark;
-    font-size: 18px;
-    --page-background-color: #252525;
+
+    @media screen {
+      --header-background-color: #252525;
+      --page-background-color: black;
+      color-scheme: dark;
+      min-height: 100%;
+      font-size: 18px;
+      line-height: 1;
+    }
 
     @media print {
       color-scheme: light;
     }
   }
 
-  @supports (grid-template-columns: subgrid) {
+  body {
     @media screen {
-        body {
-          margin: 0;
-          background: var(--page-background-color);
-          grid-template-rows: 100%;
-          grid-template-columns: 100%;
-          display: grid;
-          height: 100vh;
+      margin: 0;
+      background-color: var(--page-background-color);
+      min-height: 100%;
+    }
+  }
+
+  ul:where(:not(.list)) {
+    @media screen {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  summary {
+    @media screen {
+      cursor: pointer;
+      line-height: 1;
+      font: inherit;
+    }
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  tr {
+    display: grid;
+  }
+
+  th {
+    text-align: left;
+    border-bottom: 2px solid var(--light-color);
+    font-size: 1.25rem;
+    font-weight: normal;
+  }
+
+  table a {
+    color: var(--light-color);
+  }
+
+  td p {
+    margin: .5rem 0;
+  }
+
+  tr:not(:first-child) th {
+    margin-top: 1rem;
+  }
+
+  .visually-hidden {
+    @media screen {
+      border: 0;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+      white-space: nowrap;
+    }
+  }
+
+  .container {
+    @media screen and (max-width: calc(48rem - 1px)) {
+      display: grid;
+      grid-template-columns: 1rem 1fr 1rem;
+      grid-template-rows: auto auto auto 0;
+      row-gap: 1rem;
+      height: 100%;
+    }
+  
+    @media screen and (min-width: 48rem) {
+      display: grid;
+      grid-template-columns: 1rem 15rem 1fr 1rem;
+      grid-template-rows: auto 1fr 0;
+      column-gap: 1rem;
+      row-gap: 1rem;
+      position: relative;
+      max-height: 100vh;
+      contain: content;
+    }
+  
+    @media screen and (min-width: 72rem) {
+      column-gap: 0;
+      grid-template-columns: 1fr 1rem 1rem 15rem 1rem 44rem 1rem 1rem 1fr;
+    }
+  }
+
+  header {
+    @media screen {
+      grid-column: 1 / -1;
+      grid-row: 1 / 2;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      display: flex;
+      background-color: var(--header-background-color);
+      place-content: center;
+      padding: 1rem;
+    }
+  }
+
+  menu-button {
+    display: contents;
+  }
+
+  .menu-button {
+    cursor: pointer;
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    display: flex;
+    place-content: center;
+    place-items: center;
+    gap: .75rem;
+    font: inherit;
+    font-size: 1.125rem;
+    line-height: 1;
+    background: none;
+    padding: .125rem .5rem;
+    margin: 0;
+    border: 0;
+    height: 100%;
+    border: 2px solid white;
+    border-radius: .5rem;
+    padding: 1rem;
+
+    &:hover {
+      background-color: var(--header-background-color);
+      color: white;
+    }
+
+    & span {
+      display: block;
+      width: 5ch;
+    }
+
+    &[aria-expanded="true"] {
+      background-color: white;
+      color: black;
+
+      &:hover {
+        background-color: var(--header-background-color);
+        color: white;
+      }
+    }
+
+    &:not([aria-expanded="true"]) [data-show="on"] {
+      display: none;
+    }
+
+    &[aria-expanded="true"] [data-show="off"] {
+      display: none;
+    }
+
+    @media screen and (min-width: 48rem) {
+      display: none;
+    }
+  }
+
+  [data-icon="menu"] {
+    width: 1.25rem;
+  }
+
+  [data-icon="close"] {
+    width: 1.25rem;
+    scale: 1.75;
+  }
+
+  h1 {
+    @media screen {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: normal;
+      letter-spacing: 0.1rem;
+      text-transform: uppercase;
+      text-align: center;
+    }
+  }
+
+  nav {
+    @media screen and (max-width: calc(48rem - 1px)) {
+      grid-column: 2 / 3;
+      grid-row: 3 / 4;
+      width: calc(100% + 8px);
+      left: -5px;
+      top: -5px;
+      position: relative;
+
+      .container:has(.menu-button[aria-expanded="true"]) & {
+        max-height: calc(100% - 1rem);
+      }
+    }
+
+    @media screen and (min-width: 48rem) {
+      position: sticky;
+      top: calc(4rem - 5px);
+      height: calc(100% + 5px);
+      grid-column: 2 / 3;
+      grid-row: 2 / 3;
+      overflow: hidden;
+      margin: -5px;
+      width: calc(100% + 10px);
+    }
+
+    @media screen and (min-width: 72rem) {
+      grid-column: 4 / 5;
+    }
+  }
+
+  .nav__inner-container {
+    @media screen and (min-width: 48rem) {
+      width: calc(100% + var(--scrollbar-width, 1rem));
+      overflow-y: scroll;
+      height: calc(100% + 5px);
+    }
+  }
+
+  dialog {
+    position: static;
+    min-height: 0;
+    max-height: none;
+    height: 100%;
+    min-width: 0;
+    max-width: none;
+    width: 100%;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    inset: auto;
+
+    @media screen {
+      line-height: 1.5;
+      background-color: var(--darkest-color);
+      border-radius: .5rem;
+      border: 2px solid var(--light-color);
+    }
+
+    @media screen and (max-width: calc(48rem - 1px)) {
+      grid-column: 2 / 3;
+      grid-row: 3 / 4;
+      padding: 1rem;
+
+      .container:has(.menu-button[aria-expanded="true"]) & {
+        display: none;
+      }
+    }
+
+    @media screen and (min-width: 48rem) {
+      grid-column: 3 / 4;
+      grid-row: 2 / 3;
+      padding: 2rem;
+      overflow-y: scroll;
+    }
+
+    @media screen and (min-width: 72rem) {
+      grid-column: 6 / 7;
+    }
+  }
+
+  .dialog__heading {
+    @media screen {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-size: 1.75rem;
+    }
+  }
+
+  .nav__list {
+    @media screen {
+      display: grid;
+      row-gap: 1rem;
+    }
+
+    @media screen and (max-width: calc(48rem - 1px)) {
+      max-height: calc(100% - 5px);
+      margin: 5px 5px 0 5px;
+
+      .container:has(.menu-button:not([aria-expanded="true"])) & {
+        display: none;
+      }
+    }
+
+    @media screen and (min-width: 48rem) {
+      margin: 5px;
+    }
+  }
+  
+  ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
+    .map(([abstractRole], index, { length }) => {
+      return `
+        .dialog--is-abstract-role-${abstractRole},
+        .nav__list-item--${abstractRole} {
+          --base-color: ${(index / length) * 360}deg;
+          --lightest-color: hsl(var(--base-color), 60%, 93.5%);
+          --lighter-color: hsl(var(--base-color), 60%, 87.5%);
+          --light-color: hsl(var(--base-color), 60%, 82%);
+          --medium-color: hsla(var(--base-color), 60%, 50%, 0.25);
+          --dark-color: hsl(var(--base-color), 60%, 18%);
+          --darker-color: hsl(var(--base-color), 60%, 13.5%);
+          --darkest-color: hsl(var(--base-color), 60%, 7.5%);
         }
+      `;
+    })
+    .join("")}
 
-        body:has(.dialog--aria-role[open]) {
-          overflow: hidden;
-        
-          @media screen and (min-width: 1024px) {
-            overflow: auto;
-          }
-        }
+  .nav__list-item {
+    @media screen {
+      display: block;
+      color: white;
+      background-color: var(--dark-color);
+      border: 2px solid var(--light-color);
+      border-radius: .5rem;
 
-        .container {
-          display: grid;
-          padding: 0 1rem;
-          gap: 1rem;
-          grid-template-columns: clamp(12rem, 400px, 25%) 1fr;
-          place-content: flex-start;
-          place-items: flex-start;
-        }
+      &:has(.nav__list-item__summary:hover):has(.nav__list-item__details:not([open])) {
+        background: var(--light-color);
+        border-color: var(--darkest-color);
 
-        main {
-          display: grid;
-          grid-template-columns: subgrid;
-          place-content: space-between;
-          grid-column: 1 / 2;
-          padding-bottom: 1rem;
-          grid-template-columns: 100%;
-          background: #1a1a1a;
-        }
-
-        .dialog--aria-role[open] {
-          display: grid;
-          grid-column: 1 / -1;
-        }
-        
-        @media screen and (max-width: 1092px) {
-          body {
-            display: grid;
-            grid-column: 1 / -1;
-            grid-row: 1 / 2;
-            position: static;
-            height: auto;
-            margin: auto;
-            grid-template-columns: subgrid;
-          }
-        }
-
-        @media screen and (min-width: 1093px) {
-          .container {
-            place-content: flex-start;
-            place-items: flex-start;
-            margin: 0;
-            grid-template-columns: clamp(12rem, 300px, 25%) minmax(1fr, 800px);
-            grid-template-rows: max-content 1fr;
-            position: relative;
-            padding: 0;
-            column-gap: 1rem;
-          }
-
-          main {
-            grid-column: 1 / 2;
-            grid-row: 1 / 3;
-            height: 100%;
-            overflow-y: scroll;
-            position: fixed;
-            width: clamp(12rem, 300px, 25%);
-            top: 0;
-          }
-
-          .dialog[open] {
-            display: grid;
-            grid-column: 2 / -1;
-            grid-row: 1 / 2;
-          }
-        }
-
-        .periodic-table__root {
-          display: grid;
-          list-style: none;
-          grid-template-columns: subgrid;
-          grid-column: 1 / -1;
-        }
-
-        .periodic-table__subgrid {
-          grid-column: 1 / -1;
-          display: grid;
-          grid-template-columns: subgrid;
-        }
-
-        .periodic-table__role-area {
-          display: grid;
-          row-gap: 1rem;
-          padding: 0 1rem 1rem 1rem;
-        }
-
-        .periodic-table__abstract-area__heading:focus-visible {
-          outline: 4px solid white;
-          position: relative;
-          z-index: 1;
-        }
-
-        .page-header {
-          margin: 0 auto;
-          width: 100%;
-          grid-column: 1 / -1;
-          padding: 1rem 3rem;
-          position: sticky;
-          top: -.51px;
-          background-color: var(--page-background-color);
-          border-bottom: 2px solid hsl(0, 0%, 10%);
-          z-index: 1;
-          display: none;
-        }
-
-        .periodic-table__heading {
-          word-break: break-word;
-          font-size: 1rem;
-          font-weight: normal;
-          line-height: 1;
-          color: white;
-          letter-spacing: 0.1rem;
-          text-transform: uppercase;
-          margin: 0;
-
-          @media screen and (min-width: 600px) {
-            text-align: center;
-          }
-        }
-
-        ul {
-          padding: 0;
-          margin: 0;
-          list-style: none;
-        }
-
-        .aria-role {
-          display: grid;
-          width: 100%;
-          word-break: break-word;
-          height: 100%;
-          border-radius: .5rem;
-          --hsl-color: hsl(var(--color), 60%, 87.5%);
-          --hsl-alt-color: hsl(var(--color), 60%, 22.5%);
-          --hsl-dark-color: hsl(var(--color), 60%, 18.5%);
-          --hsl-light-color: hsl(var(--color), 60%, 80%);
-          background-color: var(--hsl-dark-color);
-          border: 2px solid var(--hsl-color);
-          color: white;
-          
-          &.aria-role--only-presentational-children,
-          &.aria-role--only-phrasing-descendants {
-            background-image: repeating-linear-gradient(
-              45deg,
-              transparent,
-              transparent 10px,
-              var(--hsl-alt-color) 10px,
-              var(--hsl-alt-color) 20px
-            );
-          }
-
-          &:hover {
-            background-color: var(--hsl-color);
-            color: black;
-
-            &.aria-role--only-presentational-children,
-            &.aria-role--only-phrasing-descendants {
-              background-image: repeating-linear-gradient(
-                45deg,
-                var(--hsl-color),
-                var(--hsl-color) 10px,
-                var(--hsl-light-color) 10px,
-                var(--hsl-light-color) 20px
-              );
-            }
-          }
-        }
-
-        ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
-          .map(([role], index, { length }) => {
-            return `
-              .periodic-table__abstract-area--${role} {
-                --color: ${(index / length) * 360}deg;
-              }
-
-              .dialog--abstract-role-${role} {
-                --color: ${(index / length) * 360}deg;
-              }
-            `;
-          })
-          .join("")}
-          
-        .aria-role__summary {
-          display: grid;
-          height: 100%;
-          width: 100%;
-          align-content: center;
-          place-self: center;
-          padding: 1rem;
-          cursor: pointer;
-          font: inherit;
-          background: none;
-          border: 0;
-          margin: auto;
-          color: inherit;
-          font-weight: 600;
-          text-decoration-color: var(--hsl-color);
-          justify-content: center;
-          text-align: center;
-          padding: .5rem;
-
-          &:focus-visible {
-            outline: 4px solid var(--hsl-color);
-            outline-offset: 4px;
-          }
-        }
-
-        .aria-role__row {
-          display: grid;
-        }
-
-        .dialog {
-          position: fixed;
-          min-height: 0;
-          max-height: none;
-          height: 100%;
-          min-width: 0;
-          max-width: 480px;
-          width: 100%;
-          top: 0;
-          left: 0;
-          border: 0;
-          padding: 0;
-          background: none;
-          grid-row: 1 / -1;
-          grid-template-columns: 100%;
-          will-change: transform;
-          z-index: 2;
-          background: white;
-          --hsl-color: hsl(var(--color), 60%, 87.5%);
-          --hsl-alt-color: hsl(var(--color), 60%, 22.5%);
-          --hsl-dark-color: hsl(var(--color), 60%, 18.5%);
-          --hsl-light-color: hsl(var(--color), 60%, 80%);
-
-          &:focus-visible { 
-            outline: 0;
-          }
-        }
-
-        .dialog__content {
-          display: grid;
-          grid-template-columns: 100%;
-          align-content: flex-start;
-          position: relative;
-          padding: 1rem;
-          background: white;
+        & .nav__list-item__summary {
           color: black;
-          color-scheme: light;
-        }
-
-        .dialog__content--aria-role {
-          background-color: var(--hsl-color);
-
-          .dialog--only-presentational-children &,
-          .dialog--only-phrasing-descendants & {
-            background-image: repeating-linear-gradient(
-              45deg,
-              var(--hsl-color),
-              var(--hsl-color) 10px,
-              var(--hsl-light-color) 10px,
-              var(--hsl-light-color) 20px
-            );
-          }
-        }
-
-        .dialog__content > [tabindex="-1"]:focus-visible {
-          outline: 0;
-        }
-
-        .dialog__content:has(> [tabindex="-1"]:focus-visible) {
-          outline: 2px solid white;
-          outline-offset: 2px;
-        }
-
-        @media screen and (min-width: 1093px) {
-          .dialog {
-            margin: 0;
-            max-width: 800px;
-            position: relative;
-            z-index: 0;
-            height: 100%;
-            overflow: auto;
-          }
-
-          .dialog__content {
-            border-left: 2px solid var(--alt-color);
-            border-right: 2px solid var(--alt-color);
-          }
-        }
-
-        .aria-role__table {
-          margin: 0;
-          list-style: none;
-          display: grid;
-          place-content: center;
-          place-items: stretch;
-          grid-auto-columns: 100%;
-          margin-top: 1rem;
-          border-radius: 8px;
-          overflow: hidden;
-        }
-
-        .aria-role__dfn {
-          margin: 0;
-          padding: 0;
-          text-align: center;
-          display: block;
-        }
-
-        .aria-role__cell {
-          background-color: hsl(var(--color), 60%, 97.5%);
-
-          & dfn + [role="definition"] {
-            display: block;
-            margin-top: 1rem;
-          }
-
-          & p {
-            margin: 0;
-
-            + p {
-              margin-top: 1rem;
-            }
-          }
-        }
-
-        .visually-hidden {
-          position: absolute;
-          width: 1px;
-          height: 1px;
-          margin: -1px;
-          padding: 0;
-          overflow: hidden;
-          clip: rect(0, 0, 0, 0);
-          border: 0;
-        }
-
-        .is-strong {
-          font-weight: bold;
-        }
-
-        .aria-role__table {
-          border-collapse: collapse;
-          border: 1px solid hsl(var(--color), 60%, 22.5%);
-        }
-
-        :is(.aria-role__cell, .aria-role__row-header) {
-          text-align: left;
-        }
-
-        .aria-role__cell {
-          padding: 1rem;
-        }
-
-        .aria-role__row-header {
-          padding: .5rem 1rem;
-          background: hsl(var(--color), 60%, 22.5%);
-          color: white;
-        }
-
-        .periodic-table__abstract-area__heading {
-          color: white;
-          display: flex;
-          place-items: center;
-          margin: 0;
-          font-size: calc((24 / 18) * 1rem);
-          font-weight: normal;
-          cursor: pointer;
-          padding: 1rem;
-        }
-
-        .periodic-table__abstract-area__description {
-          margin-top: 0;
-          margin-bottom: .5rem;
-          color: white;
-          font-size: .9em;
-        }
-
-        .list {
-          list-style: disc;
-          list-style-position: inside;
-        }
-
-        .dialog__heading {
-          margin: 0;
-          align-self: center;
-          width: 100%;
-          word-break: break-word;
-          font-size: 1.5rem;
-        }
-
-        close-dialog-button a {
-          flex: 0 0 auto;
-          background: none;
-          border: 2px solid;
-          font: inherit;
-          color: hsl(var(--color), 60%, 22.5%);
-          border-radius: 50%;
-          justify-self: flex-end;
-          display: flex;
-          place-content: center;
-          place-items: center;
-          font-weight: bold;
-          width: 2rem;
-          height: 2rem;
-          aspect-ratio: 1;
-          font-family: Helvetica, Arial, sans-serif;
-          font-size: 1rem;
-          text-decoration: none;
-          background-color: hsl(var(--color), 60%, 97.5%);
-
-          &:focus-visible {
-            outline-offset: 2px;
-            outline: 2px solid black;
-          }
-        }
-
-        .periodic-table__abstract-area {
-          border: 2px solid hsl(var(--color), 60%, 50%);
-          background-color: hsla(var(--color), 60%, 50%, .06125);
-          container-type: inline-size;
         }
       }
+    }
   }
 
-  @supports not (grid-template-columns: subgrid) {
+  .nav__list-item__summary {
     @media screen {
-      .container:has(.dialog--aria-role[open]) main {
-        display: none !important;
-      }
+      padding: 1rem;
+      border-radius: .5rem;
     }
   }
 
-  @media print {
-    .container:has(.dialog--aria-role[open]) main {
-      display: none !important;
+  .nav__list-item__sublist {
+    @media screen {
+      display: grid;
+      row-gap: .75rem;
+      padding: 0 .75rem .75rem;
     }
+  }
 
-    close-dialog-button {
-      display: none !important;
-    }
+  .nav__list-item__sublist-item__link {
+    @media screen {
+      display: block;
+      color: var(--lightest-color);
+      padding: .75rem;
+      background-color: var(--darkest-color);
+      border: 2px solid var(--light-color);
+      border-radius: .5rem;
+      word-break: break-word;
 
-    .dialog--aria-role[open] {
-      display: contents;
-    }
-
-    .aria-role__row-header {
-      font-weight: bold;
+      &:hover {
+        color: var(--darkest-color);
+        background-color: var(--lightest-color);
+        border-color: var(--lightest-color);
+      }
     }
   }
 `;
