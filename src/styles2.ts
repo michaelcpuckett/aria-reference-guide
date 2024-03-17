@@ -168,9 +168,24 @@ export default `
     border: 2px solid white;
     border-radius: .5rem;
 
+    &:hover {
+      background-color: var(--header-background-color);
+      color: white;
+    }
+
+    & span {
+      display: block;
+      width: 5ch;
+    }
+
     &[aria-expanded="true"] {
       background-color: white;
       color: black;
+
+      &:hover {
+        background-color: var(--header-background-color);
+        color: white;
+      }
     }
 
     &:not([aria-expanded="true"]) [data-show="on"] {
@@ -187,14 +202,13 @@ export default `
   }
 
   [data-icon="menu"] {
-    height: 1.5rem;
-    width: 1.5rem;
+    width: 1.25rem;
   }
 
   [data-icon="close"] {
-    height: 2rem;
-    width: 2rem;
-    margin-right: -.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: -.25rem;
   }
 
   h1 {
