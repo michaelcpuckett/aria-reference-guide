@@ -16,8 +16,14 @@ export default `
     outline-offset: 1px;
   }
 
+  dialog a:focus-visible {
+    outline-offset: 2px;
+  }
+
   :root {
     font-family: system-ui, sans-serif;
+    font-size: 18px;
+    line-height: 1;
 
     @media screen {
       --header-background-color: #252525;
@@ -111,7 +117,7 @@ export default `
     @media screen and (min-width: 48rem) {
       display: grid;
       grid-template-columns: 1rem 15rem 1fr 1rem;
-      grid-template-rows: auto 1fr 0;
+      grid-template-rows: 3rem calc(100vh - 5rem) 1fr 0;
       column-gap: 1rem;
       row-gap: 1rem;
       position: relative;
@@ -195,7 +201,6 @@ export default `
     @media screen {
       margin: 0;
       font-size: 1rem;
-      line-height: 1;
       font-weight: normal;
       letter-spacing: 0.1rem;
       text-transform: uppercase;
@@ -219,12 +224,11 @@ export default `
 
     @media screen and (min-width: 48rem) {
       position: sticky;
-      max-height: calc(100vh - 5rem);
       top: calc(4rem - 5px);
+      height: calc(100% + 5px);
       grid-column: 2 / 3;
       grid-row: 2 / 3;
       overflow: hidden;
-      width: 100%;
       margin: -5px;
       width: calc(100% + 10px);
     }
@@ -238,7 +242,7 @@ export default `
     @media screen and (min-width: 48rem) {
       width: calc(100% + var(--scrollbar-width, 1rem));
       overflow-y: scroll;
-      height: calc(100vh - 5rem);
+      height: calc(100% + 5px);
     }
   }
 
@@ -255,10 +259,11 @@ export default `
     margin: 0;
     inset: auto;
 
+    line-height: 1.5;
     background-color: var(--darkest-color);
     border-radius: .5rem;
     border: 2px solid var(--light-color);
-    padding: 1rem;
+    padding: 2rem;
 
     @media screen and (max-width: calc(48rem - 1px)) {
       grid-column: 2 / 3;
@@ -271,7 +276,7 @@ export default `
 
     @media screen and (min-width: 48rem) {
       grid-column: 3 / 4;
-      grid-row: 2 / 3;
+      grid-row: 2 / 4;
     }
 
     @media screen and (min-width: 86rem) {
@@ -291,7 +296,7 @@ export default `
 
     @media screen and (max-width: calc(48rem - 1px)) {
       max-height: calc(100% - 5px);
-      margin: 5px;
+      margin: 5px 5px 0 5px;
 
       .container:has(.menu-button:not([aria-expanded="true"])) & {
         display: none;
