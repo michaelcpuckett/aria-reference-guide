@@ -20,7 +20,7 @@ export function ARIAPeriodicTable() {
           __html: styles,
         }}
       />
-      <main className="container">
+      <div className="container">
         <header role="banner" className="header">
           <h1 className="heading" id="heading">
             Periodic Table of ARIA Roles
@@ -122,7 +122,12 @@ export function ARIAPeriodicTable() {
             </ul>
           </div>
         </nav>
+      </div>
 
+      <main>
+        <header aria-hidden="true" className="header">
+          <h1 className="heading">Periodic Table of ARIA Roles</h1>
+        </header>
         <Dialog heading="About" classes="about-dialog" id="about-dialog">
           <>
             <p>

@@ -20,31 +20,6 @@ export default `
     outline-offset: 4px;
   }
 
-  :root {
-    font-family: system-ui, sans-serif;
-
-    @media screen {
-      --header-background-color: #252525;
-      --page-background-color: black;
-      color-scheme: dark;
-      min-height: 100%;
-      font-size: 18px;
-      line-height: 1;
-    }
-
-    @media print {
-      color-scheme: light;
-    }
-  }
-
-  body {
-    @media screen {
-      margin: 0;
-      background-color: var(--page-background-color);
-      min-height: 100%;
-    }
-  }
-
   ul:where(:not(.list)) {
     @media screen {
       list-style: none;
@@ -103,29 +78,73 @@ export default `
     }
   }
 
-  .container {
+  :root {
+    font-family: system-ui, sans-serif;
+
+    @media screen {
+      --header-background-color: #252525;
+      --page-background-color: black;
+      color-scheme: dark;
+      min-height: 100%;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    @media print {
+      color-scheme: light;
+    }
+  }
+
+  body {
+    @media screen {
+      margin: 0;
+      background-color: var(--page-background-color);
+      min-height: 100%;
+    }
+
     @media screen and (max-width: calc(48rem - 1px)) {
       display: grid;
-      grid-template-columns: 1rem 1fr 1rem;
-      grid-template-rows: auto auto auto 0;
       row-gap: 1rem;
-      height: 100%;
+      grid-template-columns: 1rem 1fr 1rem;
     }
-  
+
     @media screen and (min-width: 48rem) {
       display: grid;
       grid-template-columns: 1rem 15rem 1fr 1rem;
-      grid-template-rows: auto 1fr 0;
+      grid-template-rows: 100vh 1fr;
       column-gap: 1rem;
-      row-gap: 1rem;
-      position: relative;
-      max-height: 100vh;
-      contain: content;
     }
-  
+
     @media screen and (min-width: 72rem) {
       column-gap: 0;
       grid-template-columns: 1fr 1rem 1rem 15rem 1rem 44rem 1rem 1rem 1fr;
+    }
+  }
+
+  .container {
+    @media screen and (max-width: calc(48rem - 1px)) {
+      display: grid;
+      grid-template-columns: subgrid;
+      grid-column: 1 / -1;
+      row-gap: 1rem;
+      grid-auto-flow: column;
+
+      body:has(.menu-button[aria-expanded="true"]) & {
+        grid-template-rows: auto auto 1fr 0;
+      }
+    }
+
+    @media screen and (min-width: 48rem) {
+      display: grid;
+      grid-column: 1 / -1;
+      grid-row: 1 / 2;
+      grid-template-columns: subgrid;
+      grid-template-rows: auto 1fr 0;
+      height: 100%;
+      row-gap: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 1;
     }
   }
 
@@ -133,8 +152,6 @@ export default `
     @media screen {
       grid-column: 1 / -1;
       grid-row: 1 / 2;
-      position: sticky;
-      top: 0;
       z-index: 2;
       display: flex;
       background-color: var(--header-background-color);
@@ -149,8 +166,6 @@ export default `
 
   .menu-button {
     cursor: pointer;
-    grid-column: 2 / 3;
-    grid-row: 2 / 3;
     display: flex;
     place-content: center;
     place-items: center;
@@ -166,6 +181,15 @@ export default `
     border: 1px solid white;
     border-radius: .5rem;
     padding: 1rem;
+
+    @media screen and (max-width: calc(48rem - 1px)) {
+      grid-column: 2 / 3;
+    }
+
+    @media screen and (min-width: 48rem) {
+      grid-column: 2 / 3;
+      grid-row: 2 / 3;
+    }
 
     &:hover {
       background-color: var(--header-background-color);
@@ -228,21 +252,30 @@ export default `
       left: -5px;
       top: -5px;
       position: relative;
+      max-height: calc(100% - 1rem);
 
-      .container:has(.menu-button[aria-expanded="true"]) & {
-        max-height: calc(100% - 1rem);
+      body:has(.menu-button[aria-expanded="false"]) & {
+        display: none;
       }
     }
 
     @media screen and (min-width: 48rem) {
-      position: sticky;
-      top: calc(4rem - 5px);
       height: calc(100% + 5px);
       grid-column: 2 / 3;
       grid-row: 2 / 3;
       overflow: hidden;
       margin: -5px;
       width: calc(100% + 10px);
+      position: relative;
+
+      &:after {
+        content: "";
+        background-image: linear-gradient(0deg, black 0%, transparent 1rem);
+        z-index: 1;
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
     }
 
     @media screen and (min-width: 72rem) {
@@ -255,6 +288,43 @@ export default `
       width: calc(100% + var(--scrollbar-width, 1rem));
       overflow-y: scroll;
       height: calc(100% + 5px);
+    }
+  }
+
+  main {
+    @media screen and (max-width: calc(48rem - 1px)) {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: subgrid;
+      grid-template-rows: 1fr 0;
+      row-gap: 1rem;
+
+      body:has(.menu-button[aria-expanded="true"]) & {
+        display: none;
+      }
+    }
+
+    @media screen and (min-width: 48rem) {
+      grid-column: 1 / -1;
+      grid-row: 1 / -1;
+      display: grid;
+      grid-template-columns: subgrid;
+      grid-template-rows: auto 1fr 0;
+      row-gap: 1rem;
+    }
+
+    @media screen and (min-width: 72rem) {
+      grid-column: 6 / 7;
+    }
+
+    & header {
+      @media screen and (max-width: calc(48rem - 1px)) {
+        display: none;
+      }
+
+      @media screen and (min-width: 48rem) {
+        visibility: hidden;
+      }
     }
   }
 
@@ -279,20 +349,14 @@ export default `
     }
 
     @media screen and (max-width: calc(48rem - 1px)) {
-      grid-column: 2 / 3;
-      grid-row: 3 / 4;
       padding: 1rem;
-
-      .container:has(.menu-button[aria-expanded="true"]) & {
-        display: none;
-      }
+      grid-column: 2 / 3;
     }
 
     @media screen and (min-width: 48rem) {
       grid-column: 3 / 4;
       grid-row: 2 / 3;
       padding: 2rem;
-      overflow-y: scroll;
     }
 
     @media screen and (min-width: 72rem) {
@@ -318,13 +382,14 @@ export default `
       max-height: calc(100% - 5px);
       margin: 5px 5px 0 5px;
 
-      .container:has(.menu-button:not([aria-expanded="true"])) & {
+      body:has(.menu-button:not([aria-expanded="true"])) & {
         display: none;
       }
     }
 
     @media screen and (min-width: 48rem) {
       margin: 5px;
+      padding-bottom: 1rem;
     }
   }
   

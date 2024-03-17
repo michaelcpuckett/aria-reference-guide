@@ -19,6 +19,7 @@ export function Dialog({
       className={classes}
       aria-modal="false"
       aria-labelledby={`dialog__heading--${id}`}
+      id={id}
     >
       <div className="dialog__content">
         <h2
