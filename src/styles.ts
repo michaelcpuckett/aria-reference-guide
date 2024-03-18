@@ -162,6 +162,10 @@ export default `
       background-color: var(--header-background-color);
       place-content: center;
       padding: 1rem;
+
+      @media (forced-colors: active) {
+        border-bottom: 1px solid;
+      }
     }
   }
 
@@ -375,11 +379,12 @@ export default `
     @media screen and (min-width: 48rem) {
       grid-column: 3 / 4;
       grid-row: 2 / 3;
-      padding: 2rem;
+      padding: 1rem;
     }
 
     @media screen and (min-width: 72rem) {
       grid-column: 6 / 7;
+      padding: 2rem;
     }
 
     @media print {
@@ -423,14 +428,12 @@ export default `
       return `
         .dialog--is-abstract-role-${abstractRole},
         .nav__list-item--${abstractRole} {
-          --base-color: ${(index / length) * 360}deg;
-          --lightest-color: hsl(var(--base-color), 60%, 93.5%);
-          --lighter-color: hsl(var(--base-color), 60%, 87.5%);
-          --light-color: hsl(var(--base-color), 60%, 82%);
-          --medium-color: hsla(var(--base-color), 60%, 50%, 0.25);
-          --dark-color: hsl(var(--base-color), 60%, 18%);
-          --darker-color: hsl(var(--base-color), 60%, 13.5%);
-          --darkest-color: hsl(var(--base-color), 60%, 7.5%);
+          --base-hue: ${(index / length) * 360}deg;
+          --base-saturation: 100%;
+          --lightest-color: hsl(var(--base-hue), var(--base-saturation), 93.5%);
+          --light-color: hsl(var(--base-hue), var(--base-saturation), 85%);
+          --dark-color: hsl(var(--base-hue), var(--base-saturation), 15%);
+          --darkest-color: hsl(var(--base-hue), var(--base-saturation), 7.5%);
         }
       `;
     })
@@ -479,6 +482,7 @@ export default `
       border: 1px solid var(--light-color);
       border-radius: .5rem;
       word-break: break-word;
+      text-underline-offset: 4px;
 
       &:hover {
         color: var(--darkest-color);
