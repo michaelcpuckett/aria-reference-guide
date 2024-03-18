@@ -60,12 +60,20 @@ export default `
 
     @media screen {
       border-bottom: 1px solid var(--light-color);
+
+      @media screen and (prefers-color-scheme: light) {
+        border-color: var(--dark-color);
+      }
     }
   }
 
   table a {
     @media screen {
       color: var(--light-color);
+
+      @media screen and (prefers-color-scheme: light) {
+        color: var(--dark-color);
+      }
     }
   }
 
@@ -95,12 +103,18 @@ export default `
     font-family: system-ui, sans-serif;
 
     @media screen {
-      --header-background-color: #252525;
-      --page-background-color: black;
-      color-scheme: dark;
       min-height: 100%;
       font-size: 18px;
       line-height: 1;
+      --header-background-color: #252525;
+      --page-background-color: black;
+      color-scheme: dark;
+    }
+
+    @media screen and (prefers-color-scheme: light) {
+      --header-background-color: white;
+      --page-background-color: white;
+      color-scheme: light;
     }
 
     @media print {
@@ -175,6 +189,10 @@ export default `
       @media (forced-colors: active) {
         border-bottom: 1px solid;
       }
+
+      @media (prefers-color-scheme: light) {
+        border-bottom: 1px solid;
+      }
     }
   }
 
@@ -198,7 +216,7 @@ export default `
     margin: 0;
     border: 0;
     height: 100%;
-    border: 1px solid white;
+    border: 1px solid;
     border-radius: .5rem;
     padding: 1rem;
 
@@ -215,9 +233,15 @@ export default `
       display: none;
     }
 
-    &:hover {
-      background-color: var(--header-background-color);
-      color: white;
+    @media (any-hover: hover) {
+      &:hover {
+        background-color: var(--header-background-color);
+        color: white;
+
+        @media (prefers-color-scheme: light) {
+          color: black;
+        }
+      }
     }
 
     & span {
@@ -229,9 +253,15 @@ export default `
       background-color: white;
       color: black;
 
-      &:hover {
-        background-color: var(--header-background-color);
-        color: white;
+      @media (any-hover: hover) {
+        &:hover {
+          background-color: var(--header-background-color);
+          color: white;
+
+          @media (prefers-color-scheme: light) {
+            color: black;
+          }
+        }
       }
     }
 
@@ -295,7 +325,7 @@ export default `
 
       &:after {
         content: "";
-        background-image: linear-gradient(0deg, black 0%, transparent 1rem);
+        background-image: linear-gradient(0deg, var(--page-background-color) 0%, transparent 1rem);
         z-index: 1;
         position: absolute;
         inset: 0;
@@ -378,9 +408,14 @@ export default `
 
     @media screen {
       line-height: 1.5;
-      background-color: var(--darkest-color);
       border-radius: .5rem;
+      background-color: var(--darkest-color);
       border: 1px solid var(--light-color);
+
+      @media screen and (prefers-color-scheme: light) {
+        background: var(--lightest-color);
+        border-color: var(--dark-color);
+      }
     }
 
     @media screen and (max-width: calc(48rem - 1px)) {
@@ -472,10 +507,28 @@ export default `
         .nav__list-item--${abstractRole} {
           --base-hue: ${(index / length) * 360}deg;
           --base-saturation: 100%;
-          --lightest-color: hsl(var(--base-hue), var(--base-saturation), 93.5%);
-          --light-color: hsl(var(--base-hue), var(--base-saturation), 85%);
-          --dark-color: hsl(var(--base-hue), var(--base-saturation), 15%);
-          --darkest-color: hsl(var(--base-hue), var(--base-saturation), 7.5%);
+          --lightest-color-lightness: 93.5%;
+          --light-color-lightness: 85%;
+          --dark-color-lightness: 15%;
+          --darkest-color-lightness: 7.5%;
+          --lightest-color: hsl(var(--base-hue), var(--base-saturation), var(--lightest-color-lightness));
+          --light-color: hsl(var(--base-hue), var(--base-saturation), var(--light-color-lightness));
+          --dark-color: hsl(var(--base-hue), var(--base-saturation), var(--dark-color-lightness));
+          --darkest-color: hsl(var(--base-hue), var(--base-saturation), var(--darkest-color-lightness));
+
+          @media screen and (prefers-contrast: more) {
+            --lightest-color: white;
+            --light-color: white;
+            --dark-color: black;
+            --darkest-color: black;
+
+            @media screen and (prefers-color-scheme: light) {
+              --lightest-color: black;
+              --light-color: black;
+              --dark-color: white;
+              --darkest-color: white;
+            }
+          }
         }
       `;
     })
@@ -489,12 +542,14 @@ export default `
       border: 1px solid var(--light-color);
       border-radius: .5rem;
 
-      &:has(.nav__list-item__summary:hover):has(.nav__list-item__details:not([open])) {
-        background: var(--light-color);
-        border-color: var(--darkest-color);
+      @media (any-hover: hover) {
+        &:has(.nav__list-item__summary:hover):has(.nav__list-item__details:not([open])) {
+          background: var(--light-color);
+          border-color: var(--darkest-color);
 
-        & .nav__list-item__summary {
-          color: black;
+          & .nav__list-item__summary {
+            color: black;
+          }
         }
       }
     }
@@ -526,10 +581,12 @@ export default `
       word-break: break-word;
       text-underline-offset: 4px;
 
-      &:hover {
-        color: var(--darkest-color);
-        background-color: var(--lightest-color);
-        border-color: var(--lightest-color);
+      @media (any-hover: hover) {
+        &:hover {
+          color: var(--darkest-color);
+          background-color: var(--lightest-color);
+          border-color: var(--lightest-color);
+        }
       }
     }
   }

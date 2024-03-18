@@ -45,7 +45,7 @@ export default `
       return;
     }
 
-    const html = await fetch(\`/role/\${hash}\`).then(res => res.text());
+    const html = await fetch(\`/role/\${hash}.html\`).then(res => res.text());
     const newDialogElement = new DOMParser().parseFromString(html, 'text/html').querySelector('role-dialog, dialog');
     
     if (!newDialogElement) {
@@ -76,7 +76,7 @@ export default `
   handleHashChange();
 
   window.addEventListener('hashchange', () => handleHashChange(true));
-
+  
   window.customElements.define('menu-button', class extends HTMLElement {
     constructor() {
       super();

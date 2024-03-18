@@ -5,6 +5,8 @@ import { abstractAriaRolesByType, ariaRolesByCategory } from "../data";
 import { ARIAPeriodicTable } from "./ARIAPeriodicTable";
 import { ARIARoleDialog } from "./ARIARoleDialog";
 import { CustomElement } from "./types";
+import fs from "fs";
+import path from "path";
 
 const app = express();
 
@@ -12,10 +14,13 @@ app.get("/", (req, res) => {
   const htmlResult = `<!doctype html>
     ${ReactDOMServer.renderToString(<ARIAPeriodicTable />)}
   `;
+
+  fs.writeFileSync(path.resolve("./public/", "index.html"), htmlResult, "utf8");
+
   res.send(htmlResult);
 });
 
-app.get("/role/:role", (req, res) => {
+app.get("/role/:role.html", (req, res) => {
   const [abstractRole] =
     Object.entries(ariaRolesByCategory).find(([_, roles]) =>
       roles.includes(req.params.role)
@@ -41,6 +46,12 @@ app.get("/role/:role", (req, res) => {
       )}
     </html>
   `;
+
+  fs.writeFileSync(
+    path.resolve("./public/role/", `${req.params.role}.html`),
+    htmlResult,
+    "utf8"
+  );
   res.send(htmlResult);
 });
 
