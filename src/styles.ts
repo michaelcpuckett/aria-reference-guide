@@ -113,7 +113,6 @@ export default `
       margin: 0;
       background-color: var(--page-background-color);
       min-height: 100%;
-      overflow: scroll;
     }
 
     @media screen and (max-width: calc(48rem - 1px)) {
@@ -159,6 +158,7 @@ export default `
       position: sticky;
       top: 0;
       z-index: 1;
+      pointer-events: none;
     }
   }
 
@@ -166,11 +166,11 @@ export default `
     @media screen {
       grid-column: 1 / -1;
       grid-row: 1 / 2;
-      z-index: 2;
       display: flex;
       background-color: var(--header-background-color);
       place-content: center;
       padding: 1rem;
+      pointer-events: auto;
 
       @media (forced-colors: active) {
         border-bottom: 1px solid;
@@ -291,6 +291,7 @@ export default `
       margin: -5px;
       width: calc(100% + 10px);
       position: relative;
+      pointer-events: auto;
 
       &:after {
         content: "";
@@ -341,7 +342,6 @@ export default `
       grid-template-columns: subgrid;
       grid-template-rows: auto 1fr 0;
       row-gap: 1rem;
-      z-index: 1;
     }
 
     @media screen and (min-width: 72rem) {
