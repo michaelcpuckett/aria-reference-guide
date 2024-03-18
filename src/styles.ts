@@ -20,13 +20,21 @@ export default `
     outline-offset: 4px;
   }
 
-  ul:where(:not(.list)) {
+  ul {
     @media screen {
-      list-style: none;
-      padding: 0;
-      margin: 0;
+      &.list {
+        margin-top: .5rem;
+        margin-bottom: .5rem;
+      }
+
+      &:where(:not(.list)) {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
     }
   }
+    
 
   summary {
     @media screen {
@@ -105,6 +113,7 @@ export default `
       margin: 0;
       background-color: var(--page-background-color);
       min-height: 100%;
+      overflow: scroll;
     }
 
     @media screen and (max-width: calc(48rem - 1px)) {
@@ -169,7 +178,9 @@ export default `
     }
   }
 
-  menu-button {
+  menu-button,
+  close-button,
+  role-dialog {
     display: contents;
   }
 
@@ -330,6 +341,7 @@ export default `
       grid-template-columns: subgrid;
       grid-template-rows: auto 1fr 0;
       row-gap: 1rem;
+      z-index: 1;
     }
 
     @media screen and (min-width: 72rem) {
@@ -398,10 +410,36 @@ export default `
     }
   }
 
+  .dialog__header {
+    display: flex;
+    margin-bottom: 1rem;
+
+    &:has(.dialog__close-button) {
+      place-content: space-between;
+      flex-direction: row-reverse;
+    }
+  }
+
+  .dialog__close-button {
+    margin: 0;
+    padding: 0;
+    border: 1px solid;
+    background: none;
+    cursor: pointer;
+    color: var(--light-color);
+    font: inherit;
+    line-height: 1.75;
+    height: 1.75rem;
+    width: 1.75rem;
+    border-radius: 50%;
+    display: flex;
+    place-items: center;
+    place-content: center;
+  }
+
   .dialog__heading {
     @media screen {
-      margin-top: 0;
-      margin-bottom: 1rem;
+      margin: 0;
       font-size: 1.75rem;
     }
   }

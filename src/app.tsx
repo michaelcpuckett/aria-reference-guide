@@ -4,6 +4,7 @@ import ReactDOMServer from "react-dom/server";
 import { abstractAriaRolesByType, ariaRolesByCategory } from "../data";
 import { ARIAPeriodicTable } from "./ARIAPeriodicTable";
 import { ARIARoleDialog } from "./ARIARoleDialog";
+import { CustomElement } from "./types";
 
 const app = express();
 
@@ -46,14 +47,6 @@ app.get("/role/:role", (req, res) => {
 app.listen(10101, () => {
   console.log("Running on 10101");
 });
-
-type CustomElement = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLDivElement> & {
-    class?: string;
-    tabindex?: string;
-  },
-  HTMLElement
->;
 
 declare global {
   namespace JSX {

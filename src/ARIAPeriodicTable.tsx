@@ -131,14 +131,12 @@ export function ARIAPeriodicTable() {
         <Dialog heading="About" classes="about-dialog" id="about">
           <>
             <p>
-              <span role="group">
-                <span role="term">ARIA</span>
-                <span aria-hidden="true"> — </span>
-                <span role="definition">
-                  Accessible Rich Internet Applications
-                </span>
-                <span aria-hidden="true"> — </span>
+              <span role="term">ARIA</span>
+              <span aria-hidden="true"> — </span>
+              <span role="definition">
+                Accessible Rich Internet Applications
               </span>
+              <span aria-hidden="true"> — </span>
               is a set of attributes that define ways to make web content more
               accessible to users of assistive technologies, such as screen
               readers and refreshable braille displays.
