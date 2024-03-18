@@ -28,14 +28,17 @@ app.get("/role/:role", (req, res) => {
     abstractAriaRolesByType.interactive.includes(abstractRole);
 
   const htmlResult = `<!doctype html>
-    ${ReactDOMServer.renderToString(
-      <ARIARoleDialog
-        role={req.params.role}
-        abstractAriaRole={abstractRole}
-        id={req.params.role}
-        mayBeInteractive={mayBeInteractive}
-      />
-    )}
+    <html>
+      <meta charSet="utf-8" />
+      ${ReactDOMServer.renderToString(
+        <ARIARoleDialog
+          role={req.params.role}
+          abstractAriaRole={abstractRole}
+          id={req.params.role}
+          mayBeInteractive={mayBeInteractive}
+        />
+      )}
+    </html>
   `;
   res.send(htmlResult);
 });

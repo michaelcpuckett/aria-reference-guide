@@ -25,8 +25,10 @@ export default `
 
     const html = await fetch(\`/role/\${hash}\`).then(res => res.text());
     const newDialogElement = new DOMParser().parseFromString(html, 'text/html').querySelector('dialog');
-    window.document.querySelector('dialog').replaceWith(newDialogElement);
     
+    if (!newDialogElement) {
+      return;
+    }
     const firstFocusableElement = newDialogElement.querySelector('[tabindex]');
 
     if (!firstFocusableElement) {
@@ -39,6 +41,7 @@ export default `
       return;
     }
 
+    window.document.querySelector('dialog').replaceWith(newDialogElement);
     menuElement.setAttribute('aria-expanded', 'false');
 
     if (shouldFocus) {

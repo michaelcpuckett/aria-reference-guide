@@ -128,7 +128,7 @@ export function ARIAPeriodicTable() {
         <header aria-hidden="true" className="header">
           <h1 className="heading">Periodic Table of ARIA Roles</h1>
         </header>
-        <Dialog heading="About" classes="about-dialog" id="about-dialog">
+        <Dialog heading="About" classes="about-dialog" id="about">
           <>
             <p>
               ARIA, which stands for Accessible Rich Internet Applications, is a
