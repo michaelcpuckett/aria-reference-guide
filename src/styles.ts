@@ -249,11 +249,11 @@ export default `
   h1 {
     @media screen {
       margin: 0;
-      font-size: 1rem;
-      font-weight: normal;
-      letter-spacing: 0.1rem;
+      font-size: .9rem;
+      letter-spacing: 0.2rem;
       text-transform: uppercase;
       text-align: center;
+      line-height: 1.5;
     }
   }
 
@@ -296,7 +296,7 @@ export default `
     }
 
     @media print {
-      body:not(:has(#about)) & {
+      body:not(:has(.about-dialog)) & {
         display: none;
       }
     }
@@ -387,8 +387,12 @@ export default `
       padding: 2rem;
     }
 
-    @media print {
-      &:is(#about) {
+    &.about-dialog {
+      @media screen {
+        --light-color: currentColor;
+      }
+
+      @media print {
         display: none;
       }
     }

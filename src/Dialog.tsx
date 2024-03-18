@@ -18,6 +18,7 @@ export function Dialog({
       open
       className={classes}
       aria-modal="false"
+      role="dialog"
       aria-labelledby={`dialog__heading--${id}`}
       id={id}
     >

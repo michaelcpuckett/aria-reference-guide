@@ -16,10 +16,14 @@ export default `
 
   window.addEventListener('resize', calculateScrollbarWidth);
 
+  const aboutDialog = window.document.querySelector('#about');
+  const clonedAboutDialog = aboutDialog.cloneNode(true);
+
   async function handleHashChange(shouldFocus) {
     const hash = window.location.hash.slice(1);
 
     if (!hash) {
+      window.document.querySelector('dialog').replaceWith(clonedAboutDialog);
       return;
     }
 

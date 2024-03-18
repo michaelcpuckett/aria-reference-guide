@@ -14,7 +14,7 @@ export function ARIAPeriodicTable() {
     <html lang="en">
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <title>Periodic Table of ARIA Roles</title>
+      <title>ARIA Reference Guide</title>
       <style
         dangerouslySetInnerHTML={{
           __html: styles,
@@ -23,7 +23,7 @@ export function ARIAPeriodicTable() {
       <div className="container">
         <header role="banner" className="header">
           <h1 className="heading" id="heading">
-            Periodic Table of ARIA Roles
+            ARIA Reference Guide
           </h1>
         </header>
         <menu-button>
@@ -126,24 +126,28 @@ export function ARIAPeriodicTable() {
 
       <main>
         <header aria-hidden="true" className="header">
-          <h1 className="heading">Periodic Table of ARIA Roles</h1>
+          <h1 className="heading">ARIA Reference Guide</h1>
         </header>
         <Dialog heading="About" classes="about-dialog" id="about">
           <>
             <p>
-              ARIA, which stands for Accessible Rich Internet Applications, is a
-              set of attributes that define ways to make web content and web
-              applications (especially those developed with JavaScript) more
-              accessible to people with disabilities.
+              <span role="group">
+                <span role="term">ARIA</span>
+                <span aria-hidden="true"> — </span>
+                <span role="definition">
+                  Accessible Rich Internet Applications
+                </span>
+                <span aria-hidden="true"> — </span>
+              </span>
+              is a set of attributes that define ways to make web content more
+              accessible to users of assistive technologies, such as screen
+              readers and refreshable braille displays.
             </p>
             <p>
-              This periodic table is a visual representation of the ARIA roles
-              and their relationships. It is intended to be a reference for web
-              developers and designers to help them understand the relationships
-              between different ARIA roles and their parent/child relationships.
-              The table is divided into different sections based on the type of
-              ARIA role, and each section is further divided into different ARIA
-              roles.
+              This representation of ARIA roles is intended to be a reference
+              for web developers and designers. The ARIA roles are grouped by
+              abstract ARIA role. Each role is a link that will take you to a
+              page with more information about the role.
             </p>
           </>
         </Dialog>
