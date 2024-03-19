@@ -100,13 +100,10 @@ export default `
   }
 
   :root {
-    font: -apply-system-body;
-    font-family: system-ui, sans-serif;
-
     @media screen {
       min-height: 100%;
-      font-size: 18px;
-      line-height: 1;
+      font: 18px system-ui, sans-serif;
+      font: -apple-system-body;
       --header-background-color: #252525;
       --page-background-color: black;
       color-scheme: dark;
@@ -304,6 +301,10 @@ export default `
   }
 
   nav {
+    @media screen {
+      font-size: .9rem;
+    }
+
     @media screen and (max-width: calc(48rem - 1px)) {
       grid-column: 2 / 3;
       grid-row: 3 / 4;
@@ -552,13 +553,28 @@ export default `
       border: 1px solid var(--light-color);
       border-radius: .5rem;
 
+      @media (prefers-color-scheme: light) {
+        color: black;
+        background-color: var(--light-color);
+        border-color: var(--dark-color);
+      }
+
       @media (any-hover: hover) {
         &:has(.nav__list-item__summary:hover):has(.nav__list-item__details:not([open])) {
           background: var(--light-color);
           border-color: var(--darkest-color);
 
+          @media (prefers-color-scheme: light) {
+            background-color: var(--dark-color);
+            border-color: var(--darkest-color);
+          }
+
           & .nav__list-item__summary {
             color: black;
+
+            @media (prefers-color-scheme: light) {
+              color: white;
+            }
           }
         }
       }
@@ -569,6 +585,7 @@ export default `
     @media screen {
       padding: 1rem;
       border-radius: .5rem;
+      font-weight: bold;
     }
   }
 
@@ -590,12 +607,24 @@ export default `
       border-radius: .5rem;
       word-break: break-word;
       text-underline-offset: 4px;
+      
+      @media (prefers-color-scheme: light) {
+        color: var(--darkest-color);
+        background-color: var(--lightest-color);
+        border-color: var(--dark-color);
+      }
 
       @media (any-hover: hover) {
         &:hover {
           color: var(--darkest-color);
           background-color: var(--lightest-color);
-          border-color: var(--lightest-color);
+          border-color: var(--light-color);
+
+          @media (prefers-color-scheme: light) {
+            color: var(--lightest-color);
+            background-color: var(--dark-color);
+            border-color: var(--darkest-color);
+          }
         }
       }
     }
