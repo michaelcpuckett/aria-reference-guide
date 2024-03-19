@@ -100,6 +100,7 @@ export default `
   }
 
   :root {
+    font: -apply-system-body;
     font-family: system-ui, sans-serif;
 
     @media screen {
@@ -127,6 +128,9 @@ export default `
       margin: 0;
       background-color: var(--page-background-color);
       min-height: 100%;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
+      -webkit-tap-highlight-color: transparent;
     }
 
     @media screen and (max-width: calc(48rem - 1px)) {
@@ -471,6 +475,7 @@ export default `
     place-items: center;
     place-content: center;
     color: var(--light-color);
+    aspect-ratio: 1;
 
     @media screen and (prefers-color-scheme: light) {
       color: var(--dark-color);
