@@ -30,9 +30,6 @@ app.get("/role/:role.html", (req, res) => {
     return res.status(404).send("Role not found");
   }
 
-  const mayBeInteractive =
-    abstractAriaRolesByType.interactive.includes(abstractRole);
-
   const htmlResult = `<!doctype html>
     <html>
       <meta charSet="utf-8" />
@@ -41,7 +38,6 @@ app.get("/role/:role.html", (req, res) => {
           role={req.params.role}
           abstractAriaRole={abstractRole}
           id={req.params.role}
-          mayBeInteractive={mayBeInteractive}
         />
       )}
     </html>

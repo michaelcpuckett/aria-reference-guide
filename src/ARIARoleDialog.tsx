@@ -20,22 +20,22 @@ interface ARIARoleDialogProps {
   role: string;
   abstractAriaRole: string;
   id: string;
-  mayBeInteractive: boolean;
 }
 
 export function ARIARoleDialog({
   role,
   abstractAriaRole,
-  mayBeInteractive,
   id,
 }: ARIARoleDialogProps) {
   const roleTitle = mappedAriaRolesToDisplayNames[role] || role;
 
-  const abstractRoleCategory = Object.entries(ariaRolesByCategory)
+  const abstractRoleCategories = Object.entries(ariaRolesByCategory)
     .filter(([, value]) => value.includes(role))
     .map(([key]) => key)
     .map((key) => mappedAbstractAriaRolesToTitles[key] || key)
     .sort();
+
+  const mayBeInteractive = abstractRoleCategories.length > 1;
 
   const allowedContent = mappedAriaRolesToAllowedDescendants[role] || "N/A";
 
@@ -44,7 +44,7 @@ export function ARIARoleDialog({
       <Dialog
         headingLabel={`The ${role} role`}
         heading={`The ${roleTitle} role`}
-        eyebrows={abstractRoleCategory}
+        eyebrows={abstractRoleCategories}
         classes={`dialog dialog--is-aria-role-${role} dialog--is-abstract-role-${abstractAriaRole}`}
         id={id}
         hasCloseButton
