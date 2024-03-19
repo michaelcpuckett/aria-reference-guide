@@ -3,7 +3,7 @@ import { CustomElement } from "./types";
 interface DialogProps {
   heading: string;
   headingLabel?: string;
-  eyebrow?: string;
+  eyebrows?: string[];
   classes: string;
   id: string;
   hasCloseButton?: boolean;
@@ -13,7 +13,7 @@ interface DialogProps {
 export function Dialog({
   heading,
   headingLabel,
-  eyebrow,
+  eyebrows,
   classes,
   id,
   children,
@@ -54,15 +54,29 @@ export function Dialog({
               </button>
             </close-button>
           ) : null}
-          <h2
-            className="dialog__heading"
-            id={`dialog__heading--${id}`}
-            aria-label={headingLabel}
-            tabIndex={-1}
-            dangerouslySetInnerHTML={{
-              __html: heading,
-            }}
-          ></h2>
+          <div className="dialog__header__info">
+            {eyebrows
+              ? eyebrows.map((eyebrow) => (
+                  <div key={eyebrow} className="dialog__eyebrow">
+                    {eyebrow}
+                  </div>
+                ))
+              : null}
+            <h2
+              className="dialog__heading"
+              id={`dialog__heading--${id}`}
+              aria-label={headingLabel}
+              style={
+                eyebrows?.length
+                  ? { gridColumnEnd: `span ${eyebrows.length}` }
+                  : {}
+              }
+              tabIndex={-1}
+              dangerouslySetInnerHTML={{
+                __html: heading,
+              }}
+            ></h2>
+          </div>
         </div>
         <div className="aria-role__details">{children}</div>
       </div>

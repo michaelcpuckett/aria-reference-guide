@@ -30,24 +30,11 @@ export function ARIARoleDialog({
   id,
 }: ARIARoleDialogProps) {
   const roleTitle = mappedAriaRolesToDisplayNames[role] || role;
-  const abstractTitle = mappedAbstractAriaRolesToTitles[abstractAriaRole];
 
-  let abstractRoleCategory = abstractTitle;
-
-  if (mayBeInteractive) {
-    abstractRoleCategory = [];
-
-    for (const [key, value] of Object.entries(ariaRolesByCategory)) {
-      if (value.includes(role)) {
-        abstractRoleCategory.push(mappedAbstractAriaRolesToTitles[key]);
-      }
-    }
-
-    abstractRoleCategory = abstractRoleCategory
-      .sort()
-      .map((category) => `${category}*`)
-      .join(", ");
-  }
+  const abstractRoleCategory = Object.entries(ariaRolesByCategory)
+    .filter(([, value]) => value.includes(role))
+    .map(([key]) => key)
+    .sort();
 
   const allowedContent = mappedAriaRolesToAllowedDescendants[role] || "N/A";
 
@@ -56,7 +43,7 @@ export function ARIARoleDialog({
       <Dialog
         headingLabel={`The ${role} role`}
         heading={`The ${roleTitle} role`}
-        eyebrow={abstractRoleCategory}
+        eyebrows={abstractRoleCategory}
         classes={`dialog--is-aria-role-${role} dialog--is-abstract-role-${abstractAriaRole}`}
         id={id}
         hasCloseButton
@@ -76,7 +63,6 @@ export function ARIARoleDialog({
             <tr className="aria-role__row">
               <th scope="row">Note</th>
               <td className="aria-role__cell">
-                <p>{abstractRoleCategory}</p>
                 <p>
                   *May be interactive or non-interactive depending on the
                   context: {mappedAriaRolesToNotes[role] || ""}

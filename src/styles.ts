@@ -126,6 +126,7 @@ export default `
       background-color: var(--page-background-color);
       min-height: 100%;
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
       -webkit-text-size-adjust: 100%;
       -webkit-tap-highlight-color: transparent;
     }
@@ -483,10 +484,33 @@ export default `
     }
   }
 
+  .dialog__header__info {
+    @media screen {
+      display: grid;
+      gap: .5rem;
+      grid-template-rows: auto auto;
+      grid-template-columns: max-content 1fr;
+      place-items: flex-start;
+    }
+  }
+
   .dialog__heading {
     @media screen {
       margin: 0;
       font-size: 1.75rem;
+      grid-column-start: 1;
+      grid-column-end: 2;
+    }
+  }
+
+  .dialog__eyebrow {
+    @media screen {
+      background-color: var(--light-color);
+      color: var(--dark-color);
+      padding: .25rem .5rem;
+      border-radius: .5rem;
+      font-weight: bold;
+      grid-row: 1 / 2;
     }
   }
 
