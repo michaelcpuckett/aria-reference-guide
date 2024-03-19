@@ -218,7 +218,8 @@ export default `
     font: inherit;
     font-size: 1.125rem;
     line-height: 1;
-    background: none;
+    background-color: black;
+    color: white;
     padding: .125rem .5rem;
     margin: 0;
     border: 0;
@@ -240,15 +241,9 @@ export default `
       display: none;
     }
 
-    @media (any-hover: hover) {
-      &:hover {
-        background-color: var(--header-background-color);
-        color: white;
-
-        @media (prefers-color-scheme: light) {
-          color: black;
-        }
-      }
+    &:hover {
+      background-color: #252525;
+      color: white;
     }
 
     & span {
@@ -260,15 +255,9 @@ export default `
       background-color: white;
       color: black;
 
-      @media (any-hover: hover) {
-        &:hover {
-          background-color: var(--header-background-color);
-          color: white;
-
-          @media (prefers-color-scheme: light) {
-            color: black;
-          }
-        }
+      &:hover {
+        background-color: #252525;
+        color: white;
       }
     }
 
@@ -601,7 +590,6 @@ export default `
         border-color: var(--dark-color);
       }
 
-      @media (any-hover: hover) {
         &:has(.nav__list-item__summary:hover):has(.nav__list-item__details:not([open])) {
           background: var(--light-color);
           border-color: var(--darkest-color);
@@ -618,7 +606,6 @@ export default `
               color: white;
             }
           }
-        }
       }
     }
   }
@@ -656,17 +643,15 @@ export default `
         border-color: var(--dark-color);
       }
 
-      @media (any-hover: hover) {
-        &:hover {
-          color: var(--darkest-color);
-          background-color: var(--lightest-color);
-          border-color: var(--light-color);
+      &:hover {
+        color: var(--darkest-color);
+        background-color: var(--lightest-color);
+        border-color: var(--light-color);
 
-          @media (prefers-color-scheme: light) {
-            color: var(--lightest-color);
-            background-color: var(--dark-color);
-            border-color: var(--darkest-color);
-          }
+        @media (prefers-color-scheme: light) {
+          color: var(--lightest-color);
+          background-color: var(--dark-color);
+          border-color: var(--darkest-color);
         }
       }
     }

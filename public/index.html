@@ -217,7 +217,8 @@
     font: inherit;
     font-size: 1.125rem;
     line-height: 1;
-    background: none;
+    background-color: black;
+    color: white;
     padding: .125rem .5rem;
     margin: 0;
     border: 0;
@@ -239,15 +240,9 @@
       display: none;
     }
 
-    @media (any-hover: hover) {
-      &:hover {
-        background-color: var(--header-background-color);
-        color: white;
-
-        @media (prefers-color-scheme: light) {
-          color: black;
-        }
-      }
+    &:hover {
+      background-color: #252525;
+      color: white;
     }
 
     & span {
@@ -259,15 +254,9 @@
       background-color: white;
       color: black;
 
-      @media (any-hover: hover) {
-        &:hover {
-          background-color: var(--header-background-color);
-          color: white;
-
-          @media (prefers-color-scheme: light) {
-            color: black;
-          }
-        }
+      &:hover {
+        background-color: #252525;
+        color: white;
       }
     }
 
@@ -467,6 +456,43 @@
     }
   }
 
+  .dialog__header__info {
+    @media screen {
+      display: grid;
+      gap: .5rem;
+      place-items: flex-start;
+    }
+  }
+
+  .dialog__eyebrows {
+    @media screen {
+      display: flex;
+      gap: .5rem;
+    }
+  }
+
+  .dialog__eyebrow {
+    @media screen {
+      background-color: var(--light-color);
+      color: var(--dark-color);
+      padding: .25rem .5rem;
+      border-radius: .5rem;
+      font-weight: bold;
+
+      @media screen and (prefers-color-scheme: light) {
+        background-color: var(--dark-color);
+        color: var(--lightest-color);
+      }
+    }
+  }
+
+  .dialog__heading {
+    @media screen {
+      margin: 0;
+      font-size: 1.75rem;
+    }
+  }
+
   .dialog__close-button {
     margin: 0;
     padding: 0;
@@ -491,43 +517,6 @@
     & svg {
       stroke: currentColor;
       stroke-width: 2px;
-    }
-  }
-
-  .dialog__header__info {
-    @media screen {
-      display: grid;
-      gap: .5rem;
-      place-items: flex-start;
-    }
-  }
-
-  .dialog__eyebrows {
-    @media screen {
-      display: flex;
-      gap: .5rem;
-    }
-  }
-
-  .dialog__heading {
-    @media screen {
-      margin: 0;
-      font-size: 1.75rem;
-    }
-  }
-
-  .dialog__eyebrow {
-    @media screen {
-      background-color: var(--light-color);
-      color: var(--dark-color);
-      padding: .25rem .5rem;
-      border-radius: .5rem;
-      font-weight: bold;
-
-      @media screen and (prefers-color-scheme: light) {
-        background-color: var(--dark-color);
-        color: var(--lightest-color);
-      }
     }
   }
 
@@ -736,7 +725,6 @@
         border-color: var(--dark-color);
       }
 
-      @media (any-hover: hover) {
         &:has(.nav__list-item__summary:hover):has(.nav__list-item__details:not([open])) {
           background: var(--light-color);
           border-color: var(--darkest-color);
@@ -753,7 +741,6 @@
               color: white;
             }
           }
-        }
       }
     }
   }
@@ -791,17 +778,15 @@
         border-color: var(--dark-color);
       }
 
-      @media (any-hover: hover) {
-        &:hover {
-          color: var(--darkest-color);
-          background-color: var(--lightest-color);
-          border-color: var(--light-color);
+      &:hover {
+        color: var(--darkest-color);
+        background-color: var(--lightest-color);
+        border-color: var(--light-color);
 
-          @media (prefers-color-scheme: light) {
-            color: var(--lightest-color);
-            background-color: var(--dark-color);
-            border-color: var(--darkest-color);
-          }
+        @media (prefers-color-scheme: light) {
+          color: var(--lightest-color);
+          background-color: var(--dark-color);
+          border-color: var(--darkest-color);
         }
       }
     }
