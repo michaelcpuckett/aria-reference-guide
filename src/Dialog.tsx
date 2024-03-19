@@ -3,6 +3,7 @@ import { CustomElement } from "./types";
 interface DialogProps {
   heading: string;
   headingLabel?: string;
+  eyebrow?: string;
   classes: string;
   id: string;
   hasCloseButton?: boolean;
@@ -12,6 +13,7 @@ interface DialogProps {
 export function Dialog({
   heading,
   headingLabel,
+  eyebrow,
   classes,
   id,
   children,

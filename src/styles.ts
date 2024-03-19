@@ -185,13 +185,14 @@ export default `
       place-content: center;
       padding: 1rem;
       pointer-events: auto;
+      border-bottom: 1px solid transparent;
 
       @media (forced-colors: active) {
-        border-bottom: 1px solid;
+        border-bottom-color: currentColor;
       }
 
       @media (prefers-color-scheme: light) {
-        border-bottom: 1px solid;
+        border-bottom-color: currentColor;
       }
     }
   }

@@ -92,26 +92,28 @@ export function ARIAPeriodicTable() {
                             aria-label={`${abstractRole} Roles`}
                             className="nav__list-item__sublist"
                           >
-                            {ariaRolesByCategory[abstractRole].map((role) => {
-                              const roleDisplayName =
-                                mappedAriaRolesToDisplayNames[role] || role;
+                            {ariaRolesByCategory[abstractRole]
+                              .sort()
+                              .map((role) => {
+                                const roleDisplayName =
+                                  mappedAriaRolesToDisplayNames[role] || role;
 
-                              return (
-                                <li
-                                  key={role}
-                                  className="nav__list-item__sublist-item"
-                                >
-                                  <a
-                                    href={`#${role}`}
-                                    aria-label={role}
-                                    className="nav__list-item__sublist-item__link"
-                                    dangerouslySetInnerHTML={{
-                                      __html: roleDisplayName,
-                                    }}
-                                  />
-                                </li>
-                              );
-                            })}
+                                return (
+                                  <li
+                                    key={role}
+                                    className="nav__list-item__sublist-item"
+                                  >
+                                    <a
+                                      href={`#${role}`}
+                                      aria-label={role}
+                                      className="nav__list-item__sublist-item__link"
+                                      dangerouslySetInnerHTML={{
+                                        __html: roleDisplayName,
+                                      }}
+                                    />
+                                  </li>
+                                );
+                              })}
                           </ul>
                         </details>
                       </li>

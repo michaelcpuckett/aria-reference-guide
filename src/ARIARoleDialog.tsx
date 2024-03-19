@@ -56,6 +56,7 @@ export function ARIARoleDialog({
       <Dialog
         headingLabel={`The ${role} role`}
         heading={`The ${roleTitle} role`}
+        eyebrow={abstractRoleCategory}
         classes={`dialog--is-aria-role-${role} dialog--is-abstract-role-${abstractAriaRole}`}
         id={id}
         hasCloseButton
@@ -71,22 +72,18 @@ export function ARIARoleDialog({
             </td>
           </tr>
 
-          <tr className="aria-role__row">
-            <th scope="row">Abstract Role</th>
-            <td className="aria-role__cell">
-              {mayBeInteractive ? (
-                <>
-                  <p>{abstractRoleCategory}</p>
-                  <p>
-                    *May be interactive or non-interactive depending on the
-                    context: {mappedAriaRolesToNotes[role] || ""}
-                  </p>
-                </>
-              ) : (
+          {mayBeInteractive ? (
+            <tr className="aria-role__row">
+              <th scope="row">Note</th>
+              <td className="aria-role__cell">
                 <p>{abstractRoleCategory}</p>
-              )}
-            </td>
-          </tr>
+                <p>
+                  *May be interactive or non-interactive depending on the
+                  context: {mappedAriaRolesToNotes[role] || ""}
+                </p>
+              </td>
+            </tr>
+          ) : null}
 
           <tr className="aria-role__row">
             <th scope="row">Allowed Content</th>
