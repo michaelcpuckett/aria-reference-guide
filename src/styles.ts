@@ -468,10 +468,47 @@ export default `
     }
   }
 
+  .dialog__header__info {
+    @media screen {
+      display: grid;
+      gap: .5rem;
+      place-items: flex-start;
+    }
+  }
+
+  .dialog__eyebrows {
+    @media screen {
+      display: flex;
+      gap: .5rem;
+    }
+  }
+
+  .dialog__eyebrow {
+    @media screen {
+      background-color: var(--light-color);
+      color: var(--dark-color);
+      padding: .25rem .5rem;
+      border-radius: .5rem;
+      font-weight: bold;
+
+      @media screen and (prefers-color-scheme: light) {
+        background-color: var(--dark-color);
+        color: var(--lightest-color);
+      }
+    }
+  }
+
+  .dialog__heading {
+    @media screen {
+      margin: 0;
+      font-size: 1.75rem;
+    }
+  }
+
   .dialog__close-button {
     margin: 0;
     padding: 0;
-    border: 1px solid;
+    border: 2px solid;
     background: none;
     cursor: pointer;
     font: inherit;
@@ -488,40 +525,10 @@ export default `
     @media screen and (prefers-color-scheme: light) {
       color: var(--dark-color);
     }
-  }
 
-  .dialog__header__info {
-    @media screen {
-      display: grid;
-      gap: .5rem;
-      grid-template-rows: auto auto;
-      grid-template-columns: max-content 1fr;
-      place-items: flex-start;
-    }
-  }
-
-  .dialog__heading {
-    @media screen {
-      margin: 0;
-      font-size: 1.75rem;
-      grid-column-start: 1;
-      grid-column-end: 2;
-    }
-  }
-
-  .dialog__eyebrow {
-    @media screen {
-      background-color: var(--light-color);
-      color: var(--dark-color);
-      padding: .25rem .5rem;
-      border-radius: .5rem;
-      font-weight: bold;
-      grid-row: 1 / 2;
-
-      @media screen and (prefers-color-scheme: light) {
-        background-color: var(--dark-color);
-        color: var(--light-color);
-      }
+    & svg {
+      stroke: currentColor;
+      stroke-width: 2px;
     }
   }
 

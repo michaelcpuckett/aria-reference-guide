@@ -55,13 +55,15 @@ export function Dialog({
             </close-button>
           ) : null}
           <div className="dialog__header__info">
-            {eyebrows
-              ? eyebrows.map((eyebrow) => (
-                  <div key={eyebrow} className="dialog__eyebrow">
+            {eyebrows ? (
+              <ul className="dialog__eyebrows">
+                {eyebrows.map((eyebrow) => (
+                  <li key={eyebrow} className="dialog__eyebrow">
                     {eyebrow}
-                  </div>
-                ))
-              : null}
+                  </li>
+                ))}
+              </ul>
+            ) : null}
             <h2
               className="dialog__heading"
               id={`dialog__heading--${id}`}
