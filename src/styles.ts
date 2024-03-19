@@ -14,6 +14,10 @@ export default `
   :focus-visible {
     outline: 4px dashed white;
     outline-offset: 1px;
+
+    @media (prefers-color-scheme: light) {
+      outline: 4px dashed black;
+    }
   }
 
   dialog a:focus-visible {
