@@ -462,7 +462,6 @@ export default `
     border: 1px solid;
     background: none;
     cursor: pointer;
-    color: var(--light-color);
     font: inherit;
     line-height: 1.75;
     height: 1.75rem;
@@ -471,6 +470,11 @@ export default `
     display: flex;
     place-items: center;
     place-content: center;
+    color: var(--light-color);
+
+    @media screen and (prefers-color-scheme: light) {
+      color: var(--dark-color);
+    }
   }
 
   .dialog__heading {
