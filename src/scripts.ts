@@ -16,37 +16,46 @@ export default `
 
   window.addEventListener('resize', calculateScrollbarWidth);
 
-  const aboutDialogElement = window.document.querySelector('#about');
-  const clonedAboutDialogElement = aboutDialogElement.cloneNode(true);
+  const aboutElement = window.document.querySelector('#about');
+  const clonedAboutElement = aboutElement.cloneNode(true);
+
+  let lastHash = window.location.hash.slice(1);
 
   async function handleHashChange(shouldFocus) {
-    const hash = window.location.hash.slice(1);
-
-    if (!hash) {
-      window.document.querySelector('dialog').replaceWith(clonedAboutDialogElement);
-      
-      const firstFocusableElement = clonedAboutDialogElement.querySelector('[tabindex]');
-
-      if (!firstFocusableElement) {
-        return;
-      }
-
-      if (shouldFocus) {
-        window.scrollTo(0, 0);
-        firstFocusableElement.focus();
-      }
-
-      return;
-    }
-
-    const oldDialogElement = window.document.querySelector('role-dialog, dialog');
+    const oldDialogElement = window.document.querySelector('role-dialog, .dialog');
     
     if (!oldDialogElement) {
       return;
     }
 
+    const hash = window.location.hash.slice(1);
+
+    if (!hash) {
+      oldDialogElement.replaceWith(clonedAboutElement);
+      
+      const targetLinkElement = window.document.querySelector(\`[href="#\${lastHash}"]\`);
+
+      if (!targetLinkElement) {
+        return;
+      }
+
+      if (shouldFocus) {
+        const closestDetailsElement = targetLinkElement.closest('details');
+
+        if (!closestDetailsElement) {
+          return;
+        }
+
+        closestDetailsElement.open = true;
+
+        targetLinkElement.focus();
+      }
+
+      return;
+    }
+
     const html = await fetch(\`/role/\${hash}.html\`).then(res => res.text());
-    const newDialogElement = new DOMParser().parseFromString(html, 'text/html').querySelector('role-dialog, dialog');
+    const newDialogElement = new DOMParser().parseFromString(html, 'text/html').querySelector('role-dialog');
     
     if (!newDialogElement) {
       return;
@@ -71,6 +80,8 @@ export default `
       window.scrollTo(0, 0);
       firstFocusableElement.focus();
     }
+
+    lastHash = hash;
   }
 
   handleHashChange();

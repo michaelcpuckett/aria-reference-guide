@@ -22,9 +22,9 @@ app.get("/", (req, res) => {
 
 app.get("/role/:role.html", (req, res) => {
   const [abstractRole] =
-    Object.entries(ariaRolesByCategory).find(([_, roles]) =>
-      roles.includes(req.params.role)
-    ) || [];
+    Object.entries(ariaRolesByCategory)
+      .sort(([a], [b]) => (a > b ? 1 : -1))
+      .find(([_, roles]) => roles.includes(req.params.role)) || [];
 
   if (!abstractRole) {
     return res.status(404).send("Role not found");

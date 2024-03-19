@@ -345,7 +345,7 @@ export default `
     }
 
     @media print {
-      body:not(:has(.about-dialog)) & {
+      body:not(:has(#about)) & {
         display: none;
       }
     }
@@ -412,7 +412,9 @@ export default `
     padding: 0;
     margin: 0;
     inset: auto;
+  }
 
+  .dialog {
     @media screen {
       line-height: 1.5;
       border-radius: .5rem;
@@ -440,15 +442,15 @@ export default `
       grid-column: 6 / 7;
       padding: 2rem;
     }
+  }
 
-    &.about-dialog {
-      @media screen {
-        --light-color: currentColor;
-      }
+  #about {
+    @media screen {
+      --light-color: currentColor;
+    }
 
-      @media print {
-        display: none;
-      }
+    @media print {
+      display: none;
     }
   }
 
@@ -511,6 +513,11 @@ export default `
       border-radius: .5rem;
       font-weight: bold;
       grid-row: 1 / 2;
+
+      @media screen and (prefers-color-scheme: light) {
+        background-color: var(--dark-color);
+        color: var(--light-color);
+      }
     }
   }
 

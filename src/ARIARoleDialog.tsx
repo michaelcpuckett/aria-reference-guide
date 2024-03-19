@@ -34,6 +34,7 @@ export function ARIARoleDialog({
   const abstractRoleCategory = Object.entries(ariaRolesByCategory)
     .filter(([, value]) => value.includes(role))
     .map(([key]) => key)
+    .map((key) => mappedAbstractAriaRolesToTitles[key] || key)
     .sort();
 
   const allowedContent = mappedAriaRolesToAllowedDescendants[role] || "N/A";
@@ -44,7 +45,7 @@ export function ARIARoleDialog({
         headingLabel={`The ${role} role`}
         heading={`The ${roleTitle} role`}
         eyebrows={abstractRoleCategory}
-        classes={`dialog--is-aria-role-${role} dialog--is-abstract-role-${abstractAriaRole}`}
+        classes={`dialog dialog--is-aria-role-${role} dialog--is-abstract-role-${abstractAriaRole}`}
         id={id}
         hasCloseButton
       >

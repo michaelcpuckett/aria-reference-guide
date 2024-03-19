@@ -86,7 +86,7 @@ export function ARIAPeriodicTable() {
                           open={index === 0}
                         >
                           <summary className="nav__list-item__summary">
-                            {abstractRoleDisplayName}s
+                            {`${abstractRoleDisplayName}s`}
                           </summary>
                           <ul
                             aria-label={`${abstractRole} Roles`}
@@ -130,27 +130,40 @@ export function ARIAPeriodicTable() {
         <header aria-hidden="true" className="header">
           <h1 className="heading">ARIA Reference Guide</h1>
         </header>
-        <Dialog heading="About" classes="about-dialog" id="about">
-          <>
-            <p>
-              <span role="term">ARIA</span>
-              <span aria-hidden="true"> — </span>
-              <span role="definition">
-                Accessible Rich Internet Applications
-              </span>
-              <span aria-hidden="true"> — </span>
-              is a set of attributes that define ways to make web content more
-              accessible to users of assistive technologies, such as screen
-              readers and refreshable braille displays.
-            </p>
-            <p>
-              This representation of ARIA roles is intended to be a reference
-              for web developers and designers. The ARIA roles are grouped by
-              abstract ARIA role. Each role is a link that will take you to a
-              page with more information about the role.
-            </p>
-          </>
-        </Dialog>
+        <div className="dialog" id="about">
+          <div className="dialog__content">
+            <div className="dialog__header">
+              <div className="dialog__header__info">
+                <h2
+                  className="dialog__heading"
+                  id="dialog__heading--about"
+                  tabIndex={-1}
+                >
+                  About
+                </h2>
+              </div>
+            </div>
+            <div className="aria-role__details">
+              <p>
+                <span role="term">ARIA</span>
+                <span aria-hidden="true"> — </span>
+                <span role="definition">
+                  Accessible Rich Internet Applications
+                </span>
+                <span aria-hidden="true"> — </span>is a set of attributes that
+                define ways to make web content more accessible to users of
+                assistive technologies, such as screen readers and refreshable
+                braille displays.
+              </p>
+              <p>
+                This representation of ARIA roles is intended to be a reference
+                for web developers and designers. The ARIA roles are grouped by
+                abstract ARIA role. Each role is a link that will take you to a
+                page with more information about the role.
+              </p>
+            </div>
+          </div>
+        </div>
       </main>
 
       <script
