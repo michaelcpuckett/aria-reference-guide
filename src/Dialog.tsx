@@ -68,11 +68,6 @@ export function Dialog({
               className="dialog__heading"
               id={`dialog__heading--${id}`}
               aria-label={headingLabel}
-              style={
-                eyebrows?.length
-                  ? { gridColumnEnd: `span ${eyebrows.length}` }
-                  : {}
-              }
               tabIndex={-1}
               dangerouslySetInnerHTML={{
                 __html: heading,

@@ -618,6 +618,14 @@ export default `
     }
   }
 
+  .nav__list-item__definition {
+    @media screen {
+      padding: 0 1rem 1rem;
+      font-size: .85rem;
+      margin: 0;
+    }
+  }
+
   .nav__list-item__sublist {
     @media screen {
       display: grid;

@@ -1,6 +1,7 @@
 import {
   abstractAriaRolesByType,
   ariaRolesByCategory,
+  mappedAbstractAriaRolesToDescriptions,
   mappedAbstractAriaRolesToTitles,
   mappedAriaRolesToDisplayNames,
 } from "../data";
@@ -74,6 +75,8 @@ export function ARIAPeriodicTable() {
                     const abstractRoleDisplayName =
                       mappedAbstractAriaRolesToTitles[abstractRole] ||
                       abstractRole;
+                    const abstractRoleDescription =
+                      mappedAbstractAriaRolesToDescriptions[abstractRole] || "";
 
                     return (
                       <li
@@ -88,6 +91,9 @@ export function ARIAPeriodicTable() {
                           <summary className="nav__list-item__summary">
                             {`${abstractRoleDisplayName}s`}
                           </summary>
+                          <p className="nav__list-item__definition">
+                            {abstractRoleDescription}
+                          </p>
                           <ul
                             aria-label={`${abstractRole} Roles`}
                             className="nav__list-item__sublist"
