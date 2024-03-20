@@ -130,14 +130,20 @@ export default `
 
     connectedCallback() {
       this.buttonElement.addEventListener('click', this.handleClick);
+      this.buttonElement.addEventListener('focus', this.handleFocus);
     }
 
     disconnectedCallback() {
       this.buttonElement.removeEventListener('click', this.handleClick);
+      this.buttonElement.removeEventListener('focus', this.handleFocus);
     }
 
     handleClick = () => {
       window.location.hash = '';
+    };
+
+    handleFocus = () => {
+      window.scrollTo(0, 0);
     };
   });
 
