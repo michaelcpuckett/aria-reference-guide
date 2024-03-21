@@ -107,6 +107,7 @@ export const mappedAriaRolesToDescriptions = {
   switch:
     "A type of checkbox that represents on/off values, as opposed to checked/unchecked values.",
   table: "A section containing data arranged in rows and columns.",
+  tab: "A grouping label providing a mechanism for selecting the tab content that is to be rendered to the user.",
   tablist: "A list of tab elements, which are references to tabpanel elements.",
   tabpanel:
     "A container for the resources associated with a tab, where each tab is contained in a tablist.",
