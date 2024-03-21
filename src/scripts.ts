@@ -81,6 +81,20 @@ export default `
       firstFocusableElement.focus();
     }
 
+    const targetLinkElement = window.document.querySelector(\`[href="#\${hash}"]\`);
+
+    if (!targetLinkElement) {
+      return;
+    }
+
+    const closestDetailsElement = targetLinkElement.closest('details');
+
+    if (!closestDetailsElement) {
+      return;
+    }
+
+    closestDetailsElement.open = true;
+
     lastHash = hash;
   }
 

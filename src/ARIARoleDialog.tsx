@@ -49,10 +49,7 @@ export function ARIARoleDialog({
         id={id}
         hasCloseButton
       >
-        <table
-          aria-labelledby={`dialog__heading--${id}`}
-          className="aria-role__table"
-        >
+        <table aria-label="Role Details" className="aria-role__table">
           <tr className="aria-role__row">
             <th scope="row">Description</th>
             <td className="aria-role__cell">

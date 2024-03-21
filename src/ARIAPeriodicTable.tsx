@@ -5,7 +5,6 @@ import {
   mappedAbstractAriaRolesToTitles,
   mappedAriaRolesToDisplayNames,
 } from "../data";
-import { Dialog } from "./Dialog";
 
 import scripts from "./scripts";
 import styles from "./styles";
@@ -22,10 +21,8 @@ export function ARIAPeriodicTable() {
         }}
       />
       <div className="container">
-        <header role="banner" className="header">
-          <h1 className="heading" id="heading">
-            ARIA Reference Guide
-          </h1>
+        <header className="header">
+          <span className="page-heading">ARIA Reference Guide</span>
         </header>
         <menu-button>
           <button
@@ -66,11 +63,11 @@ export function ARIAPeriodicTable() {
             <span data-show="on">Close</span>
           </button>
         </menu-button>
-        <nav role="navigation" className="nav">
+        <nav className="nav" id="menu">
           <div className="nav__inner-container">
-            <ul className="nav__list" id="menu">
+            <ul className="nav__list">
               {Object.entries(abstractAriaRolesByType).map(
-                ([type, abstractRoles]) => {
+                ([, abstractRoles]) => {
                   return abstractRoles.map((abstractRole, index) => {
                     const abstractRoleDisplayName =
                       mappedAbstractAriaRolesToTitles[abstractRole] ||
@@ -112,9 +109,10 @@ export function ARIAPeriodicTable() {
                                     <a
                                       href={`#${role}`}
                                       aria-label={role}
+                                      aria-haspopup="dialog"
                                       className="nav__list-item__sublist-item__link"
                                       dangerouslySetInnerHTML={{
-                                        __html: roleDisplayName,
+                                        __html: `<span aria-hidden="true">${roleDisplayName}</span>`,
                                       }}
                                     />
                                   </li>
@@ -133,20 +131,20 @@ export function ARIAPeriodicTable() {
       </div>
 
       <main>
-        <header aria-hidden="true" className="header">
-          <h1 className="heading">ARIA Reference Guide</h1>
-        </header>
+        <div aria-hidden="true" className="header">
+          <span className="heading">ARIA Reference Guide</span>
+        </div>
         <div className="dialog" id="about">
           <div className="dialog__content">
             <div className="dialog__header">
               <div className="dialog__header__info">
-                <h2
+                <h1
                   className="dialog__heading"
                   id="dialog__heading--about"
                   tabIndex={-1}
                 >
                   About
-                </h2>
+                </h1>
               </div>
             </div>
             <div className="aria-role__details">

@@ -182,7 +182,7 @@ export default `
     }
   }
 
-  header {
+  .header {
     @media screen {
       grid-column: 1 / -1;
       grid-row: 1 / 2;
@@ -283,7 +283,7 @@ export default `
     transform: scale(1.75);
   }
 
-  h1 {
+  .page-heading {
     @media screen {
       margin: 0;
       font-size: .9rem;
@@ -378,7 +378,7 @@ export default `
       grid-column: 6 / 7;
     }
 
-    & header {
+    & .header {
       @media screen and (max-width: calc(48rem - 1px)) {
         display: none;
       }
@@ -479,6 +479,7 @@ export default `
       padding: .25rem .5rem;
       border-radius: .5rem;
       font-weight: bold;
+      font-size: .9rem;
 
       @media screen and (prefers-color-scheme: light) {
         background-color: var(--dark-color);

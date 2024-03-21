@@ -24,7 +24,6 @@ export function Dialog({
       open
       className={classes}
       aria-modal="false"
-      role="dialog"
       aria-labelledby={`dialog__heading--${id}`}
       id={id}
     >
@@ -56,23 +55,23 @@ export function Dialog({
           ) : null}
           <div className="dialog__header__info">
             {eyebrows ? (
-              <ul className="dialog__eyebrows">
+              <div className="dialog__eyebrows">
                 {eyebrows.map((eyebrow) => (
-                  <li key={eyebrow} className="dialog__eyebrow">
+                  <span key={eyebrow} className="dialog__eyebrow">
                     {eyebrow}
-                  </li>
+                  </span>
                 ))}
-              </ul>
+              </div>
             ) : null}
-            <h2
+            <h1
               className="dialog__heading"
               id={`dialog__heading--${id}`}
               aria-label={headingLabel}
               tabIndex={-1}
               dangerouslySetInnerHTML={{
-                __html: heading,
+                __html: `<span aria-hidden="true">${heading}</span>`,
               }}
-            ></h2>
+            ></h1>
           </div>
         </div>
         <div className="aria-role__details">{children}</div>
