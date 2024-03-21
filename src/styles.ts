@@ -145,6 +145,7 @@ export default `
       display: grid;
       grid-template-columns: 1rem 15rem 1fr 1rem;
       grid-template-rows: 100vh 1fr;
+      grid-template-rows: 100dvh 1fr;
       column-gap: 1rem;
     }
 
@@ -564,20 +565,6 @@ export default `
     --light-color: hsl(var(--base-hue), var(--base-saturation), var(--light-color-lightness));
     --dark-color: hsl(var(--base-hue), var(--base-saturation), var(--dark-color-lightness));
     --darkest-color: hsl(var(--base-hue), var(--base-saturation), var(--darkest-color-lightness));
-
-    @media screen and (prefers-contrast: more) {
-      --lightest-color: white;
-      --light-color: white;
-      --dark-color: black;
-      --darkest-color: black;
-
-      @media screen and (prefers-color-scheme: light) {
-        --lightest-color: black;
-        --light-color: black;
-        --dark-color: white;
-        --darkest-color: white;
-      }
-    }
   }
   
   ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
