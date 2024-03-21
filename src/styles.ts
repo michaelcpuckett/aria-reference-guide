@@ -248,8 +248,8 @@ export default `
     }
 
     &:hover {
-      background-color: #252525;
-      color: white;
+      background-color: #f5f5f5;
+      color: black;
     }
 
     & span {
