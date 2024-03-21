@@ -515,6 +515,16 @@ export default `
       color: var(--dark-color);
     }
 
+    &:hover {
+      background-color: var(--light-color);
+      color: var(--dark-color);
+
+      @media screen and (prefers-color-scheme: light) {
+        background-color: var(--dark-color);
+        color: var(--lightest-color);
+      }
+    }
+
     & svg {
       stroke: currentColor;
       stroke-width: 2px;
@@ -541,6 +551,33 @@ export default `
       padding-bottom: 1rem;
     }
   }
+
+  .dialog,
+  .nav__list-item {
+    --base-saturation: 100%;
+    --lightest-color-lightness: 93.5%;
+    --light-color-lightness: 85%;
+    --dark-color-lightness: 15%;
+    --darkest-color-lightness: 7.5%;
+    --lightest-color: hsl(var(--base-hue), var(--base-saturation), var(--lightest-color-lightness));
+    --light-color: hsl(var(--base-hue), var(--base-saturation), var(--light-color-lightness));
+    --dark-color: hsl(var(--base-hue), var(--base-saturation), var(--dark-color-lightness));
+    --darkest-color: hsl(var(--base-hue), var(--base-saturation), var(--darkest-color-lightness));
+
+    @media screen and (prefers-contrast: more) {
+      --lightest-color: white;
+      --light-color: white;
+      --dark-color: black;
+      --darkest-color: black;
+
+      @media screen and (prefers-color-scheme: light) {
+        --lightest-color: black;
+        --light-color: black;
+        --dark-color: white;
+        --darkest-color: white;
+      }
+    }
+  }
   
   ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
     .map(([abstractRole], index, { length }) => {
@@ -548,29 +585,6 @@ export default `
         .dialog--is-abstract-role-${abstractRole},
         .nav__list-item--${abstractRole} {
           --base-hue: ${(index / length) * 360}deg;
-          --base-saturation: 100%;
-          --lightest-color-lightness: 93.5%;
-          --light-color-lightness: 85%;
-          --dark-color-lightness: 15%;
-          --darkest-color-lightness: 7.5%;
-          --lightest-color: hsl(var(--base-hue), var(--base-saturation), var(--lightest-color-lightness));
-          --light-color: hsl(var(--base-hue), var(--base-saturation), var(--light-color-lightness));
-          --dark-color: hsl(var(--base-hue), var(--base-saturation), var(--dark-color-lightness));
-          --darkest-color: hsl(var(--base-hue), var(--base-saturation), var(--darkest-color-lightness));
-
-          @media screen and (prefers-contrast: more) {
-            --lightest-color: white;
-            --light-color: white;
-            --dark-color: black;
-            --darkest-color: black;
-
-            @media screen and (prefers-color-scheme: light) {
-              --lightest-color: black;
-              --light-color: black;
-              --dark-color: white;
-              --darkest-color: white;
-            }
-          }
         }
       `;
     })
