@@ -1,2 +1,4 @@
 node_modules
 .firebase
+public/role/
+public/index.html

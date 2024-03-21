@@ -51,6 +51,18 @@ app.get("/role/:role.html", (req, res) => {
   res.send(htmlResult);
 });
 
+app.get("/test", (req, res) => {
+  const allAriaRoles = Object.values(ariaRolesByCategory).flat();
+
+  const promises = allAriaRoles.map((role) => {
+    return fetch(`http://localhost:10101/role/${role}.html`);
+  });
+
+  Promise.all(promises).then(() => {
+    res.send("done");
+  });
+});
+
 app.listen(10101, () => {
   console.log("Running on 10101");
 });
