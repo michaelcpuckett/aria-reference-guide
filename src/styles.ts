@@ -113,6 +113,11 @@ export default `
       color-scheme: dark;
     }
 
+    @media (max-width: 320px) {
+      font-size: 16px;
+      hyphens: auto;
+    }
+
     @media screen and (prefers-color-scheme: light) {
       --header-background-color: white;
       --page-background-color: white;
@@ -453,8 +458,12 @@ export default `
     margin-bottom: 1rem;
 
     &:has(.dialog__close-button) {
-      place-content: space-between;
       flex-direction: row-reverse;
+      gap: 1rem;
+
+      @media screen and (max-width: 320px) {
+        flex-wrap: wrap;
+      }
     }
   }
 
@@ -463,6 +472,7 @@ export default `
       display: grid;
       gap: .5rem;
       place-items: flex-start;
+      flex: 1;
     }
   }
 
@@ -510,6 +520,7 @@ export default `
     display: flex;
     place-items: center;
     place-content: center;
+    place-self: flex-start;
     color: var(--light-color);
     aspect-ratio: 1;
 
@@ -519,10 +530,12 @@ export default `
 
     &:hover {
       background-color: var(--light-color);
+      border-color: var(--light-color);
       color: var(--dark-color);
 
       @media screen and (prefers-color-scheme: light) {
         background-color: var(--dark-color);
+        border-color: var(--dark-color);
         color: var(--lightest-color);
       }
     }
