@@ -39,6 +39,30 @@ export default `
     }
   }
 
+  :where(a:any-link) {
+    color: rgb(158, 158, 255);
+
+    @media screen and (prefers-color-scheme: light) {
+      color: blue;
+    }
+  }
+
+  :where(a:visited) {
+    color: rgb(288, 173, 240);
+
+    @media screen and (prefers-color-scheme: light) {
+      color: purple;
+    }
+  }
+
+  :where(a:active) {
+    color: rgb(255, 158, 158);
+
+    @media screen and (prefers-color-scheme: light) {
+      color: red;
+    }
+  }
+
   a {
     text-underline-offset: 4px;
     
