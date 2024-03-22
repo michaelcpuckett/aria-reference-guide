@@ -1,18 +1,19 @@
-import express from "express";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
-import { abstractAriaRolesByType, ariaRolesByAbstractRole } from "../data";
-import { ARIAPeriodicTable } from "./ARIAPeriodicTable";
-import { ARIARoleDialog } from "./ARIARoleDialog";
-import { CustomElement } from "./types";
+import express from "express";
 import fs from "fs";
 import path from "path";
+
+import { ariaRolesByAbstractRole } from "../data";
+import { ARIAReferenceGuide } from "./ARIAReferenceGuide";
+import { ARIARoleDialog } from "./ARIARoleDialog";
+import { CustomElement } from "./types";
 
 const app = express();
 
 app.get("/", (req, res) => {
   const htmlResult = `<!doctype html>
-    ${ReactDOMServer.renderToString(<ARIAPeriodicTable />)}
+    ${ReactDOMServer.renderToString(<ARIAReferenceGuide />)}
   `;
 
   fs.writeFileSync(path.resolve("./public/", "index.html"), htmlResult, "utf8");
@@ -66,11 +67,3 @@ app.get("/test", (req, res) => {
 app.listen(10101, () => {
   console.log("Running on 10101");
 });
-
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      "menu-button": CustomElement;
-    }
-  }
-}

@@ -38,11 +38,19 @@ export default `
       }
     }
   }
-  
-  .list a {
-    display: inline-flex;
-    align-items: center;
-    gap: .25rem;
+
+  a {
+    text-underline-offset: 4px;
+    
+    &:hover {
+      text-decoration: none;
+    }
+
+    &:has(svg) {
+      display: inline-flex;
+      align-items: center;
+      gap: .25rem;
+    }
   }
 
   summary {
@@ -64,7 +72,9 @@ export default `
 
   th {
     text-align: left;
-    font-size: 1.25rem;
+    font-size: .9rem;
+    letter-spacing: .1rem;
+    text-transform: uppercase;
     font-weight: normal;
 
     @media screen {
@@ -298,7 +308,7 @@ export default `
     @media screen {
       margin: 0;
       font-size: .9rem;
-      letter-spacing: 0.2rem;
+      letter-spacing: .1rem;
       text-transform: uppercase;
       text-align: center;
       line-height: 1.5;
@@ -474,10 +484,12 @@ export default `
 
   .dialog__header__info {
     @media screen {
-      display: grid;
-      gap: .5rem;
-      place-items: flex-start;
       flex: 1;
+      display: grid;
+      place-items: flex-start;
+      column-gap: .5rem;
+      row-gap: 1rem;
+      margin-bottom: .5rem;
     }
   }
 
@@ -499,9 +511,6 @@ export default `
       font-weight: bold;
       font-size: .8rem;
       white-space: nowrap;
-      display: flex;
-      align-items: center;
-      gap: .25rem;
       border: 2px solid transparent;
 
       @media screen and (prefers-color-scheme: light) {
@@ -526,7 +535,8 @@ export default `
   .dialog__heading {
     @media screen {
       margin: 0;
-      font-size: 1.75rem;
+      font-weight: normal;
+      font-size: 2.25rem;
     }
   }
 
@@ -684,7 +694,6 @@ export default `
       border: 2px solid var(--light-color);
       border-radius: .5rem;
       word-break: break-word;
-      text-underline-offset: 4px;
       
       @media (prefers-color-scheme: light) {
         color: var(--darkest-color);

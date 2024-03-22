@@ -1,3 +1,4 @@
+import { ExternalLinkIcon } from "./Icons";
 import { CustomElement } from "./types";
 
 interface DialogProps {
@@ -73,18 +74,7 @@ export function Dialog({
                     className="dialog__tag"
                   >
                     {tagName}
-                    <span className="visually-hidden">
-                      (opens in new window)
-                    </span>
-                    <svg
-                      aria-hidden="true"
-                      width="1rem"
-                      height="1rem"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <use href="#external-link-icon"></use>
-                    </svg>
+                    <ExternalLinkIcon />
                   </a>
                 ))}
               </p>
