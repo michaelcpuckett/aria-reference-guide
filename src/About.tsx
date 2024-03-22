@@ -34,7 +34,6 @@ export function About() {
               WAI-ARIA 1.2 Recommendation
               <ExternalLinkIcon />
             </a>
-            {". "}
           </p>
         </div>
       </div>

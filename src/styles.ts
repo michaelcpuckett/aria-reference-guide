@@ -40,26 +40,20 @@ export default `
   }
 
   :where(a:any-link) {
-    color: rgb(158, 158, 255);
-
-    @media screen and (prefers-color-scheme: light) {
-      color: blue;
+    @media screen and (prefers-color-scheme: dark) {
+      color: rgb(158, 158, 255);
     }
   }
 
   :where(a:visited) {
-    color: rgb(288, 173, 240);
-
-    @media screen and (prefers-color-scheme: light) {
-      color: purple;
+    @media screen and (prefers-color-scheme: dark) {
+      color: rgb(288, 173, 240);
     }
   }
 
   :where(a:active) {
-    color: rgb(255, 158, 158);
-
     @media screen and (prefers-color-scheme: light) {
-      color: red;
+      color: rgb(255, 158, 158);
     }
   }
 
@@ -153,13 +147,12 @@ export default `
     }
 
     @media (max-width: 320px) {
-      font-size: 16px;
       -webkit-hyphens: auto;
       hyphens: auto;
     }
 
     @media screen and (prefers-color-scheme: light) {
-      --header-background-color: white;
+      --header-background-color: #d9d9d9;
       --page-background-color: white;
       color-scheme: light;
     }
