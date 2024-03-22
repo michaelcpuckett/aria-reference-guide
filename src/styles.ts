@@ -537,6 +537,11 @@ export default `
       margin: 0;
       font-weight: normal;
       font-size: 2.25rem;
+      line-height: 1.25;
+
+      @media screen and (max-width: 320px) {
+        font-size: 1.75rem;
+      }
     }
   }
 
