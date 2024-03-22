@@ -52,7 +52,7 @@ app.get("/role/:role.html", (req, res) => {
   res.send(htmlResult);
 });
 
-app.get("/test", (req, res) => {
+app.get("/build", (req, res) => {
   const allAriaRoles = Object.values(ariaRolesByAbstractRole).flat();
 
   const promises = allAriaRoles.map((role) => {

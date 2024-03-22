@@ -130,6 +130,7 @@ export default `
 
     @media (max-width: 320px) {
       font-size: 16px;
+      -webkit-hyphens: auto;
       hyphens: auto;
     }
 
@@ -149,6 +150,7 @@ export default `
       margin: 0;
       background-color: var(--page-background-color);
       min-height: 100%;
+      overflow-y: scroll;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
       -webkit-text-size-adjust: 100%;
@@ -565,16 +567,15 @@ export default `
 
     @media screen and (prefers-color-scheme: light) {
       color: var(--light-color);
+      background-color: var(--dark-color);
       border-color: var(--dark-color);
     }
 
     &:hover {
-      background-color: var(--light-color);
       color: var(--light-color);
       background: none;
 
       @media screen and (prefers-color-scheme: light) {
-        border-color: var(--dark-color);
         color: var(--dark-color);
       }
     }
@@ -621,6 +622,7 @@ export default `
   
   ${Object.values(abstractAriaRolesByType)
     .flat()
+    .reverse()
     .map((abstractRole, index, { length }) => {
       return `
         .dialog--is-abstract-role-${abstractRole},
