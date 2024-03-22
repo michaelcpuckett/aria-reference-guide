@@ -54,15 +54,6 @@ export function Dialog({
             </close-button>
           ) : null}
           <div className="dialog__header__info">
-            {eyebrows ? (
-              <div className="dialog__eyebrows">
-                {eyebrows.map((eyebrow) => (
-                  <span key={eyebrow} className="dialog__eyebrow">
-                    {eyebrow}
-                  </span>
-                ))}
-              </div>
-            ) : null}
             <h1
               className="dialog__heading"
               id={`dialog__heading--${id}`}
@@ -72,6 +63,15 @@ export function Dialog({
                 __html: `<span aria-hidden="true">${heading}</span>`,
               }}
             ></h1>
+            {eyebrows ? (
+              <p className="dialog__eyebrows">
+                {eyebrows.map((eyebrow) => (
+                  <span key={eyebrow} className="dialog__eyebrow">
+                    {eyebrow}
+                  </span>
+                ))}
+              </p>
+            ) : null}
           </div>
         </div>
         <div className="aria-role__details">{children}</div>

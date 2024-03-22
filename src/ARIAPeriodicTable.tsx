@@ -1,6 +1,6 @@
 import {
   abstractAriaRolesByType,
-  ariaRolesByCategory,
+  ariaRolesByAbstractRole,
   mappedAbstractAriaRolesToDescriptions,
   mappedAbstractAriaRolesToTitles,
   mappedAriaRolesToDisplayNames,
@@ -95,7 +95,7 @@ export function ARIAPeriodicTable() {
                             aria-label={`${abstractRole} Roles`}
                             className="nav__list-item__sublist"
                           >
-                            {ariaRolesByCategory[abstractRole]
+                            {ariaRolesByAbstractRole[abstractRole]
                               .sort()
                               .map((role) => {
                                 const roleDisplayName =

@@ -1,6 +1,6 @@
 import {
   allowedAriaRolesByHtmlElement,
-  ariaRolesByCategory,
+  ariaRolesByAbstractRole,
   ariaRolesWithPresentationalChildren,
   ariaToHtmlMapping,
   links,
@@ -29,13 +29,34 @@ export function ARIARoleDialog({
 }: ARIARoleDialogProps) {
   const roleTitle = mappedAriaRolesToDisplayNames[role] || role;
 
-  const abstractRoleCategories = Object.entries(ariaRolesByCategory)
+  const abstractRoleEyebrows = Object.entries(ariaRolesByAbstractRole)
     .filter(([, value]) => value.includes(role))
     .map(([key]) => key)
     .map((key) => mappedAbstractAriaRolesToTitles[key] || key)
     .sort();
 
-  const mayBeInteractive = abstractRoleCategories.length > 1;
+  const contentTypes = mappedAriaRolesToContentTypes[role] || [];
+
+  const contentTypeEyebrows = contentTypes
+    .filter((contentType) =>
+      ["flow", "phrasing", "interactive"].includes(contentType)
+    )
+    .map(
+      (contentType) => mappedContentTypesToTitles[contentType] || contentType
+    )
+    .sort();
+
+  const contextEyebrows = mappedAriaRolesToContextRoles[role]
+    ? ["Required Context"]
+    : [];
+
+  const eyebrows = [
+    ...abstractRoleEyebrows,
+    ...contentTypeEyebrows,
+    ...contextEyebrows,
+  ];
+
+  const mayBeInteractive = abstractRoleEyebrows.length > 1;
 
   const allowedContent = mappedAriaRolesToAllowedDescendants[role] || "N/A";
 
@@ -44,7 +65,7 @@ export function ARIARoleDialog({
       <Dialog
         headingLabel={`The ${role} role`}
         heading={`The ${roleTitle} role`}
-        eyebrows={abstractRoleCategories}
+        eyebrows={eyebrows}
         classes={`dialog dialog--is-aria-role-${role} dialog--is-abstract-role-${abstractAriaRole}`}
         id={id}
         hasCloseButton
@@ -91,7 +112,7 @@ export function ARIARoleDialog({
             <th scope="row">Content Category</th>
             <td className="aria-role__cell">
               <ul className="list">
-                {mappedAriaRolesToContentTypes[role].map((contentType) => (
+                {contentTypes.map((contentType) => (
                   <li key={contentType}>
                     {mappedContentTypesToTitles[contentType] || "N/A"}
                   </li>

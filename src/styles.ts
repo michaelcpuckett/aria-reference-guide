@@ -480,6 +480,8 @@ export default `
     @media screen {
       display: flex;
       gap: .5rem;
+      flex-wrap: wrap;
+      margin: 0;
     }
   }
 
@@ -490,7 +492,8 @@ export default `
       padding: .25rem .5rem;
       border-radius: .5rem;
       font-weight: bold;
-      font-size: .9rem;
+      font-size: .85rem;
+      white-space: nowrap;
 
       @media screen and (prefers-color-scheme: light) {
         background-color: var(--dark-color);

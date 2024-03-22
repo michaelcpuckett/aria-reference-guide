@@ -1,7 +1,7 @@
 import express from "express";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
-import { abstractAriaRolesByType, ariaRolesByCategory } from "../data";
+import { abstractAriaRolesByType, ariaRolesByAbstractRole } from "../data";
 import { ARIAPeriodicTable } from "./ARIAPeriodicTable";
 import { ARIARoleDialog } from "./ARIARoleDialog";
 import { CustomElement } from "./types";
@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 
 app.get("/role/:role.html", (req, res) => {
   const [abstractRole] =
-    Object.entries(ariaRolesByCategory)
+    Object.entries(ariaRolesByAbstractRole)
       .sort(([a], [b]) => (a > b ? 1 : -1))
       .find(([_, roles]) => roles.includes(req.params.role)) || [];
 
@@ -52,7 +52,7 @@ app.get("/role/:role.html", (req, res) => {
 });
 
 app.get("/test", (req, res) => {
-  const allAriaRoles = Object.values(ariaRolesByCategory).flat();
+  const allAriaRoles = Object.values(ariaRolesByAbstractRole).flat();
 
   const promises = allAriaRoles.map((role) => {
     return fetch(`http://localhost:10101/role/${role}.html`);

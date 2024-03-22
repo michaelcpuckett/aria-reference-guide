@@ -1,6 +1,6 @@
 export { abstractAriaRolesByType } from "./abstractAriaRolesByType";
 export { allowedAriaRolesByHtmlElement } from "./allowedAriaRolesByHtmlElement";
-export { ariaRolesByCategory } from "./ariaRolesByCategory";
+export { ariaRolesByAbstractRole } from "./ariaRolesByAbstractRole";
 export {
   ariaRolesWithPresentationalChildren,
   ariaRolesWithPhrasingDescendants,
