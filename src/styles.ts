@@ -1,4 +1,4 @@
-import { mappedAbstractAriaRolesToBackgroundColors } from "../data";
+import { abstractAriaRolesByType } from "../data";
 
 export default `
   * {
@@ -38,7 +38,12 @@ export default `
       }
     }
   }
-    
+  
+  .list a {
+    display: inline-flex;
+    align-items: center;
+    gap: .25rem;
+  }
 
   summary {
     @media screen {
@@ -197,7 +202,7 @@ export default `
       place-content: center;
       padding: 1rem;
       pointer-events: auto;
-      border-bottom: 1px solid transparent;
+      border-bottom: 2px solid transparent;
 
       @media (forced-colors: active) {
         border-bottom-color: currentColor;
@@ -230,7 +235,7 @@ export default `
     margin: 0;
     border: 0;
     height: 100%;
-    border: 1px solid;
+    border: 2px solid;
     border-radius: .5rem;
     padding: 1rem;
 
@@ -418,7 +423,7 @@ export default `
       line-height: 1.5;
       border-radius: .5rem;
       background-color: var(--darkest-color);
-      border: 1px solid var(--light-color);
+      border: 2px solid var(--light-color);
 
       @media screen and (prefers-color-scheme: light) {
         background: var(--lightest-color);
@@ -476,7 +481,7 @@ export default `
     }
   }
 
-  .dialog__eyebrows {
+  .dialog__tags {
     @media screen {
       display: flex;
       gap: .5rem;
@@ -485,19 +490,35 @@ export default `
     }
   }
 
-  .dialog__eyebrow {
+  .dialog__tag {
     @media screen {
       background-color: var(--light-color);
       color: var(--dark-color);
       padding: .25rem .5rem;
       border-radius: .5rem;
       font-weight: bold;
-      font-size: .85rem;
+      font-size: .8rem;
       white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: .25rem;
+      border: 2px solid transparent;
 
       @media screen and (prefers-color-scheme: light) {
         background-color: var(--dark-color);
         color: var(--lightest-color);
+      }
+
+      &:hover {
+        background-color: var(--darkest-color);
+        border-color: var(--light-color);
+        color: var(--light-color);
+
+        @media screen and (prefers-color-scheme: light) {
+          background-color: var(--lightest-color);
+          border-color: var(--dark-color);
+          color: var(--dark-color);
+        }
       }
     }
   }
@@ -512,8 +533,7 @@ export default `
   .dialog__close-button {
     margin: 0;
     padding: 0;
-    border: 2px solid;
-    background: none;
+    border: 2px solid var(--light-color);
     cursor: pointer;
     font: inherit;
     line-height: 1.75;
@@ -524,22 +544,23 @@ export default `
     place-items: center;
     place-content: center;
     place-self: flex-start;
-    color: var(--light-color);
     aspect-ratio: 1;
+    color: var(--dark-color);
+    background-color: var(--light-color);
 
     @media screen and (prefers-color-scheme: light) {
-      color: var(--dark-color);
+      color: var(--light-color);
+      border-color: var(--dark-color);
     }
 
     &:hover {
       background-color: var(--light-color);
-      border-color: var(--light-color);
-      color: var(--dark-color);
+      color: var(--light-color);
+      background: none;
 
       @media screen and (prefers-color-scheme: light) {
-        background-color: var(--dark-color);
         border-color: var(--dark-color);
-        color: var(--lightest-color);
+        color: var(--dark-color);
       }
     }
 
@@ -583,8 +604,9 @@ export default `
     --darkest-color: hsl(var(--base-hue), var(--base-saturation), var(--darkest-color-lightness));
   }
   
-  ${Object.entries(mappedAbstractAriaRolesToBackgroundColors)
-    .map(([abstractRole], index, { length }) => {
+  ${Object.values(abstractAriaRolesByType)
+    .flat()
+    .map((abstractRole, index, { length }) => {
       return `
         .dialog--is-abstract-role-${abstractRole},
         .nav__list-item--${abstractRole} {
@@ -599,7 +621,7 @@ export default `
       display: block;
       color: white;
       background-color: var(--dark-color);
-      border: 1px solid var(--light-color);
+      border: 2px solid var(--light-color);
       border-radius: .5rem;
 
       @media (prefers-color-scheme: light) {
@@ -657,8 +679,9 @@ export default `
       display: block;
       color: var(--lightest-color);
       padding: .75rem;
+      font-weight: bold;
       background-color: var(--darkest-color);
-      border: 1px solid var(--light-color);
+      border: 2px solid var(--light-color);
       border-radius: .5rem;
       word-break: break-word;
       text-underline-offset: 4px;

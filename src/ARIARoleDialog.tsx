@@ -5,6 +5,7 @@ import {
   ariaToHtmlMapping,
   links,
   mappedAbstractAriaRolesToTitles,
+  mappedAbstractAriaRolesToUrls,
   mappedAriaRolesToAllowedDescendants,
   mappedAriaRolesToContentTypes,
   mappedAriaRolesToContextRoles,
@@ -12,6 +13,7 @@ import {
   mappedAriaRolesToDisplayNames,
   mappedAriaRolesToNotes,
   mappedContentTypesToTitles,
+  mappedContentTypesToUrls,
 } from "../data";
 import { Dialog } from "./Dialog";
 import { CustomElement } from "./types";
@@ -29,34 +31,34 @@ export function ARIARoleDialog({
 }: ARIARoleDialogProps) {
   const roleTitle = mappedAriaRolesToDisplayNames[role] || role;
 
-  const abstractRoleEyebrows = Object.entries(ariaRolesByAbstractRole)
+  const abstractRoleTags = Object.entries(ariaRolesByAbstractRole)
     .filter(([, value]) => value.includes(role))
     .map(([key]) => key)
-    .map((key) => mappedAbstractAriaRolesToTitles[key] || key)
-    .sort();
+    .sort()
+    .map((key) => [
+      mappedAbstractAriaRolesToTitles[key] || key,
+      mappedAbstractAriaRolesToUrls[key] || "",
+    ]);
 
   const contentTypes = mappedAriaRolesToContentTypes[role] || [];
 
-  const contentTypeEyebrows = contentTypes
+  const contentTypeTags = contentTypes
     .filter((contentType) =>
       ["flow", "phrasing", "interactive"].includes(contentType)
     )
-    .map(
-      (contentType) => mappedContentTypesToTitles[contentType] || contentType
-    )
-    .sort();
+    .sort()
+    .map((contentType) => [
+      mappedContentTypesToTitles[contentType] || contentType,
+      mappedContentTypesToUrls[contentType] || "",
+    ]);
 
-  const contextEyebrows = mappedAriaRolesToContextRoles[role]
-    ? ["Required Context"]
+  const contextTags = mappedAriaRolesToContextRoles[role]
+    ? [["Required Context", ""]]
     : [];
 
-  const eyebrows = [
-    ...abstractRoleEyebrows,
-    ...contentTypeEyebrows,
-    ...contextEyebrows,
-  ];
+  const tags = [...abstractRoleTags, ...contentTypeTags, ...contextTags];
 
-  const mayBeInteractive = abstractRoleEyebrows.length > 1;
+  const mayBeInteractive = abstractRoleTags.length > 1;
 
   const allowedContent = mappedAriaRolesToAllowedDescendants[role] || "N/A";
 
@@ -65,7 +67,7 @@ export function ARIARoleDialog({
       <Dialog
         headingLabel={`The ${role} role`}
         heading={`The ${roleTitle} role`}
-        eyebrows={eyebrows}
+        tags={tags}
         classes={`dialog dialog--is-aria-role-${role} dialog--is-abstract-role-${abstractAriaRole}`}
         id={id}
         hasCloseButton
@@ -177,6 +179,18 @@ export function ARIARoleDialog({
                   <li key={link}>
                     <a href={link + role} target="_blank">
                       {name}
+                      <span className="visually-hidden">
+                        (opens in new window)
+                      </span>
+                      <svg
+                        aria-hidden="true"
+                        width="1rem"
+                        height="1rem"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <use href="#external-link-icon"></use>
+                      </svg>
                     </a>
                   </li>
                 ))}

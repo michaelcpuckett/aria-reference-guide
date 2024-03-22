@@ -3,7 +3,7 @@ import { CustomElement } from "./types";
 interface DialogProps {
   heading: string;
   headingLabel?: string;
-  eyebrows?: string[];
+  tags?: [string, string][];
   classes: string;
   id: string;
   hasCloseButton?: boolean;
@@ -13,7 +13,7 @@ interface DialogProps {
 export function Dialog({
   heading,
   headingLabel,
-  eyebrows,
+  tags,
   classes,
   id,
   children,
@@ -63,12 +63,29 @@ export function Dialog({
                 __html: `<span aria-hidden="true">${heading}</span>`,
               }}
             ></h1>
-            {eyebrows ? (
-              <p className="dialog__eyebrows">
-                {eyebrows.map((eyebrow) => (
-                  <span key={eyebrow} className="dialog__eyebrow">
-                    {eyebrow}
-                  </span>
+            {tags ? (
+              <p className="dialog__tags">
+                {tags.map(([tagName, url]) => (
+                  <a
+                    key={tagName}
+                    href={url}
+                    target="_blank"
+                    className="dialog__tag"
+                  >
+                    {tagName}
+                    <span className="visually-hidden">
+                      (opens in new window)
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      width="1rem"
+                      height="1rem"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <use href="#external-link-icon"></use>
+                    </svg>
+                  </a>
                 ))}
               </p>
             ) : null}
