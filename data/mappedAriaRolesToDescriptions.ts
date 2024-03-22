@@ -1,6 +1,6 @@
 export const mappedAriaRolesToDescriptions = {
   alert:
-    "A type of live region with important, and usually time-sensitive, information. Alerts are used to convey messages that may be immediately important to users. An alert is processed as an assertive, atomic live region.",
+    "A type of live region with important, and usually time-sensitive, information. Alerts are used to convey messages that may be immediately important to users.",
   alertdialog:
     "A type of dialog that contains an alert message. Alert dialogs are used to convey messages to alert the user. Unlike alert, alertdialog can receive a response from the user.",
   application:
