@@ -62,7 +62,6 @@ export function Dialog({
               {Object.entries(links).map(([name, link]) => (
                 <a key={link} href={link + role} target="_blank">
                   {name}
-                  <span className="visually-hidden">(opens in new window)</span>
                   <ExternalLinkIcon />
                 </a>
               ))}
