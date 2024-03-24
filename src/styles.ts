@@ -20,8 +20,19 @@ export default `
     }
   }
 
-  dialog a:focus-visible {
-    outline-offset: 4px;
+
+  dialog a {
+    @media screen {
+      color: var(--light-color);
+
+      @media screen and (prefers-color-scheme: light) {
+        color: var(--dark-color);
+      }
+
+      &:focus-visible {
+        outline-offset: 4px;
+      }
+    }
   }
 
   ul {
@@ -52,7 +63,7 @@ export default `
   }
 
   :where(a:active) {
-    @media screen and (prefers-color-scheme: light) {
+    @media screen and (prefers-color-scheme: dark) {
       color: rgb(255, 158, 158);
     }
   }
@@ -104,16 +115,6 @@ export default `
     }
   }
 
-  table a {
-    @media screen {
-      color: var(--light-color);
-
-      @media screen and (prefers-color-scheme: light) {
-        color: var(--dark-color);
-      }
-    }
-  }
-
   td p {
     margin: .5rem 0;
   }
@@ -152,7 +153,6 @@ export default `
     }
 
     @media screen and (prefers-color-scheme: light) {
-      --header-background-color: #d9d9d9;
       --page-background-color: white;
       color-scheme: light;
     }
@@ -232,12 +232,9 @@ export default `
       padding: 1rem;
       pointer-events: auto;
       border-bottom: 2px solid transparent;
+      color: white;
 
       @media (forced-colors: active) {
-        border-bottom-color: currentColor;
-      }
-
-      @media (prefers-color-scheme: light) {
         border-bottom-color: currentColor;
       }
     }
@@ -258,7 +255,7 @@ export default `
     font: inherit;
     font-size: 1.125rem;
     line-height: 1;
-    background-color: black;
+    background-color: var(--header-background-color);
     color: white;
     padding: .125rem .5rem;
     margin: 0;
@@ -282,8 +279,8 @@ export default `
     }
 
     &:hover {
-      background-color: #f5f5f5;
-      color: black;
+      background-color: var(--header-background-color);
+      color: white;
     }
 
     & span {
@@ -296,8 +293,28 @@ export default `
       color: black;
 
       &:hover {
-        background-color: #252525;
+        background-color: var(--header-background-color);
         color: white;
+      }
+    }
+
+    @media screen and (prefers-color-scheme: light) {
+      background-color: white;
+      color: black;
+
+      &:hover {
+        background-color: var(--header-background-color);
+        color: white;
+      }
+
+      &[aria-expanded="true"] {
+        background-color: var(--header-background-color);
+        color: white;
+
+        &:hover {
+          background-color: white;
+          color: black;
+        }
       }
     }
 
@@ -485,6 +502,15 @@ export default `
     @media print {
       display: none;
     }
+
+    &:has(h1:focus-visible) {
+      outline: 4px dashed white;
+      outline-offset: 1px;
+
+      @media (prefers-color-scheme: light) {
+        outline: 4px dashed black;
+      }
+    }
   }
 
   .dialog__header {
@@ -509,13 +535,14 @@ export default `
       column-gap: .5rem;
       row-gap: 1rem;
       margin-bottom: .5rem;
+      margin-top: 1rem;
     }
   }
 
   .dialog__tags {
     @media screen {
       display: flex;
-      gap: .5rem;
+      gap: 1rem;
       flex-wrap: wrap;
       margin: 0;
     }
@@ -556,11 +583,27 @@ export default `
       margin: 0;
       font-weight: normal;
       font-size: 2.25rem;
-      line-height: 1.25;
+      line-height: .85;
 
       @media screen and (max-width: 320px) {
         font-size: 1.75rem;
       }
+    }
+  }
+
+  .dialog__heading__container {
+    @media screen {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+
+  .dialog__links {
+    @media screen {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
     }
   }
 

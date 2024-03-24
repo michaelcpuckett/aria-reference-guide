@@ -7,7 +7,7 @@ import {
   mappedAbstractAriaRolesToTitles,
   mappedAbstractAriaRolesToUrls,
   mappedAriaRolesToAllowedDescendants,
-  mappedAriaRolesToContentTypes,
+  mappedAriaRolesToContentCategories,
   mappedAriaRolesToContextRoles,
   mappedAriaRolesToDescriptions,
   mappedAriaRolesToDisplayNames,
@@ -40,23 +40,35 @@ export function ARIARoleDialog({
       mappedAbstractAriaRolesToUrls[key] || "",
     ]);
 
-  const contentTypes = mappedAriaRolesToContentTypes[role] || [];
+  const contentCategories = mappedAriaRolesToContentCategories[role] || [];
 
-  const contentTypeTags = contentTypes
-    .filter((contentType) =>
-      ["flow", "phrasing", "interactive"].includes(contentType)
-    )
+  const filteredContentCategories = contentCategories.filter(
+    (contentCategory) =>
+      ["flow", "phrasing", "interactive"].includes(contentCategory)
+  );
+
+  if (
+    filteredContentCategories.includes("flow") &&
+    filteredContentCategories.includes("phrasing")
+  ) {
+    filteredContentCategories.splice(
+      filteredContentCategories.indexOf("flow"),
+      1
+    );
+  }
+
+  const contentCategoryTags = filteredContentCategories
     .sort()
-    .map((contentType) => [
-      mappedContentTypesToTitles[contentType] || contentType,
-      mappedContentTypesToUrls[contentType] || "",
+    .map((contentCategory) => [
+      mappedContentTypesToTitles[contentCategory] || contentCategory,
+      mappedContentTypesToUrls[contentCategory] || "",
     ]);
 
   const contextTags = mappedAriaRolesToContextRoles[role]
-    ? [["Required Context", ""]]
+    ? [["Required Context", "https://www.w3.org/TR/wai-aria-1.2/#scope"]]
     : [];
 
-  const tags = [...abstractRoleTags, ...contentTypeTags, ...contextTags];
+  const tags = [...abstractRoleTags, ...contentCategoryTags, ...contextTags];
 
   const mayBeInteractive = abstractRoleTags.length > 1;
 
@@ -65,6 +77,7 @@ export function ARIARoleDialog({
   return (
     <role-dialog>
       <Dialog
+        role={role}
         headingLabel={`The ${role} role`}
         heading={`The ${roleTitle} role`}
         tags={tags}
@@ -107,19 +120,6 @@ export function ARIARoleDialog({
                   </em>
                 </p>
               )}
-            </td>
-          </tr>
-
-          <tr className="aria-role__row">
-            <th scope="row">Content Category</th>
-            <td className="aria-role__cell">
-              <ul className="list">
-                {contentTypes.map((contentType) => (
-                  <li key={contentType}>
-                    {mappedContentTypesToTitles[contentType] || "N/A"}
-                  </li>
-                ))}
-              </ul>
             </td>
           </tr>
 
@@ -168,32 +168,6 @@ export function ARIARoleDialog({
                   </li>
                 ))}
                 <li key="any">{`<div>, <span>, <p>, other elements that can receive any role`}</li>
-              </ul>
-            </td>
-          </tr>
-          <tr className="aria-role__row">
-            <th scope="row">Specification Links</th>
-            <td className="aria-role__cell">
-              <ul className="list">
-                {Object.entries(links).map(([name, link]) => (
-                  <li key={link}>
-                    <a href={link + role} target="_blank">
-                      {name}
-                      <span className="visually-hidden">
-                        (opens in new window)
-                      </span>
-                      <svg
-                        aria-hidden="true"
-                        width="1rem"
-                        height="1rem"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <use href="#external-link-icon"></use>
-                      </svg>
-                    </a>
-                  </li>
-                ))}
               </ul>
             </td>
           </tr>

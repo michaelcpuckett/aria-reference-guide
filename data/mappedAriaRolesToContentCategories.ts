@@ -1,4 +1,4 @@
-export const mappedAriaRolesToContentTypes = {
+export const mappedAriaRolesToContentCategories = {
   alert: ["flow"],
   alertdialog: ["flow"],
   application: ["flow"],
@@ -60,7 +60,7 @@ export const mappedAriaRolesToContentTypes = {
   scrollbar: ["interactive"],
   search: ["flow", "palpable"],
   searchbox: ["flow", "phrasing", "interactive"],
-  separator: ["interactive-if-focusable"],
+  separator: ["phrasing", "interactive-if-focusable"],
   slider: ["flow", "phrasing", "interactive"],
   spinbutton: ["flow", "phrasing", "interactive"],
   status: ["flow"],

@@ -32,23 +32,33 @@ export default `
 
     if (!hash) {
       oldDialogElement.replaceWith(clonedAboutElement);
-      
-      const targetLinkElement = window.document.querySelector(\`[href="#\${lastHash}"]\`);
-
-      if (!targetLinkElement) {
-        return;
-      }
 
       if (shouldFocus) {
-        const closestDetailsElement = targetLinkElement.closest('details');
+        if (window.matchMedia('(max-width: calc(48rem - 1px))').matches) {
+          const headingElement = clonedAboutElement.querySelector('h1');
+          
+          if (!headingElement) {
+            return;
+          }
 
-        if (!closestDetailsElement) {
-          return;
+          headingElement.focus();
+        } else {
+          const targetLinkElement = window.document.querySelector(\`[href="#\${lastHash}"]\`);
+
+          if (!targetLinkElement) {
+            return;
+          }
+
+          const closestDetailsElement = targetLinkElement.closest('details');
+
+          if (!closestDetailsElement) {
+            return;
+          }
+
+          closestDetailsElement.open = true;
+
+          targetLinkElement.focus();
         }
-
-        closestDetailsElement.open = true;
-
-        targetLinkElement.focus();
       }
 
       return;

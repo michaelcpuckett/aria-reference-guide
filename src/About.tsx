@@ -4,7 +4,9 @@ export function About() {
   return (
     <div className="dialog" id="about">
       <div className="dialog__content">
-        <h1 className="visually-hidden">About</h1>
+        <h1 className="visually-hidden" tabIndex={-1}>
+          About
+        </h1>
         <div className="aria-role__details">
           <p>
             <abbr>ARIA</abbr> (Accessible Rich Internet Applications) is a set

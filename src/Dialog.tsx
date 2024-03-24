@@ -1,7 +1,9 @@
 import { ExternalLinkIcon } from "./Icons";
 import { CustomElement } from "./types";
+import { links } from "../data";
 
 interface DialogProps {
+  role: string;
   heading: string;
   headingLabel?: string;
   tags?: [string, string][];
@@ -12,6 +14,7 @@ interface DialogProps {
 }
 
 export function Dialog({
+  role,
   heading,
   headingLabel,
   tags,
@@ -44,15 +47,26 @@ export function Dialog({
             </close-button>
           ) : null}
           <div className="dialog__header__info">
-            <h1
-              className="dialog__heading"
-              id={`dialog__heading--${id}`}
-              aria-label={headingLabel}
-              tabIndex={-1}
-              dangerouslySetInnerHTML={{
-                __html: `<span aria-hidden="true">${heading}</span>`,
-              }}
-            ></h1>
+            <div className="dialog__heading__container">
+              <h1
+                className="dialog__heading"
+                id={`dialog__heading--${id}`}
+                aria-label={headingLabel}
+                tabIndex={-1}
+                dangerouslySetInnerHTML={{
+                  __html: `<span aria-hidden="true">${heading}</span>`,
+                }}
+              ></h1>
+            </div>
+            <div className="dialog__links">
+              {Object.entries(links).map(([name, link]) => (
+                <a key={link} href={link + role} target="_blank">
+                  {name}
+                  <span className="visually-hidden">(opens in new window)</span>
+                  <ExternalLinkIcon />
+                </a>
+              ))}
+            </div>
             {tags ? (
               <p className="dialog__tags">
                 {tags.map(([tagName, url]) => (
