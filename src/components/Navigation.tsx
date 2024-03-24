@@ -4,7 +4,7 @@ import {
   mappedAbstractAriaRolesToDescriptions,
   mappedAbstractAriaRolesToTitles,
   mappedAriaRolesToDisplayNames,
-} from "../data";
+} from "../../data";
 
 export function Navigation() {
   return (

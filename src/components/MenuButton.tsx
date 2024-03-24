@@ -1,4 +1,4 @@
-import { CustomElement } from "./types";
+import { CustomElement } from "../types";
 
 export function MenuButton() {
   return (

@@ -5,15 +5,22 @@ import fs from "fs";
 import path from "path";
 
 import { ariaRolesByAbstractRole } from "../data";
-import { ARIAReferenceGuide } from "./ARIAReferenceGuide";
-import { ARIARoleDialog } from "./ARIARoleDialog";
-import { CustomElement } from "./types";
+import { IndexPage } from "./components/IndexPage";
+import { Dialog } from "./components/Dialog";
+
+import getScripts from "./getScripts";
+import getStyles from "./getStyles";
 
 const app = express();
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
+  const scripts = await getScripts();
+  const styles = getStyles();
+
   const htmlResult = `<!doctype html>
-    ${ReactDOMServer.renderToString(<ARIAReferenceGuide />)}
+    ${ReactDOMServer.renderToString(
+      <IndexPage scripts={scripts} styles={styles} />
+    )}
   `;
 
   fs.writeFileSync(path.resolve("./public/", "index.html"), htmlResult, "utf8");
@@ -35,11 +42,7 @@ app.get("/role/:role.html", (req, res) => {
     <html>
       <meta charSet="utf-8" />
       ${ReactDOMServer.renderToString(
-        <ARIARoleDialog
-          role={req.params.role}
-          abstractAriaRole={abstractRole}
-          id={req.params.role}
-        />
+        <Dialog role={req.params.role} abstractAriaRole={abstractRole} />
       )}
     </html>
   `;
