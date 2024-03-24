@@ -4,17 +4,7 @@ export function About() {
   return (
     <div className="dialog" id="about">
       <div className="dialog__content">
-        <div className="dialog__header">
-          <div className="dialog__header__info">
-            <h1
-              className="dialog__heading"
-              id="dialog__heading--about"
-              tabIndex={-1}
-            >
-              About
-            </h1>
-          </div>
-        </div>
+        <h1 className="visually-hidden">About</h1>
         <div className="aria-role__details">
           <p>
             <abbr>ARIA</abbr> (Accessible Rich Internet Applications) is a set
