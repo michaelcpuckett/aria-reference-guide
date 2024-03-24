@@ -20,7 +20,6 @@ export default `
     }
   }
 
-
   dialog a {
     @media screen {
       color: var(--light-color);

@@ -15,6 +15,10 @@ export function ARIAReferenceGuide() {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>ARIA Reference Guide</title>
+        <meta
+          name="description"
+          content="This representation of ARIA roles contains links to each role that will take you to a page with more information about the role."
+        />
         <style
           dangerouslySetInnerHTML={{
             __html: styles,
