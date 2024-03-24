@@ -24,6 +24,22 @@ export function About() {
             This reference guide is based on the{" "}
             <a href="https://www.w3.org/TR/wai-aria-1.2/" target="_blank">
               WAI-ARIA 1.2 Recommendation
+              <span className="visually-hidden">(opens in new window)</span>
+              <ExternalLinkIcon />
+            </a>
+          </p>
+          <p>
+            This is not a substitute for the official documentation, but because
+            it is paginated, it may be easier to navigate.
+          </p>
+          <p>
+            The source code is availble on{" "}
+            <a
+              href="https://www.github.com/michaelcpuckett/aria-reference-guide"
+              target="_blank"
+            >
+              GitHub
+              <span className="visually-hidden">(opens in new window)</span>
               <ExternalLinkIcon />
             </a>
           </p>
