@@ -59,7 +59,7 @@ app.get("/build", (req, res) => {
     return fetch(`http://localhost:10101/role/${role}.html`);
   });
 
-  Promise.all(promises).then(() => {
+  Promise.all([fetch("http://localhost:10101"), ...promises]).then(() => {
     res.send("done");
   });
 });
