@@ -222,7 +222,7 @@ export default `
     }
   }
 
-  .header {
+  .page-header {
     @media screen {
       grid-column: 1 / -1;
       grid-row: 1 / 2;
@@ -232,7 +232,6 @@ export default `
       padding: 1rem;
       pointer-events: auto;
       border-bottom: 2px solid transparent;
-      color: white;
 
       @media (forced-colors: active) {
         border-bottom-color: currentColor;
@@ -348,6 +347,7 @@ export default `
       text-transform: uppercase;
       text-align: center;
       line-height: 1.5;
+      color: white;
     }
   }
 
@@ -435,7 +435,7 @@ export default `
       grid-column: 6 / 7;
     }
 
-    & .header {
+    & .page-header {
       @media screen and (max-width: calc(48rem - 1px)) {
         display: none;
       }

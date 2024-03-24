@@ -25,8 +25,10 @@ export function ARIAReferenceGuide() {
         <IconDefinitions />
 
         <div className="container">
-          <header className="header">
-            <span className="page-heading">{pageTitle}</span>
+          <header className="page-header">
+            <a href="#" className="page-heading">
+              {pageTitle}
+            </a>
           </header>
           <MenuButton />
           <Navigation />
@@ -36,8 +38,8 @@ export function ARIAReferenceGuide() {
           {/*
             The header is repeated here for layout purposes.
           */}
-          <div aria-hidden="true" className="header">
-            <span className="heading">{pageTitle}</span>
+          <div aria-hidden="true" className="page-header">
+            <span className="page-heading">{pageTitle}</span>
           </div>
           <About />
         </main>
