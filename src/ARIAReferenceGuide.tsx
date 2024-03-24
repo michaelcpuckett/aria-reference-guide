@@ -1,12 +1,18 @@
+import fs from "fs";
+import path from "path";
+
 import { About } from "./About";
-import { ExternalLinkIcon, IconDefinitions } from "./Icons";
+import { IconDefinitions } from "./Icons";
 import { MenuButton } from "./MenuButton";
 import { Navigation } from "./Navigation";
-
-import scripts from "./scripts";
-import styles from "./styles";
+import colorsCss from "./colors.css";
 
 export function ARIAReferenceGuide() {
+  const scripts = fs.readFileSync(path.resolve("./src/scripts.js"), "utf8");
+  const styles = `${fs.readFileSync(
+    path.resolve("./src/styles.css"),
+    "utf8"
+  )} ${colorsCss}`;
   const pageTitle = "ARIA Reference Guide";
 
   return (

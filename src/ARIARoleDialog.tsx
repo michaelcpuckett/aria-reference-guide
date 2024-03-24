@@ -51,6 +51,7 @@ export function ARIARoleDialog({
     filteredContentCategories.includes("flow") &&
     filteredContentCategories.includes("phrasing")
   ) {
+    // All `phrasing` roles are also `flow` roles
     filteredContentCategories.splice(
       filteredContentCategories.indexOf("flow"),
       1
