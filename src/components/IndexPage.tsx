@@ -1,7 +1,4 @@
-import fs from "fs";
-import path from "path";
-
-import { About } from "./About";
+import { Overview } from "./Overview";
 import { IconDefinitions } from "./Icons";
 import { MenuButton } from "./MenuButton";
 import { Navigation } from "./Navigation";
@@ -45,7 +42,7 @@ export function IndexPage({ scripts, styles }) {
           <div aria-hidden="true" className="page-header">
             <span className="page-heading">{pageTitle}</span>
           </div>
-          <About />
+          <Overview />
         </main>
 
         <script

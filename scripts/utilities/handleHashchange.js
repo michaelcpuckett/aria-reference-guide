@@ -1,7 +1,7 @@
-// The `about` element is cloned to replace the current dialog element when
+// The `overview` element is cloned to replace the current dialog element when
 // the hash is empty.
-const aboutElement = window.document.querySelector("#about");
-const clonedAboutElement = aboutElement.cloneNode(true);
+const overviewElement = window.document.querySelector("#overview");
+const clonedOverviewElement = overviewElement.cloneNode(true);
 
 const smallMediaQuery = window.matchMedia("(max-width: calc(48rem - 1px)");
 
@@ -28,12 +28,12 @@ async function handleHashChange(shouldMoveFocus) {
   const hash = window.location.hash.slice(1);
 
   if (!hash) {
-    currentDialogElement.replaceWith(clonedAboutElement);
+    currentDialogElement.replaceWith(clonedOverviewElement);
     titleElement.textContent = "ARIA Reference Guide";
 
     if (shouldMoveFocus) {
       if (smallMediaQuery.matches) {
-        const headingElement = clonedAboutElement.querySelector("h1");
+        const headingElement = clonedOverviewElement.querySelector("h1");
 
         if (!headingElement) {
           return;
@@ -67,7 +67,7 @@ async function handleHashChange(shouldMoveFocus) {
   const html = await fetch(`/role/${hash}.html`).then((res) => res.text());
   const nextDialogElement = new DOMParser()
     .parseFromString(html, "text/html")
-    .querySelector("role-dialog");
+    .querySelector(".dialog");
 
   if (!nextDialogElement) {
     return;

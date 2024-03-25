@@ -1,11 +1,11 @@
 import { ExternalLinkIcon } from "./Icons";
 
-export function About() {
+export function Overview() {
   return (
-    <div className="dialog" id="about">
+    <div className="dialog" id="overview">
       <div className="dialog__content">
         <h1 className="visually-hidden" tabIndex={-1}>
-          About
+          Overview of ARIA Roles
         </h1>
         <div className="aria-role__details">
           <p>

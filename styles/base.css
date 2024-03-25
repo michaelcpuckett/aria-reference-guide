@@ -17,7 +17,7 @@
   }
 }
 
-dialog a {
+:where(.dialog) a {
   @media screen {
     color: var(--light-color);
 
@@ -217,9 +217,7 @@ body {
   }
 }
 
-menu-button,
-close-button,
-role-dialog {
+menu-button {
   display: contents;
 }
 
@@ -433,20 +431,6 @@ main {
   }
 }
 
-dialog {
-  position: static;
-  min-height: 0;
-  max-height: none;
-  height: 100%;
-  min-width: 0;
-  max-width: none;
-  width: 100%;
-  border: 0;
-  padding: 0;
-  margin: 0;
-  inset: auto;
-}
-
 .dialog {
   @media screen {
     line-height: 1.5;
@@ -476,7 +460,7 @@ dialog {
   }
 }
 
-#about {
+#overview {
   @media screen {
     --light-color: currentColor;
   }

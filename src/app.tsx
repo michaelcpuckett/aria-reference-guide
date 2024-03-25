@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 import express from "express";
+
 import fs from "fs";
 import path from "path";
 
 import { ariaRolesByAbstractRole } from "../data";
 import { IndexPage } from "./components/IndexPage";
-import { Dialog } from "./components/Dialog";
+import { Role } from "./components/Role";
 
 import getScripts from "./getScripts";
 import getStyles from "./getStyles";
@@ -42,7 +43,7 @@ app.get("/role/:role.html", (req, res) => {
     <html>
       <meta charSet="utf-8" />
       ${ReactDOMServer.renderToString(
-        <Dialog role={req.params.role} abstractAriaRole={abstractRole} />
+        <Role role={req.params.role} abstractAriaRole={abstractRole} />
       )}
     </html>
   `;
