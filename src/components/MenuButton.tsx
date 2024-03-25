@@ -8,6 +8,7 @@ export function MenuButton() {
         aria-controls="menu"
         type="button"
         className="menu-button"
+        aria-label="Menu"
       >
         <svg
           data-show="off"

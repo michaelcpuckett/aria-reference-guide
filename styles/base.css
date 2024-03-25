@@ -76,6 +76,10 @@ a {
     align-items: center;
     gap: 0.25rem;
   }
+
+  & svg {
+    flex: 0 0 auto;
+  }
 }
 
 svg {
@@ -123,6 +127,7 @@ summary {
   @media (max-width: 320px) {
     -webkit-hyphens: auto;
     hyphens: auto;
+    overflow-wrap: anywhere;
   }
 
   @media screen and (prefers-color-scheme: light) {
@@ -236,6 +241,14 @@ role-dialog {
   border: 2px solid;
   border-radius: 0.5rem;
   padding: 1rem;
+  overflow-wrap: normal;
+  max-width: min-content;
+  align-self: center;
+  justify-self: center;
+
+  @media screen and (max-width: 320px) {
+    flex-wrap: wrap;
+  }
 
   @media screen and (max-width: calc(48rem - 1px)) {
     grid-column: 2 / 3;
@@ -253,11 +266,6 @@ role-dialog {
   &:hover {
     background-color: var(--header-background-color);
     color: white;
-  }
-
-  & span {
-    display: block;
-    width: 5ch;
   }
 
   &[aria-expanded="true"] {
@@ -332,7 +340,7 @@ nav {
   @media screen and (max-width: calc(48rem - 1px)) {
     grid-column: 2 / 3;
     grid-row: 3 / 4;
-    width: calc(100% + 8px);
+    width: calc(100% + 10px);
     left: -5px;
     top: -5px;
     position: relative;
@@ -532,7 +540,6 @@ dialog {
     border-radius: 0.5rem;
     font-weight: bold;
     font-size: 0.8rem;
-    white-space: nowrap;
     border: 2px solid transparent;
 
     @media screen and (prefers-color-scheme: light) {
@@ -790,4 +797,8 @@ dialog {
 
 .aria-role__subheading:not(:first-of-type) {
   margin-top: 2rem;
+}
+
+.tag-name {
+  hyphenate-character: "";
 }

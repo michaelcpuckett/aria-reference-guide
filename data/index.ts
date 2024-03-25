@@ -19,3 +19,4 @@ export { mappedAriaRolesToAllowedDescendants } from "./mappedAriaRolesToAllowedD
 export { mappedContentTypesToTitles } from "./mappedContentTypesToTitles";
 export { mappedAbstractAriaRolesToUrls } from "./mappedAbstractAriaRolesToUrls";
 export { mappedContentTypesToUrls } from "./mappedContentTypesToUrls";
+export { htmlElementsToDisplayNames } from "./htmlElementsToDisplayNames";

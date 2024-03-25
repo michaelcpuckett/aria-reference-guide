@@ -3,6 +3,7 @@ import {
   ariaRolesByAbstractRole,
   ariaRolesWithPresentationalChildren,
   ariaToHtmlMapping,
+  htmlElementsToDisplayNames,
   links,
   mappedAbstractAriaRolesToTitles,
   mappedAbstractAriaRolesToUrls,
@@ -179,11 +180,11 @@ export function Dialog({ role, abstractAriaRole }: DialogProps) {
               HTML Elements with Implicit ARIA Role
             </h2>
             <ul className="list">
-              {(ariaToHtmlMapping[role] || ["(None)"])
-                .sort()
-                .map((htmlElement) => (
-                  <li key={htmlElement}>{htmlElement}</li>
-                ))}
+              {(ariaToHtmlMapping[role] || ["(None)"]).sort().map((tagName) => (
+                <li className="tag-name" key={tagName}>
+                  {htmlElementsToDisplayNames[tagName] || tagName}
+                </li>
+              ))}
             </ul>
 
             <h2 className="aria-role__subheading">Allowed HTML Elements</h2>
@@ -197,7 +198,9 @@ export function Dialog({ role, abstractAriaRole }: DialogProps) {
                 )
               ).map((tagName) => (
                 <li key={tagName}>
-                  {tagName}
+                  <span className="tag-name">
+                    {htmlElementsToDisplayNames[tagName] || tagName}
+                  </span>
                   {(ariaToHtmlMapping[role] || []).includes(tagName)
                     ? " (role attribute unnecessary)"
                     : ""}
