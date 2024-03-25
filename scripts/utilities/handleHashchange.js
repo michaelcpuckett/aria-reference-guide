@@ -1,25 +1,24 @@
-// The `overview` element is cloned to replace the current dialog element when
-// the hash is empty.
-const overviewElement = window.document.querySelector("#overview");
+// The `overview` dialog is cloned to replace future dialogs when the hash is
+// empty.
+const overviewElement = window.document.querySelector(".dialog");
 const clonedOverviewElement = overviewElement.cloneNode(true);
 
 const smallMediaQuery = window.matchMedia("(max-width: calc(48rem - 1px)");
 
 const titleElement = window.document.querySelector("title");
+const originalTitle = titleElement.textContent;
 
 // Keep track of the last hash to get the current dialog's target link element.
 let lastHash = window.location.hash.slice(1);
 
 /**
  * Handle changes to `window.location.hash`.
- * 
- * @param {boolean} shouldMoveFocus - Whether to move focus to the dialog or its
- * target link element. This will be `false` when the page is first loaded.
+ *
+ * @param {boolean} shouldMoveFocus - Whether to move focus to the dialog. This
+ * will be `false` when the page is first loaded.
  */
 async function handleHashChange(shouldMoveFocus) {
-  const currentDialogElement = window.document.querySelector(
-    ".dialog"
-  );
+  const currentDialogElement = window.document.querySelector(".dialog");
 
   if (!currentDialogElement) {
     return;
@@ -29,36 +28,16 @@ async function handleHashChange(shouldMoveFocus) {
 
   if (!hash) {
     currentDialogElement.replaceWith(clonedOverviewElement);
-    titleElement.textContent = "ARIA Reference Guide";
+    titleElement.textContent = originalTitle;
 
     if (shouldMoveFocus) {
-      if (smallMediaQuery.matches) {
-        const headingElement = clonedOverviewElement.querySelector("h1");
+      const headingElement = clonedOverviewElement.querySelector("h1");
 
-        if (!headingElement) {
-          return;
-        }
-
-        headingElement.focus();
-      } else {
-        const targetLinkElement = window.document.querySelector(
-          `[href="#${lastHash}"]`
-        );
-
-        if (!targetLinkElement) {
-          return;
-        }
-
-        const closestDetailsElement = targetLinkElement.closest("details");
-
-        if (!closestDetailsElement) {
-          return;
-        }
-
-        closestDetailsElement.open = true;
-
-        targetLinkElement.focus();
+      if (!headingElement) {
+        return;
       }
+
+      headingElement.focus();
     }
 
     return;
@@ -73,7 +52,10 @@ async function handleHashChange(shouldMoveFocus) {
     return;
   }
 
-  titleElement.textContent = nextDialogElement.querySelector("h1").getAttribute('aria-label') + " - ARIA Reference Guide";
+  titleElement.textContent =
+    nextDialogElement.querySelector("h1").getAttribute("aria-label") +
+    " - " +
+    originalTitle;
 
   const firstFocusableElement = nextDialogElement.querySelector(
     ".dialog__close-button"
@@ -96,20 +78,6 @@ async function handleHashChange(shouldMoveFocus) {
     window.scrollTo(0, 0);
     firstFocusableElement.focus();
   }
-
-  const targetLinkElement = window.document.querySelector(`[href="#${hash}"]`);
-
-  if (!targetLinkElement) {
-    return;
-  }
-
-  const closestDetailsElement = targetLinkElement.closest("details");
-
-  if (!closestDetailsElement) {
-    return;
-  }
-
-  closestDetailsElement.open = true;
 
   lastHash = hash;
 }

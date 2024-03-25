@@ -460,25 +460,17 @@ main {
   }
 }
 
-#overview {
+.dialog:has(#overview) {
   @media screen {
     --light-color: currentColor;
-  }
 
-  &:has(h1:focus-visible) {
-    outline: 4px dashed white;
-    outline-offset: 1px;
-
-    @media (prefers-color-scheme: light) {
-      outline: 4px dashed black;
+    &:has(h1:focus-visible) {
+      outline: 4px dashed;
+      outline-offset: 1px;
     }
-  }
 
-  & .aria-role__details p {
-    margin: 0;
-
-    & + p {
-      margin-top: 1rem;
+    & h1:focus-visible {
+      outline: 0;
     }
   }
 }

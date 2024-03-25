@@ -74,15 +74,13 @@ export function Role({ role, abstractAriaRole }: DialogProps) {
   return (
     <div
       className={`dialog dialog--is-aria-role-${role} dialog--is-abstract-role-${abstractAriaRole}`}
-      aria-labelledby={`dialog__heading--${role}`}
-      id={role}
     >
       <div className="dialog__content">
         <div className="dialog__header">
           <a
             href="#"
             className="dialog__close-button"
-            aria-label="Return to Overview"
+            aria-label="Return to Overview section"
           >
             <svg fill="none" width="1rem" height="1rem">
               <use href="#close-icon"></use>
@@ -92,7 +90,7 @@ export function Role({ role, abstractAriaRole }: DialogProps) {
             <div className="dialog__heading__container">
               <h1
                 className="dialog__heading"
-                id={`dialog__heading--${role}`}
+                id={role}
                 aria-label={`The ${role} role`}
                 tabIndex={-1}
                 dangerouslySetInnerHTML={{

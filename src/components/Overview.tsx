@@ -2,11 +2,15 @@ import { ExternalLinkIcon } from "./Icons";
 
 export function Overview() {
   return (
-    <div className="dialog" id="overview">
+    <div className="dialog">
       <div className="dialog__content">
-        <h1 className="visually-hidden" tabIndex={-1}>
-          Overview of ARIA Roles
-        </h1>
+        <div className="dialog__header__info">
+          <div className="dialog__heading__container">
+            <h1 className="dialog__heading" id="overview" tabIndex={-1}>
+              Overview of ARIA Roles
+            </h1>
+          </div>
+        </div>
         <div className="aria-role__details">
           <p>
             <abbr>ARIA</abbr> (Accessible Rich Internet Applications) is a set
