@@ -21,31 +21,8 @@ const app = express();
  * The rendered HTML file is also saved to public/index.html.
  */
 app.get("/", async (_, res) => {
-  const bodyHtml = beautify(ReactDOMServer.renderToString(<IndexPage />))
-    .replace(/\n/g, "\n    ")
-    .trim();
-
-  const htmlResult = `<!doctype html>
-<html lang="en">
-  <head>
-    <meta charSet="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover"
-    />
-    <title>ARIA Reference Guide</title>
-    <meta
-      name="description"
-      content="This representation of ARIA roles contains links to each role that will take you to a page with more information about the role."
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    ${bodyHtml}
-    <script src="scripts.js"></script>
-  </body>
-</html>
-`;
+  const bodyHtml = ReactDOMServer.renderToString(<IndexPage />);
+  const htmlResult = "<!doctype html>" + bodyHtml;
 
   fs.writeFileSync(path.resolve("./public/", "index.html"), htmlResult, "utf8");
 
