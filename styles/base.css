@@ -262,8 +262,8 @@ menu-button {
   }
 
   &:hover {
-    background-color: var(--header-background-color);
-    color: white;
+    background-color: white;
+    color: black;
   }
 
   &[aria-expanded="true"] {
