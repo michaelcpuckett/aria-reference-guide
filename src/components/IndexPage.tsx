@@ -10,7 +10,10 @@ export function IndexPage({ scripts, styles }) {
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, viewport-fit=cover"
+        />
         <title>ARIA Reference Guide</title>
         <meta
           name="description"
