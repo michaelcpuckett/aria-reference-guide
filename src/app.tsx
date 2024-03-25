@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 import express from "express";
+import beautify from "diffable-html";
 
 import fs from "fs";
 import path from "path";
@@ -14,21 +15,54 @@ import getStyles from "./getStyles";
 
 const app = express();
 
-app.get("/", async (req, res) => {
-  const scripts = await getScripts();
-  const styles = getStyles();
+/**
+ * This route serves the Index page, with formatting preserved.
+ *
+ * The rendered HTML file is also saved to public/index.html.
+ */
+app.get("/", async (_, res) => {
+  const scripts = (await getScripts()).replace(/\n/g, "\n      ");
+  const styles = getStyles().replace(/\n/g, "\n      ");
+
+  const headHtml = `
+  <head>
+    <meta charSet="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>ARIA Reference Guide</title>
+    <meta
+      name="description"
+      content="This representation of ARIA roles contains links to each role that will take you to a page with more information about the role."
+    />`;
+
+  const bodyHtml = beautify(
+    ReactDOMServer.renderToString(<IndexPage />)
+  ).replace(/\n/g, "\n    ");
 
   const htmlResult = `<!doctype html>
-    ${ReactDOMServer.renderToString(
-      <IndexPage scripts={scripts} styles={styles} />
-    )}
-  `;
+  <html lang="en">${headHtml}
+    <style>
+      ${styles}
+    </style>
+  </head>
+  <body>${bodyHtml}<script>
+      ${scripts}
+    </script>
+  </body>
+</html>`;
 
   fs.writeFileSync(path.resolve("./public/", "index.html"), htmlResult, "utf8");
 
   res.send(htmlResult);
 });
 
+/**
+ * This route serves the Role pages.
+ *
+ * The rendered HTML files are also saved to public/role.
+ */
 app.get("/role/:role.html", (req, res) => {
   const [abstractRole] =
     Object.entries(ariaRolesByAbstractRole)
@@ -56,6 +90,9 @@ app.get("/role/:role.html", (req, res) => {
   res.send(htmlResult);
 });
 
+/**
+ * This route fetches all the pages, which builds the static site.
+ */
 app.get("/build", (req, res) => {
   const allAriaRoles = Object.values(ariaRolesByAbstractRole).flat();
 

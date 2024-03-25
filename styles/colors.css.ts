@@ -5,10 +5,11 @@ export default Object.values(abstractAriaRolesByType)
   .reverse()
   .map((abstractRole, index, { length }) => {
     return `
-      .dialog--is-abstract-role-${abstractRole},
-      .nav__list-item--${abstractRole} {
-        --base-hue: ${(index / length) * 360}deg;
-      }
-    `;
+.dialog--is-abstract-role-${abstractRole},
+.nav__list-item--${abstractRole} {
+  --base-hue: ${(index / length) * 360}deg;
+}
+`;
   })
-  .join("");
+  .join("")
+  .trim();
