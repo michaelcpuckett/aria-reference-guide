@@ -2,13 +2,12 @@ import { CustomElement } from "../types";
 
 export function MenuButton() {
   return (
-    <menu-button>
+    <menu-button hidden>
       <button
         aria-expanded="false"
         aria-controls="menu"
         type="button"
         className="menu-button"
-        aria-label="Menu"
       >
         <svg
           data-show="off"

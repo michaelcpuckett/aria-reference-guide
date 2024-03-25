@@ -2,3 +2,5 @@ node_modules
 .firebase
 public/role/
 public/index.html
+public/styles.css
+public/scripts.js

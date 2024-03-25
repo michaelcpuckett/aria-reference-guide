@@ -21,10 +21,12 @@ const app = express();
  * The rendered HTML file is also saved to public/index.html.
  */
 app.get("/", async (_, res) => {
-  const scripts = (await getScripts()).replace(/\n/g, "\n      ");
-  const styles = getStyles().replace(/\n/g, "\n      ");
+  const bodyHtml = beautify(ReactDOMServer.renderToString(<IndexPage />))
+    .replace(/\n/g, "\n    ")
+    .trim();
 
-  const headHtml = `
+  const htmlResult = `<!doctype html>
+<html lang="en">
   <head>
     <meta charSet="utf-8" />
     <meta
@@ -35,23 +37,15 @@ app.get("/", async (_, res) => {
     <meta
       name="description"
       content="This representation of ARIA roles contains links to each role that will take you to a page with more information about the role."
-    />`;
-
-  const bodyHtml = beautify(
-    ReactDOMServer.renderToString(<IndexPage />)
-  ).replace(/\n/g, "\n    ");
-
-  const htmlResult = `<!doctype html>
-  <html lang="en">${headHtml}
-    <style>
-      ${styles}
-    </style>
+    />
+    <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>${bodyHtml}<script>
-      ${scripts}
-    </script>
+  <body>
+    ${bodyHtml}
+    <script src="scripts.js"></script>
   </body>
-</html>`;
+</html>
+`;
 
   fs.writeFileSync(path.resolve("./public/", "index.html"), htmlResult, "utf8");
 
@@ -87,7 +81,26 @@ app.get("/role/:role.html", (req, res) => {
     htmlResult,
     "utf8"
   );
+
   res.send(htmlResult);
+});
+
+app.get("/styles.css", (req, res) => {
+  const cssResult = getStyles();
+
+  fs.writeFileSync(path.resolve("./public/styles.css"), cssResult, "utf8");
+
+  res.setHeader("Content-Type", "text/css");
+  res.send(cssResult);
+});
+
+app.get("/scripts.js", async (req, res) => {
+  const jsResult = await getScripts();
+
+  fs.writeFileSync(path.resolve("./public/scripts.js"), jsResult, "utf8");
+
+  res.setHeader("Content-Type", "application/javascript");
+  res.send(jsResult);
 });
 
 /**

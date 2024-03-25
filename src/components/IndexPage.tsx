@@ -24,7 +24,7 @@ export function IndexPage() {
         {/*
             The header is repeated here for layout purposes.
           */}
-        <div aria-hidden="true" className="page-header">
+        <div hidden aria-hidden="true" className="page-header">
           <span className="page-heading">{pageTitle}</span>
         </div>
         <Overview />
