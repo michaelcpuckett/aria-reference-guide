@@ -5,6 +5,8 @@ const clonedAboutElement = aboutElement.cloneNode(true);
 
 const smallMediaQuery = window.matchMedia("(max-width: calc(48rem - 1px)");
 
+const titleElement = window.document.querySelector("title");
+
 // Keep track of the last hash to get the current dialog's target link element.
 let lastHash = window.location.hash.slice(1);
 
@@ -27,6 +29,7 @@ async function handleHashChange(shouldMoveFocus) {
 
   if (!hash) {
     currentDialogElement.replaceWith(clonedAboutElement);
+    titleElement.textContent = "ARIA Reference Guide";
 
     if (shouldMoveFocus) {
       if (smallMediaQuery.matches) {
@@ -69,6 +72,8 @@ async function handleHashChange(shouldMoveFocus) {
   if (!nextDialogElement) {
     return;
   }
+
+  titleElement.textContent = nextDialogElement.querySelector("h1").getAttribute('aria-label') + " - ARIA Reference Guide";
 
   const firstFocusableElement = nextDialogElement.querySelector(
     ".dialog__close-button"
