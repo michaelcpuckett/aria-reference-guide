@@ -52,7 +52,6 @@ export function Navigation() {
                               <a
                                 href={`#${role}`}
                                 aria-label={role}
-                                aria-haspopup="dialog"
                                 className="nav__list-item__sublist-item__link"
                                 dangerouslySetInnerHTML={{
                                   __html: `<span aria-hidden="true">${roleDisplayName}</span>`,
