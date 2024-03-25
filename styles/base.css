@@ -493,12 +493,11 @@ dialog {
   @media screen and (min-width: 48rem) {
     grid-column: 3 / 4;
     grid-row: 2 / 3;
-    padding: 1rem;
+    padding: 2rem;
   }
 
   @media screen and (min-width: 72rem) {
     grid-column: 6 / 7;
-    padding: 2rem;
   }
 }
 
