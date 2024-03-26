@@ -17,14 +17,13 @@ import {
   mappedContentTypesToUrls,
 } from "../../data";
 import { ExternalLinkIcon } from "./Icons";
-import { CustomElement } from "../types";
 
-interface DialogProps {
+interface RolePageProps {
   role: string;
   abstractAriaRole: string;
 }
 
-export function Role({ role, abstractAriaRole }: DialogProps) {
+export function RolePage({ role, abstractAriaRole }: RolePageProps) {
   const roleTitle = mappedAriaRolesToDisplayNames[role] || role;
 
   const abstractRoleTags = Object.entries(ariaRolesByAbstractRole)

@@ -2,7 +2,7 @@ import { abstractAriaRolesByType } from "../data";
 
 export default Object.values(abstractAriaRolesByType)
   .flat()
-  .reverse()
+  .sort()
   .map((abstractRole, index, { length }) => {
     return `
 .dialog--is-abstract-role-${abstractRole},

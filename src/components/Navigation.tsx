@@ -11,8 +11,10 @@ export function Navigation() {
     <nav className="nav" id="menu">
       <div className="nav__inner-container">
         <ul className="nav__list">
-          {Object.entries(abstractAriaRolesByType).map(([, abstractRoles]) => {
-            return abstractRoles.map((abstractRole, index) => {
+          {Object.values(abstractAriaRolesByType)
+            .flat()
+            .sort()
+            .map((abstractRole, index) => {
               const abstractRoleDisplayName =
                 mappedAbstractAriaRolesToTitles[abstractRole] || abstractRole;
               const abstractRoleDescription =
@@ -64,8 +66,7 @@ export function Navigation() {
                   </details>
                 </li>
               );
-            });
-          })}
+            })}
         </ul>
       </div>
     </nav>

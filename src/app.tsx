@@ -1,14 +1,13 @@
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 import express from "express";
-import beautify from "diffable-html";
 
 import fs from "fs";
 import path from "path";
 
 import { ariaRolesByAbstractRole } from "../data";
 import { IndexPage } from "./components/IndexPage";
-import { Role } from "./components/Role";
+import { RolePage } from "./components/RolePage";
 
 import getScripts from "./getScripts";
 import getStyles from "./getStyles";
@@ -48,7 +47,7 @@ app.get("/role/:role.html", (req, res) => {
     <html>
       <meta charSet="utf-8" />
       ${ReactDOMServer.renderToString(
-        <Role role={req.params.role} abstractAriaRole={abstractRole} />
+        <RolePage role={req.params.role} abstractAriaRole={abstractRole} />
       )}
     </html>
   `;
