@@ -72,133 +72,126 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
 
   return (
     <div
-      className={`dialog dialog--is-aria-role-${role} dialog--is-abstract-role-${abstractAriaRole}`}
+      className={`content content--is-aria-role-${role} content--is-abstract-role-${abstractAriaRole}`}
     >
-      <div className="dialog__content">
-        <div className="dialog__header">
-          <a
-            href="#"
-            className="dialog__close-button"
-            aria-label="Return to Overview section"
-          >
-            <svg aria-hidden="true" fill="none" width="1rem" height="1rem">
-              <use href="#close-icon"></use>
-            </svg>
-          </a>
-          <div className="dialog__header__info">
-            <div className="dialog__heading__container">
-              <h1
-                className="dialog__heading"
-                id={role}
-                aria-label={`The ${role} role`}
-                tabIndex={-1}
-                dangerouslySetInnerHTML={{
-                  __html: `<span aria-hidden="true">The ${roleTitle} role</span>`,
-                }}
-              ></h1>
-            </div>
-            <div className="dialog__links">
-              {Object.entries(links).map(([name, link]) => (
-                <a key={link} href={link + role} target="_blank">
-                  {name}
+      <div className="content__header">
+        <a
+          href="#"
+          className="content__close-button"
+          aria-label="Return to Overview section"
+        >
+          <svg aria-hidden="true" fill="none" width="1rem" height="1rem">
+            <use href="#close-icon"></use>
+          </svg>
+        </a>
+        <div className="content__header__info">
+          <div className="content__heading__container">
+            <h1
+              className="content__heading"
+              id={role}
+              aria-label={`The ${role} role`}
+              tabIndex={-1}
+              dangerouslySetInnerHTML={{
+                __html: `<span aria-hidden="true">The ${roleTitle} role</span>`,
+              }}
+            ></h1>
+          </div>
+          <div className="content__links">
+            {Object.entries(links).map(([name, link]) => (
+              <a key={link} href={link + role} target="_blank">
+                {name}
+                <ExternalLinkIcon />
+              </a>
+            ))}
+          </div>
+          {tags ? (
+            <p className="content__tags">
+              {tags.map(([tagName, url]) => (
+                <a
+                  key={tagName}
+                  href={url}
+                  target="_blank"
+                  className="content__tag"
+                >
+                  {tagName}
                   <ExternalLinkIcon />
                 </a>
               ))}
-            </div>
-            {tags ? (
-              <p className="dialog__tags">
-                {tags.map(([tagName, url]) => (
-                  <a
-                    key={tagName}
-                    href={url}
-                    target="_blank"
-                    className="dialog__tag"
-                  >
-                    {tagName}
-                    <ExternalLinkIcon />
-                  </a>
-                ))}
-              </p>
-            ) : null}
-          </div>
-        </div>
-        <div className="aria-role__details">
-          <tr className="aria-role__row">
-            <h2 className="aria-role__subheading">Description</h2>
-            <td className="aria-role__cell">
-              <p>{mappedAriaRolesToDescriptions[role] || "--"}</p>
-            </td>
-          </tr>
-
-          {mayBeInteractive ? (
-            <tr className="aria-role__row">
-              <h2 className="aria-role__subheading">Note</h2>
-              <td className="aria-role__cell">
-                <p>
-                  *May be interactive or non-interactive depending on the
-                  context: {mappedAriaRolesToNotes[role] || ""}
-                </p>
-              </td>
-            </tr>
-          ) : null}
-
-          <h2 className="aria-role__subheading">Allowed Content</h2>
-          <p>{allowedContent}</p>
-
-          {ariaRolesWithPresentationalChildren.includes(role) && (
-            <p>
-              Browsers automatically apply the presentation role to all
-              descendant elements.{" "}
-              <em>
-                The semantics of any descendant elements are not conveyed to
-                assistive technologies.
-              </em>
             </p>
-          )}
-
-          {mappedAriaRolesToContextRoles[role] && (
-            <>
-              <h2 className="aria-role__subheading">Required Context Roles</h2>
-              <ul className="list">
-                {mappedAriaRolesToContextRoles[role].map((contextRole) => (
-                  <li key={contextRole}>{contextRole}</li>
-                ))}
-              </ul>
-            </>
-          )}
-          <h2 className="aria-role__subheading">
-            HTML Elements with Implicit ARIA Role
-          </h2>
-          <ul className="list">
-            {(ariaToHtmlMapping[role] || ["(None)"]).sort().map((tagName) => (
-              <li className="tag-name" key={tagName}>
-                {htmlElementsToDisplayNames[tagName] || tagName}
-              </li>
-            ))}
-          </ul>
-
-          <h2 className="aria-role__subheading">Allowed HTML Elements</h2>
-          <ul className="list">
-            {Array.from(
-              new Set(
-                Object.entries(allowedAriaRolesByHtmlElement)
-                  .filter(([_, roles]) => roles.includes(role))
-                  .map(([tagName]) => tagName)
-                  .concat(ariaToHtmlMapping[role] || [])
-              )
-            ).map((tagName) => (
-              <li key={tagName}>
-                <span className="tag-name">
-                  {htmlElementsToDisplayNames[tagName] || tagName}
-                </span>
-                {(ariaToHtmlMapping[role] || []).includes(tagName)
-                  ? " (role attribute unnecessary)"
-                  : ""}
-              </li>
-            ))}
-            <li key="any">{`div, span, p, other elements that can receive any role`}</li>
-          </ul>
+          ) : null}
         </div>
+      </div>
+      <div className="content__details">
+        <h2 className="aria-role__subheading">Description</h2>
+        <p>{mappedAriaRolesToDescriptions[role] || "--"}</p>
+
+        {mayBeInteractive ? (
+          <>
+            <h2 className="aria-role__subheading">Note</h2>
+            <p>
+              *May be interactive or non-interactive depending on the context:{" "}
+              {mappedAriaRolesToNotes[role] || ""}
+            </p>
+          </>
+        ) : null}
+
+        <h2 className="aria-role__subheading">Allowed Content</h2>
+        <p>{allowedContent}</p>
+
+        {ariaRolesWithPresentationalChildren.includes(role) && (
+          <p>
+            Browsers automatically apply the presentation role to all descendant
+            elements.{" "}
+            <em>
+              The semantics of any descendant elements are not conveyed to
+              assistive technologies.
+            </em>
+          </p>
+        )}
+
+        {mappedAriaRolesToContextRoles[role] && (
+          <>
+            <h2 className="aria-role__subheading">Required Context Roles</h2>
+            <ul className="list">
+              {mappedAriaRolesToContextRoles[role].map((contextRole) => (
+                <li key={contextRole}>{contextRole}</li>
+              ))}
+            </ul>
+          </>
+        )}
+
+        <h2 className="aria-role__subheading">
+          HTML Elements with Implicit ARIA Role
+        </h2>
+        <ul className="list">
+          {(ariaToHtmlMapping[role] || ["(None)"]).sort().map((tagName) => (
+            <li className="tag-name" key={tagName}>
+              {htmlElementsToDisplayNames[tagName] || tagName}
+            </li>
+          ))}
+        </ul>
+
+        <h2 className="aria-role__subheading">Allowed HTML Elements</h2>
+        <ul className="list">
+          {Array.from(
+            new Set(
+              Object.entries(allowedAriaRolesByHtmlElement)
+                .filter(([_, roles]) => roles.includes(role))
+                .map(([tagName]) => tagName)
+                .concat(ariaToHtmlMapping[role] || [])
+            )
+          ).map((tagName) => (
+            <li key={tagName}>
+              <span className="tag-name">
+                {htmlElementsToDisplayNames[tagName] || tagName}
+              </span>
+              {(ariaToHtmlMapping[role] || []).includes(tagName)
+                ? " (role attribute unnecessary)"
+                : ""}
+            </li>
+          ))}
+          <li key="any">{`div, span, p, other elements that can receive any role`}</li>
+        </ul>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
-// The `overview` dialog is cloned to replace future dialogs when the hash is
+// The `overview` content is cloned to replace future contents when the hash is
 // empty.
-const overviewElement = window.document.querySelector(".dialog");
+const overviewElement = window.document.querySelector(".content");
 const clonedOverviewElement = overviewElement.cloneNode(true);
 
 const smallMediaQuery = window.matchMedia("(max-width: calc(48rem - 1px)");
@@ -8,26 +8,26 @@ const smallMediaQuery = window.matchMedia("(max-width: calc(48rem - 1px)");
 const titleElement = window.document.querySelector("title");
 const originalTitle = titleElement.textContent;
 
-// Keep track of the last hash to get the current dialog's target link element.
+// Keep track of the last hash to get the current content's target link element.
 let lastHash = window.location.hash.slice(1);
 
 /**
  * Handle changes to `window.location.hash`.
  *
- * @param {boolean} shouldMoveFocus - Whether to move focus to the dialog. This
+ * @param {boolean} shouldMoveFocus - Whether to move focus to the content. This
  * will be `false` when the page is first loaded.
  */
 async function handleHashChange(shouldMoveFocus) {
-  const currentDialogElement = window.document.querySelector(".dialog");
+  const currentContentElement = window.document.querySelector(".content");
 
-  if (!currentDialogElement) {
+  if (!currentContentElement) {
     return;
   }
 
   const hash = window.location.hash.slice(1);
 
   if (!hash) {
-    currentDialogElement.replaceWith(clonedOverviewElement);
+    currentContentElement.replaceWith(clonedOverviewElement);
     titleElement.textContent = originalTitle;
 
     if (shouldMoveFocus) {
@@ -44,21 +44,21 @@ async function handleHashChange(shouldMoveFocus) {
   }
 
   const html = await fetch(`/role/${hash}.html`).then((res) => res.text());
-  const nextDialogElement = new DOMParser()
+  const nextContentElement = new DOMParser()
     .parseFromString(html, "text/html")
-    .querySelector(".dialog");
+    .querySelector(".content");
 
-  if (!nextDialogElement) {
+  if (!nextContentElement) {
     return;
   }
 
   titleElement.textContent =
-    nextDialogElement.querySelector("h1").getAttribute("aria-label") +
+    nextContentElement.querySelector("h1").getAttribute("aria-label") +
     " - " +
     originalTitle;
 
-  const firstFocusableElement = nextDialogElement.querySelector(
-    ".dialog__close-button"
+  const firstFocusableElement = nextContentElement.querySelector(
+    ".content__close-button"
   );
 
   if (!firstFocusableElement) {
@@ -71,7 +71,7 @@ async function handleHashChange(shouldMoveFocus) {
     return;
   }
 
-  currentDialogElement.replaceWith(nextDialogElement);
+  currentContentElement.replaceWith(nextContentElement);
   menuElement.setAttribute("aria-expanded", "false");
 
   if (shouldMoveFocus) {

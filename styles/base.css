@@ -13,7 +13,7 @@
   outline-offset: 1px;
 }
 
-:where(.dialog) a {
+:where(.content) a {
   @media screen {
     color: var(--dark-color);
 
@@ -401,7 +401,7 @@ main {
   }
 }
 
-body:has(.dialog),
+body:has(.content),
 .nav__list-item {
   --base-saturation: 100%;
   --lightest-color-lightness: 97.5%;
@@ -524,7 +524,7 @@ body:has(.dialog),
   }
 }
 
-.dialog {
+.content {
   @media screen {
     line-height: 1.5;
     border-radius: 0.5rem;
@@ -548,7 +548,7 @@ body:has(.dialog),
   }
 }
 
-.dialog:has(#overview) {
+.content:has(#overview) {
   @media screen {
     &:has(h1:focus-visible) {
       outline: 4px dashed;
@@ -561,12 +561,12 @@ body:has(.dialog),
   }
 }
 
-.dialog__header {
+.content__header {
   @media screen {
     display: flex;
     margin-bottom: 1rem;
 
-    &:has(.dialog__close-button) {
+    &:has(.content__close-button) {
       flex-direction: row-reverse;
       gap: 1rem;
 
@@ -577,7 +577,7 @@ body:has(.dialog),
   }
 }
 
-.dialog__header__info {
+.content__header__info {
   flex: 1;
   display: grid;
   place-items: flex-start;
@@ -587,14 +587,14 @@ body:has(.dialog),
   margin-top: 1rem;
 }
 
-.dialog__tags {
+.content__tags {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
   margin: 0;
 }
 
-.dialog__tag {
+.content__tag {
   @media screen {
     padding: 0.25rem 0.5rem;
     border-radius: 0.5rem;
@@ -611,7 +611,7 @@ body:has(.dialog),
   }
 }
 
-.dialog__heading {
+.content__heading {
   @media screen {
     margin: 0;
     font-weight: normal;
@@ -624,13 +624,13 @@ body:has(.dialog),
   }
 }
 
-.dialog__heading__container {
+.content__heading__container {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.dialog__links {
+.content__links {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
@@ -640,7 +640,7 @@ body:has(.dialog),
   }
 }
 
-.dialog__close-button {
+.content__close-button {
   margin: 0;
   padding: 0;
   cursor: pointer;
