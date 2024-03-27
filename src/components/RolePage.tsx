@@ -81,7 +81,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
             className="dialog__close-button"
             aria-label="Return to Overview section"
           >
-            <svg fill="none" width="1rem" height="1rem">
+            <svg aria-hidden="true" fill="none" width="1rem" height="1rem">
               <use href="#close-icon"></use>
             </svg>
           </a>

@@ -10,6 +10,7 @@ export function MenuButton() {
         className="menu-button"
       >
         <svg
+          aria-hidden="true"
           data-show="off"
           data-icon="menu"
           width="1rem"
@@ -20,6 +21,7 @@ export function MenuButton() {
         </svg>
         <span data-show="off">Menu</span>
         <svg
+          aria-hidden="true"
           data-show="on"
           data-icon="close"
           width="1rem"
