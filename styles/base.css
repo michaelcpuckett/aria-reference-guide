@@ -121,7 +121,9 @@ body {
 
   @media screen and (min-width: 48rem) {
     display: grid;
-    grid-template-columns: var(--safe-area-left) 25ch 1fr var(--safe-area-right);
+    grid-template-columns: var(--safe-area-left) 15rem 1fr var(
+        --safe-area-right
+      );
     grid-template-rows: 100vh 1fr;
     grid-template-rows: 100dvh 1fr;
     column-gap: 1rem;
@@ -130,7 +132,7 @@ body {
   @media screen and (min-width: 72rem) {
     column-gap: 0;
     grid-template-columns:
-      1fr var(--safe-area-left) 1rem 25ch 1rem calc(58rem - 25ch) 1rem var(
+      1fr var(--safe-area-left) 1rem 15rem 1rem 37rem 1rem var(
         --safe-area-right
       )
       1fr;
@@ -264,7 +266,7 @@ menu-button {
   @media screen {
     margin: 0;
     font-size: 0.9rem;
-    letter-spacing: 0.25ch;
+    letter-spacing: 0.15rem;
     text-transform: uppercase;
     font-weight: bold;
     text-align: center;
