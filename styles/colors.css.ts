@@ -5,11 +5,11 @@ export default Object.values(abstractAriaRolesByType)
   .sort()
   .map((abstractRole, index, { length }) => {
     return `
-.dialog--is-abstract-role-${abstractRole},
-.nav__list-item--${abstractRole} {
-  --base-hue: ${(index / length) * 360}deg;
-}
-`;
+      body:has(.dialog--is-abstract-role-${abstractRole}),
+      .nav__list-item--${abstractRole} {
+        --base-hue: ${(index / length) * 360}deg;
+      }
+    `;
   })
   .join("")
   .trim();
