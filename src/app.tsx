@@ -6,8 +6,8 @@ import fs from "fs";
 import path from "path";
 
 import { ariaRolesByAbstractRole } from "../data";
-import { IndexPage } from "./components/IndexPage";
-import { RolePage } from "./components/RolePage";
+import { IndexPage } from "./pages/IndexPage";
+import { RolePage } from "./pages/RolePage";
 
 import getScripts from "./getScripts";
 import getStyles from "./getStyles";

@@ -1,7 +1,7 @@
-import { Overview } from "./Overview";
-import { IconDefinitions } from "./Icons";
-import { MenuButton } from "./MenuButton";
-import { Navigation } from "./Navigation";
+import { Overview } from "../components/Overview";
+import { IconDefinitions } from "../components/Icons";
+import { MenuButton } from "../components/MenuButton";
+import { Navigation } from "../components/Navigation";
 
 export function IndexPage() {
   const pageTitle = "ARIA Reference Guide";

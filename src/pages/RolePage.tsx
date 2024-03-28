@@ -16,7 +16,7 @@ import {
   mappedContentTypesToTitles,
   mappedContentTypesToUrls,
 } from "../../data";
-import { ExternalLinkIcon } from "./Icons";
+import { ExternalLinkIcon } from "../components/Icons";
 
 interface RolePageProps {
   role: string;
