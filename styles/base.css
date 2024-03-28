@@ -404,13 +404,13 @@ main {
 body:has(.content),
 .nav__list-item {
   --base-saturation: 100%;
-  --lightest-color-lightness: 97.5%;
-  --lighter-color-lightness: 93.5%;
+  --lightest-color-lightness: 95%;
+  --lighter-color-lightness: 90;
   --light-color-lightness: 85%;
   --medium-color-lightness: 33.3%;
-  --dark-color-lightness: 17.5%;
-  --darker-color-lightness: 7.5%;
-  --darkest-color-lightness: 2.5%;
+  --dark-color-lightness: 15%;
+  --darker-color-lightness: 10%;
+  --darkest-color-lightness: 5%;
   --lightest-color: hsl(
     var(--base-hue),
     var(--base-saturation),
