@@ -7,7 +7,7 @@ export default Object.values(abstractAriaRolesByType)
     return `
       body:has(.content--is-abstract-role-${abstractRole}),
       .nav__list-item--${abstractRole} {
-        --base-hue: ${(index / length) * 360}deg;
+        --base-hue: ${((index + 1) / length) * 360}deg;
       }
     `;
   })
