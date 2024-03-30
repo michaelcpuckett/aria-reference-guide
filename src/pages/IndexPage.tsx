@@ -19,7 +19,7 @@ export function IndexPage() {
           name="description"
           content="This representation of ARIA roles contains links to each role that will take you to a page with more information about the role."
         />
-        <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" href="/styles.css" />
       </head>
       <body>
         <IconDefinitions />
@@ -41,7 +41,7 @@ export function IndexPage() {
           </div>
           <Overview />
         </main>
-        <script src="scripts.js"></script>
+        <script src="/scripts.js"></script>
       </body>
     </html>
   );

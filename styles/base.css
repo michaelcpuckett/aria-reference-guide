@@ -21,6 +21,12 @@
       outline-offset: 4px;
     }
   }
+
+  @media print {
+    color: inherit;
+    text-decoration: none;
+    font-weight: bold;
+  }
 }
 
 a[target="_blank"] svg {
@@ -84,9 +90,10 @@ summary {
 }
 
 :root {
+  font: 20px system-ui, sans-serif;
+
   @media screen {
     min-height: 100%;
-    font: 20px system-ui, sans-serif;
     font: -apple-system-body;
     --safe-area-left: max(env(safe-area-inset-left, 0px), 1rem);
     --safe-area-right: max(env(safe-area-inset-right, 0px), 1rem);
@@ -612,8 +619,9 @@ body:has(.content),
 }
 
 .content__heading {
+  margin: 0;
+
   @media screen {
-    margin: 0;
     font-weight: normal;
     font-size: 2.25rem;
     line-height: 1.25;

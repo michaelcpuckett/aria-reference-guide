@@ -6,7 +6,7 @@ import {
   mappedAriaRolesToDisplayNames,
 } from "../../data";
 
-export function Navigation() {
+export function Navigation({ role }: { role?: string }) {
   return (
     <nav className="nav" id="menu">
       <div className="nav__inner-container">
@@ -27,7 +27,10 @@ export function Navigation() {
                 >
                   <details
                     className="nav__list-item__details"
-                    open={index === 0}
+                    open={
+                      !!role &&
+                      ariaRolesByAbstractRole[abstractRole].includes(role)
+                    }
                   >
                     <summary className="nav__list-item__summary">
                       {`${abstractRoleDisplayName}s`}
@@ -51,7 +54,7 @@ export function Navigation() {
                               className="nav__list-item__sublist-item"
                             >
                               <a
-                                href={`#${role}`}
+                                href={`/role/${role}.html`}
                                 aria-label={role}
                                 className="nav__list-item__sublist-item__link"
                                 dangerouslySetInnerHTML={{
