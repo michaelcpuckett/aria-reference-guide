@@ -44,12 +44,9 @@ app.get("/role/:role.html", (req, res) => {
   }
 
   const htmlResult = `<!doctype html>
-    <html>
-      <meta charSet="utf-8" />
-      ${ReactDOMServer.renderToString(
-        <RolePage role={req.params.role} abstractAriaRole={abstractRole} />
-      )}
-    </html>
+    ${ReactDOMServer.renderToString(
+      <RolePage role={req.params.role} abstractAriaRole={abstractRole} />
+    )}
   `;
 
   fs.writeFileSync(
@@ -85,11 +82,16 @@ app.get("/scripts.js", async (req, res) => {
 app.get("/build", (req, res) => {
   const allAriaRoles = Object.values(ariaRolesByAbstractRole).flat();
 
-  const promises = allAriaRoles.map((role) => {
+  const fetchPromises = allAriaRoles.map((role) => {
     return fetch(`http://localhost:10101/role/${role}.html`);
   });
 
-  Promise.all([fetch("http://localhost:10101"), ...promises]).then(() => {
+  Promise.all([
+    fetch("http://localhost:10101"),
+    fetch("http://localhost:10101/scripts.js"),
+    fetch("http://localhost:10101/styles.css"),
+    ...fetchPromises,
+  ]).then(() => {
     res.send("done");
   });
 });
