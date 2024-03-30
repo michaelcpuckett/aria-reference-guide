@@ -697,3 +697,7 @@ body:has(.content),
 .tag-name {
   hyphenate-character: "";
 }
+
+abbr[title] {
+  text-underline-offset: 4px;
+}

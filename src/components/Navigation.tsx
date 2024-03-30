@@ -26,7 +26,6 @@ export function Navigation() {
                   className={`nav__list-item nav__list-item--${abstractRole}`}
                 >
                   <details
-                    name="accordion"
                     className="nav__list-item__details"
                     open={index === 0}
                   >
