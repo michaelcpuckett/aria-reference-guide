@@ -9,8 +9,9 @@ import { ariaRolesByAbstractRole } from "../data";
 import { IndexPage } from "./pages/IndexPage";
 import { RolePage } from "./pages/RolePage";
 
-import getScripts from "./getScripts";
+import getMainScript from "./getMainScript";
 import getStyles from "./getStyles";
+import getThirdPartyScript from "./getThirdPartyScript";
 
 const app = express();
 
@@ -68,7 +69,9 @@ app.get("/styles.css", (req, res) => {
 });
 
 app.get("/scripts.js", async (req, res) => {
-  const jsResult = await getScripts();
+  const thirdPartyJs = await getThirdPartyScript();
+  const mainJs = await getMainScript();
+  const jsResult = `${thirdPartyJs}${mainJs}`;
 
   fs.writeFileSync(path.resolve("./public/scripts.js"), jsResult, "utf8");
 

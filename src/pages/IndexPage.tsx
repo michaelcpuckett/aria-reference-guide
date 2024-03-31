@@ -1,7 +1,9 @@
+import React from "react";
 import { Overview } from "../components/Overview";
 import { IconDefinitions } from "../components/Icons";
 import { MenuButton } from "../components/MenuButton";
 import { Navigation } from "../components/Navigation";
+import { NotSupportedNotice } from "../components/NotSupportedNotice";
 
 export function IndexPage() {
   const pageTitle = "ARIA Reference Guide";
@@ -41,7 +43,8 @@ export function IndexPage() {
           </div>
           <Overview />
         </main>
-        <script src="/scripts.js"></script>
+        <NotSupportedNotice />
+        <script type="module" src="/scripts.js"></script>
       </body>
     </html>
   );

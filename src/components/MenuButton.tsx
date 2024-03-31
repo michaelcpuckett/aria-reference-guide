@@ -1,8 +1,9 @@
+import React from "react";
 import { CustomElement } from "../types";
 
 export function MenuButton() {
   return (
-    <menu-button hidden>
+    <expansion-button hidden>
       <button
         aria-expanded="false"
         aria-controls="menu"
@@ -32,14 +33,14 @@ export function MenuButton() {
         </svg>
         <span data-show="on">Close</span>
       </button>
-    </menu-button>
+    </expansion-button>
   );
 }
 
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      "menu-button": CustomElement;
+      "expansion-button": CustomElement;
     }
   }
 }

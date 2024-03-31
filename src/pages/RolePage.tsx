@@ -1,3 +1,4 @@
+import React from "react";
 import {
   allowedAriaRolesByHtmlElement,
   ariaRolesByAbstractRole,
@@ -5,6 +6,7 @@ import {
   ariaToHtmlMapping,
   htmlElementsToDisplayNames,
   links,
+  mappedAbstractAriaRolesToDescriptions,
   mappedAbstractAriaRolesToTitles,
   mappedAbstractAriaRolesToUrls,
   mappedAriaRolesToAllowedDescendants,
@@ -15,10 +17,17 @@ import {
   mappedAriaRolesToNotes,
   mappedContentTypesToTitles,
   mappedContentTypesToUrls,
+  mappedTagsToDescriptions,
 } from "../../data";
-import { ExternalLinkIcon, IconDefinitions } from "../components/Icons";
+import {
+  ExternalLinkIcon,
+  IconDefinitions,
+  InfoIcon,
+} from "../components/Icons";
 import { MenuButton } from "../components/MenuButton";
 import { Navigation } from "../components/Navigation";
+import { Tooltip } from "../components/Tooltip";
+import { NotSupportedNotice } from "../components/NotSupportedNotice";
 
 interface RolePageProps {
   role: string;
@@ -140,19 +149,38 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                   ))}
                 </div>
                 {tags ? (
-                  <p className="content__tags">
-                    {tags.map(([tagName, url]) => (
-                      <a
-                        key={tagName}
-                        href={url}
-                        target="_blank"
-                        className="content__tag"
-                      >
-                        {tagName}
-                        <ExternalLinkIcon />
-                      </a>
-                    ))}
-                  </p>
+                  <div className="content__tags">
+                    {tags.map(([tagName, url]) => {
+                      const [abstractKey] =
+                        Object.entries(mappedAbstractAriaRolesToTitles).find(
+                          ([, value]) => value === tagName
+                        ) || [];
+
+                      return (
+                        <div key={tagName} className="content__tag-container">
+                          <a
+                            href={url}
+                            target="_blank"
+                            className="content__tag"
+                          >
+                            {tagName}
+                            <ExternalLinkIcon />
+                          </a>
+                          <Tooltip name={tagName}>
+                            {abstractKey ? (
+                              <p>
+                                {mappedAbstractAriaRolesToDescriptions[
+                                  abstractKey
+                                ].replace("Represent", "Represents")}
+                              </p>
+                            ) : (
+                              mappedTagsToDescriptions[tagName]
+                            )}
+                          </Tooltip>
+                        </div>
+                      );
+                    })}
+                  </div>
                 ) : null}
               </div>
             </div>
@@ -234,7 +262,8 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
             </div>
           </div>
         </main>
-        <script src="/scripts.js"></script>
+        <NotSupportedNotice />
+        <script type="module" src="/scripts.js"></script>
       </body>
     </html>
   );

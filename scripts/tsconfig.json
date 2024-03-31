@@ -9,15 +9,11 @@
     "declaration": true,
     "noImplicitAny": false,
     "removeComments": true,
-    "jsx": "react-jsx",
     "noLib": false,
     "isolatedModules": true,
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM"],
     "target": "ESNext",
     "outDir": "./",
   },
-  "include": [
-    "src/**/*",
-    "styles/colors.css.ts"
-  ]
+  "exclude": ["../node_modules"],
 }

@@ -1,3 +1,5 @@
+import React from "react";
+
 export function IconDefinitions() {
   return (
     <div hidden>
@@ -26,6 +28,13 @@ export function IconDefinitions() {
           <rect fill="currentColor" y="32" width="100" height="16"></rect>
           <rect fill="currentColor" y="64" width="100" height="16"></rect>
         </symbol>
+
+        <symbol id="info-icon" viewBox="0 0 48 48" fill="none">
+          <path
+            fill="currentColor"
+            d="M 24 4 C 12.972066 4 4 12.972074 4 24 C 4 35.027926 12.972066 44 24 44 C 35.027934 44 44 35.027926 44 24 C 44 12.972074 35.027934 4 24 4 z M 24 7 C 33.406615 7 41 14.593391 41 24 C 41 33.406609 33.406615 41 24 41 C 14.593385 41 7 33.406609 7 24 C 7 14.593391 14.593385 7 24 7 z M 24 14 A 2 2 0 0 0 24 18 A 2 2 0 0 0 24 14 z M 23.976562 20.978516 A 1.50015 1.50015 0 0 0 22.5 22.5 L 22.5 33.5 A 1.50015 1.50015 0 1 0 25.5 33.5 L 25.5 22.5 A 1.50015 1.50015 0 0 0 23.976562 20.978516 z"
+          />
+        </symbol>
       </svg>
     </div>
   );
@@ -39,5 +48,13 @@ export function ExternalLinkIcon() {
         <use href="#external-link-icon"></use>
       </svg>
     </>
+  );
+}
+
+export function InfoIcon() {
+  return (
+    <svg fill="none" aria-hidden="true" width="1rem" height="1rem">
+      <use href="#info-icon"></use>
+    </svg>
   );
 }

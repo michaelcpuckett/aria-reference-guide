@@ -9,9 +9,13 @@
   "author": "Michael Puckett <michael@puckett.contact>",
   "license": "MIT",
   "dependencies": {
+    "@floating-ui/core": "^1.6.0",
+    "@floating-ui/dom": "^1.6.3",
+    "browserify": "^17.0.0",
     "express": "^4.17.21",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "typescript": "^5.4.3"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
