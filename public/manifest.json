@@ -1,0 +1,8 @@
+{
+  "short_name": "ARIA Reference Guide",
+  "name": "ARIA Reference Guide",
+  "display": "standalone",
+  "theme_color": "black",
+  "background_color": "white",
+  "start_url": "/?homescreen"
+}

@@ -1,0 +1,31 @@
+.page-header {
+  @media screen {
+    grid-column: 1 / -1;
+    display: flex;
+    background-color: var(--header-background-color);
+    place-content: center;
+    padding: 1rem;
+    padding-left: max(1rem, var(--safe-area-left));
+    padding-right: max(1rem, var(--safe-area-right));
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+  }
+}
+
+.page-heading {
+  @media screen {
+    margin: 0;
+    letter-spacing: 0.15rem;
+    line-height: 1.25;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+  }
+
+  &:focus-visible {
+    outline: 4px dashed white;
+  }
+}

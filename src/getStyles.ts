@@ -3,9 +3,23 @@ import path from "path";
 
 import colorsCss from "../styles/colors.css";
 
-export default function getStyles() {
-  const baseCss = fs.readFileSync(path.resolve("./styles/base.css"), "utf8");
+function getCssFile(filePath: string) {
+  return fs.readFileSync(path.resolve(filePath), "utf8");
+}
 
-  return `${baseCss}
-${colorsCss}`;
+export default function getStyles() {
+  const baseCss = getCssFile("./styles/base.css");
+  const headerCss = getCssFile("./styles/header.css");
+  const menuCss = getCssFile("./styles/menu.css");
+  const navCss = getCssFile("./styles/nav.css");
+  const contentCss = getCssFile("./styles/content.css");
+
+  return `
+    ${baseCss}
+    ${headerCss}
+    ${menuCss}
+    ${navCss}
+    ${contentCss}
+    ${colorsCss}
+  `;
 }

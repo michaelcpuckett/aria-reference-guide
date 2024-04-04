@@ -20,6 +20,7 @@ export function IndexPage() {
           content="This representation of ARIA roles contains links to each role that will take you to a page with more information about the role."
         />
         <link rel="stylesheet" href="/styles.css" />
+        <link rel="manifest" href="/manifest.json" />
       </head>
       <body>
         <IconDefinitions />
@@ -31,16 +32,10 @@ export function IndexPage() {
           </header>
           <MenuButton />
           <Navigation />
+          <main>
+            <Overview />
+          </main>
         </div>
-        <main>
-          {/*
-            The header is repeated here for layout purposes.
-          */}
-          <div hidden aria-hidden="true" className="page-header">
-            <span className="page-heading">{pageTitle}</span>
-          </div>
-          <Overview />
-        </main>
         <script src="/scripts.js"></script>
       </body>
     </html>
