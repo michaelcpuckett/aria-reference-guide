@@ -31,16 +31,10 @@ export function IndexPage() {
           </header>
           <MenuButton />
           <Navigation />
+          <main>
+            <Overview />
+          </main>
         </div>
-        <main>
-          {/*
-            The header is repeated here for layout purposes.
-          */}
-          <div hidden aria-hidden="true" className="page-header">
-            <span className="page-heading">{pageTitle}</span>
-          </div>
-          <Overview />
-        </main>
         <script src="/scripts.js"></script>
       </body>
     </html>
