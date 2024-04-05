@@ -7,10 +7,18 @@
     padding: 1rem;
     padding-left: max(1rem, var(--safe-area-left));
     padding-right: max(1rem, var(--safe-area-right));
-    position: fixed;
-    top: 0;
     width: 100%;
     z-index: 1;
+    border-bottom: 1px solid transparent;
+  }
+
+  @media screen and (min-width: 48rem) {
+    position: fixed;
+    top: 0;
+  }
+
+  @media (forced-colors: active) {
+    border-bottom: 1px solid;
   }
 }
 

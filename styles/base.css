@@ -15,8 +15,6 @@
 
 :where(.content) a {
   @media screen {
-    color: var(--dark-color);
-
     &:focus-visible {
       outline-offset: 4px;
     }

@@ -1,3 +1,4 @@
+import { raw } from "express";
 import {
   allowedAriaRolesByHtmlElement,
   ariaRolesByAbstractRole,
@@ -20,6 +21,12 @@ import { ExternalLinkIcon, IconDefinitions } from "../components/Icons";
 import { MenuButton } from "../components/MenuButton";
 import { Navigation } from "../components/Navigation";
 
+interface Tag {
+  tagName: string;
+  url: string;
+  raw: string;
+}
+
 interface RolePageProps {
   role: string;
   abstractAriaRole: string;
@@ -29,14 +36,15 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
   const roleTitle = mappedAriaRolesToDisplayNames[role] || role;
   const pageTitle = "ARIA Reference Guide";
 
-  const abstractRoleTags = Object.entries(ariaRolesByAbstractRole)
+  const abstractAriaRoleTags = Object.entries(ariaRolesByAbstractRole)
     .filter(([, value]) => value.includes(role))
     .map(([key]) => key)
     .sort()
-    .map((key) => [
-      mappedAbstractAriaRolesToTitles[key] || key,
-      mappedAbstractAriaRolesToUrls[key] || "",
-    ]);
+    .map((key) => ({
+      tagName: mappedAbstractAriaRolesToTitles[key] || key,
+      url: mappedAbstractAriaRolesToUrls[key] || "",
+      raw: key,
+    }));
 
   const contentCategories = mappedAriaRolesToContentCategories[role] || [];
 
@@ -56,20 +64,29 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
     );
   }
 
-  const contentCategoryTags = filteredContentCategories
+  const contentCategoryTags: Tag[] = filteredContentCategories
     .sort()
-    .map((contentCategory: string) => [
-      mappedContentTypesToTitles[contentCategory] || contentCategory,
-      mappedContentTypesToUrls[contentCategory] || "",
-    ]);
+    .map((contentCategory: string) => ({
+      tagName: mappedContentTypesToTitles[contentCategory] || contentCategory,
+      url: mappedContentTypesToUrls[contentCategory] || "",
+      raw: contentCategory,
+    }));
 
-  const contextTags = mappedAriaRolesToContextRoles[role]
-    ? [["Required Context", "https://www.w3.org/TR/wai-aria-1.2/#scope"]]
+  const contextTags: Tag[] = mappedAriaRolesToContextRoles[role]
+    ? [
+        {
+          tagName: "Required Context",
+          url: "https://www.w3.org/TR/wai-aria-1.2/#scope",
+          raw: "required-context",
+        },
+      ]
     : [];
 
-  const tags = [...abstractRoleTags, ...contentCategoryTags, ...contextTags];
+  const otherTags = [...contentCategoryTags, ...contextTags];
 
-  const mayBeInteractive = abstractRoleTags.length > 1;
+  const hasTags = abstractAriaRoleTags.length || otherTags.length;
+
+  const mayBeInteractive = abstractAriaRoleTags.length > 1;
 
   const allowedContent = mappedAriaRolesToAllowedDescendants[role] || "N/A";
 
@@ -101,7 +118,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
           <Navigation role={role} />
           <main>
             <div
-              className={`content content--is-aria-role-${role} content--is-abstract-role-${abstractAriaRole}`}
+              className={`content content--is-aria-role-${role} content--abstract-role-${abstractAriaRole}`}
             >
               <div className="content__header">
                 <div className="content__header__info">
@@ -124,9 +141,23 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                       </a>
                     ))}
                   </div>
-                  {tags ? (
+                  {hasTags ? (
                     <p className="content__tags">
-                      {tags.map(([tagName, url]) => (
+                      {abstractAriaRoleTags.map(({ tagName, url, raw }) => (
+                        <a
+                          key={tagName}
+                          href={url}
+                          target="_blank"
+                          className={`
+                            content__tag
+                            content__tag--abstract-aria-role--${raw}
+                          `}
+                        >
+                          {tagName}
+                          <ExternalLinkIcon />
+                        </a>
+                      ))}
+                      {otherTags.map(({ tagName, url }) => (
                         <a
                           key={tagName}
                           href={url}
@@ -176,7 +207,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                     </h2>
                     <ul className="list">
                       {mappedAriaRolesToContextRoles[role].map(
-                        (contextRole) => (
+                        (contextRole: string) => (
                           <li key={contextRole}>{contextRole}</li>
                         )
                       )}
@@ -187,15 +218,22 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                 <h2 className="aria-role__subheading">
                   HTML Elements with Implicit ARIA Role
                 </h2>
-                <ul className="list">
-                  {(ariaToHtmlMapping[role] || ["(None)"])
-                    .sort()
-                    .map((tagName) => (
-                      <li className="tag-name" key={tagName}>
-                        {htmlElementsToDisplayNames[tagName] || tagName}
-                      </li>
-                    ))}
-                </ul>
+                {(ariaToHtmlMapping[role] || []).length ? (
+                  <ul className="list">
+                    {ariaToHtmlMapping[role]
+                      .sort()
+                      .map((elementName: string) => (
+                        <li key={elementName}>
+                          <code>
+                            {htmlElementsToDisplayNames[elementName] ||
+                              elementName}
+                          </code>
+                        </li>
+                      ))}
+                  </ul>
+                ) : (
+                  <p>(None)</p>
+                )}
 
                 <h2 className="aria-role__subheading">Allowed HTML Elements</h2>
                 <ul className="list">
@@ -203,20 +241,23 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                     new Set(
                       Object.entries(allowedAriaRolesByHtmlElement)
                         .filter(([_, roles]) => roles.includes(role))
-                        .map(([tagName]) => tagName)
+                        .map(([elementName]) => elementName)
                         .concat(ariaToHtmlMapping[role] || [])
                     )
-                  ).map((tagName) => (
-                    <li key={tagName}>
-                      <span className="tag-name">
-                        {htmlElementsToDisplayNames[tagName] || tagName}
-                      </span>
-                      {(ariaToHtmlMapping[role] || []).includes(tagName)
+                  ).map((elementName) => (
+                    <li key={elementName}>
+                      <code>
+                        {htmlElementsToDisplayNames[elementName] || elementName}
+                      </code>
+                      {(ariaToHtmlMapping[role] || []).includes(elementName)
                         ? " (role attribute unnecessary)"
                         : ""}
                     </li>
                   ))}
-                  <li key="any">{`div, span, p, other elements that can receive any role`}</li>
+                  <li key="any">
+                    <code>div</code>, <code>span</code>, <code>p</code>, other
+                    elements that can receive any role
+                  </li>
                 </ul>
               </div>
             </div>

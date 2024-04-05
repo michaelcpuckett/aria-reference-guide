@@ -81,12 +81,13 @@ main {
     border-radius: 0.5rem;
     font-weight: bold;
     font-size: 0.8rem;
-    border: 2px solid var(--medium-color);
-    background-color: var(--lightest-color);
-    color: var(--darkest-color);
+    border: 2px solid var(--medium-color, rgb(75, 75, 75));
+    background-color: var(--lightest-color, rgb(230, 230, 230));
+    color: var(--darkest-color, black);
 
     &:hover {
-      background-color: var(--dark-color);
+      background-color: var(--dark-color, rgb(55, 55, 55));
+      border-color: var(--dark-color, rgb(55, 55, 55));
       color: white;
     }
   }
@@ -131,7 +132,7 @@ main {
     line-height: inherit;
     letter-spacing: 0.1rem;
     text-transform: uppercase;
-    border-bottom: 1px solid var(--dark-color);
+    border-bottom: 1px solid;
   }
 }
 
