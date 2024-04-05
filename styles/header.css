@@ -13,7 +13,7 @@
   }
 
   @media screen and (min-width: 48rem) {
-    position: fixed;
+    position: sticky;
     top: 0;
   }
 

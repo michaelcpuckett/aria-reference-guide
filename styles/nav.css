@@ -20,11 +20,10 @@ nav {
     height: 100%;
     grid-row: 2 / 3;
     grid-column: 1 / 2;
-    position: fixed;
+    position: sticky;
     top: var(--header-height);
     width: var(--sidebar-width);
     max-width: calc(100vw - 2rem);
-    max-height: calc(100vh - var(--header-height));
     max-height: calc(100dvh - var(--header-height));
     border-right: 1px solid gray;
     padding-left: var(--safe-area-left);
