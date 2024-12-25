@@ -14,10 +14,8 @@
     "isolatedModules": true,
     "lib": ["ESNext"],
     "target": "ESNext",
-    "outDir": "./",
+    "outDir": "./"
   },
   "exclude": ["../../node_modules"],
-  "include": [
-    "src/**/*"
-, "styles/colors.css.ts"  ]
+  "include": ["src/**/*", "styles/colors.css.ts"]
 }

@@ -29,11 +29,14 @@
     line-height: 1.25;
     text-transform: uppercase;
     font-weight: bold;
+    align-self: center;
+  }
+
+  @media screen and (width > 960px) {
     text-align: center;
-    color: white;
   }
 
   &:focus-visible {
-    outline: 4px dashed white;
+    outline: 4px dashed;
   }
 }

@@ -2,54 +2,6 @@ main {
   @media screen {
     font-size: 1.125rem;
   }
-
-  @media screen and (max-width: calc(48rem - 1px)) {
-    grid-row: 3 / 4;
-    grid-column: 1 / -1;
-
-    body:has(.menu-button[aria-expanded="true"]) & {
-      display: none;
-    }
-  }
-
-  @media screen and (min-width: 48rem) {
-    grid-row: 2 / 3;
-    grid-column: 2 / 3;
-  }
-}
-
-.content {
-  @media screen {
-    line-height: 1.5;
-    padding: 0 max(1rem, var(--safe-area-right)) 0
-      max(1rem, var(--safe-area-left));
-  }
-
-  @media screen and (min-width: 48rem) {
-    padding: 1rem max(1rem, var(--safe-area-right)) 1rem
-      max(1rem, var(--safe-area-left));
-  }
-
-  @media screen and (min-width: 76rem) {
-    padding: 3rem max(1rem, var(--safe-area-right)) 3rem
-      max(1rem, var(--safe-area-left));
-    max-width: 52rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-.content:has(#overview) {
-  @media screen {
-    &:has(h1:focus-visible) {
-      outline: 4px dashed;
-      outline-offset: 1px;
-    }
-
-    & h1:focus-visible {
-      outline: 0;
-    }
-  }
 }
 
 .content__header {
