@@ -125,3 +125,141 @@ body {
     -webkit-tap-highlight-color: transparent;
   }
 }
+
+:host {
+  display: contents;
+}
+
+.root {
+  display: grid;
+  grid-template-rows: auto minmax(0px, 1fr) auto;
+  height: 100%;
+  container-name: root;
+  container-type: size;
+}
+
+.top,
+.bottom {
+  background: #ddd;
+}
+
+.top,
+.bottom {
+  padding: 1rem;
+  padding-left: calc(1rem + env(safe-area-inset-left));
+  padding-right: calc(1rem + env(safe-area-inset-right));
+}
+
+.menu {
+  padding: 1rem;
+  padding-left: calc(1rem + env(safe-area-inset-left));
+}
+
+.main {
+  padding: 1rem;
+  padding-right: calc(1rem + env(safe-area-inset-right));
+}
+
+.top {
+  padding-top: 1rem;
+  padding-top: calc(1rem + env(safe-area-inset-top));
+}
+
+.bottom {
+  padding-bottom: 1rem;
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+}
+
+.top {
+  touch-action: none;
+  display: grid;
+
+  @container (width <= 960px) {
+    grid-template-columns: minmax(0px, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
+.middle {
+  display: grid;
+  height: 100%;
+
+  @container (width <= 960px) {
+    grid-template-rows: 100%;
+  }
+
+  @container (width > 960px) {
+    grid-template-columns: 300px minmax(0px, 1fr);
+  }
+}
+
+.menu,
+.main {
+  display: grid;
+  overflow-y: auto;
+}
+
+.main {
+  container-name: main;
+  container-type: size;
+}
+
+@container (width <= 960px) {
+  :has(#menu-visibility-switch:not(:checked)) .menu {
+    display: none;
+  }
+
+  :has(#menu-visibility-switch:checked) .main {
+    display: none;
+  }
+}
+
+#menu-visibility-switch:not(:checked) ~ [data-if-checked] {
+  display: none;
+}
+
+#menu-visibility-switch:checked ~ [data-if-unchecked] {
+  display: none;
+}
+
+@container (width > 960px) {
+  .content {
+    width: 100%;
+    max-width: 860px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.bottom {
+  touch-action: none;
+}
+
+.switch {
+  padding: 1rem;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  background-color: deepskyblue;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  width: auto;
+  aspect-ratio: 1;
+  line-height: 1;
+
+  &:focus-within {
+    outline: 4px dashed black;
+    outline-offset: 1px;
+  }
+}
+
+@container (width > 960px) {
+  #menu-visibility-switch-label {
+    display: none;
+  }
+}
+
+menu-visibility-switch {
+  display: contents;
+}
