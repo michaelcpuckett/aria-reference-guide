@@ -6,11 +6,12 @@ export function Overview() {
       <div className="content__header__info">
         <div className="content__heading__container">
           <h1 className="content__heading" id="overview" tabIndex={-1}>
-            Overview of ARIA Roles
+            ARIA Roles
           </h1>
         </div>
       </div>
       <div className="content__details">
+        <h2>Overview</h2>
         <p>
           <abbr title="Accessible Rich Internet Applications">ARIA</abbr> is a
           set of HTML attributes that make web content more accessible to users

@@ -99,3 +99,11 @@ main {
 .tag-name {
   hyphenate-character: "";
 }
+
+:where(h2) {
+  font-size: larger;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}

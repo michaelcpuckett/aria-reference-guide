@@ -190,7 +190,7 @@ body {
   }
 
   @container (width > 720px) {
-    grid-template-columns: max-content minmax(0px, 1fr);
+    grid-template-columns: 280px minmax(0px, 1fr);
   }
 }
 

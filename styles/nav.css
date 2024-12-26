@@ -85,3 +85,9 @@ nav {
     }
   }
 }
+
+[aria-current="page"] {
+  @media screen {
+    font-weight: bold;
+  }
+}
