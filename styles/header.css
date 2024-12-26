@@ -32,7 +32,7 @@
     align-self: center;
   }
 
-  @media screen and (width > 960px) {
+  @media screen and (width > 720px) {
     text-align: center;
   }
 

@@ -1,70 +1,33 @@
-import {
-  abstractAriaRolesByType,
-  ariaRolesByAbstractRole,
-  mappedAbstractAriaRolesToDescriptions,
-  mappedAbstractAriaRolesToTitles,
-  mappedAriaRolesToDisplayNames,
-} from "../../data";
+import { mappedAriaRolesToDisplayNames } from "../../data";
 
 export function Navigation({ role }: { role?: string }) {
   return (
     <nav className="nav" id="menu">
-      <ul className="nav__list">
-        {Object.values(abstractAriaRolesByType)
-          .flat()
+      <ul className="nav__list nav__list--role">
+        {Object.keys(mappedAriaRolesToDisplayNames)
           .sort()
-          .map((abstractRole, index) => {
-            const abstractRoleDisplayName =
-              mappedAbstractAriaRolesToTitles[abstractRole] || abstractRole;
-            const abstractRoleDescription =
-              mappedAbstractAriaRolesToDescriptions[abstractRole] || "";
+          .map((ariaRole) => {
+            const roleDisplayName =
+              mappedAriaRolesToDisplayNames[ariaRole] || ariaRole;
+            const roleDisplayHtml = { __html: roleDisplayName };
+            const roleUrl = `/role/${ariaRole}.html`;
 
             return (
               <li
-                key={abstractRole}
-                className={`nav__list-item nav__list-item--${abstractRole}`}
+                key={ariaRole}
+                className="nav__list-item nav__list-item--role"
               >
-                <details
-                  className="nav__list-item__details"
-                  open={
-                    !!role &&
-                    ariaRolesByAbstractRole[abstractRole].includes(role)
-                  }
+                <a
+                  aria-label={ariaRole}
+                  className="nav__list-item__link"
+                  href={roleUrl}
+                  aria-current={ariaRole === role ? "page" : undefined}
                 >
-                  <summary className="nav__list-item__summary">
-                    {`${abstractRoleDisplayName}s`}
-                  </summary>
-                  <p className="nav__list-item__definition">
-                    {abstractRoleDescription}
-                  </p>
-                  <ul
-                    aria-label={`${abstractRole} Roles`}
-                    className="nav__list-item__sublist"
-                  >
-                    {ariaRolesByAbstractRole[abstractRole]
-                      .sort()
-                      .map((role) => {
-                        const roleDisplayName =
-                          mappedAriaRolesToDisplayNames[role] || role;
-
-                        return (
-                          <li
-                            key={role}
-                            className="nav__list-item__sublist-item"
-                          >
-                            <a
-                              href={`/role/${role}.html`}
-                              aria-label={role}
-                              className="nav__list-item__sublist-item__link"
-                              dangerouslySetInnerHTML={{
-                                __html: `<span aria-hidden="true">${roleDisplayName}</span>`,
-                              }}
-                            />
-                          </li>
-                        );
-                      })}
-                  </ul>
-                </details>
+                  <span
+                    aria-hidden="true"
+                    dangerouslySetInnerHTML={roleDisplayHtml}
+                  ></span>
+                </a>
               </li>
             );
           })}

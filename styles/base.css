@@ -174,7 +174,7 @@ body {
   touch-action: none;
   display: grid;
 
-  @container (width <= 960px) {
+  @container (width <= 720px) {
     grid-template-columns: minmax(0px, 1fr) auto;
     align-items: center;
     gap: 1rem;
@@ -185,12 +185,12 @@ body {
   display: grid;
   height: 100%;
 
-  @container (width <= 960px) {
+  @container (width <= 720px) {
     grid-template-rows: 100%;
   }
 
-  @container (width > 960px) {
-    grid-template-columns: 300px minmax(0px, 1fr);
+  @container (width > 720px) {
+    grid-template-columns: max-content minmax(0px, 1fr);
   }
 }
 
@@ -205,7 +205,7 @@ body {
   container-type: size;
 }
 
-@container (width <= 960px) {
+@container (width <= 720px) {
   :has(#menu-visibility-switch:not(:checked)) .menu {
     display: none;
   }
@@ -223,7 +223,7 @@ body {
   display: none;
 }
 
-@container (width > 960px) {
+@container (width > 720px) {
   .content {
     width: 100%;
     max-width: 860px;
@@ -254,7 +254,7 @@ body {
   }
 }
 
-@container (width > 960px) {
+@container (width > 720px) {
   #menu-visibility-switch-label {
     display: none;
   }
@@ -262,4 +262,8 @@ body {
 
 menu-visibility-switch {
   display: contents;
+}
+
+.menu {
+  background-color: #f8f9fa;
 }
