@@ -11,7 +11,6 @@ export function Overview() {
         </div>
       </div>
       <div className="content__details">
-        <h2>Overview</h2>
         <p>
           <abbr title="Accessible Rich Internet Applications">ARIA</abbr> is a
           set of HTML attributes that make web content more accessible to users

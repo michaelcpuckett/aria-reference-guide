@@ -6,4 +6,5 @@ export const mappedContentTypesToTitles = {
   palpable: "Palpable Content",
   interactive: "Interactive Content",
   "interactive-if-focusable": "Interactive Content (if focusable)",
+  transparent: "Transparent content",
 };

@@ -5,6 +5,7 @@ import {
   ariaToHtmlMapping,
   htmlElementsToDisplayNames,
   links,
+  mappedAbstractAriaRolesToDescriptions,
   mappedAbstractAriaRolesToTitles,
   mappedAbstractAriaRolesToUrls,
   mappedAriaRolesToAllowedDescendants,
@@ -16,6 +17,7 @@ import {
   mappedContentTypesToTitles,
   mappedContentTypesToUrls,
 } from "../../data";
+import { mappedContentTypesToDescriptions } from "../../data/mappedContentTypesToDescriptions";
 import { ExternalLinkIcon, IconDefinitions } from "../components/Icons";
 import { Navigation } from "../components/Navigation";
 
@@ -86,7 +88,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
 
   const mayBeInteractive = abstractAriaRoleTags.length > 1;
 
-  const allowedContent = mappedAriaRolesToAllowedDescendants[role] || "N/A";
+  const allowedContent = mappedAriaRolesToAllowedDescendants[role] || ["N/A"];
 
   return (
     <html lang="en">
@@ -184,35 +186,6 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                         </a>
                       ))}
                     </div>
-                    {hasTags ? (
-                      <p className="content__tags">
-                        {abstractAriaRoleTags.map(({ tagName, url, raw }) => (
-                          <a
-                            key={tagName}
-                            href={url}
-                            target="_blank"
-                            className={`
-                            content__tag
-                            content__tag--abstract-aria-role--${raw}
-                          `}
-                          >
-                            {tagName}
-                            <ExternalLinkIcon />
-                          </a>
-                        ))}
-                        {otherTags.map(({ tagName, url }) => (
-                          <a
-                            key={tagName}
-                            href={url}
-                            target="_blank"
-                            className="content__tag"
-                          >
-                            {tagName}
-                            <ExternalLinkIcon />
-                          </a>
-                        ))}
-                      </p>
-                    ) : null}
                   </div>
                 </div>
                 <div className="content__details">
@@ -229,19 +202,68 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                     </>
                   ) : null}
 
-                  <h2 className="aria-role__subheading">Allowed Content</h2>
-                  <p>{allowedContent}</p>
+                  <h2 className="aria-role__subheading">
+                    Abstract Ancestor Roles
+                  </h2>
+                  <ul className="list">
+                    {abstractAriaRoleTags.map(({ tagName, url, raw }) => (
+                      <li key={tagName}>
+                        <b>{tagName}</b> -{" "}
+                        {mappedAbstractAriaRolesToDescriptions[raw]}
+                      </li>
+                    ))}
+                  </ul>
 
-                  {ariaRolesWithPresentationalChildren.includes(role) && (
-                    <p>
-                      Browsers automatically apply the presentation role to all
-                      descendant elements.{" "}
-                      <em>
-                        The semantics of any descendant elements are not
-                        conveyed to assistive technologies.
-                      </em>
-                    </p>
-                  )}
+                  <h2 className="aria-role__subheading">Content Categories</h2>
+                  <ul className="list">
+                    {contentCategoryTags.map(({ tagName, raw, url }) => (
+                      <li key={tagName}>
+                        <b>{tagName}</b> -{" "}
+                        {mappedContentTypesToDescriptions[raw]}
+                      </li>
+                    ))}
+                    {!contentCategoryTags.length && (
+                      <li key="none">
+                        Can only be used when a descendant of specific elements.
+                      </li>
+                    )}
+                  </ul>
+
+                  <h2 className="aria-role__subheading">Allowed Content</h2>
+                  <ul className="list">
+                    {ariaRolesWithPresentationalChildren.includes(role) && (
+                      <li>
+                        Browsers automatically apply the{" "}
+                        <strong>presentation</strong> role to all descendant
+                        elements, so the semantics of any descendant elements
+                        are not conveyed to assistive technologies.
+                      </li>
+                    )}
+                    {allowedContent.map((item) => {
+                      const isArray = Array.isArray(item);
+
+                      if (isArray) {
+                        const [type, description] = item;
+
+                        return (
+                          <li key={description}>
+                            {type !== "specific" ? (
+                              <>
+                                <b>{mappedContentTypesToTitles[type]}</b> -{" "}
+                              </>
+                            ) : null}
+                            {description}
+                          </li>
+                        );
+                      }
+
+                      return (
+                        <li key={item}>
+                          <b>{mappedContentTypesToTitles[item]}</b>
+                        </li>
+                      );
+                    })}
+                  </ul>
 
                   {mappedAriaRolesToContextRoles[role] && (
                     <>
