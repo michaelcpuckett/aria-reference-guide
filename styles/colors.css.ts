@@ -5,6 +5,7 @@ const colorsCss = Object.values(abstractAriaRolesByType)
   .sort()
   .map((abstractRole, index, { length }) => {
     return `
+      .card--abstract-role--${abstractRole},
       .content__tag--abstract-aria-role--${abstractRole},
       .nav__list-item--${abstractRole} {
         --base-hue: ${((index + 1) / length) * 360}deg;
@@ -15,6 +16,7 @@ const colorsCss = Object.values(abstractAriaRolesByType)
   .trim();
 
 export default `
+  .card--abstract-role,
   .content__tag,
   .nav__list-item {
     --base-saturation: 100%;

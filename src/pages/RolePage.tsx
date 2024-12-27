@@ -20,6 +20,7 @@ import {
 import { mappedContentTypesToDescriptions } from "../../data/mappedContentTypesToDescriptions";
 import { ExternalLinkIcon, IconDefinitions } from "../components/Icons";
 import { Navigation } from "../components/Navigation";
+import { CustomElement } from "../types";
 
 interface Tag {
   tagName: string;
@@ -202,107 +203,127 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                     </>
                   ) : null}
 
-                  <h2 className="aria-role__subheading">
-                    Abstract Ancestor Roles
-                  </h2>
-                  <ul className="list">
+                  <h2 className="aria-role__subheading">Properties</h2>
+                  <ul className="list--gap">
                     {abstractAriaRoleTags.map(({ tagName, url, raw }) => (
                       <li key={tagName}>
-                        <b>{tagName}</b> -{" "}
-                        {mappedAbstractAriaRolesToDescriptions[raw]}
+                        <card-item
+                          class={`card--abstract-role card--abstract-role--${raw}`}
+                        >
+                          <svg
+                            fill="none"
+                            aria-hidden="true"
+                            viewBox="0 0 542 542"
+                          >
+                            <use href={`#icon--${raw}`}></use>
+                          </svg>
+                          <b>{tagName}</b>
+                          <p className="smaller">
+                            {mappedAbstractAriaRolesToDescriptions[raw]}
+                          </p>
+                        </card-item>
                       </li>
                     ))}
-                  </ul>
-
-                  <h2 className="aria-role__subheading">Content Categories</h2>
-                  <ul className="list">
                     {contentCategoryTags.map(({ tagName, raw, url }) => (
                       <li key={tagName}>
-                        <b>{tagName}</b> -{" "}
-                        {mappedContentTypesToDescriptions[raw]}
+                        <card-item>
+                          <svg
+                            fill="none"
+                            aria-hidden="true"
+                            viewBox="0 0 542 542"
+                          >
+                            <use href={`#icon--${raw}`}></use>
+                          </svg>
+                          <b>{tagName}</b>
+                          <p className="smaller">
+                            {mappedContentTypesToDescriptions[raw]}
+                          </p>
+                        </card-item>
                       </li>
                     ))}
                     {!contentCategoryTags.length && (
                       <li key="none">
-                        Can only be used when a descendant of specific elements.
+                        <card-item>
+                          <b>Specific Context</b>
+                          <p className="smaller">
+                            This role must be a direct descendant of one of the
+                            following contexts:
+                          </p>
+                          {mappedAriaRolesToContextRoles[role] && (
+                            <ul className="list">
+                              {mappedAriaRolesToContextRoles[role].map(
+                                (contextRole: string) => (
+                                  <li key={contextRole}>{contextRole}</li>
+                                )
+                              )}
+                            </ul>
+                          )}
+                        </card-item>
                       </li>
                     )}
                   </ul>
 
-                  <h2 className="aria-role__subheading">Allowed Content</h2>
-                  <ul className="list">
-                    {ariaRolesWithPresentationalChildren.includes(role) && (
-                      <li>
-                        Browsers automatically apply the{" "}
-                        <strong>presentation</strong> role to all descendant
-                        elements, so the semantics of any descendant elements
-                        are not conveyed to assistive technologies.
-                      </li>
-                    )}
+                  <h2 className="aria-role__subheading">Descendants</h2>
+                  <ul className="list--gap">
                     {allowedContent.map((item) => {
                       const isArray = Array.isArray(item);
 
-                      if (isArray) {
-                        const [type, description] = item;
-
-                        return (
-                          <li key={description}>
-                            {type !== "specific" ? (
-                              <>
-                                <b>{mappedContentTypesToTitles[type]}</b> -{" "}
-                              </>
-                            ) : null}
-                            {description}
-                          </li>
-                        );
+                      if (!isArray) {
+                        throw new Error("Expected an array");
                       }
 
+                      const [type, details] = item;
+                      const description =
+                        mappedContentTypesToDescriptions[type];
+
                       return (
-                        <li key={item}>
-                          <b>{mappedContentTypesToTitles[item]}</b>
+                        <li key={details}>
+                          <card-item>
+                            {type !== "specific" && (
+                              <svg
+                                fill="none"
+                                aria-hidden="true"
+                                viewBox="0 0 542 542"
+                              >
+                                <use href={`#icon--${type}`}></use>
+                              </svg>
+                            )}
+                            <b>
+                              {type === "specific"
+                                ? "Specific Guidance"
+                                : `${mappedContentTypesToTitles[type]} Children Allowed`}
+                            </b>
+                            {description ? (
+                              <p className="smaller">{description}</p>
+                            ) : (
+                              <p>{details}</p>
+                            )}
+                            {type !== "specific" && details ? (
+                              <>
+                                <hr />
+                                <p>{details}</p>
+                              </>
+                            ) : null}
+                          </card-item>
                         </li>
                       );
                     })}
+                    {ariaRolesWithPresentationalChildren.includes(role) && (
+                      <li>
+                        <card-item>
+                          <b>Children Become Presentational</b>
+                          <p className="smaller">
+                            Browsers automatically apply the{" "}
+                            <strong>presentation</strong> role to all descendant
+                            elements, so their semantics are not conveyed to
+                            assistive technologies.
+                          </p>
+                        </card-item>
+                      </li>
+                    )}
                   </ul>
 
-                  {mappedAriaRolesToContextRoles[role] && (
-                    <>
-                      <h2 className="aria-role__subheading">
-                        Required Context Roles
-                      </h2>
-                      <ul className="list">
-                        {mappedAriaRolesToContextRoles[role].map(
-                          (contextRole: string) => (
-                            <li key={contextRole}>{contextRole}</li>
-                          )
-                        )}
-                      </ul>
-                    </>
-                  )}
-
-                  <h2 className="aria-role__subheading">
-                    HTML Elements with Implicit ARIA Role
-                  </h2>
-                  {(ariaToHtmlMapping[role] || []).length ? (
-                    <ul className="list">
-                      {ariaToHtmlMapping[role]
-                        .sort()
-                        .map((elementName: string) => (
-                          <li key={elementName}>
-                            <code>
-                              {htmlElementsToDisplayNames[elementName] ||
-                                elementName}
-                            </code>
-                          </li>
-                        ))}
-                    </ul>
-                  ) : (
-                    <p>(None)</p>
-                  )}
-
-                  <h2 className="aria-role__subheading">
-                    Allowed HTML Elements
-                  </h2>
+                  <h2 className="aria-role__subheading">HTML Usage</h2>
                   <ul className="list">
                     {Array.from(
                       new Set(
@@ -311,20 +332,43 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                           .map(([elementName]) => elementName)
                           .concat(ariaToHtmlMapping[role] || [])
                       )
-                    ).map((elementName) => (
-                      <li key={elementName}>
-                        <code>
-                          {htmlElementsToDisplayNames[elementName] ||
-                            elementName}
-                        </code>
-                        {(ariaToHtmlMapping[role] || []).includes(elementName)
-                          ? " (role attribute unnecessary)"
-                          : ""}
+                    )
+                      .sort((a) => {
+                        if ((ariaToHtmlMapping[role] || []).includes(a)) {
+                          return -1;
+                        }
+
+                        return 1;
+                      })
+                      .map((elementName) => (
+                        <li key={elementName}>
+                          <code>
+                            {htmlElementsToDisplayNames[elementName] ||
+                              elementName}
+                            {(ariaToHtmlMapping[role] || []).includes(
+                              elementName
+                            )
+                              ? ""
+                              : `[role=${role}]`}
+                          </code>
+                        </li>
+                      ))}
+                    {contentCategories.includes("phrasing") ? (
+                      <li key="span">
+                        <code>span[role={role}]</code>
                       </li>
-                    ))}
-                    <li key="any">
-                      <code>div</code>, <code>span</code>, <code>p</code>, other
-                      elements that can receive any role
+                    ) : (
+                      <>
+                        <li key="div">
+                          <code>div[role={role}]</code>
+                        </li>
+                        <li key="p">
+                          <code>p[role={role}]</code>
+                        </li>
+                      </>
+                    )}
+                    <li key="custom-element">
+                      <code>custom-element[role={role}]</code>
                     </li>
                   </ul>
                 </div>
@@ -336,4 +380,12 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
       </body>
     </html>
   );
+}
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      "card-item": CustomElement;
+    }
+  }
 }

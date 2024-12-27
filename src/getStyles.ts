@@ -10,14 +10,12 @@ function getCssFile(filePath: string) {
 export default function getStyles() {
   const baseCss = getCssFile("./styles/base.css");
   const headerCss = getCssFile("./styles/header.css");
-  const menuCss = getCssFile("./styles/menu.css");
   const navCss = getCssFile("./styles/nav.css");
   const contentCss = getCssFile("./styles/content.css");
 
   return `
     ${baseCss}
     ${headerCss}
-    ${menuCss}
     ${navCss}
     ${contentCss}
     ${colorsCss}

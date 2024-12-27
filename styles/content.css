@@ -49,9 +49,9 @@ main {
   margin: 0;
 
   @media screen {
-    font-weight: normal;
     font-size: 2.25rem;
     line-height: 1.25;
+    letter-spacing: -0.1rem;
 
     @media screen and (max-width: 320px) {
       font-size: 1.75rem;
@@ -106,4 +106,55 @@ main {
   &:first-child {
     margin-top: 0;
   }
+}
+
+card-item {
+  display: grid;
+  grid-template-columns: auto minmax(0px, 1fr);
+  border: 1px solid;
+  padding: 1em;
+  column-gap: 0.5em;
+  row-gap: 0.25em;
+  border-radius: 0.5em;
+  hyphens: auto;
+  font-size: 0.875em;
+  align-items: center;
+  width: 100%;
+  background-color: var(--darkest-color, black);
+
+  & b {
+    font-size: 1.25em;
+  }
+
+  & p {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  & hr {
+    width: 100%;
+  }
+
+  & > * {
+    grid-column: 1 / -1;
+  }
+
+  &:has(> svg) > b {
+    grid-column: 2 / 3;
+  }
+
+  & > svg {
+    width: 2em;
+    grid-column: 1 / 2;
+  }
+}
+
+.list--gap {
+  display: grid;
+  gap: 1em;
+  margin: 0.5em 0;
+}
+
+.smaller {
+  font-size: 0.875em;
 }

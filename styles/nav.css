@@ -1,4 +1,8 @@
 nav {
+  background-color: canvas;
+  color: canvastext;
+  color-scheme: dark;
+
   @media print {
     display: none;
   }
