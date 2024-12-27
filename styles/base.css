@@ -146,6 +146,7 @@ body {
 }
 
 .menu {
+  background-color: black;
   padding: 1rem;
   padding-left: calc(1rem + env(safe-area-inset-left));
 }
