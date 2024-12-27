@@ -268,15 +268,13 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                         <li key={details}>
                           <card-item>
                             <p className="tag">Allowed Descendants</p>
-                            {type !== "specific" && (
-                              <svg
-                                fill="none"
-                                aria-hidden="true"
-                                viewBox="0 0 542 542"
-                              >
-                                <use href={`#icon--${type}`}></use>
-                              </svg>
-                            )}
+                            <svg
+                              fill="none"
+                              aria-hidden="true"
+                              viewBox="0 0 542 542"
+                            >
+                              <use href="#icon--children"></use>
+                            </svg>
                             <h3>
                               {type === "specific"
                                 ? "Specific Guidance"

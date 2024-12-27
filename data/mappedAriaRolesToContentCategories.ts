@@ -57,7 +57,7 @@ export const mappedAriaRolesToContentCategories = {
   row: [],
   rowgroup: [],
   rowheader: [],
-  scrollbar: [],
+  scrollbar: ["flow"],
   search: ["flow"],
   searchbox: ["phrasing"],
   separator: ["phrasing"],

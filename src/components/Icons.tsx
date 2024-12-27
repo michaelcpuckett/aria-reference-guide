@@ -107,7 +107,23 @@ export function IconDefinitions() {
             fill="currentColor"
           />
         </symbol>
-        <symbol viewBox="0 0 542 542" id="icon--parent">
+        <symbol id="icon--parent">
+          <path
+            d="M527.12,78.537l0,384.5c0,35.369 -28.714,64.083 -64.083,64.083l-384.5,0c-35.369,0 -64.083,-28.714 -64.083,-64.083l-0,-384.5c-0,-35.369 28.714,-64.083 64.083,-64.083l384.5,-0c35.369,-0 64.083,28.714 64.083,64.083Z"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="28.91px"
+          />
+          <path
+            d="M269.061,178.584l0,188.467"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="28.91px"
+          />
+          <circle cx="269.061" cy="144.079" r="56.823" fill="currentColor" />
+          <circle cx="269.061" cy="390.745" r="56.823" fill="currentColor" />
+        </symbol>
+        <symbol viewBox="0 0 542 542" id="icon--children">
           <path
             d="M527.12,78.537l0,384.5c0,35.369 -28.714,64.083 -64.083,64.083l-384.5,0c-35.369,0 -64.083,-28.714 -64.083,-64.083l-0,-384.5c-0,-35.369 28.714,-64.083 64.083,-64.083l384.5,-0c35.369,-0 64.083,28.714 64.083,64.083Z"
             fill="none"
