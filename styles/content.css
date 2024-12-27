@@ -122,8 +122,10 @@ card-item {
   width: 100%;
   background-color: var(--darkest-color, black);
 
-  & b {
+  & h3 {
     font-size: 1.25em;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   & p {
@@ -139,7 +141,7 @@ card-item {
     grid-column: 1 / -1;
   }
 
-  &:has(> svg) > b {
+  &:has(> svg) > h3 {
     grid-column: 2 / 3;
   }
 
@@ -157,4 +159,15 @@ card-item {
 
 .smaller {
   font-size: 0.875em;
+}
+
+.larger {
+  font-size: 1.125em;
+}
+
+.tag {
+  font-size: 0.75em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
 }
