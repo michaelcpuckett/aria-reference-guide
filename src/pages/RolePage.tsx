@@ -237,7 +237,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                             <use href="#icon--parent"></use>
                           </svg>
                           <h3>Only Used with Specific Parent Roles</h3>
-                          <p className="smaller">
+                          <p>
                             This role must be a direct descendant of one of the
                             following roles:
                           </p>
@@ -327,9 +327,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                           <use href="#icon--html"></use>
                         </svg>
                         <h3>HTML</h3>
-                        <p className="smaller">
-                          The following HTML can designate the role:
-                        </p>
+                        <p>The following HTML can designate the role:</p>
                         <ul className="list">
                           {Array.from(
                             new Set(
