@@ -6,7 +6,7 @@ export function Overview() {
       <div className="content__header__info">
         <div className="content__heading__container">
           <h1 className="content__heading" id="overview" tabIndex={-1}>
-            ARIA Roles
+            ARIA Reference Guide
           </h1>
         </div>
       </div>
