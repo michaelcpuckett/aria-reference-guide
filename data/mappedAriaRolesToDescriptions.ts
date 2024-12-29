@@ -41,7 +41,7 @@ export const mappedAriaRolesToDescriptions = {
   form: "A landmark region that contains a collection of items and objects that, as a whole, combine to create a form.",
   generic:
     "A nameless container element that has no semantic meaning on its own.",
-  grid: "A composite widget containing a collection of one or more rows with one or more cells where some or all cells in the grid are focusable by using methods of two-dimensional navigation, such as directional arrow keys.",
+  grid: "A composite widget containing a collection of rows with cells where some or all cells in the grid are focusable by using methods of two-dimensional navigation, such as directional arrow keys.",
   gridcell: "A cell in a grid or treegrid.",
   group:
     "A set of user interface objects that is not intended to be included in a page summary or table of contents by assistive technologies.",
