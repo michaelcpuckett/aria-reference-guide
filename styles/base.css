@@ -238,7 +238,7 @@ body {
 }
 
 .switch {
-  padding: 1rem;
+  padding: 0.5rem;
   cursor: pointer;
   border: 4px solid canvas;
   border-radius: 5px;
