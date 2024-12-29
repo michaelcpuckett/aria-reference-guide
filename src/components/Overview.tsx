@@ -18,12 +18,6 @@ export function Overview() {
           braille displays.
         </p>
         <p>
-          This representation of ARIA roles is intended to be a reference for
-          web developers and designers. The roles are categorized by abstract
-          role. Each role is a link that will take you to a page with more
-          information about the role.
-        </p>
-        <p>
           This reference guide is based on the{" "}
           <a href="https://www.w3.org/TR/wai-aria-1.2/" target="_blank">
             WAI-ARIA 1.2 Recommendation
@@ -31,8 +25,10 @@ export function Overview() {
           </a>
         </p>
         <p>
-          This is not a substitute for the official documentation, but because
-          it is paginated, it may be easier to navigate.
+          This representation of ARIA roles is intended to be a reference for
+          web developers and designers. This is not a substitute for the
+          official documentation, but because it is paginated, it may be easier
+          to navigate.
         </p>
         <p>
           The source code is availble on{" "}
