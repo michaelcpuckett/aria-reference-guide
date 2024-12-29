@@ -74,4 +74,6 @@ export const mappedAriaRolesToDisplayNames = {
   main: "main",
   menu: "menu",
   region: "region",
+  heading: "heading",
+  form: "form",
 };
