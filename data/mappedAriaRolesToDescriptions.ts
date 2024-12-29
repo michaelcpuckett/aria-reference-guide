@@ -112,7 +112,7 @@ export const mappedAriaRolesToDescriptions = {
   tabpanel:
     "A container for the resources associated with a tab, where each tab is contained in a tablist.",
   term: "A word or phrase with a corresponding definition.",
-  time: "Represents a specific point in time.",
+  time: "A specific point in time.",
   toolbar:
     "A collection of commonly used function buttons or controls represented in compact visual form.",
   tooltip: "A contextual popup that displays a description for an element.",
