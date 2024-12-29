@@ -56,7 +56,7 @@ export const mappedAriaRolesToDescriptions = {
   listitem: "A single item in a list.",
   log: "A type of live region where new information is added in meaningful order and old information may disappear.",
   main: "A landmark containing the main content of a document.",
-  math: "Content that represents a mathematical expression.",
+  math: "A mathematical expression.",
   menu: "A type of widget that offers a list of choices to the user, often a list of common actions or functions that the user can invoke. The menu role is appropriate when a list of menu items is presented in a manner similar to a menu on a desktop application.",
   menubar:
     "A presentation of menu that usually remains visible and is usually presented horizontally.",
