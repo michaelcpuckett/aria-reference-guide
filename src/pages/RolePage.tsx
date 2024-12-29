@@ -107,6 +107,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                   role="switch"
                 />
                 <svg
+                  aria-hidden="true"
                   data-if-unchecked
                   width="1em"
                   height="1em"
@@ -114,13 +115,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path
-                    d="M4 6H20M4 12H20M4 18H20"
-                    stroke="#000000"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
+                  <use href="#icon--open-menu"></use>
                 </svg>
                 <svg
                   aria-hidden="true"
@@ -131,12 +126,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289Z"
-                    fill="#0F1729"
-                  />
+                  <use href="#icon--close-menu"></use>
                 </svg>
               </label>
             </menu-visibility-switch>
@@ -173,85 +163,106 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                   </div>
                 </div>
                 <div className="content__details">
-                  <ul className="list--gap">
-                    <li>
-                      <card-item>
-                        <p className="tag">Semantics</p>
-                        <h3>{mappedAriaRolesToDescriptions[role] || "--"}</h3>
-                      </card-item>
-                    </li>
+                  <div className="list--gap">
+                    <card-item key="semantics">
+                      <h2 id="h2--semantics">Semantics</h2>
+                      <p className="info">
+                        <span role="definition">
+                          <span className="visually-hidden">
+                            <span role="term" aria-labelledby={role} />{" "}
+                            represents{" "}
+                          </span>
+                          {mappedAriaRolesToDescriptions[role] || "--"}
+                        </span>
+                      </p>
+                    </card-item>
                     {abstractAriaRoleTags.map(({ tagName, url, raw }) => (
-                      <li key={tagName}>
-                        <card-item class="card--abstract-role">
-                          <p className="tag">Abstract Role</p>
-                          <svg
-                            fill="none"
-                            aria-hidden="true"
-                            viewBox="0 0 542 542"
+                      <card-item
+                        class="card--abstract-role"
+                        key={"abstract-role-" + raw}
+                      >
+                        <h2 id={"h2--abstract-role-" + raw}>Abstract Role</h2>
+                        <svg
+                          fill="none"
+                          aria-hidden="true"
+                          viewBox="0 0 542 542"
+                        >
+                          <use href={`#icon--${raw}`}></use>
+                        </svg>
+                        <div className="term-dfn" role="definition">
+                          <span
+                            className="info"
+                            role="term"
+                            id={"term--" + raw}
                           >
-                            <use href={`#icon--${raw}`}></use>
-                          </svg>
-                          <h3>{tagName}</h3>
-                          <p className="smaller">
+                            {tagName}
+                          </span>
+                          <span className="note">
                             {mappedAbstractAriaRolesToDescriptions[raw]}
-                          </p>
-                          {abstractAriaRoleTags.length > 1 && (
-                            <>
-                              <hr />
-                              <p>
-                                May be an interactive Widget or non-interactive
-                                Structure, depending on the context.
-                              </p>
-                            </>
-                          )}
-                        </card-item>
-                      </li>
+                          </span>
+                        </div>
+                        {abstractAriaRoleTags.length > 1 && (
+                          <>
+                            <hr role="none" />
+                            <p>
+                              May be an interactive Widget or non-interactive
+                              Structure, depending on the context.
+                            </p>
+                          </>
+                        )}
+                      </card-item>
                     ))}
                     {contentCategoryTags.map(({ tagName, raw, url }) => (
-                      <li key={tagName}>
-                        <card-item>
-                          <p className="tag">Content Category</p>
-                          <svg
-                            fill="none"
-                            aria-hidden="true"
-                            viewBox="0 0 542 542"
+                      <card-item key="content-category">
+                        <h2 id="h2--content-category">Content Category</h2>
+                        <svg
+                          fill="none"
+                          aria-hidden="true"
+                          viewBox="0 0 542 542"
+                        >
+                          <use href={`#icon--${raw}`}></use>
+                        </svg>
+                        <div className="term-dfn" role="definition">
+                          <span
+                            className="info"
+                            role="term"
+                            id={"term--" + raw}
                           >
-                            <use href={`#icon--${raw}`}></use>
-                          </svg>
-                          <h3>{tagName}</h3>
-                          <p className="smaller">
+                            {tagName} Content
+                          </span>
+                          <span className="note">
                             {mappedContentTypesToDescriptions[raw]}
-                          </p>
-                        </card-item>
-                      </li>
+                          </span>
+                        </div>
+                      </card-item>
                     ))}
                     {!contentCategoryTags.length && (
-                      <li key="none">
-                        <card-item>
-                          <p className="tag">Content Category</p>
-                          <svg
-                            fill="none"
-                            aria-hidden="true"
-                            viewBox="0 0 542 542"
-                          >
-                            <use href="#icon--parent"></use>
-                          </svg>
-                          <h3>Only Used with Specific Parent Roles</h3>
-                          <p>
-                            This role must be a direct descendant of one of the
-                            following roles:
-                          </p>
-                          {mappedAriaRolesToContextRoles[role] && (
-                            <ul className="list">
-                              {mappedAriaRolesToContextRoles[role].map(
-                                (contextRole: string) => (
-                                  <li key={contextRole}>{contextRole}</li>
-                                )
-                              )}
-                            </ul>
-                          )}
-                        </card-item>
-                      </li>
+                      <card-item key="content-category">
+                        <h2 id="h2--content-category">Content Category</h2>
+                        <svg
+                          fill="none"
+                          aria-hidden="true"
+                          viewBox="0 0 542 542"
+                        >
+                          <use href="#icon--parent"></use>
+                        </svg>
+                        <p className="info">
+                          Only Used with Specific Parent Roles
+                        </p>
+                        <p>
+                          This role must be a direct descendant of one of the
+                          following roles:
+                        </p>
+                        {mappedAriaRolesToContextRoles[role] && (
+                          <ul className="list">
+                            {mappedAriaRolesToContextRoles[role].map(
+                              (contextRole: string) => (
+                                <li key={contextRole}>{contextRole}</li>
+                              )
+                            )}
+                          </ul>
+                        )}
+                      </card-item>
                     )}
                     {allowedContent.map((item) => {
                       const isArray = Array.isArray(item);
@@ -265,119 +276,101 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                         mappedContentTypesToDescriptions[type];
 
                       return (
-                        <li key={details}>
-                          <card-item>
-                            <p className="tag">Allowed Descendants</p>
-                            <svg
-                              fill="none"
-                              aria-hidden="true"
-                              viewBox="0 0 542 542"
-                            >
-                              <use href="#icon--children"></use>
-                            </svg>
-                            <h3>
-                              {type === "specific"
-                                ? "Specific Guidance"
-                                : `${mappedContentTypesToTitles[type]} Children Allowed`}
-                            </h3>
-                            {description ? (
-                              <p className="smaller">{description}</p>
-                            ) : (
-                              <p>{details}</p>
-                            )}
-                            {type !== "specific" && details ? (
-                              <>
-                                <hr />
-                                <p>{details}</p>
-                              </>
-                            ) : null}
-                          </card-item>
-                        </li>
-                      );
-                    })}
-                    {ariaRolesWithPresentationalChildren.includes(role) && (
-                      <li>
-                        <card-item>
-                          <p className="tag">Note</p>
+                        <card-item key="allowed-descendants">
+                          <h2 id="h2--allowed-descendants">
+                            Allowed Descendants
+                          </h2>
                           <svg
                             fill="none"
                             aria-hidden="true"
                             viewBox="0 0 542 542"
                           >
-                            <use href="#icon--warning"></use>
+                            <use href="#icon--children"></use>
                           </svg>
-                          <h3>Children Become Presentational</h3>
-                          <p className="smaller">
-                            Browsers automatically apply the{" "}
-                            <code>presentation</code> role to all descendant
-                            elements, so their semantics are not conveyed to
-                            assistive technologies.
+                          <p className="info">
+                            {type === "specific"
+                              ? "Specific Guidance"
+                              : `${mappedContentTypesToTitles[type]} Children Allowed`}
                           </p>
+                          {details ? (
+                            <>
+                              <hr role="none" />
+                              <p>{details}</p>
+                            </>
+                          ) : null}
                         </card-item>
-                      </li>
-                    )}
-                    <li>
-                      <card-item>
-                        <p className="tag">Usage</p>
+                      );
+                    })}
+                    {ariaRolesWithPresentationalChildren.includes(role) && (
+                      <card-item key="presentational-children">
+                        <h2 id="h2--presentational-children">Note</h2>
                         <svg
                           fill="none"
                           aria-hidden="true"
                           viewBox="0 0 542 542"
                         >
-                          <use href="#icon--html"></use>
+                          <use href="#icon--warning"></use>
                         </svg>
-                        <h3>HTML</h3>
-                        <p>The following HTML can designate the role:</p>
-                        <ul className="list">
-                          {Array.from(
-                            new Set(
-                              Object.entries(allowedAriaRolesByHtmlElement)
-                                .filter(([_, roles]) => roles.includes(role))
-                                .map(([elementName]) => elementName)
-                                .concat(ariaToHtmlMapping[role] || [])
-                            )
-                          )
-                            .sort((a) => {
-                              if ((ariaToHtmlMapping[role] || []).includes(a)) {
-                                return -1;
-                              }
-
-                              return 1;
-                            })
-                            .map((elementName) => (
-                              <li key={elementName}>
-                                <code>
-                                  {htmlElementsToDisplayNames[elementName] ||
-                                    elementName}
-                                  {(ariaToHtmlMapping[role] || []).includes(
-                                    elementName
-                                  )
-                                    ? ""
-                                    : `[role=${role}]`}
-                                </code>
-                              </li>
-                            ))}
-                          {contentCategories.includes("phrasing") ? (
-                            <li key="span">
-                              <code>span[role={role}]</code>
-                            </li>
-                          ) : (
-                            <>
-                              <li key="div">
-                                <code>div[role={role}]</code>
-                              </li>
-                              <li key="p">
-                                <code>p[role={role}]</code>
-                              </li>
-                            </>
-                          )}
-                          <li key="custom-element">
-                            <code>custom-element[role={role}]</code>
-                          </li>
-                        </ul>
+                        <p className="info">Children Become Presentational</p>
+                        <p className="note">
+                          Browsers automatically apply the{" "}
+                          <code>presentation</code> role to all descendant
+                          elements, so their semantics are not conveyed to
+                          assistive technologies.
+                        </p>
                       </card-item>
-                    </li>
-                  </ul>
+                    )}
+                    <card-item key="usage">
+                      <h2 id="h2--usage">Usage</h2>
+                      <svg fill="none" aria-hidden="true" viewBox="0 0 542 542">
+                        <use href="#icon--html"></use>
+                      </svg>
+                      <p className="info">HTML</p>
+                      <p>The following HTML can designate the role:</p>
+                      <ul className="list">
+                        {Array.from(
+                          new Set(
+                            Object.entries(allowedAriaRolesByHtmlElement)
+                              .filter(([_, roles]) => roles.includes(role))
+                              .map(([elementName]) => elementName)
+                              .concat(ariaToHtmlMapping[role] || [])
+                          )
+                        )
+                          .sort((a) => {
+                            if ((ariaToHtmlMapping[role] || []).includes(a)) {
+                              return -1;
+                            }
+
+                            return 1;
+                          })
+                          .map((elementName) => (
+                            <li key={elementName}>
+                              <code>
+                                {htmlElementsToDisplayNames[elementName] ||
+                                  elementName}
+                                {(ariaToHtmlMapping[role] || []).includes(
+                                  elementName
+                                )
+                                  ? ""
+                                  : `[role=${role}]`}
+                              </code>
+                            </li>
+                          ))}
+                        {contentCategories.includes("phrasing") ? (
+                          <li key="span">
+                            <code>span[role={role}]</code>
+                          </li>
+                        ) : (
+                          <li key="div">
+                            <code>div[role={role}]</code>
+                          </li>
+                        )}
+                        <li key="custom-element">
+                          <code>custom-element[role={role}]</code>
+                        </li>
+                      </ul>
+                    </card-item>
+                  </div>
                 </div>
               </div>
             </main>

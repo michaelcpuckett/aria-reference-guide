@@ -122,12 +122,18 @@ card-item {
   width: 100%;
   background-color: var(--darkest-color, black);
 
-  & h3 {
-    font-size: 1.25em;
-    margin-top: 0;
-    margin-bottom: 0;
+  & h2 {
+    font-size: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    grid-column: 1 / -1;
   }
 
+  & p {
+    grid-column: 1 / -1;
+  }
+
+  & h2,
   & p {
     margin-top: 0;
     margin-bottom: 0;
@@ -137,11 +143,24 @@ card-item {
     width: 100%;
   }
 
+  & .info {
+    font-size: 1.25em;
+    font-weight: bold;
+    display: block;
+    grid-column: 1 / -1;
+  }
+
+  & .note {
+    font-size: 0.875em;
+    display: block;
+    grid-column: 1 / -1;
+  }
+
   & > * {
     grid-column: 1 / -1;
   }
 
-  &:has(> svg) > h3 {
+  &:has(> svg) .info {
     grid-column: 2 / 3;
   }
 
@@ -149,25 +168,14 @@ card-item {
     width: 2em;
     grid-column: 1 / 2;
   }
+
+  & .term-dfn {
+    display: contents;
+  }
 }
 
 .list--gap {
   display: grid;
   gap: 1em;
   margin: 0.5em 0;
-}
-
-.smaller {
-  font-size: 0.875em;
-}
-
-.larger {
-  font-size: 1.125em;
-}
-
-.tag {
-  font-size: 0.75em;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: bold;
 }

@@ -7,7 +7,7 @@
 }
 
 :where(:focus-visible) {
-  outline: 4px dashed black;
+  outline: 4px dashed;
   outline-offset: 1px;
 }
 
@@ -245,12 +245,21 @@ body {
   text-align: center;
   display: flex;
   width: auto;
+  color: canvas;
   aspect-ratio: 1;
   line-height: 1;
 
   &:focus-within {
-    outline: 4px dashed black;
+    outline: 4px dashed;
     outline-offset: 1px;
+  }
+
+  &:hover {
+    background-color: white;
+  }
+
+  &:has(:checked) {
+    background-color: white;
   }
 }
 
