@@ -172,6 +172,10 @@ card-item {
   & .term-dfn {
     display: contents;
   }
+
+  & dfn {
+    font-style: normal;
+  }
 }
 
 .list--gap {

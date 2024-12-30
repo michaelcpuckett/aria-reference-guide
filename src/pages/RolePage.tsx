@@ -167,13 +167,10 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                     <card-item key="semantics">
                       <h2 id="h2--semantics">Semantics</h2>
                       <p className="info">
-                        <span role="definition">
-                          <span className="visually-hidden">
-                            <span role="term" aria-labelledby={role} />{" "}
-                            represents{" "}
-                          </span>
-                          {mappedAriaRolesToDescriptions[role] || "--"}
+                        <span className="visually-hidden">
+                          <dfn aria-labelledby={role} /> represents{" "}
                         </span>
+                        {mappedAriaRolesToDescriptions[role] || "--"}
                       </p>
                     </card-item>
                     {abstractAriaRoleTags.map(({ tagName, url, raw }) => (
@@ -189,18 +186,12 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                         >
                           <use href={`#icon--${raw}`}></use>
                         </svg>
-                        <div className="term-dfn" role="definition">
-                          <span
-                            className="info"
-                            role="term"
-                            id={"term--" + raw}
-                          >
-                            {tagName}
-                          </span>
+                        <p className="term-dfn" role="paragraph">
+                          <dfn className="info">{tagName}</dfn>
                           <span className="note">
                             {mappedAbstractAriaRolesToDescriptions[raw]}
                           </span>
-                        </div>
+                        </p>
                         {abstractAriaRoleTags.length > 1 && (
                           <>
                             <hr role="none" />
@@ -222,18 +213,12 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                         >
                           <use href={`#icon--${raw}`}></use>
                         </svg>
-                        <div className="term-dfn" role="definition">
-                          <span
-                            className="info"
-                            role="term"
-                            id={"term--" + raw}
-                          >
-                            {tagName} Content
-                          </span>
+                        <p className="term-dfn" role="paragraph">
+                          <dfn className="info">{tagName} Content</dfn>
                           <span className="note">
                             {mappedContentTypesToDescriptions[raw]}
                           </span>
-                        </div>
+                        </p>
                       </card-item>
                     ))}
                     {!contentCategoryTags.length && (
