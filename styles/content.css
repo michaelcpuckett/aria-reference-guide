@@ -126,6 +126,10 @@ card-item {
 
   & hr {
     width: 100%;
+
+    @media print {
+      display: none;
+    }
   }
 
   & .info {
