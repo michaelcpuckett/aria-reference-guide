@@ -186,7 +186,7 @@ export const allowedAriaRolesByHtmlElement = {
   sub: ["subscript"],
   sup: ["superscript"],
   summary: ["button"],
-  svg: ["*"],
+  svg: ["img"],
   table: ["*"],
   tbody: ["*"],
   td: ["cell", "gridcell"],
