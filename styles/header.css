@@ -9,11 +9,11 @@
     color: canvas;
   }
 
-  @media screen and (width > 720px) {
-    text-align: center;
-  }
-
   &:focus-visible {
     outline: 4px dashed;
+  }
+
+  @media screen and (width > 720px) {
+    text-align: center;
   }
 }

@@ -53,12 +53,6 @@ ul {
   }
 }
 
-svg {
-  @media print {
-    display: none;
-  }
-}
-
 summary {
   @media screen {
     cursor: pointer;
@@ -90,14 +84,17 @@ abbr[title] {
 }
 
 :root {
-  color-scheme: dark;
+  color-scheme: light dark;
   display: grid;
   font-size: calc((18 / 16) * 100%);
   height: 100%;
   line-height: 1.5;
-  overflow: hidden;
   overscroll-behavior: none;
   font-family: system-ui, sans-serif;
+
+  @media screen {
+    overflow: hidden;
+  }
 
   @media (max-width: 320px) {
     -webkit-hyphens: auto;
@@ -126,27 +123,31 @@ body {
 }
 
 .root {
-  display: grid;
-  grid-template-rows: auto minmax(0px, 1fr) auto;
-  height: 100%;
-  container-name: root;
-  container-type: size;
+  @media screen {
+    display: grid;
+    grid-template-rows: auto minmax(0px, 1fr) auto;
+    height: 100%;
+    container-name: root;
+    container-type: size;
+  }
+
+  @media print {
+    display: contents;
+  }
 }
 
-.top,
-.bottom {
-  background: rgb(208, 173, 240);
+.top {
+  background: VisitedText;
 }
 
-.top,
-.bottom {
+.top {
   padding: 1rem;
   padding-left: calc(1rem + env(safe-area-inset-left));
   padding-right: calc(1rem + env(safe-area-inset-right));
 }
 
 .menu {
-  background-color: black;
+  background-color: light-dark(white, black);
   padding: 1rem;
   padding-left: calc(1rem + env(safe-area-inset-left));
 }
@@ -180,6 +181,10 @@ body {
     align-items: center;
     gap: 1rem;
   }
+
+  @media print {
+    display: none;
+  }
 }
 
 .middle {
@@ -198,7 +203,16 @@ body {
 .menu,
 .main {
   display: grid;
-  overflow-y: auto;
+
+  @media screen {
+    overflow-y: auto;
+  }
+}
+
+.menu {
+  @media print {
+    display: none;
+  }
 }
 
 .main {
@@ -233,10 +247,6 @@ body {
   }
 }
 
-.bottom {
-  touch-action: none;
-}
-
 .switch {
   padding: 0.5rem;
   cursor: pointer;
@@ -255,11 +265,11 @@ body {
   }
 
   &:hover {
-    background-color: white;
+    background-color: canvastext;
   }
 
   &:has(:checked) {
-    background-color: white;
+    background-color: canvastext;
   }
 }
 

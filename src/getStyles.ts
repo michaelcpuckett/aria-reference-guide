@@ -1,8 +1,6 @@
 import fs from "fs";
 import path from "path";
 
-import colorsCss from "../styles/colors.css";
-
 function getCssFile(filePath: string) {
   return fs.readFileSync(path.resolve(filePath), "utf8");
 }
@@ -18,6 +16,5 @@ export default function getStyles() {
     ${headerCss}
     ${navCss}
     ${contentCss}
-    ${colorsCss}
   `;
 }

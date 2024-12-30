@@ -1,8 +1,4 @@
 nav {
-  @media print {
-    display: none;
-  }
-
   @container (width <= 720px) {
     text-align: center;
   }
@@ -16,30 +12,6 @@ nav {
 .nav__list-item {
   display: block;
   border-radius: 0.5rem;
-
-  &:has(.nav__list-item__details:not([open])) {
-    border: 2px solid var(--medium-color);
-    color: var(--darkest-color);
-    background-color: var(--lightest-color);
-  }
-
-  &:has(.nav__list-item__details[open]) {
-    border: 2px solid var(--medium-color);
-    color: var(--darkest-color);
-    background-color: var(--lightest-color);
-  }
-
-  &:has(.nav__list-item__summary:hover):has(
-      .nav__list-item__details:not([open])
-    ) {
-    color: black;
-    border-color: var(--dark-color);
-    background-color: var(--dark-color);
-
-    & .nav__list-item__summary {
-      color: white;
-    }
-  }
 }
 
 .nav__list-item__summary {

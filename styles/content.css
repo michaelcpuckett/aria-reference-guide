@@ -27,24 +27,6 @@ main {
   margin: 0;
 }
 
-.content__tag {
-  @media screen {
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.5rem;
-    font-weight: bold;
-    font-size: 0.8rem;
-    border: 2px solid var(--medium-color, rgb(75, 75, 75));
-    background-color: var(--lightest-color, rgb(230, 230, 230));
-    color: var(--darkest-color, black);
-
-    &:hover {
-      background-color: var(--dark-color, rgb(55, 55, 55));
-      border-color: var(--dark-color, rgb(55, 55, 55));
-      color: white;
-    }
-  }
-}
-
 .content__heading {
   margin: 0;
 
@@ -111,16 +93,19 @@ main {
 card-item {
   display: grid;
   grid-template-columns: auto minmax(0px, 1fr);
-  border: 1px solid;
-  padding: 1em;
   column-gap: 0.5em;
   row-gap: 0.25em;
-  border-radius: 0.5em;
   hyphens: auto;
   font-size: 0.875em;
   align-items: center;
   width: 100%;
-  background-color: var(--darkest-color, black);
+
+  @media screen {
+    border: 1px solid;
+    padding: 1em;
+    border-radius: 0.5em;
+    background-color: light-dark(white, black);
+  }
 
   & h2 {
     font-size: 0.75em;
