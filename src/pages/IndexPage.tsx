@@ -12,7 +12,7 @@ export function IndexPage() {
         <meta charSet="utf-8" />
         <meta
           name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"
+          content="width=device-width, initial-scale=1, viewport-fit=cover"
         />
         <title>{pageTitle}</title>
         <meta
@@ -31,8 +31,11 @@ export function IndexPage() {
               {pageTitle}
             </a>
             <menu-visibility-switch>
-              <label className="switch" id="menu-visibility-switch-label">
-                <span className="visually-hidden">Toggle Menu</span>
+              <label
+                className="switch"
+                id="menu-visibility-switch-label"
+                aria-label="Toggle Menu"
+              >
                 <input
                   id="menu-visibility-switch"
                   type="checkbox"

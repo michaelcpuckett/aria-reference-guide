@@ -80,7 +80,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
         <meta charSet="utf-8" />
         <meta
           name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"
+          content="width=device-width, initial-scale=1, viewport-fit=cover"
         />
         <title>{`The ${role} role - ${pageTitle}`}</title>
         <meta
@@ -98,8 +98,11 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
               {pageTitle}
             </a>
             <menu-visibility-switch>
-              <label className="switch" id="menu-visibility-switch-label">
-                <span className="visually-hidden">Toggle Menu</span>
+              <label
+                className="switch"
+                id="menu-visibility-switch-label"
+                aria-label="Toggle Menu"
+              >
                 <input
                   id="menu-visibility-switch"
                   type="checkbox"
@@ -168,7 +171,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                       <h2 id="h2--semantics">Semantics</h2>
                       <p className="info">
                         <span className="visually-hidden">
-                          <dfn aria-labelledby={role} /> represents{" "}
+                          <dfn>{role}</dfn> represents{" "}
                         </span>
                         {mappedAriaRolesToDescriptions[role] || "--"}
                       </p>
