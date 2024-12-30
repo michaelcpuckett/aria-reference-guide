@@ -170,9 +170,6 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                     <card-item key="semantics">
                       <h2 id="h2--semantics">Semantics</h2>
                       <p className="info">
-                        <span className="visually-hidden">
-                          <dfn>{role}</dfn> represents{" "}
-                        </span>
                         {mappedAriaRolesToDescriptions[role] || "--"}
                       </p>
                     </card-item>
@@ -280,12 +277,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                               ? "Specific Guidance"
                               : `${mappedContentTypesToTitles[type]} Children Allowed`}
                           </p>
-                          {details ? (
-                            <>
-                              <hr role="none" />
-                              <p>{details}</p>
-                            </>
-                          ) : null}
+                          {details ? <p>{details}</p> : null}
                         </card-item>
                       );
                     })}
@@ -313,8 +305,9 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                       <svg fill="none" aria-hidden="true" viewBox="0 0 542 542">
                         <use href="#icon--html"></use>
                       </svg>
-                      <p className="info">HTML</p>
-                      <p>The following HTML can designate the role:</p>
+                      <p className="info">
+                        Elements that can designate the role in HTML:
+                      </p>
                       <ul className="list">
                         {Array.from(
                           new Set(

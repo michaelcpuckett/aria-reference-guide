@@ -133,6 +133,7 @@ card-item {
   }
 
   & .info {
+    line-height: 1.25;
     font-size: 1.25em;
     font-weight: bold;
     display: block;
