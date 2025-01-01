@@ -1,10 +1,10 @@
 export const mappedAriaRolesToDescriptions = {
   alert:
-    "A type of live region with important and usually time-sensitive information. Alerts are used to convey messages that may be immediately important to users.",
+    "A type of live region with important and usually time-sensitive information, used to convey messages that may be immediately important to users.",
   alertdialog:
-    "A type of dialog that contains an alert message. Alert dialogs are used to convey messages to alert the user. Unlike alert, alertdialog can receive a response from the user.",
+    "A type of dialog that contains an alert message, used to convey messages to alert the user, which can receive a response from the user.",
   application:
-    "A container with focusable descendants, similar to a composite, but with a non-standard interaction model. For user agents that support browse modes, this role switches to passthrough mode so that user events can be processed with JavaScript.",
+    "A container with focusable descendants, similar to a composite, but with a non-standard interaction model, switching to passthrough mode so that user events can be processed with JavaScript.",
   article:
     "A section of a page that forms an independent part of a document, page, or site.",
   banner:
@@ -57,7 +57,7 @@ export const mappedAriaRolesToDescriptions = {
   log: "A type of live region where new information is added in meaningful order and old information may disappear.",
   main: "A landmark containing the main content of a document.",
   math: "A mathematical expression.",
-  menu: "A type of widget that offers a list of choices to the user, often a list of common actions or functions that the user can invoke. The menu role is appropriate when a list of menu items is presented in a manner similar to a menu on a desktop application.",
+  menu: "A type of widget that offers a list of choices to the user, often a list of common actions or functions that the user can invoke, appropriate when a list of menu items is presented in a manner similar to a menu on a desktop application.",
   menubar:
     "A presentation of menu that usually remains visible and is usually presented horizontally.",
   menuitem: "An option in a set of choices contained by a menu or menubar.",
@@ -79,7 +79,7 @@ export const mappedAriaRolesToDescriptions = {
     "An element whose implicit native role semantics will not be mapped to the accessibility API.",
   none: "An element whose implicit native role semantics will not be mapped to the accessibility API.",
   progressbar:
-    "An element that displays the progress status for tasks that take a long time. A progressbar indicates that the user's request has been received and the application is making progress toward completing the requested action.",
+    "An element that displays the progress status for tasks that take a long time, indicating that the user's request has been received and the application is making progress toward completing the requested action.",
   radiogroup: "A group of radio buttons.",
   radio:
     "A checkable input in a group of elements with the same role, only one of which can be checked at a time.",
