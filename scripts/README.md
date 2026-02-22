@@ -7,9 +7,7 @@ of the application. These are imported directly into the HTML file.
 
 - `components/`
 
-  - Contains the web components that are used in the application.
-  - The components do not have Shadow DOM, and instead enhance the descendant
-    DOM elements.
+  - Contains optional component scripts that enhance plain HTML elements.
 
 - `utilities/`
 

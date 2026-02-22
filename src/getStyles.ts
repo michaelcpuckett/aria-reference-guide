@@ -3,31 +3,21 @@ import cssnano from "cssnano";
 import fs from "fs";
 import path from "path";
 import postcss from "postcss";
-import postcssNesting from "postcss-nesting";
+import tailwindcss from "tailwindcss";
 
 function getCssFile(filePath: string) {
   return fs.readFileSync(path.resolve(filePath), "utf8");
 }
 
 export default async function getStyles() {
-  const baseCss = getCssFile("./styles/base.css");
-  const headerCss = getCssFile("./styles/header.css");
-  const navCss = getCssFile("./styles/nav.css");
-  const contentCss = getCssFile("./styles/content.css");
-
-  const authoredStyles = `
-    ${baseCss}
-    ${headerCss}
-    ${navCss}
-    ${contentCss}
-  `;
+  const authoredStyles = getCssFile("./styles/tailwind.css");
 
   const cssResult = await postcss([
+    tailwindcss("./tailwind.config.cjs"),
+    autoprefixer,
     cssnano({
       preset: "default",
     }),
-    autoprefixer,
-    postcssNesting(),
   ])
     .process(authoredStyles, { from: "styles.css", to: "styles.css" })
     .then((result: postcss.Result) => {

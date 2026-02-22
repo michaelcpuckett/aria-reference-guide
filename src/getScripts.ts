@@ -2,15 +2,17 @@ import fs from "fs";
 import path from "path";
 
 const filterJsFiles = (file: string) => file.endsWith(".js");
+const getDirectoryFiles = (dir: string) => {
+  const absolutePath = path.resolve(dir);
+  if (!fs.existsSync(absolutePath)) return [];
+  if (!fs.statSync(absolutePath).isDirectory()) return [];
+
+  return fs.readdirSync(absolutePath).filter(filterJsFiles);
+};
 
 export default async function getScripts() {
-  const utilityFiles = fs
-    .readdirSync(path.resolve("./scripts/utilities"))
-    .filter(filterJsFiles);
-
-  const componentFiles = fs
-    .readdirSync(path.resolve("./scripts/components"))
-    .filter(filterJsFiles);
+  const utilityFiles = getDirectoryFiles("./scripts/utilities");
+  const componentFiles = getDirectoryFiles("./scripts/components");
 
   const getJsFiles = async (files: string[], filePath: string) => {
     return files

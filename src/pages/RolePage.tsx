@@ -1,26 +1,28 @@
+import type { ReactNode } from "react";
 import {
   allowedAriaRolesByHtmlElement,
   ariaRolesByAbstractRole,
   ariaRolesWithPresentationalChildren,
   ariaToHtmlMapping,
+  htmlElementsToContentCategories,
   htmlElementsToDisplayNames,
   links,
   mappedAbstractAriaRolesToDescriptions,
   mappedAbstractAriaRolesToTitles,
   mappedAbstractAriaRolesToUrls,
+  mappedAriaRolesToAdditionalDescriptions,
   mappedAriaRolesToAllowedDescendants,
   mappedAriaRolesToContentCategories,
   mappedAriaRolesToContextRoles,
   mappedAriaRolesToDescriptions,
   mappedAriaRolesToDisplayNames,
+  mappedContentTypesToDescriptions,
   mappedContentTypesToTitles,
   mappedContentTypesToUrls,
 } from "../../data";
-import { mappedContentTypesToDescriptions } from "../../data/mappedContentTypesToDescriptions";
 import { ExternalLinkIcon, IconDefinitions } from "../components/Icons";
 import { MenuVisibilitySwitch } from "../components/MenuVisibilitySwitch";
 import { Navigation } from "../components/Navigation";
-import { CustomElement } from "../types";
 
 interface Tag {
   tagName: string;
@@ -33,9 +35,63 @@ interface RolePageProps {
   abstractAriaRole: string;
 }
 
+function RoleSection({
+  id,
+  title,
+  children,
+}: {
+  id: string;
+  title: string;
+  children: ReactNode;
+}) {
+  return (
+    <section className="w-full rounded-lg border border-current bg-white p-4 text-sm hyphens-auto dark:bg-black flex flex-col gap-3">
+      <h2
+        className="m-0 text-xs uppercase tracking-[2px] opacity-60 first:mt-0"
+        id={id}
+      >
+        {title}
+      </h2>
+      {children}
+    </section>
+  );
+}
+
+function DetailList({ children }: { children: ReactNode }) {
+  return <ul className="m-0 flex list-none flex-col gap-3 p-0">{children}</ul>;
+}
+
+function BulletList({ children }: { children: ReactNode }) {
+  return <ul className="m-0 list-disc space-y-2 ps-5">{children}</ul>;
+}
+
 export function RolePage({ role, abstractAriaRole }: RolePageProps) {
   const roleTitle = mappedAriaRolesToDisplayNames[role] || role;
   const pageTitle = "ARIA Reference Guide";
+  const pageHeading = `The ${role} role`;
+  const pageHeadingHtml = {
+    __html: `<span aria-hidden="true">The ${roleTitle} role</span>`,
+  };
+  const pageDocumentTitle = `${pageHeading} - ${pageTitle}`;
+  const roleDescription = mappedAriaRolesToDescriptions[role] || "--";
+  const roleAdditionalDescription =
+    mappedAriaRolesToAdditionalDescriptions[role] || null;
+  const hasRoleAdditionalDescription = !!roleAdditionalDescription;
+  const roleMetaDescription = roleDescription === "--" ? "" : roleDescription;
+  const roleWildcard = "*";
+  const semanticContentCategories = ["flow", "phrasing", "interactive"];
+  const normalizeSemanticCategories = (categories: string[]) => {
+    const filtered = categories.filter((category: string) =>
+      semanticContentCategories.includes(category),
+    );
+
+    // Phrasing is a subset of flow; prefer the more specific bucket.
+    if (filtered.includes("phrasing") && filtered.includes("flow")) {
+      return filtered.filter((category) => category !== "flow");
+    }
+
+    return filtered;
+  };
 
   const abstractAriaRoleTags = Object.entries(ariaRolesByAbstractRole)
     .filter(([, value]) => value.includes(role))
@@ -46,24 +102,12 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
       url: mappedAbstractAriaRolesToUrls[key] || "",
       raw: key,
     }));
+  const hasAbstractAriaRoleTags = abstractAriaRoleTags.length > 0;
+  const showAbstractAriaRoleContextNote = abstractAriaRoleTags.length > 1;
 
   const contentCategories = mappedAriaRolesToContentCategories[role] || [];
-
-  const filteredContentCategories = contentCategories.filter(
-    (contentCategory: string) =>
-      ["flow", "phrasing", "interactive"].includes(contentCategory)
-  );
-
-  if (
-    filteredContentCategories.includes("flow") &&
-    filteredContentCategories.includes("phrasing")
-  ) {
-    // All `phrasing` roles are also `flow` roles
-    filteredContentCategories.splice(
-      filteredContentCategories.indexOf("flow"),
-      1
-    );
-  }
+  const filteredContentCategories =
+    normalizeSemanticCategories(contentCategories);
 
   const contentCategoryTags: Tag[] = filteredContentCategories
     .sort()
@@ -72,8 +116,116 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
       url: mappedContentTypesToUrls[contentCategory] || "",
       raw: contentCategory,
     }));
+  const hasContentCategoryTags = contentCategoryTags.length > 0;
 
-  const allowedContent = mappedAriaRolesToAllowedDescendants[role] || ["N/A"];
+  const allowedDescendantRule = mappedAriaRolesToAllowedDescendants[role] || {
+    category: "specific",
+    note: "N/A",
+  };
+  const allowedDescendantTitle =
+    allowedDescendantRule.category === "specific"
+      ? "Specific Guidance"
+      : `${mappedContentTypesToTitles[allowedDescendantRule.category]} Children Allowed`;
+  const allowedDescendantNote = allowedDescendantRule.note || null;
+  const roleCategories = normalizeSemanticCategories(
+    mappedAriaRolesToContentCategories[role] || [],
+  );
+  const nativeRoleElements: string[] = Array.from(
+    new Set((ariaToHtmlMapping[role] || []) as string[]),
+  );
+  const explicitRoleElements: string[] = Object.entries(
+    allowedAriaRolesByHtmlElement,
+  )
+    .filter(([, roles]) => roles.includes(role))
+    .map(([elementName]) => elementName);
+  const explicitUsageElements: string[] = Array.from(
+    new Set<string>(nativeRoleElements.concat(explicitRoleElements)),
+  ).sort((a, b) => {
+    const aNative = nativeRoleElements.includes(a);
+    const bNative = nativeRoleElements.includes(b);
+
+    if (aNative && !bNative) {
+      return -1;
+    }
+
+    if (!aNative && bNative) {
+      return 1;
+    }
+
+    return a.localeCompare(b);
+  });
+  const explicitUsageElementSet = new Set(explicitUsageElements);
+  const wildcardUsageElements: string[] = Object.entries(
+    allowedAriaRolesByHtmlElement,
+  )
+    .filter(([elementName, roles]) => {
+      if (!roles.includes(roleWildcard)) {
+        return false;
+      }
+
+      if (explicitUsageElementSet.has(elementName)) {
+        return false;
+      }
+
+      const knownElementCategories =
+        htmlElementsToContentCategories[elementName];
+
+      // If category metadata is unavailable, keep prior behavior.
+      if (!roleCategories.length || knownElementCategories === undefined) {
+        return true;
+      }
+
+      const elementCategories = normalizeSemanticCategories(
+        knownElementCategories,
+      );
+
+      return roleCategories.some((category: string) =>
+        elementCategories.includes(category),
+      );
+    })
+    .map(([elementName]) => elementName)
+    .sort((a, b) => a.localeCompare(b));
+  const explicitUsageItems = explicitUsageElements.map((elementName) => {
+    const elementDisplayName =
+      htmlElementsToDisplayNames[elementName] || elementName;
+    const explicitRoleLabel = nativeRoleElements.includes(elementName)
+      ? ""
+      : `[role=${role}]`;
+
+    return {
+      key: elementName,
+      label: (
+        <>
+          {elementDisplayName}
+          {explicitRoleLabel}
+        </>
+      ),
+    };
+  });
+  const wildcardUsageItems = wildcardUsageElements.map((elementName) => {
+    const elementDisplayName =
+      htmlElementsToDisplayNames[elementName] || elementName;
+
+    return {
+      key: elementName,
+      label: (
+        <>
+          {elementDisplayName}
+          {`[role=${role}]`}
+        </>
+      ),
+    };
+  });
+  const hasExplicitUsageItems = explicitUsageItems.length > 0;
+  const hasWildcardUsageItems = wildcardUsageItems.length > 0;
+  const contextRoles = mappedAriaRolesToContextRoles[role] || [];
+  const hasContextRoles = contextRoles.length > 0;
+  const hasPresentationalChildren =
+    ariaRolesWithPresentationalChildren.includes(role);
+  const roleLinks = Object.entries(links).map(([name, link]) => ({
+    name,
+    href: link + role,
+  }));
 
   return (
     <html lang="en">
@@ -83,47 +235,58 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
           name="viewport"
           content="width=device-width, initial-scale=1, viewport-fit=cover"
         />
-        <title>{`The ${role} role - ${pageTitle}`}</title>
-        <meta
-          name="description"
-          content={mappedAriaRolesToDescriptions[role]}
-        />
+        <title>{pageDocumentTitle}</title>
+        <meta name="description" content={roleMetaDescription} />
         <link rel="stylesheet" href="/styles.css" />
         <link rel="manifest" href="/manifest.json" />
       </head>
-      <body>
+      <body className="h-full overflow-hidden">
         <IconDefinitions />
-        <div className="root">
-          <header role="banner" className="top">
-            <a href="/" className="page-heading">
+        <div className="flex h-full min-h-0 flex-col print:contents max-[720px]:[&:has(#menu-visibility-switch:not(:checked))_#nav]:hidden max-[720px]:[&:has(#menu-visibility-switch:checked)_main]:hidden">
+          <header
+            role="banner"
+            className="flex flex-col bg-[VisitedText] p-4 pt-[calc(1rem+env(safe-area-inset-top))] pl-[calc(1rem+env(safe-area-inset-left))] pr-[calc(1rem+env(safe-area-inset-right))] touch-none max-[720px]:flex-row max-[720px]:items-center max-[720px]:gap-4 print:hidden"
+          >
+            <a
+              href="/"
+              className="m-0 self-center font-bold uppercase leading-tight tracking-[0.15rem] text-[canvas] min-[721px]:text-center focus-visible:outline-4 focus-visible:outline-dashed"
+            >
               {pageTitle}
             </a>
             <MenuVisibilitySwitch />
           </header>
-          <div className="middle">
-            <div className="menu" id="nav">
+          <div className="flex min-h-0 flex-1 flex-col min-[721px]:flex-row">
+            <div
+              className="min-h-0 overflow-y-auto bg-white p-4 pl-[calc(1rem+env(safe-area-inset-left))] min-[721px]:w-[280px] min-[721px]:shrink-0 dark:bg-black print:hidden"
+              id="nav"
+            >
               <Navigation role={role} />
             </div>
-            <main className="main">
+            <main className="min-h-0 overflow-y-auto p-4 pr-[calc(1rem+env(safe-area-inset-right))] text-lg min-[721px]:min-w-0 min-[721px]:flex-1 min-[721px]:p-12 min-[721px]:pr-[calc(3rem+env(safe-area-inset-right))] print:[&_a]:font-bold print:[&_a]:no-underline print:[&_a]:text-inherit">
               <div
-                className={`content content--is-aria-role-${role} content--abstract-role-${abstractAriaRole}`}
+                className="w-full min-[721px]:mx-auto min-[721px]:max-w-[860px] [&_a:focus-visible]:outline-offset-4"
+                data-role={role}
+                data-abstract-role={abstractAriaRole}
               >
-                <div className="content__header">
-                  <div className="content__header__info">
-                    <div className="content__heading__container">
+                <div className="mb-4 flex">
+                  <div className="mb-2 flex flex-1 flex-col items-start gap-2">
+                    <div className="flex flex-col gap-4">
                       <h1
-                        className="content__heading"
+                        className="m-0 text-4xl leading-tight tracking-[-0.1rem] max-[320px]:text-[1.75rem]"
                         id={role}
-                        aria-label={`The ${role} role`}
+                        aria-label={pageHeading}
                         tabIndex={-1}
-                        dangerouslySetInnerHTML={{
-                          __html: `<span aria-hidden="true">The ${roleTitle} role</span>`,
-                        }}
+                        dangerouslySetInnerHTML={pageHeadingHtml}
                       ></h1>
                     </div>
-                    <div className="content__links">
-                      {Object.entries(links).map(([name, link]) => (
-                        <a key={link} href={link + role} target="_blank">
+                    <div className="flex flex-wrap gap-3 print:hidden">
+                      {roleLinks.map(({ name, href }) => (
+                        <a
+                          className="inline-flex items-center gap-1 rounded border border-current px-3 py-1 text-sm font-bold no-underline hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+                          key={href}
+                          href={href}
+                          target="_blank"
+                        >
                           {name}
                           <ExternalLinkIcon />
                         </a>
@@ -131,208 +294,219 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                     </div>
                   </div>
                 </div>
-                <div className="content__details">
-                  <div className="list--gap">
-                    <card-item key="semantics">
-                      <h2 id="h2--semantics">Semantics</h2>
-                      <p className="info">
-                        {mappedAriaRolesToDescriptions[role] || "--"}
+                <div>
+                  <div className="my-2 flex flex-col gap-4">
+                    <RoleSection id="h2--semantics" title="Semantics">
+                      <p className="block text-[1.25em] font-bold leading-tight">
+                        {roleDescription}
                       </p>
-                    </card-item>
-                    {abstractAriaRoleTags.map(({ tagName, url, raw }) => (
-                      <card-item
-                        class="card--abstract-role"
-                        key={"abstract-role-" + raw}
+                      {hasRoleAdditionalDescription && (
+                        <details className="text-[0.875em]">
+                          <summary>
+                            Additional info from the ARIA specification
+                          </summary>
+                          <div className="pl-8 mt-2 [&_p]:my-3 [&_p:first-child]:mt-0 [&_p:last-child]:mb-0">
+                            {roleAdditionalDescription}
+                          </div>
+                        </details>
+                      )}
+                    </RoleSection>
+                    {hasAbstractAriaRoleTags && (
+                      <RoleSection
+                        id="h2--abstract-roles"
+                        title="Abstract Role"
                       >
-                        <h2 id={"h2--abstract-role-" + raw}>Abstract Role</h2>
-                        <svg
-                          fill="none"
-                          aria-hidden="true"
-                          viewBox="0 0 542 542"
-                        >
-                          <use href={`#icon--${raw}`}></use>
-                        </svg>
-                        <p className="term-dfn" role="paragraph">
-                          <dfn className="info">{tagName}</dfn>
-                          <span className="note">
-                            {mappedAbstractAriaRolesToDescriptions[raw]}
-                          </span>
-                        </p>
-                        {abstractAriaRoleTags.length > 1 && (
-                          <>
-                            <hr role="none" />
-                            <p>
-                              May be an interactive Widget or non-interactive
-                              Structure, depending on the context.
-                            </p>
-                          </>
+                        <DetailList>
+                          {abstractAriaRoleTags.map(({ tagName, raw }) => (
+                            <li
+                              className="flex items-start gap-2"
+                              key={"abstract-role-" + raw}
+                            >
+                              <svg
+                                className="h-8 w-8 flex-none"
+                                fill="none"
+                                aria-hidden="true"
+                                viewBox="0 0 542 542"
+                              >
+                                <use href={`#icon--${raw}`}></use>
+                              </svg>
+                              <p className="m-0 min-w-0 flex-1">
+                                <dfn className="block text-[1.25em] font-bold leading-tight not-italic">
+                                  {tagName}
+                                </dfn>
+                                <span className="block text-[0.875em]">
+                                  {mappedAbstractAriaRolesToDescriptions[raw]}
+                                </span>
+                              </p>
+                            </li>
+                          ))}
+                        </DetailList>
+                        {showAbstractAriaRoleContextNote && (
+                          <p>
+                            May be an interactive Widget or non-interactive
+                            Structure, depending on the context.
+                          </p>
                         )}
-                      </card-item>
-                    ))}
-                    {contentCategoryTags.map(({ tagName, raw, url }) => (
-                      <card-item key="content-category">
-                        <h2 id="h2--content-category">Content Category</h2>
-                        <svg
-                          fill="none"
-                          aria-hidden="true"
-                          viewBox="0 0 542 542"
-                        >
-                          <use href={`#icon--${raw}`}></use>
-                        </svg>
-                        <p className="term-dfn" role="paragraph">
-                          <dfn className="info">{tagName} Content</dfn>
-                          <span className="note">
-                            {mappedContentTypesToDescriptions[raw]}
-                          </span>
-                        </p>
-                      </card-item>
-                    ))}
-                    {!contentCategoryTags.length && (
-                      <card-item key="content-category">
-                        <h2 id="h2--content-category">Content Category</h2>
-                        <svg
-                          fill="none"
-                          aria-hidden="true"
-                          viewBox="0 0 542 542"
-                        >
-                          <use href="#icon--parent"></use>
-                        </svg>
-                        <p className="info">
-                          Only Used with Specific Parent Roles
-                        </p>
-                        <p>
-                          This role must be a direct descendant of one of the
-                          following roles:
-                        </p>
-                        {mappedAriaRolesToContextRoles[role] && (
-                          <ul className="list">
-                            {mappedAriaRolesToContextRoles[role].map(
-                              (contextRole: string) => (
-                                <li key={contextRole}>{contextRole}</li>
-                              )
-                            )}
-                          </ul>
-                        )}
-                      </card-item>
+                      </RoleSection>
                     )}
-                    {allowedContent.map((item) => {
-                      const isArray = Array.isArray(item);
-
-                      if (!isArray) {
-                        throw new Error("Expected an array");
-                      }
-
-                      const [type, details] = item;
-                      const description =
-                        mappedContentTypesToDescriptions[type];
-
-                      return (
-                        <card-item key="allowed-descendants">
-                          <h2 id="h2--allowed-descendants">
-                            Allowed Descendants
-                          </h2>
+                    {hasContentCategoryTags && (
+                      <RoleSection
+                        id="h2--content-categories"
+                        title="Content Categories"
+                      >
+                        <DetailList>
+                          {contentCategoryTags.map(({ tagName, raw }) => (
+                            <li
+                              className="flex items-start gap-2"
+                              key={"content-category-" + raw}
+                            >
+                              <svg
+                                className="h-8 w-8 flex-none"
+                                fill="none"
+                                aria-hidden="true"
+                                viewBox="0 0 542 542"
+                              >
+                                <use href={`#icon--${raw}`}></use>
+                              </svg>
+                              <p className="m-0 min-w-0 flex-1">
+                                <dfn className="block text-[1.25em] font-bold leading-tight not-italic">
+                                  {tagName} Content
+                                </dfn>
+                                <span className="block text-[0.875em]">
+                                  {mappedContentTypesToDescriptions[raw]}
+                                </span>
+                              </p>
+                            </li>
+                          ))}
+                        </DetailList>
+                      </RoleSection>
+                    )}
+                    {!hasContentCategoryTags && (
+                      <RoleSection
+                        id="h2--content-category"
+                        title="Content Category"
+                      >
+                        <div className="flex items-center gap-2">
                           <svg
+                            className="h-8 w-8 flex-none"
                             fill="none"
                             aria-hidden="true"
                             viewBox="0 0 542 542"
                           >
-                            <use href="#icon--children"></use>
+                            <use href="#icon--parent"></use>
                           </svg>
-                          <p className="info">
-                            {type === "specific"
-                              ? "Specific Guidance"
-                              : `${mappedContentTypesToTitles[type]} Children Allowed`}
+                          <p className="m-0 text-[1.25em] font-bold leading-tight">
+                            Only Used with Specific Parent Roles
                           </p>
-                          {details ? <p>{details}</p> : null}
-                        </card-item>
-                      );
-                    })}
-                    {ariaRolesWithPresentationalChildren.includes(role) && (
-                      <card-item key="presentational-children">
-                        <h2 id="h2--presentational-children">Note</h2>
+                        </div>
+                        <p>
+                          This role must be a direct descendant of one of the
+                          following roles:
+                        </p>
+                        {hasContextRoles && (
+                          <BulletList>
+                            {contextRoles.map((contextRole: string) => (
+                              <li key={contextRole}>
+                                <code>{contextRole}</code>
+                              </li>
+                            ))}
+                          </BulletList>
+                        )}
+                      </RoleSection>
+                    )}
+                    <RoleSection
+                      id="h2--allowed-descendants"
+                      title="Allowed Descendants"
+                    >
+                      <div className="flex items-center gap-2">
                         <svg
+                          className="h-8 w-8 flex-none"
                           fill="none"
                           aria-hidden="true"
                           viewBox="0 0 542 542"
                         >
-                          <use href="#icon--warning"></use>
+                          <use href="#icon--children"></use>
                         </svg>
-                        <p className="info">Children Become Presentational</p>
-                        <p className="note">
+                        <p className="m-0 text-[1.25em] font-bold leading-tight">
+                          {allowedDescendantTitle}
+                        </p>
+                      </div>
+                      {allowedDescendantNote && <p>{allowedDescendantNote}</p>}
+                    </RoleSection>
+                    {hasPresentationalChildren && (
+                      <RoleSection
+                        id="h2--presentational-children"
+                        title="Note"
+                      >
+                        <div className="flex items-center gap-2">
+                          <svg
+                            className="h-8 w-8 flex-none"
+                            fill="none"
+                            aria-hidden="true"
+                            viewBox="0 0 542 542"
+                          >
+                            <use href="#icon--warning"></use>
+                          </svg>
+                          <p className="m-0 text-[1.25em] font-bold leading-tight">
+                            Children Become Presentational
+                          </p>
+                        </div>
+                        <p className="pl-10 text-[0.875em]">
                           Browsers automatically apply the{" "}
                           <code>presentation</code> role to all descendant
                           elements, so their semantics are not conveyed to
                           assistive technologies.
                         </p>
-                      </card-item>
+                      </RoleSection>
                     )}
-                    <card-item key="usage">
-                      <h2 id="h2--usage">Usage</h2>
-                      <svg fill="none" aria-hidden="true" viewBox="0 0 542 542">
-                        <use href="#icon--html"></use>
-                      </svg>
-                      <p className="info">
-                        Elements that can designate the role in HTML:
-                      </p>
-                      <ul className="list">
-                        {Array.from(
-                          new Set(
-                            Object.entries(allowedAriaRolesByHtmlElement)
-                              .filter(([_, roles]) => roles.includes(role))
-                              .map(([elementName]) => elementName)
-                              .concat(ariaToHtmlMapping[role] || [])
-                          )
-                        )
-                          .sort((a) => {
-                            if ((ariaToHtmlMapping[role] || []).includes(a)) {
-                              return -1;
-                            }
-
-                            return 1;
-                          })
-                          .map((elementName) => (
-                            <li key={elementName}>
-                              <code>
-                                {htmlElementsToDisplayNames[elementName] ||
-                                  elementName}
-                                {(ariaToHtmlMapping[role] || []).includes(
-                                  elementName
-                                )
-                                  ? ""
-                                  : `[role=${role}]`}
-                              </code>
-                            </li>
-                          ))}
-                        {contentCategories.includes("phrasing") ? (
-                          <li key="span">
-                            <code>span[role={role}]</code>
+                    <RoleSection id="h2--usage" title="Usage">
+                      <div className="flex items-center gap-2">
+                        <svg
+                          className="h-8 w-8 flex-none"
+                          fill="none"
+                          aria-hidden="true"
+                          viewBox="0 0 542 542"
+                        >
+                          <use href="#icon--html"></use>
+                        </svg>
+                        <p className="m-0 text-[1.25em] font-bold leading-tight">
+                          Allowed HTML elements
+                        </p>
+                      </div>
+                      <h3 className="my-[0.25em] text-[0.9em] font-bold leading-tight">
+                        Explicitly allowed
+                      </h3>
+                      <BulletList>
+                        {explicitUsageItems.map(({ key, label }) => (
+                          <li key={key}>
+                            <code>{label}</code>
                           </li>
-                        ) : (
-                          <li key="div">
-                            <code>div[role={role}]</code>
-                          </li>
+                        ))}
+                        {!hasExplicitUsageItems && (
+                          <li key="explicit-none">None</li>
                         )}
-                        <li key="custom-element">
-                          <code>custom-element[role={role}]</code>
-                        </li>
-                      </ul>
-                    </card-item>
+                      </BulletList>
+                      <h3 className="my-[0.25em] text-[0.9em] font-bold leading-tight">
+                        Elements that can have any role
+                      </h3>
+                      <BulletList>
+                        {wildcardUsageItems.map(({ key, label }) => (
+                          <li key={key}>
+                            <code>{label}</code>
+                          </li>
+                        ))}
+                        {!hasWildcardUsageItems && (
+                          <li key="wildcard-none">None</li>
+                        )}
+                      </BulletList>
+                    </RoleSection>
                   </div>
                 </div>
               </div>
             </main>
           </div>
         </div>
-        <script src="/scripts.js"></script>
       </body>
     </html>
   );
-}
-
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      "card-item": CustomElement;
-    }
-  }
 }

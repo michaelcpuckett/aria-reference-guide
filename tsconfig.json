@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
     "strict": true,
-    "module": "commonjs",
+    "module": "nodenext",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "moduleResolution": "nodenext",
     "sourceMap": true,
-    "declaration": true,
+    "declaration": false,
     "noImplicitAny": false,
     "removeComments": true,
     "jsx": "react-jsx",

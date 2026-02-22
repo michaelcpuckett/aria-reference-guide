@@ -8,10 +8,16 @@ import { ariaRolesByAbstractRole } from "../data";
 import { IndexPage } from "./pages/IndexPage";
 import { RolePage } from "./pages/RolePage";
 
-import getScripts from "./getScripts";
 import getStyles from "./getStyles";
 
 const app = express();
+
+function writePublicFile(filePath: string, content: string) {
+  const resolvedPath = path.resolve(filePath);
+
+  fs.mkdirSync(path.dirname(resolvedPath), { recursive: true });
+  fs.writeFileSync(resolvedPath, content, "utf8");
+}
 
 /**
  * This route serves the Index page, with formatting preserved.
@@ -22,7 +28,7 @@ app.get("/", async (_, res) => {
   const bodyHtml = ReactDOMServer.renderToString(<IndexPage />);
   const htmlResult = "<!doctype html>" + bodyHtml;
 
-  fs.writeFileSync(path.resolve("./public/", "index.html"), htmlResult, "utf8");
+  writePublicFile("./public/index.html", htmlResult);
 
   res.send(htmlResult);
 });
@@ -48,11 +54,7 @@ app.get("/role/:role.html", (req, res) => {
     )}
   `;
 
-  fs.writeFileSync(
-    path.resolve("./public/role/", `${req.params.role}.html`),
-    htmlResult,
-    "utf8"
-  );
+  writePublicFile(`./public/role/${req.params.role}.html`, htmlResult);
 
   res.send(htmlResult);
 });
@@ -60,19 +62,10 @@ app.get("/role/:role.html", (req, res) => {
 app.get("/styles.css", async (req, res) => {
   const cssResult = await getStyles();
 
-  fs.writeFileSync(path.resolve("./public/styles.css"), cssResult, "utf8");
+  writePublicFile("./public/styles.css", cssResult);
 
   res.setHeader("Content-Type", "text/css");
   res.send(cssResult);
-});
-
-app.get("/scripts.js", async (req, res) => {
-  const jsResult = await getScripts();
-
-  fs.writeFileSync(path.resolve("./public/scripts.js"), jsResult, "utf8");
-
-  res.setHeader("Content-Type", "application/javascript");
-  res.send(jsResult);
 });
 
 /**
@@ -87,7 +80,6 @@ app.get("/build", (req, res) => {
 
   Promise.all([
     fetch("http://localhost:10101"),
-    fetch("http://localhost:10101/scripts.js"),
     fetch("http://localhost:10101/styles.css"),
     ...fetchPromises,
   ]).then(() => {

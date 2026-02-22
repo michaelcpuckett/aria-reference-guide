@@ -75,7 +75,6 @@ export const allowedAriaRolesByHtmlElement = {
   form: ["form", "none", "presentation", "search"],
   "h1-h6": ["heading"],
   header: ["banner", "group", "none", "presentation"],
-  hgroup: ["*"],
   hr: ["separator", "none", "presentation"],
   i: ["*"],
   iframe: ["application", "document", "img", "none", "presentation"],

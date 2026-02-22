@@ -1,0 +1,38 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.htmlElementsToContentCategories = void 0;
+exports.htmlElementsToContentCategories = {
+    abbr: ["flow", "phrasing"],
+    address: ["flow"],
+    b: ["flow", "phrasing"],
+    blockquote: ["flow"],
+    canvas: ["flow", "phrasing"],
+    cite: ["flow", "phrasing"],
+    code: ["flow", "phrasing"],
+    "custom-element": ["flow", "phrasing"],
+    data: ["flow", "phrasing"],
+    del: ["flow", "phrasing"],
+    dfn: ["flow", "phrasing"],
+    div: ["flow"],
+    em: ["flow", "phrasing"],
+    figure: ["flow"],
+    i: ["flow", "phrasing"],
+    ins: ["flow", "phrasing"],
+    kbd: ["flow", "phrasing"],
+    mark: ["flow", "phrasing"],
+    output: ["flow", "phrasing"],
+    p: ["flow"],
+    pre: ["flow"],
+    q: ["flow", "phrasing"],
+    samp: ["flow", "phrasing"],
+    small: ["flow", "phrasing"],
+    span: ["flow", "phrasing"],
+    table: ["flow"],
+    time: ["flow", "phrasing"],
+    u: ["flow", "phrasing"],
+    var: ["flow", "phrasing"],
+    tbody: [],
+    tfoot: [],
+    thead: [],
+};
+//# sourceMappingURL=htmlElementsToContentCategories.js.map

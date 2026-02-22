@@ -1,6 +1,14 @@
 # Styles
 
-This directory contains all the stylesheets used in the project. The styles are written in pure CSS, but include newer features, including:
+This directory contains the single authored stylesheet used in the project:
+
+- `styles/tailwind.css`
+
+The project uses Tailwind CSS with `@layer` and `@apply` for base and utility-driven styles.
+
+The stylesheet may still include a small number of plain CSS declarations when there is no direct Tailwind utility equivalent.
+
+It also uses newer CSS features, including:
 
 - subgrid
 - native CSS nesting
@@ -16,4 +24,4 @@ This directory contains all the stylesheets used in the project. The styles are 
 
 - The colors are designed to be accessible, and the contrast should be at least 4.5:1 for all text.
 
-- Dark mode and light mode are supported. The user's preference is detected using the `prefers-color-scheme` media query.
+- Dark mode and light mode are supported.

@@ -1,25 +1,21 @@
-import { CustomElement } from "../types";
-
 export function MenuVisibilitySwitch() {
   return (
-    <menu-visibility-switch>
+    <div className="contents">
       <label
-        className="switch"
+        className="flex w-auto cursor-pointer p-2 text-center leading-none border-4 border-[canvas] rounded-[5px] text-[canvas] aspect-square focus-within:outline-4 focus-within:outline-dashed focus-within:outline-offset-1 hover:bg-[canvastext] has-[:checked]:bg-[canvastext] min-[721px]:hidden"
         id="menu-visibility-switch-label"
-        aria-label="Toggle Menu"
-        role="none"
+        htmlFor="menu-visibility-switch"
       >
         <input
           id="menu-visibility-switch"
           type="checkbox"
-          className="visually-hidden"
-          role="button"
-          aria-expanded="false"
+          className="peer sr-only print:hidden"
           aria-controls="nav"
+          aria-label="Toggle menu"
         />
         <svg
           aria-hidden="true"
-          data-if-unchecked
+          className="peer-checked:hidden"
           width="1em"
           height="1em"
           viewBox="0 0 24 24"
@@ -30,7 +26,7 @@ export function MenuVisibilitySwitch() {
         </svg>
         <svg
           aria-hidden="true"
-          data-if-checked
+          className="hidden peer-checked:block"
           width="1em"
           height="1em"
           viewBox="0 0 24 24"
@@ -40,14 +36,6 @@ export function MenuVisibilitySwitch() {
           <use href="#icon--close-menu"></use>
         </svg>
       </label>
-    </menu-visibility-switch>
+    </div>
   );
-}
-
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      "menu-visibility-switch": CustomElement;
-    }
-  }
 }

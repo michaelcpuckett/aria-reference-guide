@@ -6,17 +6,20 @@ export {
   ariaRolesWithPhrasingDescendants,
 } from "./ariaRolesWithPresentationalChildren";
 export { ariaToHtmlMapping } from "./ariaToHtmlMapping";
+export { htmlElementsToDisplayNames } from "./htmlElementsToDisplayNames";
+export { htmlElementsToContentCategories } from "./htmlElementsToContentCategories";
 export { links } from "./links";
 export { mappedAbstractAriaRolesToDescriptions } from "./mappedAbstractAriaRolesToDescriptions";
 export { mappedAbstractAriaRolesToDisplayNames as mappedAbstractAriaRolesToTitles } from "./mappedAbstractAriaRolesToDisplayNames";
+export { mappedAbstractAriaRolesToUrls } from "./mappedAbstractAriaRolesToUrls";
+export { mappedAriaRolesToAllowedDescendants } from "./mappedAriaRolesToAllowedDescendants";
 export { mappedAriaRolesToContentCategories } from "./mappedAriaRolesToContentCategories";
 export { mappedAriaRolesToContextRoles } from "./mappedAriaRolesToContextRoles";
+export { mappedAriaRolesToAdditionalDescriptions } from "./mappedAriaRolesToAdditionalDescriptions";
 export { mappedAriaRolesToDescriptions } from "./mappedAriaRolesToDescriptions";
 export { mappedAriaRolesToDisplayNames } from "./mappedAriaRolesToDisplayNames";
 export { mappedAriaRolesToNotes } from "./mappedAriaRolesToNotes";
 export { mappedAriaTypesToTitles } from "./mappedAriaTypesToTitles";
-export { mappedAriaRolesToAllowedDescendants } from "./mappedAriaRolesToAllowedDescendants";
+export { mappedContentTypesToDescriptions } from "./mappedContentTypesToDescriptions";
 export { mappedContentTypesToTitles } from "./mappedContentTypesToTitles";
-export { mappedAbstractAriaRolesToUrls } from "./mappedAbstractAriaRolesToUrls";
 export { mappedContentTypesToUrls } from "./mappedContentTypesToUrls";
-export { htmlElementsToDisplayNames } from "./htmlElementsToDisplayNames";

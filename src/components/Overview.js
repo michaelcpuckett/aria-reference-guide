@@ -1,0 +1,9 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Overview = Overview;
+const jsx_runtime_1 = require("react/jsx-runtime");
+const Icons_1 = require("./Icons");
+function Overview() {
+    return ((0, jsx_runtime_1.jsxs)("div", { className: "content", children: [(0, jsx_runtime_1.jsx)("div", { className: "content__header__info", children: (0, jsx_runtime_1.jsx)("div", { className: "content__heading__container", children: (0, jsx_runtime_1.jsx)("h1", { className: "content__heading", id: "overview", tabIndex: -1, children: "ARIA Reference Guide" }) }) }), (0, jsx_runtime_1.jsxs)("div", { className: "content__details", children: [(0, jsx_runtime_1.jsxs)("p", { children: [(0, jsx_runtime_1.jsx)("abbr", { title: "Accessible Rich Internet Applications", children: "ARIA" }), " is a set of HTML attributes that make web content more accessible to users of assistive technologies, such as screen readers and refreshable braille displays."] }), (0, jsx_runtime_1.jsxs)("p", { children: ["This reference guide is based on the", " ", (0, jsx_runtime_1.jsxs)("a", { href: "https://www.w3.org/TR/wai-aria-1.2/", target: "_blank", children: ["WAI-ARIA 1.2", " ", (0, jsx_runtime_1.jsxs)("keep-together", { children: ["Recommendation", (0, jsx_runtime_1.jsx)(Icons_1.ExternalLinkIcon, {})] })] })] }), (0, jsx_runtime_1.jsx)("p", { children: "This representation of ARIA roles is intended to be a reference for web developers and designers. This is not a substitute for the official documentation, but because it is paginated, it may be easier to navigate." }), (0, jsx_runtime_1.jsxs)("p", { children: ["The source code is availble on", " ", (0, jsx_runtime_1.jsxs)("a", { href: "https://www.github.com/michaelcpuckett/aria-reference-guide", target: "_blank", children: ["GitHub", (0, jsx_runtime_1.jsx)(Icons_1.ExternalLinkIcon, {})] })] })] })] }));
+}
+//# sourceMappingURL=Overview.js.map
