@@ -77,7 +77,8 @@
       text-rendering: optimizeLegibility;
       -webkit-text-size-adjust: 100%;
       -webkit-tap-highlight-color: transparent;
-      background-image: radial-gradient(
+      background-image:
+        radial-gradient(
           circle at 20% -10%,
           rgba(245, 171, 125, 0.2) 0%,
           transparent 50%
@@ -144,11 +145,7 @@
   }
 
   .app-main-panel {
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.25) 0%,
-      rgba(255, 255, 255, 0) 40%
-    );
+    background: rgba(255, 255, 255, 0);
   }
 
   .nav-role-link {
@@ -161,7 +158,11 @@
 
   .nav-role-link:hover {
     transform: translateY(-1px);
-    background: linear-gradient(130deg, rgba(248, 150, 97, 0.2), var(--accent-soft));
+    background: linear-gradient(
+      130deg,
+      rgba(248, 150, 97, 0.2),
+      var(--accent-soft)
+    );
     box-shadow: var(--panel-shadow);
   }
 
@@ -184,7 +185,11 @@
   }
 
   .spec-link:hover {
-    background: linear-gradient(120deg, rgba(248, 150, 97, 0.22) 0%, var(--accent-soft) 100%);
+    background: linear-gradient(
+      120deg,
+      rgba(248, 150, 97, 0.22) 0%,
+      var(--accent-soft) 100%
+    );
   }
 
   .role-panel {
