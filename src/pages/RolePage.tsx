@@ -45,9 +45,9 @@ function RoleSection({
   children: ReactNode;
 }) {
   return (
-    <section className="role-panel">
+    <section className="flex w-full flex-col gap-3 rounded-xl border border-[var(--panel-border)] bg-[var(--panel-bg)] p-4 text-sm hyphens-auto shadow-[var(--panel-shadow)] backdrop-blur-[8px]">
       <h2
-        className="subhead-label m-0 text-xs uppercase tracking-[2px] first:mt-0"
+        className="m-0 text-xs uppercase tracking-[2px] text-[var(--subhead-ink)] first:mt-0"
         id={id}
       >
         {title}
@@ -245,11 +245,11 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
         <div className="flex h-full min-h-0 flex-col print:contents max-[720px]:[&:has(#menu-visibility-switch:not(:checked))_#nav]:hidden max-[720px]:[&:has(#menu-visibility-switch:checked)_main]:hidden">
           <header
             role="banner"
-            className="app-header grid p-4 pt-[calc(1rem+env(safe-area-inset-top))] pl-[calc(1rem+env(safe-area-inset-left))] pr-[calc(1rem+env(safe-area-inset-right))] touch-none max-[720px]:grid-cols-[minmax(0,1fr)_auto] max-[720px]:items-center max-[720px]:gap-4 print:hidden"
+            className="relative grid border-b border-white/20 bg-[linear-gradient(120deg,var(--app-header-start),var(--app-header-end))] p-4 pt-[calc(1rem+env(safe-area-inset-top))] pl-[calc(1rem+env(safe-area-inset-left))] pr-[calc(1rem+env(safe-area-inset-right))] text-white touch-none max-[720px]:grid-cols-[minmax(0,1fr)_auto] max-[720px]:items-center max-[720px]:gap-4 print:hidden"
           >
             <a
               href="/"
-              className="app-title m-0 self-center font-bold uppercase leading-tight text-white min-[721px]:text-center focus-visible:outline-4 focus-visible:outline-dashed"
+              className="m-0 self-center font-bold uppercase leading-tight tracking-[0.22rem] text-white [text-shadow:0_1px_0_rgba(0,0,0,0.45)] min-[721px]:text-center focus-visible:outline-4 focus-visible:outline-dashed"
             >
               {pageTitle}
             </a>
@@ -257,12 +257,12 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
           </header>
           <div className="flex min-h-0 flex-1 flex-col min-[721px]:flex-row">
             <div
-              className="app-nav-panel min-h-0 overflow-y-auto p-4 pl-[calc(1rem+env(safe-area-inset-left))] min-[721px]:w-[280px] min-[721px]:shrink-0 print:hidden"
+              className="min-h-0 overflow-y-auto border-r border-black/10 bg-[var(--panel-bg)] p-4 pl-[calc(1rem+env(safe-area-inset-left))] backdrop-blur-[10px] min-[721px]:w-[280px] min-[721px]:shrink-0 dark:border-white/10 print:hidden"
               id="nav"
             >
               <Navigation role={role} />
             </div>
-            <main className="app-main-panel min-h-0 overflow-y-auto p-4 pr-[calc(1rem+env(safe-area-inset-right))] text-lg min-[721px]:min-w-0 min-[721px]:flex-1 min-[721px]:p-12 min-[721px]:pr-[calc(3rem+env(safe-area-inset-right))] print:[&_a]:font-bold print:[&_a]:no-underline print:[&_a]:text-inherit">
+            <main className="min-h-0 overflow-y-auto p-4 pr-[calc(1rem+env(safe-area-inset-right))] text-lg min-[721px]:min-w-0 min-[721px]:flex-1 min-[721px]:p-12 min-[721px]:pr-[calc(3rem+env(safe-area-inset-right))] print:[&_a]:font-bold print:[&_a]:no-underline print:[&_a]:text-inherit">
               <div
                 className="w-full min-[721px]:mx-auto min-[721px]:max-w-[860px] [&_a:focus-visible]:outline-offset-4"
                 data-role={role}
@@ -272,7 +272,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                   <div className="mb-2 flex flex-1 flex-col items-start gap-2">
                     <div className="flex flex-col gap-4">
                       <h1
-                        className="role-title"
+                        className="m-0 text-4xl leading-tight tracking-[-0.1rem] text-[var(--title-ink)] max-[320px]:text-[1.75rem]"
                         id={role}
                         aria-label={pageHeading}
                         tabIndex={-1}
@@ -282,7 +282,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                     <div className="flex flex-wrap gap-3 print:hidden">
                       {roleLinks.map(({ name, href }) => (
                         <a
-                          className="spec-link"
+                          className="inline-flex items-center gap-1 rounded-md border border-[var(--panel-border)] bg-[var(--panel-bg)] px-3 py-1 text-sm font-bold no-underline transition-colors duration-200 hover:bg-[linear-gradient(120deg,rgba(248,150,97,0.22)_0%,var(--accent-soft)_100%)]"
                           key={href}
                           href={href}
                           target="_blank"

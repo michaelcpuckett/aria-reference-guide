@@ -15,7 +15,7 @@ export function Navigation({ role }: { role?: string }) {
 
   return (
     <nav className="max-[720px]:text-center">
-      <h2 className="subhead-label m-0 mb-3 text-xs font-bold uppercase tracking-[1px]">
+      <h2 className="m-0 mb-3 text-xs font-bold uppercase tracking-[1px] text-[var(--subhead-ink)]">
         All Roles
       </h2>
       <ul className="grid list-none gap-y-2 m-0 p-0">
@@ -24,7 +24,7 @@ export function Navigation({ role }: { role?: string }) {
             <li key={ariaRole} className="block rounded-lg">
               <a
                 aria-label={ariaRole}
-                className="nav-role-link"
+                className="block break-words rounded-xl border border-[var(--panel-border)] bg-[var(--panel-bg)] p-3 text-[0.8em] font-bold text-[var(--title-ink)] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.14)] transition-all duration-200 hover:shadow-[var(--panel-shadow)] aria-[current=page]:bg-[var(--title-ink)] aria-[current=page]:text-[var(--panel-bg)]"
                 href={roleUrl}
                 aria-current={isCurrentPage ? "page" : undefined}
               >
