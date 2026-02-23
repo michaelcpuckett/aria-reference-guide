@@ -22,8 +22,8 @@
     --app-bg-start: #f7efe1;
     --app-bg-mid: #f9f7ff;
     --app-bg-end: #e8f7f2;
-    --app-header-start: #d35a3a;
-    --app-header-end: #8058b6;
+    --app-header-start: #9b3f2b;
+    --app-header-end: #4558a8;
     --panel-bg: rgba(255, 255, 255, 0.76);
     --panel-border: rgba(25, 27, 41, 0.2);
     --panel-shadow: 0 12px 30px rgba(23, 17, 42, 0.12);
@@ -37,8 +37,8 @@
       --app-bg-start: #080912;
       --app-bg-mid: #101324;
       --app-bg-end: #111a19;
-      --app-header-start: #cf5e39;
-      --app-header-end: #4f66c8;
+      --app-header-start: #8c3928;
+      --app-header-end: #3f4f9a;
       --panel-bg: rgba(15, 19, 36, 0.88);
       --panel-border: rgba(191, 203, 255, 0.28);
       --panel-shadow: 0 14px 34px rgba(2, 4, 12, 0.65);
@@ -132,7 +132,7 @@
 
   .app-title {
     @apply tracking-[0.22rem];
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.45);
   }
 
   .app-nav-panel {
@@ -154,6 +154,7 @@
     border-color: var(--panel-border);
     background-color: var(--panel-bg);
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+    color: var(--title-ink);
   }
 
   .nav-role-link:hover {
@@ -164,7 +165,7 @@
 
   .nav-role-link[aria-current="page"] {
     border-color: rgba(255, 255, 255, 0.45);
-    background: linear-gradient(120deg, #f58963 0%, #7f5ddb 100%);
+    background: linear-gradient(120deg, #8c3c2a 0%, #463fa7 100%);
     color: white;
     box-shadow: var(--panel-shadow);
   }
