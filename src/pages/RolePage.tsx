@@ -138,8 +138,8 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
   )
     .filter(([, roles]) => roles.includes(role))
     .map(([elementName]) => elementName);
-  const implicitSemanticsElements: string[] = [...nativeRoleElements].sort((a, b) =>
-    a.localeCompare(b),
+  const implicitSemanticsElements: string[] = [...nativeRoleElements].sort(
+    (a, b) => a.localeCompare(b),
   );
   const implicitSemanticsElementSet = new Set(implicitSemanticsElements);
   const explicitAllowedElements: string[] = explicitRoleElements
@@ -178,19 +178,17 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
     })
     .map(([elementName]) => elementName)
     .sort((a, b) => a.localeCompare(b));
-  const implicitSemanticsItems = implicitSemanticsElements.map((elementName) => {
-    const elementDisplayName =
-      htmlElementsToDisplayNames[elementName] || elementName;
+  const implicitSemanticsItems = implicitSemanticsElements.map(
+    (elementName) => {
+      const elementDisplayName =
+        htmlElementsToDisplayNames[elementName] || elementName;
 
-    return {
-      key: elementName,
-      label: (
-        <>
-          {elementDisplayName}
-        </>
-      ),
-    };
-  });
+      return {
+        key: elementName,
+        label: <>{elementDisplayName}</>,
+      };
+    },
+  );
   const explicitUsageItems = explicitAllowedElements.map((elementName) => {
     const elementDisplayName =
       htmlElementsToDisplayNames[elementName] || elementName;
@@ -477,9 +475,18 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                           Allowed HTML elements
                         </p>
                       </div>
-                      <h3 className="my-[0.25em] text-[0.9em] font-bold leading-tight">
+                      <h3 className="mt-[0.25em] text-[0.9em] font-bold leading-tight">
                         Implicit semantics
                       </h3>
+                      {implicitSemanticsItems.length > 0 && (
+                        <p className="text-[0.875em]">
+                          These elements have the role semantics by default,
+                          without needing to set the <code>role</code>{" "}
+                          attribute. Reach for elements with native semantics
+                          first when choosing how to implement a role in your
+                          content.
+                        </p>
+                      )}
                       <BulletList>
                         {implicitSemanticsItems.map(({ key, label }) => (
                           <li key={key}>
@@ -490,6 +497,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                           <li key="implicit-none">None</li>
                         )}
                       </BulletList>
+                      <hr className="border-[--accent-strong]" />
                       <h3 className="my-[0.25em] text-[0.9em] font-bold leading-tight">
                         Explicitly allowed
                       </h3>
@@ -503,6 +511,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                           <li key="explicit-none">None</li>
                         )}
                       </BulletList>
+                      <hr className="border-[--accent-strong]" />
                       <h3 className="my-[0.25em] text-[0.9em] font-bold leading-tight">
                         Elements that can have any role
                       </h3>
