@@ -11,11 +11,16 @@ This project is a simplified Static Site Generator. `react-dom/server` is used t
 ## Development
 
 1. Run `npm start`
-1. Local server runs at `http://localhost:10001/build`
+1. Local server runs at `http://localhost:10101`
 
 ## Generate Files and Build
 
 1. Run `npm start`
-1. Go to `http://localhost:10001/build` to generate files in `public/`
+1. Go to `http://localhost:10101/build` to generate files in `public/`
 1. Wait for "done" to appear
 1. Run `firebase deploy`
+
+### Alternative static build command
+
+1. Run `npm run build:static` to regenerate `public/` without starting the server.
+1. `firebase deploy` now runs this automatically as a predeploy step.

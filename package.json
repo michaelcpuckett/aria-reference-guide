@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "build": "npm run build:static",
+    "build:static": "ts-node --prefer-ts-exts ./scripts/build-static.ts",
     "start": "ts-node --prefer-ts-exts ./src/app.tsx",
     "test-webkit": "npx playwright wk http://localhost:10101"
   },

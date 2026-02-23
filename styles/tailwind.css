@@ -86,10 +86,6 @@
     @apply [text-underline-offset:4px];
   }
 
-  a:hover {
-    text-decoration: none;
-  }
-
   summary {
     @apply cursor-pointer leading-none [font:inherit];
   }

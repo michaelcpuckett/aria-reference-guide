@@ -245,7 +245,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
         <div className="flex h-full min-h-0 flex-col print:contents max-[720px]:[&:has(#menu-visibility-switch:not(:checked))_#nav]:hidden max-[720px]:[&:has(#menu-visibility-switch:checked)_main]:hidden">
           <header
             role="banner"
-            className="relative grid border-b border-white/20 bg-[linear-gradient(120deg,var(--app-header-start),var(--app-header-end))] p-4 pt-[calc(1rem+env(safe-area-inset-top))] pl-[calc(1rem+env(safe-area-inset-left))] pr-[calc(1rem+env(safe-area-inset-right))] text-white touch-none max-[720px]:grid-cols-[minmax(0,1fr)_auto] max-[720px]:items-center max-[720px]:gap-4 print:hidden"
+            className="relative grid border-b border-white/20 p-4 pt-[calc(1rem+env(safe-area-inset-top))] pl-[calc(1rem+env(safe-area-inset-left))] pr-[calc(1rem+env(safe-area-inset-right))] text-white touch-none max-[720px]:grid-cols-[minmax(0,1fr)_auto] max-[720px]:items-center max-[720px]:gap-4 print:hidden"
           >
             <a
               href="/"
@@ -282,7 +282,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                     <div className="flex flex-wrap gap-3 print:hidden">
                       {roleLinks.map(({ name, href }) => (
                         <a
-                          className="inline-flex items-center gap-1 rounded-md border border-[var(--panel-border)] bg-[var(--panel-bg)] px-3 py-1 text-sm font-bold no-underline transition-colors duration-200 hover:bg-[linear-gradient(120deg,rgba(248,150,97,0.22)_0%,var(--accent-soft)_100%)]"
+                          className="hover:underline inline-flex items-center gap-1 rounded-md border border-[var(--panel-border)] bg-[var(--panel-bg)] px-3 py-1 text-sm font-bold no-underline transition-colors duration-200"
                           key={href}
                           href={href}
                           target="_blank"

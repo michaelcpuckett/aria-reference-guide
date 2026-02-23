@@ -25,7 +25,11 @@ export function Overview() {
         </p>
         <p>
           This reference guide is based on the{" "}
-          <a href="https://www.w3.org/TR/wai-aria-1.2/" target="_blank">
+          <a
+            href="https://www.w3.org/TR/wai-aria-1.2/"
+            target="_blank"
+            className="underline"
+          >
             WAI-ARIA 1.2{" "}
             <span className="whitespace-nowrap">
               Recommendation
@@ -44,6 +48,7 @@ export function Overview() {
           <a
             href="https://www.github.com/michaelcpuckett/aria-reference-guide"
             target="_blank"
+            className="underline"
           >
             GitHub
             <ExternalLinkIcon />
