@@ -2,7 +2,7 @@ export function MenuVisibilitySwitch() {
   return (
     <div className="contents">
       <label
-        className="flex w-auto cursor-pointer p-2 text-center leading-none border-4 border-[canvas] rounded-[5px] text-[canvas] aspect-square focus-within:outline-4 focus-within:outline-dashed focus-within:outline-offset-1 hover:bg-[canvastext] has-[:checked]:bg-[canvastext] min-[721px]:hidden"
+        className="flex w-auto cursor-pointer p-2 text-center leading-none border-2 border-white/85 rounded-[7px] text-white aspect-square focus-within:outline-4 focus-within:outline-dashed focus-within:outline-offset-1 hover:bg-white/15 has-[:checked]:bg-white/20 min-[721px]:hidden transition-colors"
         id="menu-visibility-switch-label"
         htmlFor="menu-visibility-switch"
       >

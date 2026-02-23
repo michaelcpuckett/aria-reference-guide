@@ -7,7 +7,7 @@ export function Overview() {
         <div className="mb-2 grid flex-1 place-items-start gap-x-2 gap-y-2">
           <div className="flex flex-col gap-4">
             <h1
-              className="m-0 text-4xl leading-tight tracking-[-0.1rem] max-[320px]:text-[1.75rem]"
+              className="role-title"
               id="overview"
               tabIndex={-1}
             >

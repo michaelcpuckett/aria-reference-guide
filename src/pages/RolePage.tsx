@@ -45,7 +45,7 @@ function RoleSection({
   children: ReactNode;
 }) {
   return (
-    <section className="w-full rounded-lg border border-current bg-white p-4 text-sm hyphens-auto dark:bg-black flex flex-col gap-3">
+    <section className="role-panel">
       <h2
         className="m-0 text-xs uppercase tracking-[2px] opacity-60 first:mt-0"
         id={id}
@@ -245,11 +245,11 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
         <div className="flex h-full min-h-0 flex-col print:contents max-[720px]:[&:has(#menu-visibility-switch:not(:checked))_#nav]:hidden max-[720px]:[&:has(#menu-visibility-switch:checked)_main]:hidden">
           <header
             role="banner"
-            className="flex flex-col bg-[VisitedText] p-4 pt-[calc(1rem+env(safe-area-inset-top))] pl-[calc(1rem+env(safe-area-inset-left))] pr-[calc(1rem+env(safe-area-inset-right))] touch-none max-[720px]:flex-row max-[720px]:items-center max-[720px]:gap-4 print:hidden"
+            className="app-header flex flex-col p-4 pt-[calc(1rem+env(safe-area-inset-top))] pl-[calc(1rem+env(safe-area-inset-left))] pr-[calc(1rem+env(safe-area-inset-right))] touch-none max-[720px]:flex-row max-[720px]:items-center max-[720px]:gap-4 print:hidden"
           >
             <a
               href="/"
-              className="m-0 self-center font-bold uppercase leading-tight tracking-[0.15rem] text-[canvas] min-[721px]:text-center focus-visible:outline-4 focus-visible:outline-dashed"
+              className="app-title m-0 self-center font-bold uppercase leading-tight text-white min-[721px]:text-center focus-visible:outline-4 focus-visible:outline-dashed"
             >
               {pageTitle}
             </a>
@@ -257,12 +257,12 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
           </header>
           <div className="flex min-h-0 flex-1 flex-col min-[721px]:flex-row">
             <div
-              className="min-h-0 overflow-y-auto bg-white p-4 pl-[calc(1rem+env(safe-area-inset-left))] min-[721px]:w-[280px] min-[721px]:shrink-0 dark:bg-black print:hidden"
+              className="app-nav-panel min-h-0 overflow-y-auto p-4 pl-[calc(1rem+env(safe-area-inset-left))] min-[721px]:w-[280px] min-[721px]:shrink-0 print:hidden"
               id="nav"
             >
               <Navigation role={role} />
             </div>
-            <main className="min-h-0 overflow-y-auto p-4 pr-[calc(1rem+env(safe-area-inset-right))] text-lg min-[721px]:min-w-0 min-[721px]:flex-1 min-[721px]:p-12 min-[721px]:pr-[calc(3rem+env(safe-area-inset-right))] print:[&_a]:font-bold print:[&_a]:no-underline print:[&_a]:text-inherit">
+            <main className="app-main-panel min-h-0 overflow-y-auto p-4 pr-[calc(1rem+env(safe-area-inset-right))] text-lg min-[721px]:min-w-0 min-[721px]:flex-1 min-[721px]:p-12 min-[721px]:pr-[calc(3rem+env(safe-area-inset-right))] print:[&_a]:font-bold print:[&_a]:no-underline print:[&_a]:text-inherit">
               <div
                 className="w-full min-[721px]:mx-auto min-[721px]:max-w-[860px] [&_a:focus-visible]:outline-offset-4"
                 data-role={role}
@@ -272,7 +272,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                   <div className="mb-2 flex flex-1 flex-col items-start gap-2">
                     <div className="flex flex-col gap-4">
                       <h1
-                        className="m-0 text-4xl leading-tight tracking-[-0.1rem] max-[320px]:text-[1.75rem]"
+                        className="role-title"
                         id={role}
                         aria-label={pageHeading}
                         tabIndex={-1}
@@ -282,7 +282,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                     <div className="flex flex-wrap gap-3 print:hidden">
                       {roleLinks.map(({ name, href }) => (
                         <a
-                          className="inline-flex items-center gap-1 rounded border border-current px-3 py-1 text-sm font-bold no-underline hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+                          className="spec-link"
                           key={href}
                           href={href}
                           target="_blank"

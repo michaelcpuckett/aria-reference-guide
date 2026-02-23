@@ -18,7 +18,34 @@
     height: 100%;
     line-height: 1.5;
     overscroll-behavior: none;
-    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-family: "Avenir Next", "Trebuchet MS", "Segoe UI", sans-serif;
+    --app-bg-start: #f7efe1;
+    --app-bg-mid: #f9f7ff;
+    --app-bg-end: #e8f7f2;
+    --app-header-start: #d35a3a;
+    --app-header-end: #8058b6;
+    --panel-bg: rgba(255, 255, 255, 0.76);
+    --panel-border: rgba(25, 27, 41, 0.2);
+    --panel-shadow: 0 12px 30px rgba(23, 17, 42, 0.12);
+    --accent-strong: #3c2eb4;
+    --accent-soft: #eff2ff;
+    --title-ink: #11142b;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --app-bg-start: #080912;
+      --app-bg-mid: #101324;
+      --app-bg-end: #111a19;
+      --app-header-start: #cf5e39;
+      --app-header-end: #4f66c8;
+      --panel-bg: rgba(15, 19, 36, 0.88);
+      --panel-border: rgba(191, 203, 255, 0.28);
+      --panel-shadow: 0 14px 34px rgba(2, 4, 12, 0.65);
+      --accent-strong: #a9b7ff;
+      --accent-soft: rgba(80, 102, 200, 0.18);
+      --title-ink: #f0f3ff;
+    }
   }
 
   @media screen {
@@ -48,8 +75,23 @@
       text-rendering: optimizeLegibility;
       -webkit-text-size-adjust: 100%;
       -webkit-tap-highlight-color: transparent;
-      background-color: canvas;
-      color: canvastext;
+      background-image: radial-gradient(
+          circle at 20% -10%,
+          rgba(245, 171, 125, 0.2) 0%,
+          transparent 50%
+        ),
+        radial-gradient(
+          circle at 90% 12%,
+          rgba(91, 113, 228, 0.2) 0%,
+          transparent 45%
+        ),
+        linear-gradient(
+          135deg,
+          var(--app-bg-start) 0%,
+          var(--app-bg-mid) 48%,
+          var(--app-bg-end) 100%
+        );
+      color: var(--title-ink);
     }
   }
 
@@ -75,5 +117,82 @@
 
   :where(h2):first-child {
     @apply mt-0;
+  }
+}
+
+@layer components {
+  .app-header {
+    @apply relative border-b border-white/20 text-white;
+    background-image: linear-gradient(
+      120deg,
+      var(--app-header-start),
+      var(--app-header-end)
+    );
+  }
+
+  .app-title {
+    @apply tracking-[0.22rem];
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  .app-nav-panel {
+    @apply border-r border-black/10 dark:border-white/10;
+    background-color: var(--panel-bg);
+    backdrop-filter: blur(10px);
+  }
+
+  .app-main-panel {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.25) 0%,
+      rgba(255, 255, 255, 0) 40%
+    );
+  }
+
+  .nav-role-link {
+    @apply block rounded-xl border p-3 font-bold break-words transition-all duration-200;
+    border-color: var(--panel-border);
+    background-color: var(--panel-bg);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+  }
+
+  .nav-role-link:hover {
+    transform: translateY(-1px);
+    background: linear-gradient(130deg, rgba(248, 150, 97, 0.2), var(--accent-soft));
+    box-shadow: var(--panel-shadow);
+  }
+
+  .nav-role-link[aria-current="page"] {
+    border-color: rgba(255, 255, 255, 0.45);
+    background: linear-gradient(120deg, #f58963 0%, #7f5ddb 100%);
+    color: white;
+    box-shadow: var(--panel-shadow);
+  }
+
+  .role-title {
+    @apply m-0 text-4xl leading-tight tracking-[-0.1rem] max-[320px]:text-[1.75rem];
+    color: var(--title-ink);
+  }
+
+  .spec-link {
+    @apply inline-flex items-center gap-1 rounded-md border px-3 py-1 text-sm font-bold no-underline transition-colors duration-200;
+    border-color: var(--panel-border);
+    background-color: var(--panel-bg);
+  }
+
+  .spec-link:hover {
+    background: linear-gradient(120deg, rgba(248, 150, 97, 0.22) 0%, var(--accent-soft) 100%);
+  }
+
+  .role-panel {
+    @apply w-full rounded-xl border p-4 text-sm hyphens-auto flex flex-col gap-3;
+    border-color: var(--panel-border);
+    background-color: var(--panel-bg);
+    box-shadow: var(--panel-shadow);
+    backdrop-filter: blur(8px);
+  }
+
+  .role-panel > h2 {
+    color: var(--accent-strong);
   }
 }
