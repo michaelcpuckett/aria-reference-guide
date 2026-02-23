@@ -9,7 +9,7 @@ export interface AllowedDescendantRule {
   note?: string;
 }
 
-export const mappedAriaRolesToAllowedDescendants: Record<
+export const allowedDescendantsByRole: Record<
   string,
   AllowedDescendantRule
 > = {
@@ -96,3 +96,5 @@ export const mappedAriaRolesToAllowedDescendants: Record<
   treegrid: { category: "specific", note: "Only row and rowgroup roles allowed." },
   treeitem: { category: "phrasing" },
 };
+
+export const mappedAriaRolesToAllowedDescendants = allowedDescendantsByRole;

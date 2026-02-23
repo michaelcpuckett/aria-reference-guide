@@ -1,4 +1,4 @@
-export const mappedAriaRolesToDisplayNames = {
+export const ariaRoleDisplayNames = {
   presentation: "presen&shy;tation",
   definition: "defi&shy;ni&shy;tion",
   document: "docu&shy;ment",
@@ -78,3 +78,5 @@ export const mappedAriaRolesToDisplayNames = {
   form: "form",
   alert: "alert",
 };
+
+export const mappedAriaRolesToDisplayNames = ariaRoleDisplayNames;

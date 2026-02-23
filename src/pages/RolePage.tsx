@@ -1,24 +1,24 @@
 import type { ReactNode } from "react";
 import {
+  abstractRoleDescriptions,
+  abstractRoleDisplayNames,
+  abstractRoleSpecUrls,
   allowedAriaRolesByHtmlElement,
+  allowedDescendantsByRole,
+  ariaRoleAdditionalDescriptions,
+  ariaRoleContentCategories,
+  ariaRoleDescriptions,
+  ariaRoleDisplayNames,
   ariaRolesByAbstractRole,
   ariaRolesWithPresentationalChildren,
   ariaToHtmlMapping,
+  contentCategoryDescriptions,
+  contentCategoryTitles,
+  contentCategoryUrls,
   htmlElementsToContentCategories,
   htmlElementsToDisplayNames,
-  links,
-  mappedAbstractAriaRolesToDescriptions,
-  mappedAbstractAriaRolesToTitles,
-  mappedAbstractAriaRolesToUrls,
-  mappedAriaRolesToAdditionalDescriptions,
-  mappedAriaRolesToAllowedDescendants,
-  mappedAriaRolesToContentCategories,
-  mappedAriaRolesToContextRoles,
-  mappedAriaRolesToDescriptions,
-  mappedAriaRolesToDisplayNames,
-  mappedContentTypesToDescriptions,
-  mappedContentTypesToTitles,
-  mappedContentTypesToUrls,
+  requiredContextRolesByAriaRole,
+  specLinks,
 } from "../../data";
 import { ExternalLinkIcon, IconDefinitions } from "../components/Icons";
 import { MenuVisibilitySwitch } from "../components/MenuVisibilitySwitch";
@@ -66,16 +66,16 @@ function BulletList({ children }: { children: ReactNode }) {
 }
 
 export function RolePage({ role, abstractAriaRole }: RolePageProps) {
-  const roleTitle = mappedAriaRolesToDisplayNames[role] || role;
+  const roleTitle = ariaRoleDisplayNames[role] || role;
   const pageTitle = "ARIA Reference Guide";
   const pageHeading = `The ${role} role`;
   const pageHeadingHtml = {
     __html: `<span aria-hidden="true">The ${roleTitle} role</span>`,
   };
   const pageDocumentTitle = `${pageHeading} - ${pageTitle}`;
-  const roleDescription = mappedAriaRolesToDescriptions[role] || "--";
+  const roleDescription = ariaRoleDescriptions[role] || "--";
   const roleAdditionalDescription =
-    mappedAriaRolesToAdditionalDescriptions[role] || null;
+    ariaRoleAdditionalDescriptions[role] || null;
   const hasRoleAdditionalDescription = !!roleAdditionalDescription;
   const roleMetaDescription = roleDescription === "--" ? "" : roleDescription;
   const roleWildcard = "*";
@@ -98,37 +98,37 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
     .map(([key]) => key)
     .sort()
     .map((key) => ({
-      tagName: mappedAbstractAriaRolesToTitles[key] || key,
-      url: mappedAbstractAriaRolesToUrls[key] || "",
+      tagName: abstractRoleDisplayNames[key] || key,
+      url: abstractRoleSpecUrls[key] || "",
       raw: key,
     }));
   const hasAbstractAriaRoleTags = abstractAriaRoleTags.length > 0;
   const showAbstractAriaRoleContextNote = abstractAriaRoleTags.length > 1;
 
-  const contentCategories = mappedAriaRolesToContentCategories[role] || [];
+  const contentCategories = ariaRoleContentCategories[role] || [];
   const filteredContentCategories =
     normalizeSemanticCategories(contentCategories);
 
   const contentCategoryTags: Tag[] = filteredContentCategories
     .sort()
     .map((contentCategory: string) => ({
-      tagName: mappedContentTypesToTitles[contentCategory] || contentCategory,
-      url: mappedContentTypesToUrls[contentCategory] || "",
+      tagName: contentCategoryTitles[contentCategory] || contentCategory,
+      url: contentCategoryUrls[contentCategory] || "",
       raw: contentCategory,
     }));
   const hasContentCategoryTags = contentCategoryTags.length > 0;
 
-  const allowedDescendantRule = mappedAriaRolesToAllowedDescendants[role] || {
+  const allowedDescendantRule = allowedDescendantsByRole[role] || {
     category: "specific",
     note: "N/A",
   };
   const allowedDescendantTitle =
     allowedDescendantRule.category === "specific"
       ? "Specific Guidance"
-      : `${mappedContentTypesToTitles[allowedDescendantRule.category]} Children Allowed`;
+      : `${contentCategoryTitles[allowedDescendantRule.category]} Children Allowed`;
   const allowedDescendantNote = allowedDescendantRule.note || null;
   const roleCategories = normalizeSemanticCategories(
-    mappedAriaRolesToContentCategories[role] || [],
+    ariaRoleContentCategories[role] || [],
   );
   const nativeRoleElements: string[] = Array.from(
     new Set((ariaToHtmlMapping[role] || []) as string[]),
@@ -220,11 +220,11 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
   const hasImplicitSemanticsItems = implicitSemanticsItems.length > 0;
   const hasExplicitUsageItems = explicitUsageItems.length > 0;
   const hasWildcardUsageItems = wildcardUsageItems.length > 0;
-  const contextRoles = mappedAriaRolesToContextRoles[role] || [];
+  const contextRoles = requiredContextRolesByAriaRole[role] || [];
   const hasContextRoles = contextRoles.length > 0;
   const hasPresentationalChildren =
     ariaRolesWithPresentationalChildren.includes(role);
-  const roleLinks = Object.entries(links).map(([name, link]) => ({
+  const roleLinks = Object.entries(specLinks).map(([name, link]) => ({
     name,
     href: link + role,
   }));
@@ -247,7 +247,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
         <div className="flex h-full min-h-0 flex-col print:contents max-[720px]:[&:has(#menu-visibility-switch:not(:checked))_#nav]:hidden max-[720px]:[&:has(#menu-visibility-switch:checked)_main]:hidden">
           <header
             role="banner"
-            className="relative grid border-b border-white/20 p-4 pt-[calc(1rem+env(safe-area-inset-top))] pl-[calc(1rem+env(safe-area-inset-left))] pr-[calc(1rem+env(safe-area-inset-right))] text-white touch-none max-[720px]:grid-cols-[minmax(0,1fr)_auto] max-[720px]:items-center max-[720px]:gap-4 print:hidden"
+            className="relative grid border-b bg-[linear-gradient(120deg,var(--app-header-start),var(--app-header-end))] border-white/20 p-4 pt-[calc(1rem+env(safe-area-inset-top))] pl-[calc(1rem+env(safe-area-inset-left))] pr-[calc(1rem+env(safe-area-inset-right))] text-white touch-none max-[720px]:grid-cols-[minmax(0,1fr)_auto] max-[720px]:items-center max-[720px]:gap-4 print:hidden"
           >
             <a
               href="/"
@@ -337,7 +337,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                                   {tagName}
                                 </dfn>
                                 <span className="block text-[0.875em]">
-                                  {mappedAbstractAriaRolesToDescriptions[raw]}
+                                  {abstractRoleDescriptions[raw]}
                                 </span>
                               </p>
                             </li>
@@ -375,7 +375,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                                   {tagName} Content
                                 </dfn>
                                 <span className="block text-[0.875em]">
-                                  {mappedContentTypesToDescriptions[raw]}
+                                  {contentCategoryDescriptions[raw]}
                                 </span>
                               </p>
                             </li>

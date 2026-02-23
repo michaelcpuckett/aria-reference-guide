@@ -1,4 +1,4 @@
-export const mappedAriaRolesToDescriptions = {
+export const ariaRoleDescriptions = {
   alert: "A type of live region with important, and usually time-sensitive, information.",
   alertdialog: "A type of dialog that contains an alert message, where initial focus goes to an element within the dialog.",
   application: "A structure containing one or more focusable elements requiring user input, such as keyboard or gesture events, that do not follow a standard interaction pattern supported by a widget role.",
@@ -81,4 +81,6 @@ export const mappedAriaRolesToDescriptions = {
   tree: "A widget that allows the user to select one or more items from a hierarchically organized collection.",
   treegrid: "A grid whose rows can be expanded and collapsed in the same manner as for a tree.",
   treeitem: "An item in a tree.",
-}
+};
+
+export const mappedAriaRolesToDescriptions = ariaRoleDescriptions;

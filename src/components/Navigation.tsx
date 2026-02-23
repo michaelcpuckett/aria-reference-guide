@@ -1,9 +1,9 @@
-import { mappedAriaRolesToDisplayNames } from "../../data";
+import { ariaRoleDisplayNames } from "../../data";
 
 export function Navigation({ role }: { role?: string }) {
-  const sortedAriaRoles = Object.keys(mappedAriaRolesToDisplayNames).sort();
+  const sortedAriaRoles = Object.keys(ariaRoleDisplayNames).sort();
   const navigationItems = sortedAriaRoles.map((ariaRole) => {
-    const roleDisplayName = mappedAriaRolesToDisplayNames[ariaRole] || ariaRole;
+    const roleDisplayName = ariaRoleDisplayNames[ariaRole] || ariaRole;
 
     return {
       ariaRole,

@@ -1,4 +1,4 @@
-export const mappedAriaRolesToContentCategories = {
+export const ariaRoleContentCategories = {
   alert: ["flow"],
   alertdialog: ["flow"],
   application: ["flow"],
@@ -82,3 +82,5 @@ export const mappedAriaRolesToContentCategories = {
   treegrid: ["flow"],
   treeitem: [],
 };
+
+export const mappedAriaRolesToContentCategories = ariaRoleContentCategories;

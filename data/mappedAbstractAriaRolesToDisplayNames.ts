@@ -1,4 +1,4 @@
-export const mappedAbstractAriaRolesToDisplayNames = {
+export const abstractRoleDisplayNames = {
   composite: "Composite",
   landmark: "Landmark",
   structure: "Structure",
@@ -6,3 +6,5 @@ export const mappedAbstractAriaRolesToDisplayNames = {
   window: "Window",
   live: "Live Region",
 };
+
+export const mappedAbstractAriaRolesToDisplayNames = abstractRoleDisplayNames;

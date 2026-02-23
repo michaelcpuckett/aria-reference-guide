@@ -1,6 +1,6 @@
 import React from "react";
 
-export const mappedAriaRolesToAdditionalDescriptions = {
+export const ariaRoleAdditionalDescriptions = {
   alert: (
     <>
       <p>{"See related alertdialog and status."}</p>
@@ -562,3 +562,6 @@ export const mappedAriaRolesToAdditionalDescriptions = {
     </>
   ),
 } as const;
+
+export const mappedAriaRolesToAdditionalDescriptions =
+  ariaRoleAdditionalDescriptions;

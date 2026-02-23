@@ -1,4 +1,4 @@
-export const mappedAriaRolesToContextRoles = {
+export const requiredContextRolesByAriaRole = {
   caption: ["table", "grid", "treegrid", "figure"],
   cell: ["row"],
   columnheader: ["row"],
@@ -14,3 +14,5 @@ export const mappedAriaRolesToContextRoles = {
   tab: ["tablist"],
   treeitem: ["tree", "group"],
 };
+
+export const mappedAriaRolesToContextRoles = requiredContextRolesByAriaRole;
