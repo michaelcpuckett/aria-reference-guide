@@ -138,23 +138,16 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
   )
     .filter(([, roles]) => roles.includes(role))
     .map(([elementName]) => elementName);
-  const explicitUsageElements: string[] = Array.from(
-    new Set<string>(nativeRoleElements.concat(explicitRoleElements)),
-  ).sort((a, b) => {
-    const aNative = nativeRoleElements.includes(a);
-    const bNative = nativeRoleElements.includes(b);
-
-    if (aNative && !bNative) {
-      return -1;
-    }
-
-    if (!aNative && bNative) {
-      return 1;
-    }
-
-    return a.localeCompare(b);
-  });
-  const explicitUsageElementSet = new Set(explicitUsageElements);
+  const implicitSemanticsElements: string[] = [...nativeRoleElements].sort((a, b) =>
+    a.localeCompare(b),
+  );
+  const implicitSemanticsElementSet = new Set(implicitSemanticsElements);
+  const explicitAllowedElements: string[] = explicitRoleElements
+    .filter((elementName) => !implicitSemanticsElementSet.has(elementName))
+    .sort((a, b) => a.localeCompare(b));
+  const usageElementSet = new Set(
+    implicitSemanticsElements.concat(explicitAllowedElements),
+  );
   const wildcardUsageElements: string[] = Object.entries(
     allowedAriaRolesByHtmlElement,
   )
@@ -163,7 +156,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
         return false;
       }
 
-      if (explicitUsageElementSet.has(elementName)) {
+      if (usageElementSet.has(elementName)) {
         return false;
       }
 
@@ -185,19 +178,29 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
     })
     .map(([elementName]) => elementName)
     .sort((a, b) => a.localeCompare(b));
-  const explicitUsageItems = explicitUsageElements.map((elementName) => {
+  const implicitSemanticsItems = implicitSemanticsElements.map((elementName) => {
     const elementDisplayName =
       htmlElementsToDisplayNames[elementName] || elementName;
-    const explicitRoleLabel = nativeRoleElements.includes(elementName)
-      ? ""
-      : `[role=${role}]`;
 
     return {
       key: elementName,
       label: (
         <>
           {elementDisplayName}
-          {explicitRoleLabel}
+        </>
+      ),
+    };
+  });
+  const explicitUsageItems = explicitAllowedElements.map((elementName) => {
+    const elementDisplayName =
+      htmlElementsToDisplayNames[elementName] || elementName;
+
+    return {
+      key: elementName,
+      label: (
+        <>
+          {elementDisplayName}
+          {`[role=${role}]`}
         </>
       ),
     };
@@ -216,6 +219,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
       ),
     };
   });
+  const hasImplicitSemanticsItems = implicitSemanticsItems.length > 0;
   const hasExplicitUsageItems = explicitUsageItems.length > 0;
   const hasWildcardUsageItems = wildcardUsageItems.length > 0;
   const contextRoles = mappedAriaRolesToContextRoles[role] || [];
@@ -473,6 +477,19 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
                           Allowed HTML elements
                         </p>
                       </div>
+                      <h3 className="my-[0.25em] text-[0.9em] font-bold leading-tight">
+                        Implicit semantics
+                      </h3>
+                      <BulletList>
+                        {implicitSemanticsItems.map(({ key, label }) => (
+                          <li key={key}>
+                            <code>{label}</code>
+                          </li>
+                        ))}
+                        {!hasImplicitSemanticsItems && (
+                          <li key="implicit-none">None</li>
+                        )}
+                      </BulletList>
                       <h3 className="my-[0.25em] text-[0.9em] font-bold leading-tight">
                         Explicitly allowed
                       </h3>
