@@ -15,7 +15,7 @@ export function Navigation({ role }: { role?: string }) {
 
   return (
     <nav className="max-[720px]:text-center">
-      <h2 className="m-0 mb-3 text-xs font-bold uppercase tracking-[1px] opacity-70">
+      <h2 className="subhead-label m-0 mb-3 text-xs font-bold uppercase tracking-[1px]">
         All Roles
       </h2>
       <ul className="grid list-none gap-y-2 m-0 p-0">

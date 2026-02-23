@@ -47,7 +47,7 @@ function RoleSection({
   return (
     <section className="role-panel">
       <h2
-        className="m-0 text-xs uppercase tracking-[2px] opacity-60 first:mt-0"
+        className="subhead-label m-0 text-xs uppercase tracking-[2px] first:mt-0"
         id={id}
       >
         {title}
@@ -245,7 +245,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
         <div className="flex h-full min-h-0 flex-col print:contents max-[720px]:[&:has(#menu-visibility-switch:not(:checked))_#nav]:hidden max-[720px]:[&:has(#menu-visibility-switch:checked)_main]:hidden">
           <header
             role="banner"
-            className="app-header flex flex-col p-4 pt-[calc(1rem+env(safe-area-inset-top))] pl-[calc(1rem+env(safe-area-inset-left))] pr-[calc(1rem+env(safe-area-inset-right))] touch-none max-[720px]:flex-row max-[720px]:items-center max-[720px]:gap-4 print:hidden"
+            className="app-header grid p-4 pt-[calc(1rem+env(safe-area-inset-top))] pl-[calc(1rem+env(safe-area-inset-left))] pr-[calc(1rem+env(safe-area-inset-right))] touch-none max-[720px]:grid-cols-[minmax(0,1fr)_auto] max-[720px]:items-center max-[720px]:gap-4 print:hidden"
           >
             <a
               href="/"

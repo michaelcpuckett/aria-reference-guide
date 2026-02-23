@@ -28,6 +28,7 @@
     --panel-border: rgba(25, 27, 41, 0.2);
     --panel-shadow: 0 12px 30px rgba(23, 17, 42, 0.12);
     --accent-strong: #3c2eb4;
+    --subhead-ink: #2f3b74;
     --accent-soft: #eff2ff;
     --title-ink: #11142b;
   }
@@ -43,6 +44,7 @@
       --panel-border: rgba(191, 203, 255, 0.28);
       --panel-shadow: 0 14px 34px rgba(2, 4, 12, 0.65);
       --accent-strong: #a9b7ff;
+      --subhead-ink: #b6c3ff;
       --accent-soft: rgba(80, 102, 200, 0.18);
       --title-ink: #f0f3ff;
     }
@@ -194,6 +196,10 @@
   }
 
   .role-panel > h2 {
-    color: var(--accent-strong);
+    color: var(--subhead-ink);
+  }
+
+  .subhead-label {
+    color: var(--subhead-ink);
   }
 }
