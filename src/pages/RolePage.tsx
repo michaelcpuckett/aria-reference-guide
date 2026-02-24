@@ -15,7 +15,6 @@ import {
   contentCategoryDescriptions,
   contentCategoryTitles,
   contentCategoryUrls,
-  htmlElementsToContentCategories,
   htmlElementsToDisplayNames,
   requiredContextRolesByAriaRole,
   specLinks,
@@ -160,21 +159,7 @@ export function RolePage({ role, abstractAriaRole }: RolePageProps) {
         return false;
       }
 
-      const knownElementCategories =
-        htmlElementsToContentCategories[elementName];
-
-      // If category metadata is unavailable, keep prior behavior.
-      if (!roleCategories.length || knownElementCategories === undefined) {
-        return true;
-      }
-
-      const elementCategories = normalizeSemanticCategories(
-        knownElementCategories,
-      );
-
-      return roleCategories.some((category: string) =>
-        elementCategories.includes(category),
-      );
+      return true;
     })
     .map(([elementName]) => elementName)
     .sort((a, b) => a.localeCompare(b));
